@@ -99,6 +99,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Work aliases
+alias cdprojetos='cd ~/fdte/projetos'
 alias cdrakuten='cdprojetos; cd rakuten; ./add-deploy-keys'
 alias subway='cdrakuten; ssh subway'
 alias stargate='cdrakuten; ssh stargate'
