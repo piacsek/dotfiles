@@ -97,3 +97,8 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# Work aliases
+alias cdrakuten='cdprojetos; cd rakuten; ./add-deploy-keys'
+alias subway='cdrakuten; ssh subway'
+alias stargate='cdrakuten; ssh stargate'
