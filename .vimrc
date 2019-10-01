@@ -41,10 +41,9 @@ filetype plugin indent on
 syntax on
 colorscheme gruvbox
 let g:airline_theme='gruvbox'
-colorscheme Papercolor
-let g:airline_theme='papercolor'
+" colorscheme Papercolor
+" let g:airline_theme='papercolor'
 
-set termguicolors
 set background=dark
 set guifont=*
 set clipboard=unnamedplus
