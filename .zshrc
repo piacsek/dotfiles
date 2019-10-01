@@ -103,3 +103,24 @@ alias cdprojetos='cd ~/fdte/projetos'
 alias cdrakuten='cdprojetos; cd rakuten; ./add-deploy-keys'
 alias subway='cdrakuten; ssh subway'
 alias stargate='cdrakuten; ssh stargate'
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+. $HOME/.asdf/asdf.sh
+
+. $HOME/.asdf/completions/asdf.bash
+export ERL_AFLAGS="-kernel shell_history enabled"
+
+. $HOME/.asdf/asdf.sh
+
+. $HOME/.asdf/completions/asdf.bash
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+# eval "$(docker-machine env dev)"
+MAIN_PARTITION_DISK_USAGE=$(df -h | grep /dev/sdb2 | cut -d"%" -f1 | tail -c3)
+echo "Main partition disk usage: $MAIN_PARTITION_DISK_USAGE%"
+
