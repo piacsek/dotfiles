@@ -2,6 +2,6 @@
 local M = {}
 
 M.ui = { theme = 'github_dark' }
-M.plugins = require "custom.plugins"
+M.plugins = "custom.plugins"
 
 return M
