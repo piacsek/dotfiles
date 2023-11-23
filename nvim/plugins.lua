@@ -27,7 +27,8 @@ local plugins = {
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
-  }
+  },
 }
 
 return plugins
+
