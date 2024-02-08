@@ -1,0 +1,20 @@
+""" Map leader to space ---------------------
+let mapleader=" "
+
+""" Mappings
+map <leader>e <Action>(RecentFiles)
+map <leader>s <Action>(FileStructurePopup)
+map <leader>d <Action>(Compare.SameVersion)
+map <leader>r <Action>(ChooseRunConfiguration)
+map <leader>gr <Action>(ActivateRunToolWindow)
+map <leader>gt <Action>(ActivateTerminalToolWindow)
+map <leader>ga <Action>(GotoAction)
+map <leader>t <Action>(GotoTest)
+map <leader>go <Action>(GotoFile)
+map <leader>x <Action>(CloseContent)
+map <leader><Tab> <Action>(NextSplitter)
+map <leader><Up> <Action>(com.mnw.tabmover.actions.MoveTabToNextWindow)
+
+
+""" % to bounce from do to end etc.
+set matchit
