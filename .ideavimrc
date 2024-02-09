@@ -13,6 +13,7 @@ map <leader>u <Action>(Vcs.RollbackChangedLines)
 map <leader><Tab> <Action>(NextSplitter)
 map <leader><Up> <Action>(com.mnw.tabmover.actions.MoveTabToNextWindow)
 map <leader><Right> <Action>(MoveTabRight)
+map <leader>n <Action>(NewElement)
 map <leader>mm <Action>(Tool_External Tools_mix format current file)
 
 """ Mappings - Go to...
@@ -21,6 +22,7 @@ map <leader>gr <Action>(ActivateRunToolWindow)
 map <leader>gs <Action>(ActivateTerminalToolWindow)
 map <leader>ga <Action>(GotoAction)
 map <leader>gt <Action>(GotoTest)
+map <leader>gp <Action>(SelectInProjectView)
 
 """ % to bounce from do to end etc.
 set matchit
