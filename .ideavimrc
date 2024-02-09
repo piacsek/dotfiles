@@ -7,9 +7,9 @@ map <leader>e <Action>(RecentFiles)
 map <leader>s <Action>(FileStructurePopup)
 map <leader>d <Action>(Compare.SameVersion)
 map <leader>r <Action>(ChooseRunConfiguration)
-map <leader>t <Action>(GotoTest)
 map <leader>f <Action>(FindInPath)
 map <leader>x <Action>(CloseContent)
+map <leader>u <Action>(Vcs.RollbackChangedLines)
 map <leader><Tab> <Action>(NextSplitter)
 map <leader><Up> <Action>(com.mnw.tabmover.actions.MoveTabToNextWindow)
 map <leader><Right> <Action>(MoveTabRight)
@@ -18,8 +18,9 @@ map <leader>mm <Action>(Tool_External Tools_mix format current file)
 """ Mappings - Go to...
 map <leader>go <Action>(GotoFile)
 map <leader>gr <Action>(ActivateRunToolWindow)
-map <leader>gt <Action>(ActivateTerminalToolWindow)
+map <leader>gs <Action>(ActivateTerminalToolWindow)
 map <leader>ga <Action>(GotoAction)
+map <leader>gt <Action>(GotoTest)
 
 """ % to bounce from do to end etc.
 set matchit
