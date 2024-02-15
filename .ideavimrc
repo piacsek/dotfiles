@@ -16,7 +16,10 @@ map <leader>r <Action>(RunClass)
 map <leader><BS> <Action>(Run)
 map <leader>n <Action>(NewElement)
 map <leader>mm <Action>(Tool_External Tools_mix format current file)
+
+""" Mappings - VCS
 map <leader>kp <Action>(Vcs.Push)
+map <leader>kr <Action>(Vcs.UpdateProject)
 
 """ Mappings - Go to...
 map <leader>gr <Action>(ChooseRunConfiguration)
