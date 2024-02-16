@@ -18,8 +18,8 @@ map <leader>n <Action>(NewElement)
 map <leader>mm <Action>(Tool_External Tools_mix format current file)
 
 """ Mappings - VCS
-map <leader>kp <Action>(Vcs.Push)
-map <leader>kr <Action>(Vcs.UpdateProject)
+map <leader>kk <Action>(Git.Commit.And.Push.Executor)
+map <leader>kp <Action>(Vcs.UpdateProject)
 
 """ Mappings - Go to...
 map <leader>gr <Action>(ChooseRunConfiguration)
@@ -33,5 +33,6 @@ map <leader>ga <Action>(GotoAction)
 map <leader>gt <Action>(GotoTest)
 map <leader>gp <Action>(SelectInProjectView)
 
-""" % to bounce from do to end etc.
+""" Plugins
+set NERDTree 
 set matchit
