@@ -12,6 +12,7 @@ map <leader>u <Action>(Vcs.RollbackChangedLines)
 map <leader>/ <Action>(CommentByLineComment)
 map <leader><Tab> <Action>(NextSplitter)
 map <leader><Up> <Action>(com.mnw.tabmover.actions.MoveTabToNextWindow)
+map <leader><Down> <Action>(com.mnw.tabmover.actions.MoveTabToNextWindow)
 map <leader><Right> <Action>(MoveTabRight)
 map <leader>r <Action>(RunClass)
 map <leader><BS> <Action>(Run)
@@ -35,6 +36,11 @@ map <leader>js <Action>(ActivateTerminalToolWindow)
 map <leader>ja <Action>(GotoAction)
 map <leader>jt <Action>(GotoTest)
 map <leader>jp <Action>(SelectInProjectView)
+map <leader>jc <Action>(Refactorings.QuickListPopupAction)
+
+""" Copilot
+map <leader>cd <Action>(copilot.disableCopilot)
+map <leader>ce <Action>(copilot.enableCopilot)
 
 """ Plugins
 set NERDTree 
