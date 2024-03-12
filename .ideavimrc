@@ -41,6 +41,7 @@ map <leader>jc <Action>(Refactorings.QuickListPopupAction)
 """ Copilot
 map <leader>cd <Action>(copilot.disableCopilot)
 map <leader>ce <Action>(copilot.enableCopilot)
+map <leader>cc <Action>(copilot.requestCompletions)
 
 """ Plugins
 set NERDTree 
