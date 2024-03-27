@@ -5,7 +5,6 @@ let mapleader=" "
 """ Mappings
 map <leader>e <Action>(RecentFiles)
 map <leader>s <Action>(FileStructurePopup)
-map <leader>d <Action>(Compare.SameVersion)
 map <leader>f <Action>(FindInPath)
 map <leader>x <Action>(CloseContent)
 map <leader>u <Action>(Vcs.RollbackChangedLines)
@@ -26,13 +25,19 @@ map <leader>kk <Action>(Git.Commit.And.Push.Executor)
 map <leader>kp <Action>(Vcs.UpdateProject)
 
 """ Mappings - Jump to...
+""" After weeks of usage, I feel like some of those should have one keystroke only
+""" But I'll still keep the two keystroke ones for "backwards compatibility"
 map <leader>jr <Action>(ChooseRunConfiguration)
 map <leader>jk <Action>(CheckinProject)
+map <leader>o <Action>(GotoFile)
 map <leader>jo <Action>(GotoFile)
-map <leader>jd <Action>(GotoDeclaration)
+map <leader>d <Action>(GotoDeclaration)
+map <leader>jd <Action>(Compare.SameVersion)
 map <leader>jb <Action>(Back)
+map <leader>4 <Action>(ActivateRunToolWindow)
 map <leader>j4 <Action>(ActivateRunToolWindow)
 map <leader>js <Action>(ActivateTerminalToolWindow)
+map <leader>a <Action>(GotoAction)
 map <leader>ja <Action>(GotoAction)
 map <leader>jt <Action>(GotoTest)
 map <leader>jp <Action>(SelectInProjectView)
@@ -41,6 +46,7 @@ map <leader>jc <Action>(Refactorings.QuickListPopupAction)
 """ Copilot
 map <leader>cd <Action>(copilot.disableCopilot)
 map <leader>ce <Action>(copilot.enableCopilot)
+map <leader>cc <Action>(ActivateGitHubCopilotChatToolWindow)
 
 """ Plugins
 set NERDTree 
