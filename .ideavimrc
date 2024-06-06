@@ -3,6 +3,7 @@ let mapleader=" "
 
 
 """ Mappings
+map Y y$
 map <leader>e <Action>(RecentFiles)
 map <leader>s <Action>(FileStructurePopup)
 map <leader>f <Action>(FindInPath)
@@ -17,28 +18,23 @@ map <leader>r <Action>(RunClass)
 map <leader><BS> <Action>(Run)
 map <leader><Enter> <Action>(HideAllWindows)
 map <leader>n <Action>(NewElement)
+map <leader>y <Action>(EditorCopy)
 map <leader>N <Action>(NewScratchFile)
 map <leader>mm <Action>(Tool_External Tools_mix format current file)
 
 """ Mappings - VCS
-map <leader>kk <Action>(Git.Commit.And.Push.Executor)
-map <leader>kp <Action>(Vcs.UpdateProject)
+map <leader>gp <Action>(Vcs.UpdateProject)
+map <leader>gk <Action>(CheckinProject)
+map <leader>gd <Action>(Compare.SameVersion)
 
 """ Mappings - Jump to...
-""" After weeks of usage, I feel like some of those should have one keystroke only
-""" But I'll still keep the two keystroke ones for "backwards compatibility"
-map <leader>jr <Action>(ChooseRunConfiguration)
-map <leader>jk <Action>(CheckinProject)
+map <leader>R <Action>(ChooseRunConfiguration)
 map <leader>o <Action>(GotoFile)
-map <leader>jo <Action>(GotoFile)
 map <leader>d <Action>(GotoDeclaration)
-map <leader>jd <Action>(Compare.SameVersion)
-map <leader>jb <Action>(Back)
+map <leader>b <Action>(Back)
 map <leader>4 <Action>(ActivateRunToolWindow)
-map <leader>j4 <Action>(ActivateRunToolWindow)
 map <leader>js <Action>(ActivateTerminalToolWindow)
 map <leader>a <Action>(GotoAction)
-map <leader>ja <Action>(GotoAction)
 map <leader>jt <Action>(GotoTest)
 map <leader>jp <Action>(SelectInProjectView)
 map <leader>jc <Action>(Refactorings.QuickListPopupAction)
