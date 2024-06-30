@@ -1,12 +1,14 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- <Normal mode remaps>
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>', { desc = 'Remove search results highlights' })
+-- <Normal mode remaps> vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>', { desc = 'Remove search results highlights' })
 
 vim.keymap.set('n', '<leader><Esc>', ':hide<CR>', { desc = 'Hide window' })
 
-vim.keymap.set('n', '<Tab>', '<C-w>w', { desc = 'Move to the next window' })
+vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 vim.keymap.set('n', '<leader><BS>', ':w<CR>', { desc = 'Save file' })
 
@@ -16,11 +18,6 @@ vim.keymap.set('n', 'n', 'nzzzv', { desc = 'Auto zz' })
 vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'Auto zz' })
 
 vim.keymap.set('n', '<leader>s', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = 'Replace word under the cursor'})
-
-vim.keymap.set('n', '<C-k>', '<cmd>cnext<CR>zz')
-vim.keymap.set('n', '<C-j>', '<cmd>cprev<CR>zz')
-vim.keymap.set('n', '<leader>k', '<cmd>lnext<CR>zz')
-vim.keymap.set('n', '<leader>j', '<cmd>lprev<CR>zz')
 
 
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
