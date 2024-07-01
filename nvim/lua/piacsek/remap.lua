@@ -4,6 +4,7 @@ vim.g.maplocalleader = ' '
 -- <Normal mode remaps> vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>', { desc = 'Remove search results highlights' })
 
 vim.keymap.set('n', '<leader><Esc>', ':hide<CR>', { desc = 'Hide window' })
+vim.keymap.set('n', '<leader>vp', vim.cmd.Ex, { desc = 'Hide window' })
 
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
