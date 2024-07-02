@@ -14,11 +14,11 @@ return {
 			harpoon.ui:toggle_quick_menu(harpoon:list())
 		end)
 
-		local keys_that_toggle_selections = { "h", "j", "k", "l" }
+		local keys_that_toggle_selections = { "j", "k", "l", "m", ",", "." }
 
 		for file_index, key in ipairs(keys_that_toggle_selections) do
-			local open_on_split_buff_remap = ("<C-S-%s>"):format(key)
-			vim.keymap.set("n", open_on_split_buff_remap, function()
+			local open_on_split_buffer_remap = ("<C-S-%s>"):format(key)
+			vim.keymap.set("n", open_on_split_buffer_remap, function()
 				harpoon:list():select(file_index, { vsplit = true })
 			end)
 
