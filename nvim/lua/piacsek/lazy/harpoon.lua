@@ -14,32 +14,23 @@ return {
 			harpoon.ui:toggle_quick_menu(harpoon:list())
 		end)
 
-		vim.keymap.set("n", "<C-m>", function()
-			harpoon:list():select(1)
-		end)
-		vim.keymap.set("n", "<leader><C-m>", function()
-			harpoon:list():replace_at(1)
-		end)
+		local keys_that_toggle_selections = { "h", "j", "k", "l" }
 
-		vim.keymap.set("n", "<C-,>", function()
-			harpoon:list():select(2)
-		end)
-		vim.keymap.set("n", "<leader><C-,>", function()
-			harpoon:list():replace_at(2)
-		end)
+		for file_index, key in ipairs(keys_that_toggle_selections) do
+			local open_on_split_buff_remap = ("<C-S-%s>"):format(key)
+			vim.keymap.set("n", open_on_split_buff_remap, function()
+				harpoon:list():select(file_index, { vsplit = true })
+			end)
 
-		vim.keymap.set("n", "<C-.>", function()
-			harpoon:list():select(3)
-		end)
-		vim.keymap.set("n", "<leader><C-.>", function()
-			harpoon:list():replace_at(3)
-		end)
+			local open_on_same_buffer_remap = ("<C-%s>"):format(key)
+			vim.keymap.set("n", open_on_same_buffer_remap, function()
+				harpoon:list():select(file_index)
+			end)
 
-		vim.keymap.set("n", "<C-/>", function()
-			harpoon:list():select(4)
-		end)
-		vim.keymap.set("n", "<leader><C-/>", function()
-			harpoon:list():replace_at(4)
-		end)
+			local replace_file_remap = ("<leader><C-%s>"):format(key)
+			vim.keymap.set("n", replace_file_remap, function()
+				harpoon:list():select(file_index)
+			end)
+		end
 	end,
 }
