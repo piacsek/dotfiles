@@ -52,6 +52,8 @@ return {
 							current_umbrella_app,
 							"mix",
 							"test",
+							"--exit-status",
+							"0",
 							"--formatter",
 							"NeotestElixir.Formatter",
 							"--formatter",
