@@ -22,9 +22,44 @@ return {
 		end
 
 		local neotest = require("neotest")
+		dump = function(o)
+			if type(o) == "table" then
+				local s = "{ "
+				for k, v in pairs(o) do
+					if type(k) ~= "number" then
+						k = '"' .. k .. '"'
+					end
+					s = s .. "[" .. k .. "] = " .. dump(v) .. ","
+				end
+				return s .. "} "
+			else
+				return tostring(o)
+			end
+		end
 		neotest.setup({
 			adapters = {
-				require("neotest-elixir"),
+				require("neotest-elixir")({
+					post_process_command = function(cmd)
+						local test_file_path_from_root = cmd[#cmd]
+						local current_umbrella_app = test_file_path_from_root:match("^apps/([^/]+)")
+						local umbrella_relative_path_to_test =
+							test_file_path_from_root:match("apps/" .. current_umbrella_app .. "/(.*)")
+
+						return {
+							"mix",
+							"cmd",
+							"--app",
+							current_umbrella_app,
+							"mix",
+							"test",
+							"--formatter",
+							"NeotestElixir.Formatter",
+							"--formatter",
+							"ExUnit.CLIFormatter",
+							umbrella_relative_path_to_test,
+						}
+					end,
+				}),
 			},
 		})
 
@@ -37,7 +72,11 @@ return {
 		end)
 
 		vim.keymap.set("n", "<leader>to", function()
-			neotest.output.open({ open = true })
+			neotest.output.open()
+		end)
+
+		vim.keymap.set("n", "<leader>tO", function()
+			neotest.output_panel.open()
 		end)
 
 		vim.keymap.set("n", "<leader>ts", function()
