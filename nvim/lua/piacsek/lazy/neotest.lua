@@ -21,20 +21,12 @@ return {
 			return project_root
 		end
 
-		require("neotest").setup({
+		local neotest = require("neotest")
+		neotest.setup({
 			adapters = {
-				require("neotest-elixir")({
-					cwd = function()
-						local test_file = vim.fn.expand("%:p")
-						local result = find_app_root(test_file)
-						print(result)
-						return result
-					end,
-				}),
+				require("neotest-elixir"),
 			},
 		})
-
-		local neotest = require("neotest")
 
 		vim.keymap.set("n", "<leader>ta", function()
 			neotest.run.run(vim.fn.expand("%"))
@@ -45,7 +37,7 @@ return {
 		end)
 
 		vim.keymap.set("n", "<leader>to", function()
-			neotest.output()
+			neotest.output.open({ open = true })
 		end)
 
 		vim.keymap.set("n", "<leader>ts", function()
