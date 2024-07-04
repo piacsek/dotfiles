@@ -69,6 +69,10 @@ return {
 			neotest.run.run(vim.fn.expand("%"))
 		end)
 
+		vim.keymap.set("n", "<leader>tw", function()
+			neotest.watch.watch()
+		end)
+
 		vim.keymap.set("n", "<leader>tt", function()
 			neotest.run.run()
 		end)
