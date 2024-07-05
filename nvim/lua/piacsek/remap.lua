@@ -61,11 +61,10 @@ local function open_terminal_and_run_tests(test_command)
 		mix_test_command = mix_test_command .. ":" .. current_line
 	end
 
-	local command = cd_command .. " && " .. mix_test_command
-
 	vim.cmd("split | terminal")
 	vim.cmd("resize 20")
-	vim.fn.chansend(vim.b.terminal_job_id, command .. "\n")
+	vim.fn.chansend(vim.b.terminal_job_id, cd_command .. "\n")
+	vim.fn.chansend(vim.b.terminal_job_id, mix_test_command .. "\n")
 end
 
 vim.keymap.set("n", "<leader>tt", function()
