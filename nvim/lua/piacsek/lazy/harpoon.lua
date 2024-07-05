@@ -16,7 +16,7 @@ return {
 			harpoon.ui:toggle_quick_menu(harpoon:list())
 		end)
 
-		local keys_that_toggle_selections = { "j", "k", "l", "m", ",", "." }
+		local keys_that_toggle_selections = { "j", "k", "l", "h" }
 
 		for file_index, key in ipairs(keys_that_toggle_selections) do
 			local open_on_split_buffer_remap = ("<C-S-%s>"):format(key)
