@@ -38,3 +38,11 @@ vim.opt.hlsearch = true
 
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
+
+vim.opt.autoread = true
+
+vim.api.nvim_create_augroup("autoread", { clear = true })
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
+	group = "autoread",
+	command = "checktime",
+})
