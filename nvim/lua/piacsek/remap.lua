@@ -50,29 +50,49 @@ vim.keymap.set("n", "<leader>kt", function()
 	end
 end, { desc = "[K]ill all [T]erminal buffers" })
 
--- Move this to a lego-specific config
-local function open_terminal_and_run_tests(test_command)
-	local current_file = vim.fn.expand("%:p")
-	local current_line = vim.fn.line(".")
+local function open_terminal()
+	vim.cmd("split | terminal")
+	vim.cmd("resize 20")
+end
+
+local function cd_to_app_dir_in_umbrella(current_file)
 	local current_umbrella_app = current_file:match("apps/([^/]+)")
 	local cd_command = "cd apps/" .. current_umbrella_app
-	local mix_test_command = "mix " .. test_command .. " " .. current_file
+
+	vim.fn.chansend(vim.b.terminal_job_id, cd_command .. "\n")
+end
+
+-- Move this to a lego-specific config
+
+vim.keymap.set("n", "<leader>tt", function()
+	local current_file = vim.fn.expand("%:p")
+	local current_line = vim.fn.line(".")
+	local mix_test_command = "mix test " .. current_file
+
 	if current_line ~= 1 then
 		mix_test_command = mix_test_command .. ":" .. current_line
 	end
 
-	vim.cmd("split | terminal")
-	vim.cmd("resize 20")
-	vim.fn.chansend(vim.b.terminal_job_id, cd_command .. "\n")
+	open_terminal()
+	cd_to_app_dir_in_umbrella(current_file)
 	vim.fn.chansend(vim.b.terminal_job_id, mix_test_command .. "\n")
-end
-
-vim.keymap.set("n", "<leader>tt", function()
-	open_terminal_and_run_tests("test")
 end)
 
 vim.keymap.set("n", "<leader>tw", function()
-	open_terminal_and_run_tests("test.watch")
+	local current_file = vim.fn.expand("%:p")
+	local current_line = vim.fn.line(".")
+	local fscommand = "fswatch lib test"
+
+	local mix_test_command = "mix test " .. current_file
+	if current_line ~= 1 then
+		mix_test_command = mix_test_command .. ":" .. current_line
+	end
+	local test_run_loop = "while read; do clear; echo '" .. mix_test_command .. "';" .. mix_test_command .. "; done"
+	local command = mix_test_command .. " && " .. fscommand .. " | " .. test_run_loop
+
+	open_terminal()
+	cd_to_app_dir_in_umbrella(current_file)
+	vim.fn.chansend(vim.b.terminal_job_id, command .. "\n")
 end)
 
 -- </Normal mode remaps>
