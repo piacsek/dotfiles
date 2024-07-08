@@ -5,7 +5,7 @@ return {
 	opts = {},
 
 	init = function()
-		vim.cmd.colorscheme("tokyonight-night")
+		vim.cmd.colorscheme("tokyonight-moon")
 
 		vim.cmd.hi("Comment gui=none")
 	end,
@@ -14,7 +14,7 @@ return {
 		require("tokyonight").setup({
 			on_colors = function(colors)
 				colors.bg = "#000000"
-				colors.bg_highlight = "#151458"
+				-- colors.bg_highlight = "#151458"
 			end,
 		})
 	end,
