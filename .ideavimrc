@@ -4,13 +4,35 @@ let mapleader=" "
 
 """ Mappings
 map Y y$
+
+""" Bookmarks
+map <leader>E <Action>(ShowHarpoon)
+
+map <leader><C-j> <Action>(SetHarpoon1)
+map <C-j> <Action>(GotoHarpoon1)
+map <C-S-j> <C-w><C-w><Action>(GotoHarpoon1)
+
+map <leader><C-k> <Action>(SetHarpoon2)
+map <C-k> <Action>(GotoHarpoon2)
+map <C-S-k> <C-w><C-w><Action>(GotoHarpoon2)
+
+map <leader><C-l> <Action>(SetHarpoon3)
+map <C-l> <Action>(GotoHarpoon3)
+map <C-S-l> <C-w><C-w><Action>(GotoHarpoon3)
+
+map <leader><C-h> <Action>(SetHarpoon4)
+map <C-h> <Action>(GotoHarpoon4)
+map <C-S-h> <C-w><C-w><Action>(GotoHarpoon4)
+
 map <leader>e <Action>(RecentFiles)
 map <leader>s <Action>(FileStructurePopup)
 map <leader>f <Action>(FindInPath)
-map <leader>x <Action>(CloseContent)
+map <leader>F <Action>(ReplaceInPath)
+map <leader><Esc> <Action>(CloseContent)
 map <leader>u <Action>(Vcs.RollbackChangedLines)
 map <leader>/ <Action>(CommentByLineComment)
 map <leader><Tab> <Action>(NextSplitter)
+map <Tab> <Action>(NextSplitter)
 map <leader><Up> <Action>(com.mnw.tabmover.actions.MoveTabToNextWindow)
 map <leader><Down> <Action>(com.mnw.tabmover.actions.MoveTabToNextWindow)
 map <leader><Right> <Action>(MoveTabRight)
@@ -20,22 +42,22 @@ map <leader><Enter> <Action>(HideAllWindows)
 map <leader>n <Action>(NewElement)
 map <leader>y <Action>(EditorCopy)
 map <leader>N <Action>(NewScratchFile)
-map <leader>mm <Action>(Tool_External Tools_mix format current file)
+map <leader>mf <Action>(Tool_External Tools_mix format all)
+map <C-s> <Action>(Tool_External Tools_mix format current file)
 
 """ Mappings - VCS
-map <leader>gp <Action>(Vcs.UpdateProject)
-map <leader>gk <Action>(CheckinProject)
 map <leader>gd <Action>(Compare.SameVersion)
 
 """ Mappings - Jump to...
 map <leader>R <Action>(ChooseRunConfiguration)
 map <leader>o <Action>(GotoFile)
-map <leader>d <Action>(GotoDeclaration)
+map gd <Action>(GotoDeclaration)
+map gr <Action>(ShowUsages)
 map <leader>b <Action>(Back)
 map <leader>4 <Action>(ActivateRunToolWindow)
 map <leader>js <Action>(ActivateTerminalToolWindow)
 map <leader>a <Action>(GotoAction)
-map <leader>jt <Action>(GotoTest)
+map <leader>jt <C-w><C-w><Action>(GotoTest)
 map <leader>jp <Action>(SelectInProjectView)
 map <leader>jc <Action>(Refactorings.QuickListPopupAction)
 
@@ -46,4 +68,4 @@ map <leader>cc <Action>(ActivateGitHubCopilotChatToolWindow)
 
 """ Plugins
 set NERDTree 
-set matchit
+set highlightedyank
