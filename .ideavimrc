@@ -4,7 +4,6 @@ let mapleader=" "
 
 """ Mappings
 map Y y$
-
 """ Bookmarks
 map <leader>E <Action>(ShowHarpoon)
 
@@ -23,6 +22,7 @@ map <C-S-l> <C-w><C-w><Action>(GotoHarpoon3)
 map <leader><C-h> <Action>(SetHarpoon4)
 map <C-h> <Action>(GotoHarpoon4)
 map <C-S-h> <C-w><C-w><Action>(GotoHarpoon4)
+
 
 map <leader>e <Action>(RecentFiles)
 map <leader>s <Action>(FileStructurePopup)
