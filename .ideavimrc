@@ -4,7 +4,7 @@ let mapleader=" "
 
 """ Mappings
 map Y y$
-""" Bookmarks
+""" Harpoon
 map <leader>E <Action>(ShowHarpoon)
 
 map <leader><C-j> <Action>(SetHarpoon1)
@@ -47,6 +47,8 @@ map <C-s> <Action>(Tool_External Tools_mix format current file)
 
 """ Mappings - VCS
 map <leader>gd <Action>(Compare.SameVersion)
+map <leader>gw <Action>(Github.Open.In.Browser)
+map <leader>gy <Action>(GitHub.Copy.Link)
 
 """ Mappings - Jump to...
 map <leader>R <Action>(ChooseRunConfiguration)
