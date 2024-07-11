@@ -2,8 +2,9 @@
 let mapleader=" "
 
 
-""" Mappings
+""" VIM Mappings
 map Y y$
+
 """ Harpoon
 map <leader>E <Action>(ShowHarpoon)
 
@@ -29,23 +30,24 @@ map <leader>s <Action>(FileStructurePopup)
 map <leader>f <Action>(FindInPath)
 map <leader>F <Action>(ReplaceInPath)
 map <leader><Esc> <Action>(CloseContent)
-map <leader>u <Action>(Vcs.RollbackChangedLines)
 map <leader>/ <Action>(CommentByLineComment)
+map <leader>r <Action>(RunClass)
+map <leader><BS> <Action>(Run)
+map <leader>K <Action>(Stop)
+map <leader>n <Action>(NewElement)
+map <leader>y <Action>(EditorCopy)
+map <leader>N <Action>(NewScratchFile)
+
+""" Mappings - Window management
+map <leader><Enter> <Action>(HideAllWindows)
 map <leader><Tab> <Action>(NextSplitter)
 map <Tab> <Action>(NextSplitter)
 map <leader><Up> <Action>(com.mnw.tabmover.actions.MoveTabToNextWindow)
 map <leader><Down> <Action>(com.mnw.tabmover.actions.MoveTabToNextWindow)
 map <leader><Right> <Action>(MoveTabRight)
-map <leader>r <Action>(RunClass)
-map <leader><BS> <Action>(Run)
-map <leader><Enter> <Action>(HideAllWindows)
-map <leader>n <Action>(NewElement)
-map <leader>y <Action>(EditorCopy)
-map <leader>N <Action>(NewScratchFile)
-map <leader>mf <Action>(Tool_External Tools_mix format all)
-map <C-s> <Action>(Tool_External Tools_mix format current file)
 
 """ Mappings - VCS
+map <leader>u <Action>(Vcs.RollbackChangedLines)
 map <leader>gd <Action>(Compare.SameVersion)
 map <leader>gw <Action>(Github.Open.In.Browser)
 map <leader>gy <Action>(GitHub.Copy.Link)
@@ -62,6 +64,10 @@ map <leader>a <Action>(GotoAction)
 map <leader>jt <C-w><C-w><Action>(GotoTest)
 map <leader>jp <Action>(SelectInProjectView)
 map <leader>jc <Action>(Refactorings.QuickListPopupAction)
+
+""" Mappings - Elixir
+map <leader>mf <Action>(Tool_External Tools_mix format all)
+map <C-s> <Action>(Tool_External Tools_mix format current file)
 
 """ Copilot
 map <leader>cd <Action>(copilot.disableCopilot)
