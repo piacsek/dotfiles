@@ -6,6 +6,7 @@ let mapleader=" "
 map Y y$
 
 """ Harpoon
+map <leader>e <Action>(RecentFiles)
 map <leader>E <Action>(ShowHarpoon)
 
 map <leader><C-j> <Action>(SetHarpoon1)
@@ -25,8 +26,8 @@ map <C-h> <Action>(GotoHarpoon4)
 map <C-S-h> <C-w><C-w><Action>(GotoHarpoon4)
 
 
-map <leader>e <Action>(RecentFiles)
 map <leader>s <Action>(FileStructurePopup)
+map <leader>S <Action>(ActivateStructureToolWindow)
 map <leader>f <Action>(FindInPath)
 map <leader>F <Action>(ReplaceInPath)
 map <leader><Esc> <Action>(CloseContent)
@@ -34,11 +35,13 @@ map <leader>/ <Action>(CommentByLineComment)
 map <leader>r <Action>(RunClass)
 map <leader><BS> <Action>(Run)
 map <leader>K <Action>(Stop)
+map <leader>kd <Action>(DatabaseView.DeactivateAction)
 map <leader>n <Action>(NewElement)
 map <leader>y <Action>(EditorCopy)
 map <leader>N <Action>(NewScratchFile)
 
 """ Mappings - Window management
+map <leader>` <Action>(NextProjectWindow)
 map <leader><Enter> <Action>(HideAllWindows)
 map <leader><Tab> <Action>(NextSplitter)
 map <Tab> <Action>(NextSplitter)
@@ -51,18 +54,25 @@ map <leader>u <Action>(Vcs.RollbackChangedLines)
 map <leader>gd <Action>(Compare.SameVersion)
 map <leader>gw <Action>(Github.Open.In.Browser)
 map <leader>gy <Action>(GitHub.Copy.Link)
+map <leader>gh <Action>(Vcs.ShowTabbedFileHistory)
 
 """ Mappings - Jump to...
 map <leader>R <Action>(ChooseRunConfiguration)
 map <leader>o <Action>(GotoFile)
+map <leader>O <Action>(Scratch.ShowFilesPopup)
 map gd <Action>(GotoDeclaration)
 map gr <Action>(ShowUsages)
-map <leader>b <Action>(Back)
+map <leader>[ <Action>(MethodUp)
+map <leader>] <Action>(MethodDown)
+""" map <leader>g] <VcsShowPrevChangeMarker> Not working?
+""" map <leader>g] <Action>(VcsShowNextChangeMarker) Not working?
+map <leader>3 <Action>(ActivateFindToolWindow)
 map <leader>4 <Action>(ActivateRunToolWindow)
 map <leader>js <Action>(ActivateTerminalToolWindow)
 map <leader>a <Action>(GotoAction)
 map <leader>jt <C-w><C-w><Action>(GotoTest)
 map <leader>jp <Action>(SelectInProjectView)
+map <leader>jd <Action>(ActivateDatabaseToolWindow)
 map <leader>jc <Action>(Refactorings.QuickListPopupAction)
 
 """ Mappings - Elixir
