@@ -62,10 +62,8 @@ map <leader>o <Action>(GotoFile)
 map <leader>O <Action>(Scratch.ShowFilesPopup)
 map gd <Action>(GotoDeclaration)
 map gr <Action>(ShowUsages)
-map <leader>[ <Action>(MethodUp)
-map <leader>] <Action>(MethodDown)
-""" map <leader>g] <VcsShowPrevChangeMarker> Not working?
-""" map <leader>g] <Action>(VcsShowNextChangeMarker) Not working?
+map <leader>[ <Action>(VcsShowPrevChangeMarker)
+map <leader>] <Action>(VcsShowNextChangeMarker)
 map <leader>3 <Action>(ActivateFindToolWindow)
 map <leader>4 <Action>(ActivateRunToolWindow)
 map <leader>js <Action>(ActivateTerminalToolWindow)
@@ -73,16 +71,13 @@ map <leader>a <Action>(GotoAction)
 map <leader>jt <C-w><C-w><Action>(GotoTest)
 map <leader>jp <Action>(SelectInProjectView)
 map <leader>jd <Action>(ActivateDatabaseToolWindow)
-map <leader>jc <Action>(Refactorings.QuickListPopupAction)
 
 """ Mappings - Elixir
 map <leader>mf <Action>(Tool_External Tools_mix format all)
 map <C-s> <Action>(Tool_External Tools_mix format current file)
 
-""" Copilot
-map <leader>cd <Action>(copilot.disableCopilot)
-map <leader>ce <Action>(copilot.enableCopilot)
-map <leader>cc <Action>(ActivateGitHubCopilotChatToolWindow)
+""" AI assistant
+map <leader>gi <Action>(ActivateAIAssistantToolWindow)
 
 """ Plugins
 set NERDTree 
