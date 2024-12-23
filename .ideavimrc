@@ -52,8 +52,9 @@ map <leader><Right> <Action>(MoveTabRight)
 """ Mappings - VCS
 map <leader>u <Action>(Vcs.RollbackChangedLines)
 map <leader>gd <Action>(Compare.SameVersion)
-map <leader>gw <Action>(Github.Open.In.Browser)
-map <leader>gy <Action>(GitHub.Copy.Link)
+""" Those have broken after upgrading to IDEA 2024 :(. They work outside ideavim, however.
+""" map <leader>gw <Action>(Github.Open.In.Browser)
+""" map <leader>gy <Action>(GitHub.Copy.Link)
 map <leader>gh <Action>(Vcs.ShowTabbedFileHistory)
 
 """ Mappings - Jump to...
@@ -71,6 +72,7 @@ map <leader>a <Action>(GotoAction)
 map <leader>jt <C-w><C-w><Action>(GotoTest)
 map <leader>jp <Action>(SelectInProjectView)
 map <leader>jd <Action>(ActivateDatabaseToolWindow)
+map <leader>jh <Action>(ShowHoverInfo)
 
 """ Mappings - Elixir
 map <leader>mf <Action>(Tool_External Tools_mix format all)
@@ -82,3 +84,4 @@ map <leader>gi <Action>(ActivateAIAssistantToolWindow)
 """ Plugins
 set NERDTree 
 set highlightedyank
+set matchit
