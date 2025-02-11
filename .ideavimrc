@@ -74,6 +74,9 @@ map <leader>jt <C-w><C-w><Action>(GotoTest)
 map <leader>jp <Action>(SelectInProjectView)
 map <leader>jd <Action>(ActivateDatabaseToolWindow)
 map <leader>jh <Action>(ShowHoverInfo)
+map <leader>ji :edit ~/.ideavimrc<cr>
+
+"map <leader>7 <Action>(ActivateRunToolWindow)<Tab>
 
 """ Mappings - Elixir
 map <leader>mf <Action>(Tool_External Tools_mix format all)
