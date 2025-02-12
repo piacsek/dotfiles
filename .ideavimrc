@@ -4,6 +4,7 @@ let mapleader=" "
 
 """ VIM Mappings
 map Y y$
+map V v$
 
 """ Harpoon
 map <leader>e <Action>(RecentFiles)
@@ -43,7 +44,6 @@ map <leader>N <Action>(NewScratchFile)
 """ Mappings - Window management
 map <leader>` <Action>(NextProjectWindow)
 map <leader><Enter> <Action>(HideAllWindows)
-map <leader><Tab> <Action>(NextSplitter)
 map <Tab> <Action>(NextSplitter)
 map <leader><Up> <Action>(com.mnw.tabmover.actions.MoveTabToNextWindow)
 map <leader><Down> <Action>(com.mnw.tabmover.actions.MoveTabToNextWindow)
@@ -75,8 +75,6 @@ map <leader>jp <Action>(SelectInProjectView)
 map <leader>jd <Action>(ActivateDatabaseToolWindow)
 map <leader>jh <Action>(ShowHoverInfo)
 map <leader>ji :edit ~/.ideavimrc<cr>
-
-"map <leader>7 <Action>(ActivateRunToolWindow)<Tab>
 
 """ Mappings - Elixir
 map <leader>mf <Action>(Tool_External Tools_mix format all)
