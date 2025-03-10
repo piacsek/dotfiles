@@ -39,6 +39,7 @@ map <leader>K <Action>(Stop)
 map <leader>kd <Action>(DatabaseView.DeactivateAction)
 map <leader>n <Action>(NewElement)
 map <leader>y <Action>(EditorCopy)
+map <leader>p <Action>(EditorPaste)
 map <leader>N <Action>(NewScratchFile)
 
 """ Mappings - Window management
