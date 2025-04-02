@@ -36,11 +36,9 @@ map <leader>/ <Action>(CommentByLineComment)
 map <leader>r <Action>(RunClass)
 map <leader><BS> <Action>(Run)
 map <leader>K <Action>(Stop)
-map <leader>kd <Action>(DatabaseView.DeactivateAction)
-map <leader>n <Action>(NewElement)
 map <leader>y <Action>(EditorCopy)
 map <leader>p <Action>(EditorPaste)
-map <leader>N <Action>(NewScratchFile)
+map <leader>h <Action>(QuickJavaDoc)
 
 """ Mappings - Window management
 map <leader>` <Action>(NextProjectWindow)
@@ -54,7 +52,6 @@ map <leader><Right> <Action>(MoveTabRight)
 map <leader>u <Action>(Vcs.RollbackChangedLines)
 map <leader>gd <Action>(Compare.SameVersion)
 map <leader>gg <Action>(ActivateCommitToolWindow)
-""" Those have broken after upgrading to IDEA 2024 :(. They work outside ideavim, however.
 map <leader>gw <Action>(Github.Open.In.Browser)
 map <leader>gy <Action>(GitHub.Copy.Link)
 map <leader>gh <Action>(Vcs.ShowTabbedFileHistory)
@@ -78,11 +75,11 @@ map <leader>jh <Action>(ShowHoverInfo)
 map <leader>ji :edit ~/.ideavimrc<cr>
 
 """ Mappings - Elixir
-map <leader>mf <Action>(Tool_External Tools_mix format all)
 map <C-s> <Action>(Tool_External Tools_mix format current file)
 
 """ AI assistant
 map <leader>gi <Action>(ActivateAIAssistantToolWindow)
+
 
 """ Plugins
 set NERDTree 
