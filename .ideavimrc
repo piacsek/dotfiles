@@ -39,6 +39,7 @@ map <leader>K <Action>(Stop)
 map <leader>y <Action>(EditorCopy)
 map <leader>p <Action>(EditorPaste)
 map <leader>h <Action>(QuickJavaDoc)
+map <leader>n <Action>(NewScratchFile)
 
 """ Mappings - Window management
 map <leader>` <Action>(NextProjectWindow)
@@ -47,8 +48,10 @@ map <Tab> <Action>(NextSplitter)
 map <leader><Up> <Action>(com.mnw.tabmover.actions.MoveTabToNextWindow)
 map <leader><Down> <Action>(com.mnw.tabmover.actions.MoveTabToNextWindow)
 map <leader><Right> <Action>(MoveTabRight)
+map <leader><Del> <Action>(UnsplitAll)
 
 """ Mappings - VCS
+map <leader>l <Action>(TUILauncher.lazygit)
 map <leader>u <Action>(Vcs.RollbackChangedLines)
 map <leader>gd <Action>(Compare.SameVersion)
 map <leader>gg <Action>(ActivateCommitToolWindow)
@@ -82,7 +85,7 @@ map <leader>gi <Action>(ActivateAIAssistantToolWindow)
 
 
 """ Plugins
-set NERDTree 
+set NERDTree
 set highlightedyank
 set matchit
 set sneak
