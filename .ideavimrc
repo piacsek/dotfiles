@@ -74,7 +74,6 @@ map <leader>a <Action>(GotoAction)
 map <leader>jt <C-w><C-w><Action>(GotoTest)
 map <leader>jp <Action>(SelectInProjectView)
 map <leader>jd <Action>(ActivateDatabaseToolWindow)
-map <leader>jh <Action>(ShowHoverInfo)
 map <leader>ji :edit ~/.ideavimrc<cr>
 
 """ Mappings - Elixir
@@ -83,6 +82,9 @@ map <C-s> <Action>(Tool_External Tools_mix format current file)
 """ AI assistant
 map <leader>gi <Action>(ActivateAIAssistantToolWindow)
 
+""" Plugin hacks
+""" OMFG IT WORKS
+map <leader>9 <Action>(com.testoutputselector.FocusTestRunnerAction)
 
 """ Plugins
 set NERDTree
