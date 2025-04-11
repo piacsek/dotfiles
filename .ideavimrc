@@ -84,8 +84,13 @@ map <leader>gi <Action>(ActivateAIAssistantToolWindow)
 """ OMFG IT WORKS
 map <leader>9 <Action>(com.testoutputselector.FocusTestRunnerAction)
 
+""" Omit annoying sounds
+set noerrorbells
+set visualbell
+
 """ Plugins
 set NERDTree
 set highlightedyank
 set matchit
 set sneak
+ 
