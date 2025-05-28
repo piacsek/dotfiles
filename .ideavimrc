@@ -64,8 +64,10 @@ map <leader>o <Action>(GotoFile)
 map <leader>O <Action>(Scratch.ShowFilesPopup)
 map gd <Action>(GotoDeclaration)
 map gr <Action>(ShowUsages)
+map <leader>1 <Action>(ActivateProjectToolWindow)
 map <leader>3 <Action>(ActivateFindToolWindow)
 map <leader>4 <Action>(ActivateRunToolWindow)
+map <leader>7 <Action>(ActivateProblemsViewToolWindow)
 map <leader>js <Action>(ActivateTerminalToolWindow)
 map <leader>a <Action>(GotoAction)
 map <leader>jt <C-w><C-w><Action>(GotoTest)
@@ -78,6 +80,7 @@ map <C-s> <Action>(Tool_External Tools_mix format current file)
 
 """ AI assistant
 map <leader>gi <Action>(ActivateAIAssistantToolWindow)
+map <leader>ic <Action>(action.AIAssistant.ToolWindow.Chat.Message.AddContext)
 
 """ Plugin hacks
 """ OMFG IT WORKS
@@ -92,4 +95,5 @@ set NERDTree
 set highlightedyank
 set matchit
 set sneak
+set mini-ai
  
