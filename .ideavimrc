@@ -2,7 +2,7 @@
 let mapleader=" "
 
 
-""" VIM Mappings
+"" VIM Mappings
 map Y y$
 map V v$
 
@@ -26,7 +26,6 @@ map <leader><C-h> <Action>(SetHarpoon4)
 map <C-h> <Action>(GotoHarpoon4)
 map <C-S-h> <C-w><C-w><Action>(GotoHarpoon4)
 
-
 map <leader>s <Action>(FileStructurePopup)
 map <leader>S <Action>(ActivateStructureToolWindow)
 map <leader>f <Action>(FindInPath)
@@ -35,7 +34,8 @@ map <leader>/ <Action>(CommentByLineComment)
 map <leader>t <Action>(RunClass)
 map <leader><BS> <Action>(Run)
 map <leader>K <Action>(Stop)
-map <leader>y <Action>(EditorCopy)
+map <leader>Y <Action>(EditorCopy)
+map <leader>y <Action>(CopyAsPlainText)
 map <leader>p <Action>(EditorPaste)
 map <leader>h <Action>(QuickJavaDoc)
 map <leader>n <Action>(NewScratchFile)
@@ -48,6 +48,7 @@ map <leader><Esc> <Action>(CloseContent)
 map <leader><Del> <Action>(UnsplitAll)
 
 """ Mappings - VCS
+""" map <leader>l <Action>(TUILauncher.lazygitlego)
 map <leader>l <Action>(TUILauncher.lazygit)
 map <leader>u <Action>(Vcs.RollbackChangedLines)
 map <leader>gd <Action>(Compare.SameVersion)
