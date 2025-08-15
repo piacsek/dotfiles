@@ -27,13 +27,12 @@ generate_commit_message() {
     fi
     
     # Use Claude to analyze the diff and generate a commit message
-    local claude_prompt="Analyze this git diff and generate a concise, descriptive commit message (max 72 chars) that explains what changed in the config file. Focus on the actual changes made, not just 'sync dotfiles'. Use conventional commit format if appropriate (feat:, fix:, config:, etc.).
+    local claude_prompt="Generate ONLY a git commit message (max 50 chars) for this diff. No explanation, no analysis, just the commit message. Use format like 'config: brief description of change':
 
-Here's the diff:
 $diff_output"
     
     local commit_msg
-    commit_msg=$(echo "$claude_prompt" | claude 2>/dev/null | head -1 | tr -d '\n\r' | sed 's/[[:space:]]\+/ /g' | xargs)
+    commit_msg=$(echo "$claude_prompt" | claude 2>/dev/null | tr -d '\n\r' | sed 's/[[:space:]]\+/ /g' | xargs)
     
     # Fallback if Claude fails or returns empty
     if [[ -z "$commit_msg" || "$commit_msg" == *"error"* ]]; then
