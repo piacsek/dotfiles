@@ -15,6 +15,35 @@ log_message() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a "$LOG_FILE"
 }
 
+# Function to generate contextual commit message using Claude
+generate_commit_message() {
+    local diff_output="$1"
+    
+    # Check if claude command is available
+    if ! command -v claude &> /dev/null; then
+        log_message "Claude CLI not available, using default commit message"
+        echo "Auto-sync dotfiles - $(date '+%Y-%m-%d %H:%M:%S')"
+        return
+    fi
+    
+    # Use Claude to analyze the diff and generate a commit message
+    local claude_prompt="Analyze this git diff and generate a concise, descriptive commit message (max 72 chars) that explains what changed in the config file. Focus on the actual changes made, not just 'sync dotfiles'. Use conventional commit format if appropriate (feat:, fix:, config:, etc.).
+
+Here's the diff:
+$diff_output"
+    
+    local commit_msg
+    commit_msg=$(echo "$claude_prompt" | claude 2>/dev/null | head -1 | tr -d '\n\r')
+    
+    # Fallback if Claude fails or returns empty
+    if [[ -z "$commit_msg" || "$commit_msg" == *"error"* ]]; then
+        log_message "Claude failed to generate commit message, using fallback"
+        echo "Auto-sync dotfiles - $(date '+%Y-%m-%d %H:%M:%S')"
+    else
+        echo "$commit_msg"
+    fi
+}
+
 # Function to sync config files to dotfiles repo
 sync_config_files() {
     if [[ -d "$CONFIG_SOURCE" ]]; then
@@ -49,9 +78,11 @@ sync_changes() {
         # Add all changes
         git add .
         
-        # Create commit message with timestamp and changed files
-        CHANGED_FILES=$(git diff --cached --name-only | tr '\n' ' ')
-        COMMIT_MSG="Auto-sync dotfiles: $CHANGED_FILES - $(date '+%Y-%m-%d %H:%M:%S')"
+        # Get the diff for commit message generation
+        DIFF_OUTPUT=$(git diff --cached)
+        
+        # Generate commit message using Claude
+        COMMIT_MSG=$(generate_commit_message "$DIFF_OUTPUT")
         
         # Commit changes
         if git commit -m "$COMMIT_MSG"; then
