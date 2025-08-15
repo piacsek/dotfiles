@@ -10,7 +10,9 @@ return {
 	config = function()
 		require("neotest").setup({
 			adapters = {
-				require("neotest-elixir")({}),
+				require("neotest-elixir")({
+					mix_task = "test",
+				}),
 			},
 		})
 	end,
