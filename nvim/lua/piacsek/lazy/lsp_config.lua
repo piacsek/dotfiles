@@ -64,8 +64,8 @@ return {
 		capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
 		local servers = {
-			nextls = { enable = true, autostart = true },
-			elixirls = { enable = false, autostart = false },
+			nextls = {},
+			elixirls = {},
 			lua_ls = {
 				settings = {
 					Lua = {
