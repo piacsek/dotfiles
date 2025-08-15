@@ -64,8 +64,18 @@ return {
 		capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
 		local servers = {
-			nextls = {},
-			elixirls = {},
+			elixirls = {
+				root_dir = require("lspconfig.util").root_pattern("mix.exs"),
+				settings = {
+					elixirLS = {
+						dialyzerEnabled = false,
+						fetchDeps = false,
+						enableTestLenses = false,
+						suggestSpecs = true,
+						mixEnv = "dev",
+					},
+				},
+			},
 			lua_ls = {
 				settings = {
 					Lua = {
@@ -79,7 +89,7 @@ return {
 
 		require("mason").setup()
 
-		local ensure_installed = vim.tbl_keys(servers or {})
+		local ensure_installed = { "elixir-ls", "lua_ls" }
 		vim.list_extend(ensure_installed, {
 			"stylua", -- Used to format Lua code
 		})
