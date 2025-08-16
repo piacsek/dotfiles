@@ -193,27 +193,6 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move currently selection 
 vim.keymap.set("t", "<C-Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 -- </Terminal mode remaps>
 
--- <Neotest remaps>
-vim.keymap.set("n", "<leader>tt", function()
-	require("neotest").run.run()
-end, { desc = "[T]est neares[T]" })
-
-vim.keymap.set("n", "<leader>to", function()
-	require("neotest").output_panel.open()
-end, { desc = "[T]est [O]utput" })
-
-vim.keymap.set("n", "<leader>tf", function()
-	require("neotest").run.run(vim.fn.expand("%"))
-end, { desc = "[T]est [F]ile" })
-
-vim.keymap.set("n", "<leader>ts", function()
-	require("neotest").summary.toggle()
-end, { desc = "[T]est [S]ummary" })
-
-vim.keymap.set("n", "<leader>to", function()
-	require("neotest").output.open({ enter = true })
-end, { desc = "[T]est [O]utput" })
--- </Neotest remaps>
 
 ----------------------
 --    </remaps>     --
