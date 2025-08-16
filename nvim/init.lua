@@ -47,6 +47,10 @@ require("lazy").setup({
     },
     lazy = false,
     config = function()
+      local data = vim.fn.stdpath("data")
+      vim.opt.rtp:append(data .. "/lazy/neotest-elixir")
+
+
       require("neotest").setup({
         log_level = vim.log.levels.DEBUG,
         adapters = {
