@@ -60,6 +60,7 @@ require("lazy").setup({
 
 
 vim.keymap.set("n", "<leader><BS>", ":w<CR>", { desc = "Save file" })
+
 vim.keymap.set("n", "<leader>tt", function()
   require("neotest").run.run()
 end, { desc = "[T]est neares[T]" })
