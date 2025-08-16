@@ -103,6 +103,10 @@ require("lazy").setup({
     end,
   },
   {
+    "jfpedroza/neotest-elixir",
+    lazy = false,
+  },
+  {
     "nvim-neotest/neotest",
     dependencies = {
       "nvim-neotest/nvim-nio",
