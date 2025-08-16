@@ -75,10 +75,4 @@ end, { desc = "[T]est [S]ummary" })
 vim.keymap.set("n", "<leader>to", function()
   require("neotest").output.open({ enter = true })
 end, { desc = "[T]est [O]utput" })
--- </Neotest remaps>
-
-----------------------
---    </remaps>     --
-----------------------
-
 
