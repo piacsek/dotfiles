@@ -111,7 +111,6 @@ require("lazy").setup({
       "nvim-treesitter/nvim-treesitter",
       "jfpedroza/neotest-elixir",
     },
-    lazy = true,
     keys = {
       { "<leader>tt", function() require("neotest").run.run() end, desc = "[T]est neares[T]" },
       { "<leader>tf", function() require("neotest").run.run(vim.fn.expand("%")) end, desc = "[T]est [F]ile" },
