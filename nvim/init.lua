@@ -50,8 +50,8 @@ require("lazy").setup({
     local adapter_dir = vim.fn.stdpath("data") .. "/lazy/neotest-elixir"
 
     local lua_paths = table.concat({
-      -- adapter_dir .. "/lua/?.lua",
-      adapter_dir .. "/lua/?/init.lua",
+      adapter_dir .. "/lua/?.lua",
+      -- adapter_dir .. "/lua/?/init.lua",
     }, ";")
 
     if not vim.env.LUA_PATH or #vim.env.LUA_PATH <= 0 then
