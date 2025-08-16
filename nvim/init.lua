@@ -51,7 +51,6 @@ require("lazy").setup({
     config = function()
       local data = vim.fn.stdpath("data")
       vim.opt.rtp:append(data .. "/lazy/neotest-elixir")
-      vim._update_package_paths()
 
 
       require("neotest").setup({
