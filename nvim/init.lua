@@ -56,7 +56,7 @@ require("lazy").setup({
       adapter_dir .. "/lua/?/init.lua",
     }, ";")
 
-    if !vim.env.LUA_PATH or #vim.env.LUA_PATH <= 0 then
+    if not vim.env.LUA_PATH or #vim.env.LUA_PATH <= 0 then
       vim.env.LUA_PATH = lua_paths
     end
 
