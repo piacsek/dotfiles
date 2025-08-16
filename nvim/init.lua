@@ -46,7 +46,6 @@ require("lazy").setup({
     "nvim-treesitter/nvim-treesitter",
     { "jfpedroza/neotest-elixir", lazy = false }, -- make sure it's installed & on rtp
   },
-  lazy = false,
   config = function()
     -- Put the adapter path on both runtimepath *and* LUA_PATH so the CHILD can require it.
     local adapter_dir = vim.fn.stdpath("data") .. "/lazy/neotest-elixir"
