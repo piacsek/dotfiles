@@ -38,27 +38,27 @@ require("lazy").setup({
       require('nvim-treesitter.configs').setup(opts)
     end,
   },
-  {
+  
+{
   "nvim-neotest/neotest",
   dependencies = {
     "nvim-neotest/nvim-nio",
     "nvim-lua/plenary.nvim",
     "antoinemadec/FixCursorHold.nvim",
     "nvim-treesitter/nvim-treesitter",
-    { "jfpedroza/neotest-elixir", lazy = false }, -- keep it eager
+    { "jfpedroza/neotest-elixir", lazy = false }, -- make sure it's installed & on rtp
   },
   lazy = false,
   config = function()
-    -- 0) (Optional but good) enable the modern loader very early in your init.lua:
-    --    if vim.loader then vim.loader.enable() end
-
-    -- 1) Put the adapter dir on runtimepath (parent → mirrored to child)
-    local data = vim.fn.stdpath("data")
-    local adapter_dir = data .. "/lazy/neotest-elixir"
+    -- Put the adapter path on both runtimepath *and* LUA_PATH so the CHILD can require it.
+    local adapter_dir = vim.fn.stdpath("data") .. "/lazy/neotest-elixir"
     vim.opt.rtp:append(adapter_dir)
 
-    -- 2) Put the adapter on LUA_PATH (env → inherited by child)
-    local lua_paths = adapter_dir .. "/lua/?.lua;" .. adapter_dir .. "/lua/?/init.lua"
+    local lua_paths = table.concat({
+      adapter_dir .. "/lua/?.lua",
+      adapter_dir .. "/lua/?/init.lua",
+    }, ";")
+
     if vim.env.LUA_PATH and #vim.env.LUA_PATH > 0 then
       if not string.find(vim.env.LUA_PATH, adapter_dir, 1, true) then
         vim.env.LUA_PATH = vim.env.LUA_PATH .. ";" .. lua_paths
@@ -69,25 +69,15 @@ require("lazy").setup({
 
     require("neotest").setup({
       log_level = vim.log.levels.DEBUG,
-
-      -- Tiny consumer: in the CHILD, make sure loader is on and warm up the module
-      consumers = {
-        elixir_child_boot = function(client)
-          client.listeners.starting.elixir_child_boot = function()
-            if vim.loader then vim.loader.enable() end
-            -- attempt to load once so subsequent remote calls succeed
-            pcall(require, "neotest-elixir")
-          end
-        end,
-      },
-
       adapters = {
-        -- instantiate explicitly so the parent registers it
+        -- Instantiate the adapter explicitly
         require("neotest-elixir")({}),
       },
     })
   end,
-} ,
+},
+ 
+
 })
 
 
