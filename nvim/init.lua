@@ -156,18 +156,6 @@ vim.keymap.set("n", "<leader>kt", function()
 	end
 end, { desc = "[K]ill all [T]erminal buffers" })
 
-local function open_terminal()
-	vim.cmd("split | terminal")
-	vim.cmd("resize 20")
-end
-
-local function cd_to_app_dir_in_umbrella(current_file)
-	local current_umbrella_app = current_file:match("apps/([^/]+)")
-	local cd_command = "cd apps/" .. current_umbrella_app
-
-	vim.fn.chansend(vim.b.terminal_job_id, cd_command .. "\n")
-end
-
 -- </Normal mode remaps>
 
 -- <Visual mode remaps>
