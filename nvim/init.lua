@@ -1,7 +1,7 @@
 -- require("piacsek")
 
 -----------------
--- set configs --
+-- vim configs --
 -----------------
 
 -- vim.g configs
