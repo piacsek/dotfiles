@@ -103,10 +103,6 @@ require("lazy").setup({
     end,
   },
   {
-    "jfpedroza/neotest-elixir",
-    lazy = false,
-  },
-  {
     "nvim-neotest/neotest",
     dependencies = {
       "nvim-neotest/nvim-nio",
@@ -115,12 +111,7 @@ require("lazy").setup({
       "nvim-treesitter/nvim-treesitter",
       "jfpedroza/neotest-elixir",
     },
-    keys = {
-      { "<leader>tt", function() require("neotest").run.run() end, desc = "[T]est neares[T]" },
-      { "<leader>tf", function() require("neotest").run.run(vim.fn.expand("%")) end, desc = "[T]est [F]ile" },
-      { "<leader>ts", function() require("neotest").summary.toggle() end, desc = "[T]est [S]ummary" },
-      { "<leader>to", function() require("neotest").output.open({ enter = true }) end, desc = "[T]est [O]utput" },
-    },
+    lazy = false,
     config = function()
       require("neotest").setup({
         log_level = vim.log.levels.DEBUG,
