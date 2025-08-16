@@ -44,7 +44,7 @@ require("lazy").setup({
     "nvim-lua/plenary.nvim",
     "antoinemadec/FixCursorHold.nvim",
     "nvim-treesitter/nvim-treesitter",
-    { "jfpedroza/neotest-elixir", lazy = false }, -- make sure it's installed & on rtp
+    "jfpedroza/neotest-elixir",
   },
   config = function()
     -- Put the adapter path on both runtimepath *and* LUA_PATH so the CHILD can require it.
