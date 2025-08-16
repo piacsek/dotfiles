@@ -168,25 +168,6 @@ local function cd_to_app_dir_in_umbrella(current_file)
 	vim.fn.chansend(vim.b.terminal_job_id, cd_command .. "\n")
 end
 
--- Move this to a lego-specific config
-
-vim.keymap.set("n", "<leader>tw", function()
-	local current_file = vim.fn.expand("%:p")
-	local current_line = vim.fn.line(".")
-	local fscommand = "fswatch lib test"
-
-	local mix_test_command = "mix test " .. current_file
-	if current_line ~= 1 then
-		mix_test_command = mix_test_command .. ":" .. current_line
-	end
-	local test_run_loop = "while read; do clear; echo '" .. mix_test_command .. "';" .. mix_test_command .. "; done"
-	local command = mix_test_command .. " && " .. fscommand .. " | " .. test_run_loop
-
-	open_terminal()
-	cd_to_app_dir_in_umbrella(current_file)
-	vim.fn.chansend(vim.b.terminal_job_id, command .. "\n")
-end)
-
 -- </Normal mode remaps>
 
 -- <Visual mode remaps>
