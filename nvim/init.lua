@@ -48,7 +48,6 @@ require("lazy").setup({
   },
   config = function()
     local adapter_dir = vim.fn.stdpath("data") .. "/lazy/neotest-elixir"
-    -- vim.opt.rtp:append(adapter_dir)
 
     local lua_paths = table.concat({
       adapter_dir .. "/lua/?.lua",
