@@ -101,9 +101,8 @@ require("lazy").setup({
       ---@diagnostic disable-next-line: missing-fields
       require('nvim-treesitter.configs').setup(opts)
     end,
-    },
-  },
-	{
+ },
+ {
 	"nvim-neotest/neotest",
 	dependencies = {
 		"nvim-neotest/nvim-nio",
@@ -120,6 +119,7 @@ require("lazy").setup({
 			},
 		})
 	end,
+ },
 })
 
 ---------------------
