@@ -57,9 +57,11 @@ require("lazy").setup({
     }, ";")
 
     if vim.env.LUA_PATH and #vim.env.LUA_PATH > 0 then
-      if not string.find(vim.env.LUA_PATH, adapter_dir, 1, true) then
-        vim.env.LUA_PATH = vim.env.LUA_PATH .. ";" .. lua_paths
-      end
+--      if not string.find(vim.env.LUA_PATH, adapter_dir, 1, true) then
+ --       vim.env.LUA_PATH = vim.env.LUA_PATH .. ";" .. lua_paths
+  --    end
+    else
+      vim.env.LUA_PATH = lua_paths
     end
 
     require("neotest").setup({
