@@ -85,7 +85,6 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Setup lazy.nvim
 require("lazy").setup({
-  spec = {
  {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
@@ -121,9 +120,6 @@ require("lazy").setup({
 			},
 		})
 	end,
-},
-  -- automatically check for plugin updates
-  checker = { enabled = true },
 })
 
 ---------------------
