@@ -47,9 +47,8 @@ require("lazy").setup({
     "jfpedroza/neotest-elixir",
   },
   config = function()
-    -- Put the adapter path on both runtimepath *and* LUA_PATH so the CHILD can require it.
     local adapter_dir = vim.fn.stdpath("data") .. "/lazy/neotest-elixir"
-    vim.opt.rtp:append(adapter_dir)
+    -- vim.opt.rtp:append(adapter_dir)
 
     local lua_paths = table.concat({
       adapter_dir .. "/lua/?.lua",
