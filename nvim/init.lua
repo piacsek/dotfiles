@@ -47,7 +47,8 @@ require("lazy").setup({
     "jfpedroza/neotest-elixir",
   },
   config = function()
-    
+    -- Hack: neotest spawns a headless nvim which doesn't have everything loaded up like the regular instance
+    -- And neotest elixir requires some stuff to be loaded in order to run return "require("neotest-elixir")._build_position"
     if not vim.env.LUA_PATH or #vim.env.LUA_PATH <= 0 then
       local adapter_dir = vim.fn.stdpath("data") .. "/lazy/neotest-elixir"
 
