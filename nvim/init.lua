@@ -85,7 +85,7 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Setup lazy.nvim
 require("lazy").setup({
- {
+  {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     opts = {
@@ -101,25 +101,25 @@ require("lazy").setup({
       ---@diagnostic disable-next-line: missing-fields
       require('nvim-treesitter.configs').setup(opts)
     end,
- },
- {
-	"nvim-neotest/neotest",
-	dependencies = {
-		"nvim-neotest/nvim-nio",
-		"nvim-lua/plenary.nvim",
-		"antoinemadec/FixCursorHold.nvim",
-		"nvim-treesitter/nvim-treesitter",
-		"jfpedroza/neotest-elixir",
-	},
-	config = function()
-		require("neotest").setup({
-			log_level = vim.log.levels.DEBUG,
-			adapters = {
-				require("neotest-elixir"),
-			},
-		})
-	end,
- },
+  },
+  {
+    "nvim-neotest/neotest",
+    dependencies = {
+      "nvim-neotest/nvim-nio",
+      "nvim-lua/plenary.nvim",
+      "antoinemadec/FixCursorHold.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "jfpedroza/neotest-elixir",
+    },
+    config = function()
+      require("neotest").setup({
+        log_level = vim.log.levels.DEBUG,
+        adapters = {
+          require("neotest-elixir"),
+        },
+      })
+    end,
+  },
 })
 
 ---------------------
