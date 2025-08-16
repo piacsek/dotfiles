@@ -59,7 +59,6 @@ require("lazy").setup({
     end
 
     require("neotest").setup({
-      log_level = vim.log.levels.DEBUG,
       adapters = {
         require("neotest-elixir"),
       },
