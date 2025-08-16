@@ -43,7 +43,7 @@ require("lazy").setup({
       "nvim-lua/plenary.nvim",
       "antoinemadec/FixCursorHold.nvim",
       "nvim-treesitter/nvim-treesitter",
-      "jfpedroza/neotest-elixir",
+      {"jfpedroza/neotest-elixir", lazy = false},
     },
     lazy = false,
     config = function()
