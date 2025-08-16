@@ -109,17 +109,8 @@ require("lazy").setup({
       "nvim-lua/plenary.nvim",
       "antoinemadec/FixCursorHold.nvim",
       "nvim-treesitter/nvim-treesitter",
-      "jfpedroza/neotest-elixir",
     },
     lazy = false,
-    config = function()
-      require("neotest").setup({
-        log_level = vim.log.levels.DEBUG,
-        adapters = {
-          require("neotest-elixir"),
-        },
-      })
-    end,
   },
 })
 
