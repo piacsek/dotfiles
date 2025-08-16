@@ -147,15 +147,6 @@ vim.keymap.set("n", "<C-,>", ":horizontal resize -5<CR>", { desc = "Decrease win
 vim.keymap.set("n", ">", ":vertical resize +5<CR>", { desc = "Increase window vertical size" })
 vim.keymap.set("n", "<", ":vertical resize -5<CR>", { desc = "Decrease window vertical size" })
 
-vim.keymap.set("n", "<leader>kt", function()
-	local buffers = vim.api.nvim_list_bufs()
-	for _, buffer in ipairs(buffers) do
-		if vim.api.nvim_buf_get_option(buffer, "buftype") == "terminal" then
-			vim.api.nvim_buf_delete(buffer, { force = true })
-		end
-	end
-end, { desc = "[K]ill all [T]erminal buffers" })
-
 -- </Normal mode remaps>
 
 -- <Visual mode remaps>
