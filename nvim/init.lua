@@ -558,6 +558,7 @@ end
 -- </LSP remaps>
 
 -- <Comment remaps>
+
 vim.keymap.set("n", "<leader>/", function()
 	return require("Comment.api").toggle.linewise.current()
 end, { expr = true, desc = "Toggle comment (line)" })
