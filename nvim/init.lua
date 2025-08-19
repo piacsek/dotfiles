@@ -372,7 +372,7 @@ require("lazy").setup({
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
-			vim.g.gitblame_display_virtual_text = 0 -- Disable virtual text
+			vim.g.gitblame_display_virtual_text = 0 -- Disable virtual text on the buffer, git blame will now appear on the status line
 			local git_blame = require("gitblame")
 
 			require("lualine").setup({
