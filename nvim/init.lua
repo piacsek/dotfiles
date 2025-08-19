@@ -94,7 +94,7 @@ require("lazy").setup({
       highlight = {
         enable = true,
       },
-      indent = { enable = true, disable = { 'ruby' } },
+      indent = { enable = true },
     },
     config = function(_, opts)
       require('nvim-treesitter.install').prefer_git = true
