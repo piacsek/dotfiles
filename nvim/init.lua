@@ -55,7 +55,6 @@ vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
 	command = "checktime",
 })
 
-
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
 	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
@@ -64,12 +63,9 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
-
 ----------------------------
 --  <basic vim configs/>  --
 ----------------------------
-
-
 
 --------------------
 --  <lazy setup>  --
@@ -84,7 +80,9 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
 	if vim.v.shell_error ~= 0 then
 		vim.api.nvim_echo({
-			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" }, { out, "WarningMsg" }, { "\nPress any key to exit..." },
+			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+			{ out, "WarningMsg" },
+			{ "\nPress any key to exit..." },
 		}, true, {})
 		vim.fn.getchar()
 		os.exit(1)
@@ -95,10 +93,22 @@ vim.opt.rtp:prepend(lazypath)
 -- Setup lazy.nvim
 require("lazy").setup({
 	{
-		'nvim-treesitter/nvim-treesitter',
-		build = ':TSUpdate',
+		"nvim-treesitter/nvim-treesitter",
+		build = ":TSUpdate",
 		opts = {
-			ensure_installed = { 'bash', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc', 'elixir', 'heex', 'eex' },
+			ensure_installed = {
+				"bash",
+				"diff",
+				"html",
+				"lua",
+				"luadoc",
+				"markdown",
+				"vim",
+				"vimdoc",
+				"elixir",
+				"heex",
+				"eex",
+			},
 			auto_install = true,
 			highlight = {
 				enable = true,
@@ -106,9 +116,9 @@ require("lazy").setup({
 			indent = { enable = true },
 		},
 		config = function(_, opts)
-			require('nvim-treesitter.install').prefer_git = true
+			require("nvim-treesitter.install").prefer_git = true
 			---@diagnostic disable-next-line: missing-fields
-			require('nvim-treesitter.configs').setup(opts)
+			require("nvim-treesitter.configs").setup(opts)
 		end,
 	},
 	{
@@ -175,7 +185,7 @@ require("lazy").setup({
 				end,
 			},
 			{ "nvim-telescope/telescope-ui-select.nvim" },
-			{ "nvim-tree/nvim-web-devicons",            enabled = vim.g.have_nerd_font },
+			{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
 		},
 		config = function()
 			require("telescope").setup({
@@ -191,43 +201,43 @@ require("lazy").setup({
 		end,
 	},
 	{
-		'hrsh7th/nvim-cmp',
-		event = 'InsertEnter',
+		"hrsh7th/nvim-cmp",
+		event = "InsertEnter",
 		dependencies = {
 			{
-				'L3MON4D3/LuaSnip',
+				"L3MON4D3/LuaSnip",
 				build = (function()
-					if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
+					if vim.fn.has("win32") == 1 or vim.fn.executable("make") == 0 then
 						return
 					end
-					return 'make install_jsregexp'
+					return "make install_jsregexp"
 				end)(),
 				dependencies = {},
 			},
-			'saadparwaiz1/cmp_luasnip',
+			"saadparwaiz1/cmp_luasnip",
 
-			'hrsh7th/cmp-nvim-lsp',
-			'hrsh7th/cmp-path',
+			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-path",
 		},
 		config = function()
-			local cmp = require 'cmp'
-			local luasnip = require 'luasnip'
-			luasnip.config.setup {}
+			local cmp = require("cmp")
+			local luasnip = require("luasnip")
+			luasnip.config.setup({})
 
-			cmp.setup {
+			cmp.setup({
 				snippet = {
 					expand = function(args)
 						luasnip.lsp_expand(args.body)
 					end,
 				},
-				completion = { completeopt = 'menu,menuone,noinsert' },
+				completion = { completeopt = "menu,menuone,noinsert" },
 				mapping = _G.get_cmp_mappings(cmp, luasnip),
 				sources = {
-					{ name = 'nvim_lsp' },
-					{ name = 'luasnip' },
-					{ name = 'path' },
+					{ name = "nvim_lsp" },
+					{ name = "luasnip" },
+					{ name = "path" },
 				},
-			}
+			})
 		end,
 	},
 	{
@@ -237,9 +247,9 @@ require("lazy").setup({
 			"williamboman/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 
-			{ "j-hui/fidget.nvim",       opts = {} },
+			{ "j-hui/fidget.nvim", opts = {} },
 
-			{ "folke/neodev.nvim",       opts = {} },
+			{ "folke/neodev.nvim", opts = {} },
 		},
 		config = function()
 			vim.api.nvim_create_autocmd("LspAttach", {
@@ -250,7 +260,8 @@ require("lazy").setup({
 
 					local client = vim.lsp.get_client_by_id(event.data.client_id)
 					if client and client.server_capabilities.documentHighlightProvider then
-						local highlight_augroup = vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
+						local highlight_augroup =
+							vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
 						vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 							buffer = event.buf,
 							group = highlight_augroup,
@@ -349,48 +360,45 @@ require("lazy").setup({
 		end,
 	},
 	{
-		"numToStr/Comment.nvim"
+		"numToStr/Comment.nvim",
 	},
 
-
-{ -- Autoformat
-    'stevearc/conform.nvim',
-    lazy = false,
-    keys = {
-      {
-        '<leader>f',
-        function()
-          require('conform').format { async = true, lsp_fallback = true }
-        end,
-        mode = '',
-        desc = '[F]ormat buffer',
-      },
-    },
-    opts = {
-      notify_on_error = false,
-      format_on_save = function(bufnr)
-        -- Disable "format_on_save lsp_fallback" for languages that don't
-        -- have a well standardized coding style. You can add additional
-        -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true }
-        return {
-          timeout_ms = 500,
-          lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
-        }
-      end,
-      formatters_by_ft = {
-        lua = { 'stylua' },
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
-        --
-        -- You can use a sub-list to tell conform to run *until* a formatter
-        -- is found.
-        -- javascript = { { "prettierd", "prettier" } },
-      },
-    },
-  },
-
-
+	{ -- Autoformat
+		"stevearc/conform.nvim",
+		lazy = false,
+		keys = {
+			{
+				"<leader>f",
+				function()
+					require("conform").format({ async = true, lsp_fallback = true })
+				end,
+				mode = "",
+				desc = "[F]ormat buffer",
+			},
+		},
+		opts = {
+			notify_on_error = false,
+			format_on_save = function(bufnr)
+				-- Disable "format_on_save lsp_fallback" for languages that don't
+				-- have a well standardized coding style. You can add additional
+				-- languages here or re-enable it for the disabled ones.
+				local disable_filetypes = { c = true, cpp = true }
+				return {
+					timeout_ms = 500,
+					lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
+				}
+			end,
+			formatters_by_ft = {
+				lua = { "stylua" },
+				-- Conform can also run multiple formatters sequentially
+				-- python = { "isort", "black" },
+				--
+				-- You can use a sub-list to tell conform to run *until* a formatter
+				-- is found.
+				-- javascript = { { "prettierd", "prettier" } },
+			},
+		},
+	},
 })
 
 ---------------------
@@ -400,8 +408,6 @@ require("lazy").setup({
 ---------------------
 --    <remaps>     --
 ---------------------
-
-
 
 -- <Normal mode remaps>
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Remove search results highlights" })
@@ -530,25 +536,25 @@ end, { desc = "[F]find [N]eovim files" })
 
 -- <CMP remaps>
 function _G.get_cmp_mappings(cmp, luasnip)
-	return cmp.mapping.preset.insert {
-		['<C-n>'] = cmp.mapping.select_next_item(),
-		['<C-p>'] = cmp.mapping.select_prev_item(),
-		['<C-b>'] = cmp.mapping.scroll_docs(-4),
-		['<C-f>'] = cmp.mapping.scroll_docs(4),
-		['<C-y>'] = cmp.mapping.confirm { select = true },
-		['<C-Space>'] = cmp.mapping.complete {},
-		['<C-l>'] = cmp.mapping(function()
+	return cmp.mapping.preset.insert({
+		["<C-n>"] = cmp.mapping.select_next_item(),
+		["<C-p>"] = cmp.mapping.select_prev_item(),
+		["<C-b>"] = cmp.mapping.scroll_docs(-4),
+		["<C-f>"] = cmp.mapping.scroll_docs(4),
+		["<C-y>"] = cmp.mapping.confirm({ select = true }),
+		["<C-Space>"] = cmp.mapping.complete({}),
+		["<C-l>"] = cmp.mapping(function()
 			if luasnip.expand_or_locally_jumpable() then
 				luasnip.expand_or_jump()
 			end
-		end, { 'i', 's' }),
+		end, { "i", "s" }),
 
-		['<C-h>'] = cmp.mapping(function()
+		["<C-h>"] = cmp.mapping(function()
 			if luasnip.locally_jumpable(-1) then
 				luasnip.jump(-1)
 			end
-		end, { 'i', 's' }),
-	}
+		end, { "i", "s" }),
+	})
 end
 
 -- </CMP remaps>
