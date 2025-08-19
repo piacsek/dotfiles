@@ -318,7 +318,7 @@ require("lazy").setup({
 		capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
 		local servers = {
-			elixir_ls = {
+			elixirls = {
 				root_dir = require("lspconfig.util").root_pattern("mix.exs"),
 				settings = {
 					elixirLS = {
@@ -343,7 +343,7 @@ require("lazy").setup({
 
 		require("mason").setup()
 
-		local ensure_installed = { "elixir_ls", "lua_ls" }
+		local ensure_installed = { "elixir-ls", "lua_ls" }
 		vim.list_extend(ensure_installed, {
 			"stylua", -- Used to format Lua code
 		})
