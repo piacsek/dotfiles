@@ -343,7 +343,7 @@ require("lazy").setup({
 
 		require("mason").setup()
 
-		local ensure_installed = { "elixir-ls", "lua_ls" }
+		local ensure_installed = { "elixir_ls", "lua_ls" }
 		vim.list_extend(ensure_installed, {
 			"stylua", -- Used to format Lua code
 		})
