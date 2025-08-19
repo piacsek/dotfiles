@@ -361,8 +361,6 @@ require("lazy").setup({
 			require("Comment").setup({
 				mappings = false
 			})
-
-			-- Linewise toggle in NORMAL mode
 		end,
 	}
 
