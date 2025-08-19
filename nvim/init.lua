@@ -56,6 +56,15 @@ vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
 })
 
 
+vim.api.nvim_create_autocmd("TextYankPost", {
+	desc = "Highlight when yanking (copying) text",
+	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+	callback = function()
+		vim.highlight.on_yank()
+	end,
+})
+
+
 ----------------------------
 --  <basic vim configs/>  --
 ----------------------------
@@ -533,6 +542,7 @@ function _G.setup_lsp_keymaps(event)
 		end, "[T]oggle Inlay [H]ints")
 	end
 end
+
 -- </LSP remaps>
 
 ----------------------
