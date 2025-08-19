@@ -362,7 +362,6 @@ require("lazy").setup({
 	{
 		"numToStr/Comment.nvim",
 	},
-
 	{ -- Autoformat
 		"stevearc/conform.nvim",
 		lazy = false,
