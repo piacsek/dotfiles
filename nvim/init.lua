@@ -104,7 +104,6 @@ require("lazy").setup({
   },
   {
     "nvim-neotest/neotest",
-		event = "VimEnter",
     dependencies = {
       "nvim-neotest/nvim-nio",
       "nvim-lua/plenary.nvim",
@@ -115,7 +114,12 @@ require("lazy").setup({
     config = function()
       -- Hack: neotest spawns a headless nvim which doesn't have everything loaded up like the regular instance
       -- And neotest elixir requires some stuff to be loaded in order to run return "require("neotest-elixir")._build_position"
-      
+      if not vim.env.LUA_PATH then
+        local adapter_dir = vim.fn.stdpath("data") .. "/lazy/neotest-elixir"
+        local lua_paths = table.concat({ adapter_dir .. "/lua/?.lua", adapter_dir .. "/lua/?/init.lua" }, ";")
+
+        vim.env.LUA_PATH = lua_paths
+      end
 
       require("neotest").setup({
         adapters = {
