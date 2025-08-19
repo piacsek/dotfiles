@@ -318,7 +318,7 @@ require("lazy").setup({
 		capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
 		local servers = {
-			elixirls = {
+			elixir_ls = {
 				root_dir = require("lspconfig.util").root_pattern("mix.exs"),
 				settings = {
 					elixirLS = {
