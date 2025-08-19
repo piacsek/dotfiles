@@ -184,7 +184,6 @@ require("lazy").setup({
 			pcall(require("telescope").load_extension, "ui-select")
 		end,
 	},
-
 	{
 		'hrsh7th/nvim-cmp',
 		event = 'InsertEnter',
@@ -245,8 +244,6 @@ require("lazy").setup({
 			}
 		end,
 	},
-
-
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
