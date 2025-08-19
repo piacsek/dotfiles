@@ -183,56 +183,7 @@ require("lazy").setup({
 		pcall(require("telescope").load_extension, "fzf")
 		pcall(require("telescope").load_extension, "ui-select")
 
-		local builtin = require("telescope.builtin")
-		vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "[F]find [H]elp" })
-		vim.keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "[F]find [K]eymaps" })
-		vim.keymap.set("n", "<leader>fs", builtin.builtin, { desc = "[F]find [S]elect Telescope" })
-		vim.keymap.set("n", "<leader>fw", builtin.grep_string, { desc = "[F]find current [W]ord" })
-		vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "[F]find by [G]rep" })
-		vim.keymap.set("n", "<leader>fd", builtin.diagnostics, { desc = "[F]find [D]iagnostics" })
-		vim.keymap.set("n", "<leader>fr", builtin.resume, { desc = "[F]find [R]esume" })
-		vim.keymap.set("n", "<leader>f.", builtin.oldfiles, { desc = '[F]find Recent Files ("." for repeat)' })
-		vim.keymap.set("n", "<leader>o", builtin.find_files, { desc = "[O]pen Files" })
-		vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
-
-		-- Searching selected words in visual mode
-		function vim.getVisualSelection()
-			vim.cmd('noau normal! "vy"')
-			local text = vim.fn.getreg("v")
-			vim.fn.setreg("v", {})
-
-			text = string.gsub(text, "\n", "")
-
-			return #text > 0 and text or ""
-		end
-
-		vim.keymap.set("v", "<leader>fw", function()
-			local text = vim.getVisualSelection()
-			builtin.grep_string({ default_text = text })
-		end, { noremap = true, silent = true, desc = "[F]ind selected [W]ords" })
-
-		vim.keymap.set("n", "<leader>/", function()
-			builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
-				winblend = 10,
-				previewer = false,
-				layout_config = {
-					width = 120,
-					height = 40,
-				},
-			}))
-		end, { desc = "[/] Fuzzily search in current buffer" })
-
-		vim.keymap.set("n", "<leader>f/", function()
-			builtin.live_grep({
-				grep_open_files = true,
-				prompt_title = "Live Grep in Open Files",
-			})
-		end, { desc = "[F]find [/] in Open Files" })
-
-		vim.keymap.set("n", "<leader>fn", function()
-			builtin.find_files({ cwd = vim.fn.stdpath("config") })
-		end, { desc = "[F]find [N]eovim files" })
-	end,
+			end,
 },
 })
 
@@ -317,6 +268,61 @@ vim.keymap.set("n", "<leader>to", function()
   require("neotest").output.open({ enter = true })
 end, { desc = "[T]est [O]utput" })
 -- </Neotest remaps>
+
+-- <Telescope remaps>
+local builtin = require("telescope.builtin")
+		vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "[F]find [H]elp" })
+		vim.keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "[F]find [K]eymaps" })
+		vim.keymap.set("n", "<leader>fs", builtin.builtin, { desc = "[F]find [S]elect Telescope" })
+		vim.keymap.set("n", "<leader>fw", builtin.grep_string, { desc = "[F]find current [W]ord" })
+		vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "[F]find by [G]rep" })
+		vim.keymap.set("n", "<leader>fd", builtin.diagnostics, { desc = "[F]find [D]iagnostics" })
+		vim.keymap.set("n", "<leader>fr", builtin.resume, { desc = "[F]find [R]esume" })
+		vim.keymap.set("n", "<leader>f.", builtin.oldfiles, { desc = '[F]find Recent Files ("." for repeat)' })
+		vim.keymap.set("n", "<leader>o", builtin.find_files, { desc = "[O]pen Files" })
+		vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
+
+		-- Searching selected words in visual mode
+		function vim.getVisualSelection()
+			vim.cmd('noau normal! "vy"')
+			local text = vim.fn.getreg("v")
+			vim.fn.setreg("v", {})
+
+			text = string.gsub(text, "\n", "")
+
+			return #text > 0 and text or ""
+		end
+
+		vim.keymap.set("v", "<leader>fw", function()
+			local text = vim.getVisualSelection()
+			builtin.grep_string({ default_text = text })
+		end, { noremap = true, silent = true, desc = "[F]ind selected [W]ords" })
+
+		vim.keymap.set("n", "<leader>/", function()
+			builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
+				winblend = 10,
+				previewer = false,
+				layout_config = {
+					width = 120,
+					height = 40,
+				},
+			}))
+		end, { desc = "[/] Fuzzily search in current buffer" })
+
+		vim.keymap.set("n", "<leader>f/", function()
+			builtin.live_grep({
+				grep_open_files = true,
+				prompt_title = "Live Grep in Open Files",
+			})
+		end, { desc = "[F]find [/] in Open Files" })
+
+		vim.keymap.set("n", "<leader>fn", function()
+			builtin.find_files({ cwd = vim.fn.stdpath("config") })
+		end, { desc = "[F]find [N]eovim files" })
+
+-- </Telescope remaps>
+
+
 
 ----------------------
 --    </remaps>     --
