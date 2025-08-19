@@ -354,6 +354,24 @@ require("lazy").setup({
 				},
 			})
 		end,
+	},
+	{
+		"numToStr/Comment.nvim",
+		config = function()
+			require("Comment").setup({
+				mappings = false, -- 🔴 disable default `gcc`, `gbc`, etc.
+			})
+
+			-- Linewise toggle in NORMAL mode
+			vim.keymap.set("n", "<leader>/", function()
+				return require("Comment.api").toggle.linewise.current()
+			end, { expr = true, desc = "Toggle comment (line)" })
+
+			-- Linewise toggle in VISUAL mode
+			vim.keymap.set("v", "<leader>/", function()
+				return require("Comment.api").toggle.linewise(vim.fn.visualmode())
+			end, { expr = true, desc = "Toggle comment (visual)" })
+		end,
 	}
 
 
@@ -517,6 +535,7 @@ function _G.get_cmp_mappings(cmp, luasnip)
 		end, { 'i', 's' }),
 	}
 end
+
 -- </CMP remaps>
 
 -- <LSP remaps>
