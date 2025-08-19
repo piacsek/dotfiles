@@ -4,8 +4,6 @@
 --  <basic vim configs>  --
 ---------------------------
 
-
-
 -- vim.g configs
 
 vim.g.have_nerd_font = true
