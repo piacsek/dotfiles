@@ -357,7 +357,7 @@ require("lazy").setup({
 	},
 	{
 		"numToStr/Comment.nvim"
-	}
+	},
 
 
 
