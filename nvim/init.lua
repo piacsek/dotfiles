@@ -274,13 +274,6 @@ require("lazy").setup({
 				end,
 			})
 
-			-- LSP autoformat on save
-			vim.api.nvim_create_autocmd("BufWritePre", {
-				callback = function()
-					vim.lsp.buf.format({ async = false })
-				end,
-			})
-
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
