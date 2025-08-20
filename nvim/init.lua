@@ -459,7 +459,16 @@ vim.keymap.set("n", "<S-Tab>", "<C-w>p", { desc = "Go to previous window" })
 vim.keymap.set("n", "<leader><Esc>", ":hide<CR>", { desc = "Hide window" })
 vim.keymap.set("n", "<leader>vp", vim.cmd.Ex, { desc = "Hide window" })
 
-vim.keymap.set("n", "<leader><BS>", ":w<CR>", { desc = "Save file" })
+vim.keymap.set("n", "<leader><BS>", function()
+	-- save file
+	vim.cmd("w")
+
+	-- if neotest is available, rerun last test
+	local ok, neotest = pcall(require, "neotest")
+	if ok then
+		neotest.run.run_last()
+	end
+end, { desc = "Save file and re-run last test (if any)" })
 
 vim.keymap.set("n", "Q", "<nop>", { desc = "Avoiding Q" })
 
