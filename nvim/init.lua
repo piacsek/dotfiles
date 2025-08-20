@@ -527,9 +527,24 @@ vim.keymap.set("n", "<leader>to", function()
 end, { desc = "[T]est [O]utput" })
 
 vim.keymap.set("n", "<leader>ta", function()
+	local neotest = require("neotest")
 	local file_path = vim.fn.expand("%:p")
-	require("neotest").summary.target(file_path)
-end, { desc = "[T]est target [A]dd current file to summary" })
+	
+	-- Open summary if not already open
+	if not neotest.summary.is_open() then
+		neotest.summary.open()
+	end
+	
+	-- Get the adapter ID and position ID for current file
+	vim.defer_fn(function()
+		local tree = neotest.state.positions(file_path)
+		if tree then
+			local data = tree:data()
+			local adapter_id = data.adapter_id or next(neotest.state.adapter_ids())
+			neotest.summary.target(adapter_id, data.id)
+		end
+	end, 100)
+end, { desc = "[T]est [A]dd current file to summary target" })
 -- </Neotest remaps>
 
 -- <Telescope remaps>
