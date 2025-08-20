@@ -2,7 +2,7 @@ nvim roadmap:
 
 - disable arrow keys;
 - refactor config back to file-based organization;
-- improve font & looking:
+- improve font & general look-n-feel:
 	- bolder font;
 	- better contrast with highlighting;
 	- more vivid colors(like intellij);
