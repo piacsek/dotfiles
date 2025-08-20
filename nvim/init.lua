@@ -552,7 +552,7 @@ vim.keymap.set("v", "<leader>fw", function()
 	builtin.grep_string({ default_text = text })
 end, { noremap = true, silent = true, desc = "[F]ind selected [W]ords" })
 
-vim.keymap.set("n", "<leader>/", function()
+vim.keymap.set("n", "<leader>f/", function()
 	builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
 		winblend = 10,
 		previewer = false,
