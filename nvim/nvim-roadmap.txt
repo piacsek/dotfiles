@@ -7,6 +7,9 @@ nvim roadmap:
 	- better contrast with highlighting;
 	- more vivid colors(like intellij);
 - replace <leader>o w/ <leader>ff;
+- enable `q` as quote & `b` as bracket(lookup in intellij for a clue);
+- map <leader>y to "copy to clipboard":
+	- unlink y from system clipboard;
 - map <leader>u to "undo git changes";
 - map <leader>gy to "copy github url";
 - map <leader>go to "open github url";
