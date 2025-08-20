@@ -519,7 +519,7 @@ vim.keymap.set("n", "<leader>tf", function()
 end, { desc = "[T]est [F]ile" })
 
 vim.keymap.set("n", "<leader>ts", function()
-	require("neotest").output_panel.toggle()
+	require("neotest").summary.toggle()
 end, { desc = "[T]est [S]ummary" })
 
 vim.keymap.set("n", "<leader>to", function()
