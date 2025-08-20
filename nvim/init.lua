@@ -525,6 +525,11 @@ end, { desc = "[T]est [S]ummary" })
 vim.keymap.set("n", "<leader>to", function()
 	require("neotest").output.open({ enter = true })
 end, { desc = "[T]est [O]utput" })
+
+vim.keymap.set("n", "<leader>ta", function()
+	local file_path = vim.fn.expand("%:p")
+	require("neotest").summary.target(file_path)
+end, { desc = "[T]est target [A]dd current file to summary" })
 -- </Neotest remaps>
 
 -- <Telescope remaps>
