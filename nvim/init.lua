@@ -527,16 +527,9 @@ vim.keymap.set("n", "<leader>to", function()
 end, { desc = "[T]est [O]utput" })
 
 vim.keymap.set("n", "<leader>ta", function()
-	local neotest = require("neotest")
-	local file_path = vim.fn.expand("%:p")
-	
-	-- Open summary if not already open
-	if not neotest.summary.is_open() then
-		neotest.summary.open()
-	end
-	
-	-- Get the adapter ID and position ID for current file
 	vim.defer_fn(function()
+		local neotest = require("neotest")
+		local file_path = vim.fn.expand("%:p")
 		local tree = neotest.state.positions(file_path)
 		if tree then
 			local data = tree:data()
