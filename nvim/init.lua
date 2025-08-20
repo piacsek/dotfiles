@@ -519,9 +519,7 @@ vim.keymap.set("n", "<leader>tf", function()
 end, { desc = "[T]est [F]ile" })
 
 vim.keymap.set("n", "<leader>ts", function()
-	local file_path = vim.fn.expand("%:p")
 	require("neotest").summary.toggle()
-	require("neotest").summary.target(file_path)
 end, { desc = "[T]est [S]ummary" })
 
 vim.keymap.set("n", "<leader>to", function()
