@@ -291,11 +291,20 @@ require("lazy").setup({
 					root_dir = require("lspconfig.util").root_pattern("mix.exs"),
 					settings = {
 						elixirLS = {
-							dialyzerEnabled = false,
-							fetchDeps = false,
+							dialyzerEnabled = true,
+							fetchDeps = true,
 							enableTestLenses = false,
 							suggestSpecs = true,
 							mixEnv = "dev",
+							dialyzerWarnOpts = {},
+							additionalWatchedExtensions = { ".ex", ".exs", ".eex", ".heex", ".leex" },
+							compileTimeout = 60000,
+						},
+					},
+					init_options = {
+						elixirLS = {
+							dialyzerEnabled = true,
+							fetchDeps = true,
 						},
 					},
 				},
