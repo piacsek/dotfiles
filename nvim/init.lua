@@ -526,20 +526,6 @@ vim.keymap.set("n", "<leader>to", function()
 	require("neotest").output.open({ enter = true })
 end, { desc = "[T]est [O]utput" })
 
-vim.keymap.set("n", "<leader>tc", function()
-	require("neotest").summary.clear_target()
-end, { desc = "Clears the current summary target" })
-
-vim.keymap.set("n", "<leader>ta", function()
-	local neotest = require("neotest")
-	local file_path = vim.fn.expand("%:p")
-	local tree = neotest.state.positions(file_path)
-	if tree then
-		local data = tree:data()
-		local adapter_id = data.adapter_id or next(neotest.state.adapter_ids())
-		neotest.summary.target(adapter_id, data.id)
-	end
-end, { desc = "[T]est [A]dd current file to summary target" })
 -- </Neotest remaps>
 
 -- <Telescope remaps>
