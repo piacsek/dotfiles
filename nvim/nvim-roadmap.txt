@@ -16,7 +16,6 @@ nvim roadmap:
 - map <leader>/ to "gcc";
 - map <leader>h to "display docs";
 - map <leader>ft to "find test file";
-- map <leader><BS> to "save & maybe re-run test";
 - map <leader>l* to lsp actions:
     - <leader>ll shows logs;
     - <leader>li shows info;
