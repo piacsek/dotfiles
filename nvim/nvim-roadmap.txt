@@ -2,6 +2,10 @@ nvim roadmap:
 
 - disable arrow keys;
 - refactor config back to file-based organization;
+- improve font & looking:
+	- bolder font;
+	- better contrast with highlighting;
+	- more vivid colors(like intellij);
 - replace <leader>o w/ <leader>ff;
 - map <leader>u to "undo git changes";
 - map <leader>gy to "copy github url";
