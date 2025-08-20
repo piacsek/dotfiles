@@ -1,6 +1,7 @@
 nvim roadmap:
 
 - disable arrow keys;
+- refactor config back to file-based organization;
 - replace <leader>o w/ <leader>ff;
 - map <leader>u to "undo git changes";
 - map <leader>gy to "copy github url";
