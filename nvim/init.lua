@@ -519,7 +519,15 @@ vim.keymap.set("n", "<leader>tf", function()
 end, { desc = "[T]est [F]ile" })
 
 vim.keymap.set("n", "<leader>ts", function()
-	require("neotest").summary.toggle()
+	local file_path = vim.fn.expand("%:p")
+	if file_path:match("_test%.exs$") then
+		-- Show results for current test file
+		require("neotest").run.run(file_path)
+		require("neotest").output_panel.toggle()
+	else
+		-- Show full summary for non-test files
+		require("neotest").summary.toggle()
+	end
 end, { desc = "[T]est [S]ummary" })
 
 vim.keymap.set("n", "<leader>to", function()
