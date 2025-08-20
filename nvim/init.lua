@@ -526,6 +526,10 @@ vim.keymap.set("n", "<leader>to", function()
 	require("neotest").output.open({ enter = true })
 end, { desc = "[T]est [O]utput" })
 
+vim.keymap.set("n", "<leader>tc", function()
+	require("neotest").summary.clear_target()
+end, { desc = "Clears the current summary target" })
+
 vim.keymap.set("n", "<leader>ta", function()
 	vim.defer_fn(function()
 		local neotest = require("neotest")
