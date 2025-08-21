@@ -469,7 +469,6 @@ require("lazy").setup({
 --    <remaps>     --
 ---------------------
 
--- <Normal mode remaps>
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Remove search results highlights" })
 vim.keymap.set("n", "<Tab>", "<C-w>w", { desc = "Go to next window" })
 vim.keymap.set("n", "<S-Tab>", "<C-w>p", { desc = "Go to previous window" })
@@ -515,19 +514,11 @@ vim.keymap.set("n", "<C-,>", ":horizontal resize -5<CR>", { desc = "Decrease win
 vim.keymap.set("n", ">", ":vertical resize +5<CR>", { desc = "Increase window vertical size" })
 vim.keymap.set("n", "<", ":vertical resize -5<CR>", { desc = "Decrease window vertical size" })
 
--- </Normal mode remaps>
-
--- <Visual mode remaps>
-
 vim.keymap.set("v", "<leader>s", '"sy:%s/<C-r>s/', { desc = "[S]ubstitute selected word" })
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move currently selection one line below" })
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move currently selection one line above" })
 
--- </Visual mode remaps>
-
--- <Terminal mode remaps>
 vim.keymap.set("t", "<C-Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
--- </Terminal mode remaps>
 
 -- <Neotest remaps>
 vim.keymap.set("n", "<leader>tt", function()
