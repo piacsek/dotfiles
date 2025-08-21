@@ -21,6 +21,8 @@ nvim roadmap:
     - make sure you can type to filter without additional keystrokes;
     - nice to have: colorful icons to distinguished between private & public;
 
+- figure out how to have project-specific configs
+
 - add plugin to run custom scripts:
     - make sure alternating between those buffers is smooth 😎;
 
