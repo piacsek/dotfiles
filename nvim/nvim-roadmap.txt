@@ -18,8 +18,6 @@ nvim roadmap:
 - map <leader>l* to lsp actions:
     - <leader>ll shows logs;
     - <leader>li shows info;
-- Y == y$;
-- V == v$;
 
 - have topbar display the complete filepath;
 - add https://github.com/stevearc/stickybuf.nvim plugin;
