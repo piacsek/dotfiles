@@ -534,6 +534,9 @@ end, { desc = "[T]est [O]utput" })
 
 -- </Neotest remaps>
 
+-- <LSP remaps>
+vim.keymap.set("n", "<leader>ll", ":LspLogs<CR>", { desc = "[L]SP [L]ogs" })
+-- </LSP remaps>
 -- <Telescope remaps>
 local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "[F]pen [F]iles" })
