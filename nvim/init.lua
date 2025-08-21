@@ -532,10 +532,6 @@ end, { desc = "[T]est [O]utput" })
 
 -- </Neotest remaps>
 
--- <LSP remaps>
-vim.keymap.set("n", "<leader>ll", ":LspLog<CR>", { desc = "[L]SP [L]ogs" })
-vim.keymap.set("n", "<leader>li", ":LspInfo<CR>", { desc = "[L]SP [I]nfo" })
--- </LSP remaps>
 -- <Telescope remaps>
 local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "[F]pen [F]iles" })
@@ -615,6 +611,10 @@ end
 -- </CMP remaps>
 
 -- <LSP remaps>
+
+vim.keymap.set("n", "<leader>ll", ":LspLog<CR>", { desc = "[L]SP [L]ogs" })
+vim.keymap.set("n", "<leader>li", ":LspInfo<CR>", { desc = "[L]SP [I]nfo" })
+
 function _G.setup_lsp_keymaps(event)
 	local map = function(keys, func, desc)
 		vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
