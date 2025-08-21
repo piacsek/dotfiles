@@ -493,7 +493,7 @@ vim.keymap.set("x", "<leader>p", [["_dP]], { desc = 'Pastes content without losi
 vim.keymap.set(
 	"n",
 	"<leader>s",
-	[[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+	[[:.,$s/\<<C-r><C-w>\>/<C-r><C-w>/gcI<Left><Left><Left>]],
 	{ desc = "Replace word under the cursor" }
 )
 
