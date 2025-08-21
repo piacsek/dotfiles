@@ -665,10 +665,10 @@ end
 
 -- Disable arrow keys in all modes
 local arrow_disabling_opts = { noremap = true, silent = true }
-vim.keymap.set({ "n", "i", "v", "c" }, "<Up>", "<Nop>", arrow_disabling_opts)
-vim.keymap.set({ "n", "i", "v", "c" }, "<Down>", "<Nop>", arrow_disabling_opts)
-vim.keymap.set({ "n", "i", "v", "c" }, "<Left>", "<Nop>", arrow_disabling_opts)
-vim.keymap.set({ "n", "i", "v", "c" }, "<Right>", "<Nop>", arrow_disabling_opts)
+vim.keymap.set({ "n", "i", "v", "c", "t" }, "<Up>", "<Nop>", arrow_disabling_opts)
+vim.keymap.set({ "n", "i", "v", "c", "t" }, "<Down>", "<Nop>", arrow_disabling_opts)
+vim.keymap.set({ "n", "i", "v", "c", "t" }, "<Left>", "<Nop>", arrow_disabling_opts)
+vim.keymap.set({ "n", "i", "v", "c", "t" }, "<Right>", "<Nop>", arrow_disabling_opts)
 
 -- Also disable arrows inside Telescope prompt
 vim.api.nvim_create_autocmd("FileType", {
