@@ -35,5 +35,6 @@ nvim roadmap:
 - add matchit plugin;
 - add a plugin for scratch files;
 - add a plugin to connect to Postgres;
-- figure out find/replace within buffer;
+- figure out find/replace within buffer:
+	- for simple cases, <C-g> is now doing the job;
 - figure out find/replace across files(quickfix list);
