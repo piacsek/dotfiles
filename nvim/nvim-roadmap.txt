@@ -11,7 +11,6 @@ nvim roadmap:
 - map <leader>u to "undo git changes";
 - map <leader>gy to "copy github url";
 - map <leader>go to "open github url";
-- map <leader>h to "display docs";
 - map <leader>ft to "find test file";
 
 - have topbar display the complete filepath;
