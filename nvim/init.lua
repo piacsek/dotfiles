@@ -475,7 +475,6 @@ vim.keymap.set("n", "<Tab>", "<C-w>w", { desc = "Go to next window" })
 vim.keymap.set("n", "<S-Tab>", "<C-w>p", { desc = "Go to previous window" })
 
 vim.keymap.set("n", "<leader><Esc>", ":hide<CR>", { desc = "Hide window" })
-vim.keymap.set("n", "<Esc><Esc>", ":hide<CR>", { desc = "Hide window" })
 vim.keymap.set("n", "Y", "y$", { desc = "[Y]ank till the end of the line" })
 vim.keymap.set("n", "V", "v$", { desc = "[V]isually select till the end of the line" })
 vim.keymap.set("n", "<leader>vp", vim.cmd.Ex, { desc = "Hide window" })
