@@ -664,26 +664,12 @@ end
 -- </Harpoon remaps>
 --
 -- Disable arrow keys in all modes
-local opts = { noremap = true, silent = true }
-vim.keymap.set({ "n", "i", "v", "c", "t" }, "<Up>", "<Nop>", opts)
-vim.keymap.set({ "n", "i", "v", "c", "t" }, "<Down>", "<Nop>", opts)
-vim.keymap.set({ "n", "i", "v", "c", "t" }, "<Left>", "<Nop>", opts)
-vim.keymap.set({ "n", "i", "v", "c", "t" }, "<Right>", "<Nop>", opts)
-local msg = [[<cmd>echohl Error | echo "KEY DISABLED" | echohl None<CR>]]
+local arrow_disabling_opts = { noremap = true, silent = true }
+vim.keymap.set({ "n", "i", "v", "c", "t" }, "<Up>", "<Nop>", arrow_disabling_opts)
+vim.keymap.set({ "n", "i", "v", "c", "t" }, "<Down>", "<Nop>", arrow_disabling_opts)
+vim.keymap.set({ "n", "i", "v", "c", "t" }, "<Left>", "<Nop>", arrow_disabling_opts)
+vim.keymap.set({ "n", "i", "v", "c", "t" }, "<Right>", "<Nop>", arrow_disabling_opts)
 
-vim.api.nvim_set_keymap("i", "<Up>", "<C-o>" .. msg, { noremap = true, silent = false })
-vim.api.nvim_set_keymap("i", "<Down>", "<C-o>" .. msg, { noremap = true, silent = false })
-vim.api.nvim_set_keymap("i", "<Left>", "<C-o>" .. msg, { noremap = true, silent = false })
-vim.api.nvim_set_keymap("i", "<Right>", "<C-o>" .. msg, { noremap = true, silent = false })
-
-vim.api.nvim_set_keymap("n", "<Up>", msg, { noremap = true, silent = false })
-vim.api.nvim_set_keymap("n", "<Down>", msg, { noremap = true, silent = false })
-vim.api.nvim_set_keymap("n", "<Left>", msg, { noremap = true, silent = false })
-vim.api.nvim_set_keymap("n", "<Right>", msg, { noremap = true, silent = false })
---
---
---
---
 ----------------------
 --    </remaps>     --
 ----------------------
