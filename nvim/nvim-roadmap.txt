@@ -5,7 +5,6 @@ nvim roadmap:
 	- bolder font;
 	- better contrast with highlighting;
 	- more vivid colors(like intellij);
-- replace <leader>o w/ <leader>ff;
 - enable `q` as quote & `b` as bracket(lookup in intellij for a clue);
 - map <leader>y to "copy to clipboard":
 	- unlink y from system clipboard;
