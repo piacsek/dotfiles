@@ -53,6 +53,24 @@ vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
 	command = "checktime",
 })
 
+-- Disable arrow keys in all modes
+local arrow_disabling_opts = { noremap = true, silent = true }
+vim.keymap.set({ "n", "i", "v", "c", "t" }, "<Up>", "<Nop>", arrow_disabling_opts)
+vim.keymap.set({ "n", "i", "v", "c", "t" }, "<Down>", "<Nop>", arrow_disabling_opts)
+vim.keymap.set({ "n", "i", "v", "c", "t" }, "<Left>", "<Nop>", arrow_disabling_opts)
+vim.keymap.set({ "n", "i", "v", "c", "t" }, "<Right>", "<Nop>", arrow_disabling_opts)
+
+-- Also disable arrows inside Telescope prompt
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "TelescopePrompt",
+	callback = function()
+		for _, key in ipairs({ "<Up>", "<Down>", "<Left>", "<Right>" }) do
+			vim.keymap.set("i", key, "<Nop>", { buffer = true })
+		end
+	end,
+})
+
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
 	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
@@ -662,23 +680,6 @@ for file_index, key in ipairs(keys_that_toggle_selections) do
 end
 
 -- </Harpoon remaps>
-
--- Disable arrow keys in all modes
-local arrow_disabling_opts = { noremap = true, silent = true }
-vim.keymap.set({ "n", "i", "v", "c", "t" }, "<Up>", "<Nop>", arrow_disabling_opts)
-vim.keymap.set({ "n", "i", "v", "c", "t" }, "<Down>", "<Nop>", arrow_disabling_opts)
-vim.keymap.set({ "n", "i", "v", "c", "t" }, "<Left>", "<Nop>", arrow_disabling_opts)
-vim.keymap.set({ "n", "i", "v", "c", "t" }, "<Right>", "<Nop>", arrow_disabling_opts)
-
--- Also disable arrows inside Telescope prompt
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = "TelescopePrompt",
-	callback = function()
-		for _, key in ipairs({ "<Up>", "<Down>", "<Left>", "<Right>" }) do
-			vim.keymap.set("i", key, "<Nop>", { buffer = true })
-		end
-	end,
-})
 
 ----------------------
 --    </remaps>     --
