@@ -470,6 +470,7 @@ require("lazy").setup({
 ---------------------
 
 vim.keymap.set("n", "<C-g>", "#*viw", { desc = "Multiple cursor replacement" })
+vim.keymap.set("v", "<C-g>", "#*", { desc = "Multiple cursor replacement - visual mode" })
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Remove search results highlights" })
 vim.keymap.set("n", "<Tab>", "<C-w>w", { desc = "Go to next window" })
 vim.keymap.set("n", "<S-Tab>", "<C-w>p", { desc = "Go to previous window" })
