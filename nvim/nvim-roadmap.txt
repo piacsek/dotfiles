@@ -13,9 +13,6 @@ nvim roadmap:
 - map <leader>go to "open github url";
 - map <leader>h to "display docs";
 - map <leader>ft to "find test file";
-- map <leader>l* to lsp actions:
-    - <leader>ll shows logs;
-    - <leader>li shows info;
 
 - have topbar display the complete filepath;
 - add https://github.com/stevearc/stickybuf.nvim plugin;
