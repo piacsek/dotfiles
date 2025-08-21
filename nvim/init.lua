@@ -486,8 +486,8 @@ end, { desc = "Save file and re-run last test (if any)" })
 
 vim.keymap.set("n", "Q", "<nop>", { desc = "Avoiding Q" })
 
--- vim.keymap.set("n", "n", "nzzzv", { desc = "Auto zz" })
--- vim.keymap.set("n", "N", "Nzzzv", { desc = "Auto zz" })
+vim.keymap.set("n", "n", "nzzzv", { desc = "Auto zz" })
+vim.keymap.set("n", "N", "Nzzzv", { desc = "Auto zz" })
 
 vim.keymap.set("x", "<leader>p", [["_dP]], { desc = 'Pastes content without losing current "0 contents' })
 vim.keymap.set(
