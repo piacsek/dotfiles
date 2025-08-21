@@ -662,7 +662,7 @@ for file_index, key in ipairs(keys_that_toggle_selections) do
 end
 
 -- </Harpoon remaps>
---
+
 -- Disable arrow keys in all modes
 local arrow_disabling_opts = { noremap = true, silent = true }
 vim.keymap.set({ "n", "i", "v", "c", "t" }, "<Up>", "<Nop>", arrow_disabling_opts)
