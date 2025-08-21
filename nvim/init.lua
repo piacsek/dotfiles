@@ -670,6 +670,16 @@ vim.keymap.set({ "n", "i", "v", "c", "t" }, "<Down>", "<Nop>", arrow_disabling_o
 vim.keymap.set({ "n", "i", "v", "c", "t" }, "<Left>", "<Nop>", arrow_disabling_opts)
 vim.keymap.set({ "n", "i", "v", "c", "t" }, "<Right>", "<Nop>", arrow_disabling_opts)
 
+-- Also disable arrows inside Telescope prompt
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "TelescopePrompt",
+	callback = function()
+		for _, key in ipairs({ "<Up>", "<Down>", "<Left>", "<Right>" }) do
+			vim.keymap.set("i", key, "<Nop>", { buffer = true })
+		end
+	end,
+})
+
 ----------------------
 --    </remaps>     --
 ----------------------
