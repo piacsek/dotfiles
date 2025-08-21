@@ -536,6 +536,7 @@ end, { desc = "[T]est [O]utput" })
 
 -- <LSP remaps>
 vim.keymap.set("n", "<leader>ll", ":LspLog<CR>", { desc = "[L]SP [L]ogs" })
+vim.keymap.set("n", "<leader>li", ":LspInfo<CR>", { desc = "[L]SP [I]nfo" })
 -- </LSP remaps>
 -- <Telescope remaps>
 local builtin = require("telescope.builtin")
