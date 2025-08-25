@@ -21,6 +21,7 @@ nvim roadmap:
     - nice to have: colorful icons to distinguished between private & public;
 
 - figure out how to have project-specific configs
+- Add mapping("live template") for `|> IO.inspect(label: $SELECTION)`
 
 - add plugin to run custom scripts:
     - make sure alternating between those buffers is smooth 😎;
