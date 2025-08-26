@@ -1,6 +1,5 @@
 nvim roadmap:
 
-- refactor config back to file-based organization;
 - improve font & general look-n-feel:
 	- bolder font;
 	- better contrast with highlighting;
