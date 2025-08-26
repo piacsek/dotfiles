@@ -4,7 +4,7 @@ vim.g.maplocalleader = " "
 
 vim.opt.autoread = true
 vim.opt.breakindent = true
-vim.opt.clipboard = "unnamedplus"
+vim.opt.clipboard = ""
 vim.opt.cursorline = true
 vim.opt.hlsearch = true
 vim.opt.ignorecase = false
