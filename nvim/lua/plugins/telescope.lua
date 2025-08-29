@@ -1,6 +1,11 @@
 local function setup_keymaps()
 	local builtin = require("telescope.builtin")
-	vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "[F]pen [F]iles" })
+	vim.keymap.set("n", "<leader>ff", function()
+		require("telescope.builtin").find_files({
+			hidden = true,
+			no_ignore = false,
+		})
+	end, { desc = "[F]ind [F]iles (incl. hidden)" })
 	vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "[F]find [H]elp" })
 	vim.keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "[F]find [K]eymaps" })
 	vim.keymap.set("n", "<leader>fs", builtin.builtin, { desc = "[F]find [S]elect Telescope" })
@@ -73,4 +78,3 @@ return {
 		setup_keymaps()
 	end,
 }
-
