@@ -1,21 +1,4 @@
 local function setup_keymaps()
-	local builtin = require("telescope.builtin")
-	vim.keymap.set("n", "<leader>ff", function()
-		require("telescope.builtin").find_files({
-			hidden = true,
-			no_ignore = false,
-		})
-	end, { desc = "[F]ind [F]iles (incl. hidden)" })
-	vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "[F]find [H]elp" })
-	vim.keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "[F]find [K]eymaps" })
-	vim.keymap.set("n", "<leader>fs", builtin.builtin, { desc = "[F]find [S]elect Telescope" })
-	vim.keymap.set("n", "<leader>fw", builtin.grep_string, { desc = "[F]ind current [W]ord" })
-	vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "[F]find by [G]rep" })
-	vim.keymap.set("n", "<leader>fd", builtin.diagnostics, { desc = "[F]find [D]iagnostics" })
-	vim.keymap.set("n", "<leader>fr", builtin.resume, { desc = "[F]find [R]esume" })
-	vim.keymap.set("n", "<leader>f.", builtin.oldfiles, { desc = '[F]find Recent Files ("." for repeat)' })
-	vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
-
 	function vim.getVisualSelection()
 		vim.cmd('noau normal! "vy"')
 		local text = vim.fn.getreg("v")
@@ -25,6 +8,33 @@ local function setup_keymaps()
 
 		return #text > 0 and text or ""
 	end
+
+	local builtin = require("telescope.builtin")
+	vim.keymap.set("n", "<leader>ff", function()
+		require("telescope.builtin").find_files({
+			hidden = true,
+			no_ignore = false,
+		})
+	end, { desc = "[F]ind [F]iles" })
+
+	vim.keymap.set("v", "<leader>ff", function()
+		local text = vim.getVisualSelection()
+		require("telescope.builtin").find_files({
+			hidden = true,
+			no_ignore = false,
+			default_text = text,
+		})
+	end, { noremap = true, silent = true, desc = "[F]ind [F]files with selected text" })
+
+	vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "[F]find [H]elp" })
+	vim.keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "[F]find [K]eymaps" })
+	vim.keymap.set("n", "<leader>fs", builtin.builtin, { desc = "[F]find [S]elect Telescope" })
+	vim.keymap.set("n", "<leader>fw", builtin.grep_string, { desc = "[F]ind current [W]ord" })
+	vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "[F]find by [G]rep" })
+	vim.keymap.set("n", "<leader>fd", builtin.diagnostics, { desc = "[F]find [D]iagnostics" })
+	vim.keymap.set("n", "<leader>fr", builtin.resume, { desc = "[F]find [R]esume" })
+	vim.keymap.set("n", "<leader>f.", builtin.oldfiles, { desc = '[F]find Recent Files ("." for repeat)' })
+	vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
 
 	vim.keymap.set("v", "<leader>fw", function()
 		local text = vim.getVisualSelection()
