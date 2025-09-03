@@ -4,8 +4,6 @@ nvim roadmap:
 	- bolder font;
 	- better contrast with highlighting;
 	- more vivid colors(like intellij);
-- map <leader>gy to "copy github url";
-- map <leader>go to "open github url";
 - map <leader>ft to "find test file";
 
 - have topbar display the complete filepath;

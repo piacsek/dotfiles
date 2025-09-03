@@ -42,7 +42,25 @@ return {
 
 		require("neotest").setup({
 			adapters = {
-				require("neotest-elixir"),
+				require("neotest-elixir")({
+					mix_task = "test",
+					args = { "--trace" },
+					elixir_ls_node_path = function()
+						-- For umbrella projects, detect the app and change cwd
+						local file = vim.fn.expand("%:p")
+						if file:match("/apps/([^/]+)/") then
+							local app_name = file:match("/apps/([^/]+)/")
+							local app_dir = vim.fn.getcwd() .. "/apps/" .. app_name
+							if vim.fn.isdirectory(app_dir) == 1 then
+								vim.cmd("cd " .. app_dir)
+							end
+						end
+						return nil
+					end,
+				}),
+			},
+			discovery = {
+				enabled = false,
 			},
 		})
 
