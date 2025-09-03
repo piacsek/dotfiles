@@ -7,7 +7,6 @@ nvim roadmap:
 - map <leader>ft to "find test file";
 
 - have topbar display the complete filepath;
-- add https://github.com/stevearc/stickybuf.nvim plugin;
 - add symbols explorer plugin(aerial):
     - as a popup, just like Idea's FileStructurePopup;
     - make sure you can type to filter without additional keystrokes;
