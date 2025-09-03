@@ -16,8 +16,7 @@ nvim roadmap:
 - figure out how to have project-specific configs
 - Add mapping("live template") for `|> IO.inspect(label: $SELECTION)`
 
-- add plugin to run custom scripts:
-    - make sure alternating between those buffers is smooth 😎;
+- add plugin to run custom scripts(https://github.com/stevearc/overseer.nvim)
 
 - add a file explorer plugin;
 - explore & customize telescope;
