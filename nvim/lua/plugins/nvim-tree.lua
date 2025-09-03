@@ -7,6 +7,27 @@ return {
 		vim.g.loaded_netrw = 1
 		vim.g.loaded_netrwPlugin = 1
 
+		local function on_attach_mappings(bufnr)
+			local api = require("nvim-tree.api")
+
+			local function opts(desc)
+				return {
+					desc = "nvim-tree: " .. desc,
+					buffer = bufnr,
+					noremap = true,
+					silent = true,
+					nowait = true,
+				}
+			end
+
+			-- Keep default mappings
+			api.config.mappings.default_on_attach(bufnr)
+
+			-- Remove tab mapping(to avoid messing w/ my navigation) and add space for preview
+			vim.keymap.del("n", "<Tab>", { buffer = bufnr })
+			vim.keymap.set("n", "<Space>", api.node.open.preview, opts("Preview"))
+		end
+
 		require("nvim-tree").setup({
 			sort_by = "case_sensitive",
 			view = {
@@ -37,6 +58,7 @@ return {
 					quit_on_open = false,
 				},
 			},
+			on_attach = on_attach_mappings,
 		})
 
 		vim.keymap.set("n", "<leader>1", ":NvimTreeFocus<CR>", { desc = "Focus on file explorer" })
