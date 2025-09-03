@@ -17,12 +17,6 @@ return {
 			)
 			vim.keymap.set(
 				"n",
-				"<leader>gh",
-				"<cmd>Gitsigns blame<CR>",
-				{ desc = "[G]it [H]istory(blame)", buffer = bufnr }
-			)
-			vim.keymap.set(
-				"n",
 				"<leader>gl",
 				"<cmd>Telescope git_bcommits<CR>",
 				{ desc = "[G]it [L]og for current file", buffer = bufnr }

@@ -35,6 +35,7 @@ local function setup_keymaps()
 	vim.keymap.set("n", "<leader>fr", builtin.resume, { desc = "[F]find [R]esume" })
 	vim.keymap.set("n", "<leader>f.", builtin.oldfiles, { desc = '[F]find Recent Files ("." for repeat)' })
 	vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
+	vim.keymap.set("n", "<leader>gh", builtin.git_bcommits, { desc = "[G]it [H]istory" })
 
 	vim.keymap.set("v", "<leader>fw", function()
 		local text = vim.getVisualSelection()
@@ -77,21 +78,16 @@ return {
 		require("telescope").setup({
 			pickers = {
 				git_bcommits = {
-					theme = "dropdown",
-					layout_config = {
-						width = 0.75,
-						height = 0.75,
-						anchor = "CENTER",
-					},
 					mappings = {
 						i = {
-							["<C-o>"] = function(prompt_bufnr)
+							["<C-w>"] = function(prompt_bufnr)
 								local selection = require("telescope.actions.state").get_selected_entry()
 								require("telescope.actions").close(prompt_bufnr)
 								local commit_hash = string.match(selection.value, "^(%w+)")
 								local remote_url = vim.fn.system("git remote get-url origin"):gsub("\n", "")
 								if remote_url:match("github.com") then
-									remote_url = remote_url:gsub("%.git$", ""):gsub("git@github.com:", "https://github.com/")
+									remote_url =
+										remote_url:gsub("%.git$", ""):gsub("git@github.com:", "https://github.com/")
 									vim.fn.system("open " .. remote_url .. "/commit/" .. commit_hash)
 								end
 							end,
