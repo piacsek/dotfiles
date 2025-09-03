@@ -84,12 +84,11 @@ return {
 								local selection = require("telescope.actions.state").get_selected_entry()
 								require("telescope.actions").close(prompt_bufnr)
 								local commit_hash = string.match(selection.value, "^(%w+)")
-								local remote_url = vim.fn.system("git remote get-url origin"):gsub("\n", "")
-								if remote_url:match("github.com") then
-									remote_url =
-										remote_url:gsub("%.git$", ""):gsub("git@github.com:", "https://github.com/")
-									vim.fn.system("open " .. remote_url .. "/commit/" .. commit_hash)
-								end
+
+								require("gitlinker").link({
+									rev = commit_hash,
+									action = require("gitlinker.actions").system,
+								})
 							end,
 						},
 					},
