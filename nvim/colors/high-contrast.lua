@@ -35,6 +35,7 @@ local colors = {
 	magenta = "#ff96ff",
 	orange = "#ed864a",
 	purple = "#ed94ff",
+	purple_dark = "#8547ff",
 	red = "#fa3232",
 	red1 = "#f2495a",
 	teal = "#5be7f5",
@@ -142,11 +143,12 @@ hi("LspReferenceRead", { bg = "#3b0a" })
 hi("LspReferenceWrite", { bg = "#471747" })
 
 -- Treesitter
-hi("@variable", { fg = colors.fg })
+hi("@variable", { fg = colors.purple_dark, bold = true })
 hi("@variable.member", { fg = colors.purple })
-hi("@variable.parameter", { fg = colors.fg })
 hi("@constant", { fg = colors.purple, italic = true })
 hi("@constant.builtin", { fg = colors.purple, italic = true })
+hi("@symbol", { fg = colors.purple, italic = true })
+hi("@string.special.symbol", { fg = colors.purple, italic = true })
 hi("@string", { fg = colors.green })
 hi("@string.escape", { fg = colors.orange })
 hi("@number", { fg = colors.blue, bold = true })
@@ -162,8 +164,12 @@ hi("@namespace", { fg = colors.teal, bold = true })
 hi("@module", { fg = colors.teal, bold = true })
 hi("@type.builtin", { fg = colors.cyan, bold = true })
 hi("@comment", { fg = colors.cyan, italic = true })
+hi("@punctuation.special", { fg = colors.blue, bold = true })
 hi("@punctuation.delimiter", { fg = colors.orange, bold = true })
-hi("@punctuation.bracket", { fg = colors.orange, bold = true })
+hi("@punctuation.bracket", { fg = colors.blue, bold = true })
+hi("@constructor", { fg = colors.blue, bold = true })
+hi("@type.qualifier", { fg = colors.blue, bold = true })
+hi("@operator", { fg = colors.green1, bold = true })
 
 -- Telescope
 hi("TelescopeNormal", { fg = colors.fg, bg = colors.bg_float })
