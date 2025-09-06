@@ -1,11 +1,5 @@
 nvim roadmap:
 
-- improve font & general look-n-feel:
-	- bolder font;
-	- better contrast with highlighting;
-	- more vivid colors(like intellij);
-- map <leader>ft to "find test file";
-
 - have topbar display the complete filepath;
 - add symbols explorer plugin(aerial):
     - as a popup, just like Idea's FileStructurePopup;
@@ -26,3 +20,4 @@ nvim roadmap:
 - figure out find/replace within buffer:
 	- for simple cases, <C-g> is now doing the job;
 - figure out find/replace across files(quickfix list);
+- map <leader>ft to "find test file";
