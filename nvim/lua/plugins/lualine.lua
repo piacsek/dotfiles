@@ -7,7 +7,7 @@ return {
 
 		require("lualine").setup({
 			options = {
-				theme = "tokyonight",
+				-- theme = "industrial",
 				component_separators = { left = "", right = "" },
 				section_separators = { left = "", right = "" },
 				globalstatus = true,
@@ -15,13 +15,13 @@ return {
 			sections = {
 				lualine_a = { "mode" },
 				lualine_b = { "branch", "diff", "diagnostics" },
-				lualine_c = { 
+				lualine_c = {
 					{ "filename", path = 1 },
 					{ git_blame.get_current_blame_text, cond = git_blame.is_blame_text_available },
 				},
 				lualine_x = { "encoding", "fileformat", "filetype" },
 				lualine_y = { "progress" },
-				lualine_z = { "location" }
+				lualine_z = { "location" },
 			},
 			inactive_sections = {
 				lualine_a = {},
@@ -29,7 +29,7 @@ return {
 				lualine_c = { "filename" },
 				lualine_x = { "location" },
 				lualine_y = {},
-				lualine_z = {}
+				lualine_z = {},
 			},
 		})
 	end,

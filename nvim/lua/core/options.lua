@@ -25,3 +25,4 @@ vim.opt.tabstop = 2
 vim.opt.timeoutlen = 300
 vim.opt.updatetime = 250
 vim.opt.undofile = true
+

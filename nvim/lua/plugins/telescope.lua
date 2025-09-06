@@ -28,6 +28,7 @@ local function setup_keymaps()
 	end, { noremap = true, silent = true, desc = "[F]ind [F]files with selected text" })
 
 	vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "[F]find [H]elp" })
+	vim.keymap.set("n", "<leader>ft", builtin.colorscheme, { desc = "[F]find [T]heme" })
 	vim.keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "[F]find [K]eymaps" })
 	vim.keymap.set("n", "<leader>fs", builtin.builtin, { desc = "[F]find [S]elect Telescope" })
 	vim.keymap.set("n", "<leader>fw", builtin.grep_string, { desc = "[F]ind current [W]ord" })
