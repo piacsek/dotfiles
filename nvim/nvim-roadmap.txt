@@ -11,10 +11,7 @@ nvim roadmap:
 
 - add plugin to run custom scripts(https://github.com/stevearc/overseer.nvim)
 
-- add a file explorer plugin;
 - explore & customize telescope;
-- add sneak plugin;
-- add matchit plugin;
 - add a plugin for scratch files;
 - add a plugin to connect to Postgres;
 - figure out find/replace within buffer:
