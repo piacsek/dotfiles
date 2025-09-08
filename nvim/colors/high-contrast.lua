@@ -29,6 +29,7 @@ local colors = {
 	blue1 = "#1aabff",
 	blue2 = "#4ff0ff",
 	cyan = "#37cccc",
+	grey = "#bcc2be",
 	green = "#54b33e",
 	green1 = "#62cc47",
 	green2 = "#499936",
@@ -164,7 +165,7 @@ hi("@type", { fg = colors.teal, bold = true })
 hi("@namespace", { fg = colors.teal, bold = true })
 hi("@module", { fg = colors.teal, bold = true })
 hi("@type.builtin", { fg = colors.cyan, bold = true })
-hi("@comment", { fg = colors.cyan, italic = true })
+hi("@comment", { fg = colors.grey, italic = true })
 hi("@punctuation.special", { fg = colors.blue, bold = true })
 hi("@punctuation.delimiter", { fg = colors.orange, bold = true })
 hi("@punctuation.bracket", { fg = colors.blue, bold = true })
