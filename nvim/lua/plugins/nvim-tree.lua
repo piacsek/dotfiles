@@ -64,11 +64,6 @@ return {
 		})
 
 		vim.keymap.set("n", "<leader>1", ":NvimTreeFocus<CR>", { desc = "Focus on file explorer" })
-		vim.keymap.set(
-			"n",
-			"<leader>jp",
-			":NvimTreeFindFile<CR>",
-			{ desc = "[J]ump to [P]roject files(IntelliJ legacy)" }
-		)
+		vim.keymap.set("n", "<leader>jp", ":NvimTreeFocus<CR>", { desc = "[J]ump to [P]roject files(IntelliJ legacy)" })
 	end,
 }
