@@ -1,15 +1,6 @@
 nvim roadmap:
 
-- add symbols explorer plugin(aerial):
-    - as a popup, just like Idea's FileStructurePopup;
-    - make sure you can type to filter without additional keystrokes;
-    - nice to have: colorful icons to distinguished between private & public;
-
-- figure out how to have project-specific configs
-
-- Add mapping("live template") for `|> IO.inspect(label: $SELECTION)`
-
-- add plugin to run custom scripts(https://github.com/stevearc/overseer.nvim)
+- figure out how to have project-specific configs & overseer tasks
 
 - explore & customize telescope;
 
