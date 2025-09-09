@@ -1,20 +1,28 @@
 nvim roadmap:
 
-- have topbar display the complete filepath;
 - add symbols explorer plugin(aerial):
     - as a popup, just like Idea's FileStructurePopup;
     - make sure you can type to filter without additional keystrokes;
     - nice to have: colorful icons to distinguished between private & public;
 
 - figure out how to have project-specific configs
+
 - Add mapping("live template") for `|> IO.inspect(label: $SELECTION)`
 
 - add plugin to run custom scripts(https://github.com/stevearc/overseer.nvim)
 
 - explore & customize telescope;
-- add a plugin for scratch files;
+
 - add a plugin to connect to Postgres;
+
 - figure out find/replace within buffer:
 	- for simple cases, <C-g> is now doing the job;
+
 - figure out find/replace across files(quickfix list);
+
+- Create plugin to REPL-it-up!
+
 - map <leader>ft to "find test file";
+
+- have topbar display the complete filepath;
+
