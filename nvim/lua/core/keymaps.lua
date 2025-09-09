@@ -46,7 +46,4 @@ vim.keymap.set("n", "<leader>js", ":term<CR>", { desc = "[J]ump to [O]il" })
 vim.keymap.set("n", "<leader>fs", ":ScratchOpen<CR>", { desc = "[F]ump to [S]cratch" })
 vim.keymap.set("n", "<leader>n", ":Scratch<CR>", { desc = "[N]ew scrach" })
 
-vim.keymap.set("n", "<leader><CR>", function()
-	require("neotest").summary.close()
-	vim.cmd(":NvimTreeClose")
-end, { desc = "[T]est [S]ummary" })
+vim.keymap.set("n", "<leader><Del><Del>", ":BufOnly<CR>", { desc = "[T]est [S]ummary" })
