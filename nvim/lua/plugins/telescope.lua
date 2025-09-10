@@ -58,6 +58,10 @@ local function setup_keymaps()
 	vim.keymap.set("n", "<leader>fn", function()
 		builtin.find_files({ cwd = vim.fn.stdpath("config") })
 	end, { desc = "[F]find [N]eovim files" })
+
+	vim.keymap.set("n", "<leader>fc", function()
+		builtin.live_grep({ cwd = vim.fn.stdpath("config") })
+	end, { desc = "Grep config files" })
 end
 
 return {
