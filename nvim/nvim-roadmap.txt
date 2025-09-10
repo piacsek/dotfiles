@@ -11,8 +11,6 @@ nvim roadmap:
 
 - figure out find/replace across files(quickfix list);
 
-- Create plugin to REPL-it-up!
-
 - map <leader>ft to "find test file";
 
 - have topbar display the complete filepath;
