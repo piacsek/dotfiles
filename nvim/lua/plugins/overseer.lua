@@ -50,10 +50,25 @@ return {
 				}
 			end,
 		})
+
+		overseer.register_template({
+			name = "iex -S mix phx.server",
+			builder = function()
+				return {
+					cmd = { "iex" },
+					args = { "-S", "mix", "phx.server" },
+					cwd = vim.fn.getcwd(),
+				}
+			end,
+			condition = {
+				filetype = { "elixir" },
+			},
+		})
 	end,
 	keys = {
 		{ "<leader>rr", "<cmd>OverseerRun<cr>", desc = "Overseer Run" },
 		{ "<leader>re", "<cmd>OverseerToggle<cr>", desc = "Overseer Toggle" },
 		{ "<leader>ra", "<cmd>OverseerTaskAction<cr>", desc = "Overseer Task Action" },
+		{ "<leader>4", "<cmd>OverseerQuickAction open float<cr>", desc = "Open task output on a float window" },
 	},
 }
