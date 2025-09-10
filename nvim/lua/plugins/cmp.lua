@@ -43,6 +43,8 @@ return {
 		local luasnip = require("luasnip")
 		luasnip.config.setup({})
 
+		require("luasnip.loaders.from_lua").load({ paths = vim.fn.stdpath("config") .. "/snippets" })
+
 		cmp.setup({
 			snippet = {
 				expand = function(args)
@@ -59,3 +61,4 @@ return {
 		})
 	end,
 }
+
