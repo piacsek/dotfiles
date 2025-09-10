@@ -83,13 +83,23 @@ return {
 		{ "<leader>ra", "<cmd>OverseerTaskAction<cr>", desc = "Overseer Task Action" },
 		{ "<leader>4", "<cmd>OverseerQuickAction open float<cr>", desc = "Open task output on a float window" },
 		{
-			"<leader>X",
+			"<leader>R",
 			function()
-				vim.api.nvim_feedkeys("yy", "n", false)
+				vim.cmd.normal("yy")
 				vim.cmd("OverseerQuickAction open float")
-				vim.api.nvim_feedkeys("p", "n", false)
+				vim.cmd.normal("p")
 			end,
-			desc = "Open task output on a float window",
+			desc = "Pastes the current line on the most recent task buffer",
+		},
+		{
+			"<leader>R",
+			function()
+				vim.cmd.normal('"vy"')
+				vim.cmd("OverseerQuickAction open float")
+				vim.cmd.normal('"vp')
+			end,
+			desc = "Pastes the current selection on the most recent task buffer",
+			mode = { "v" },
 		},
 	},
 }
