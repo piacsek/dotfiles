@@ -11,6 +11,9 @@ return {
 			},
 			task_list = {
 				min_height = 0.5,
+				bindings = {
+					["<Esc>"] = "Close",
+				},
 			},
 			log = {
 				{
