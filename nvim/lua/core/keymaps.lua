@@ -36,8 +36,8 @@ vim.keymap.set("n", "<", ":vertical resize -5<CR>", { desc = "Decrease window ve
 
 vim.keymap.set("v", "<leader>s", '"sy:%s/<C-r>s/', { desc = "[S]ubstitute selected word" })
 
-vim.keymap.set("t", "<C-\\><C-\\>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
-vim.keymap.set("n", "<C-\\>", ":hide<CR>", { desc = "Exit terminal mode" })
+vim.keymap.set("t", "<C-`>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+vim.keymap.set("n", "<C-`>", ":hide<CR>", { desc = "Exit terminal mode" })
 
 vim.keymap.set("n", "<leader>jo", function()
 	require("oil").open_float()
