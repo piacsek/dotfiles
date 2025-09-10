@@ -9,6 +9,17 @@ return {
 			task_list = {
 				min_height = 0.5,
 			},
+			log = {
+				{
+					type = "echo",
+					level = vim.log.levels.INFO,
+				},
+				{
+					type = "file",
+					filename = "overseer.log",
+					level = vim.log.levels.DEBUG,
+				},
+			},
 		})
 
 		overseer.register_template({
