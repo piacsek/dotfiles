@@ -17,7 +17,7 @@ return {
 				{
 					type = "file",
 					filename = "overseer.log",
-					level = vim.log.levels.DEBUG,
+					level = vim.log.levels.INFO,
 				},
 			},
 		})
