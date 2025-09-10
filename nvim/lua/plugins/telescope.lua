@@ -35,6 +35,7 @@ local function setup_keymaps()
 	vim.keymap.set("n", "<leader>fd", builtin.diagnostics, { desc = "[F]find [D]iagnostics" })
 	vim.keymap.set("n", "<leader>fr", builtin.resume, { desc = "[F]find [R]esume" })
 	vim.keymap.set("n", "<leader>f.", builtin.oldfiles, { desc = '[F]find Recent Files ("." for repeat)' })
+	vim.keymap.set("n", "<leader>F", builtin.resume, { desc = "Resume last search" })
 	vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
 	vim.keymap.set("n", "<leader>gh", builtin.git_bcommits, { desc = "[G]it [H]istory" })
 
@@ -77,6 +78,7 @@ return {
 	},
 	config = function()
 		require("telescope").setup({
+			defaults = {},
 			pickers = {
 				git_bcommits = {
 					mappings = {

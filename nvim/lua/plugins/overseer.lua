@@ -6,6 +6,9 @@ return {
 	config = function(_, _opts)
 		local overseer = require("overseer")
 		overseer.setup({
+			templates = {
+				mix = false,
+			},
 			task_list = {
 				min_height = 0.5,
 			},
@@ -32,34 +35,35 @@ return {
 			end,
 		})
 		-- Custom cloud_iex tasks
-		overseer.register_template({
-			name = "cloud_iex prod",
-			builder = function()
-				return {
-					cmd = { "cloud_iex" },
-					args = { "prod" },
-				}
-			end,
-		})
+		local cloud_iex_envs = {
+			{ env = "prod" },
+			{ env = "staging", priority = 1 },
+			{ env = "dev" },
+		}
+
+		for _, config in ipairs(cloud_iex_envs) do
+			overseer.register_template({
+				name = "cloud_iex " .. config.env,
+				priority = config.priority,
+				builder = function()
+					return {
+						cmd = { "cloud_iex" },
+						args = { config.env },
+					}
+				end,
+			})
+		end
 
 		overseer.register_template({
-			name = "cloud_iex staging",
-			priority = 1,
+			name = "mix credo",
 			builder = function()
-				return {
-					cmd = { "cloud_iex" },
-					args = { "staging" },
-				}
+				return { cmd = { "mix" }, args = { "credo" } }
 			end,
 		})
-
 		overseer.register_template({
-			name = "cloud_iex dev",
+			name = "mix deps.get",
 			builder = function()
-				return {
-					cmd = { "cloud_iex" },
-					args = { "dev" },
-				}
+				return { cmd = { "mix" }, args = { "deps.get" } }
 			end,
 		})
 
@@ -69,12 +73,8 @@ return {
 				return {
 					cmd = { "iex" },
 					args = { "-S", "mix", "phx.server" },
-					cwd = vim.fn.getcwd(),
 				}
 			end,
-			condition = {
-				filetype = { "elixir" },
-			},
 		})
 	end,
 	keys = {
