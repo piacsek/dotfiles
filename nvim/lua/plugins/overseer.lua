@@ -22,17 +22,18 @@ return {
 		})
 		-- Custom cloud_iex tasks
 		overseer.register_template({
-			name = "cloud_iex production",
+			name = "cloud_iex prod",
 			builder = function()
 				return {
 					cmd = { "cloud_iex" },
-					args = { "production" },
+					args = { "prod" },
 				}
 			end,
 		})
 
 		overseer.register_template({
 			name = "cloud_iex staging",
+			priority = 1,
 			builder = function()
 				return {
 					cmd = { "cloud_iex" },
@@ -70,5 +71,14 @@ return {
 		{ "<leader>re", "<cmd>OverseerToggle<cr>", desc = "Overseer Toggle" },
 		{ "<leader>ra", "<cmd>OverseerTaskAction<cr>", desc = "Overseer Task Action" },
 		{ "<leader>4", "<cmd>OverseerQuickAction open float<cr>", desc = "Open task output on a float window" },
+		{
+			"<leader>X",
+			function()
+				vim.api.nvim_feedkeys("yy", "n", false)
+				vim.cmd("OverseerQuickAction open float")
+				vim.api.nvim_feedkeys("p", "n", false)
+			end,
+			desc = "Open task output on a float window",
+		},
 	},
 }
