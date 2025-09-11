@@ -8,8 +8,17 @@ return {
 		t("@tag :skip"),
 	}),
 	s("ioinspect", {
-		t("|> IO.inspect(label: \""),
+		t('|> IO.inspect(label: "'),
 		i(1),
-		t("\")"),
+		t('")'),
+	}),
+	s({ trig = "ttest", priority = 1000 }, {
+		t("@tag :skip"),
+		t({ "", 'test "' }),
+		i(1),
+		t('" do'),
+		t({ "", "\t" }),
+		i(2),
+		t({ "", "end" }),
 	}),
 }

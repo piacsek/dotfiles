@@ -23,9 +23,6 @@ local function setup_keymaps()
 	vim.keymap.set("n", "<leader>to", function()
 		require("neotest").output.open({ enter = true })
 	end, { desc = "[T]est [O]utput" })
-	vim.keymap.set("n", "<leader>tO", function()
-		require("neotest").output.open({ enter = true, short = false })
-	end, { desc = "Open full test output" })
 end
 
 return {
