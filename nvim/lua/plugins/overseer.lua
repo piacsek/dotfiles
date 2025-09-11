@@ -16,16 +16,28 @@ return {
 				},
 			},
 			log = {
-				{
-					type = "echo",
-					level = vim.log.levels.INFO,
-				},
-				{
-					type = "file",
-					filename = "overseer.log",
-					level = vim.log.levels.INFO,
-				},
+				{ type = "echo", level = vim.log.levels.INFO },
+				{ type = "file", filename = "overseer.log", level = vim.log.levels.INFO },
 			},
+		})
+
+		overseer.register_template({
+			name = "claude",
+			builder = function()
+				return {
+					cmd = { "claude" },
+				}
+			end,
+		})
+
+		overseer.register_template({
+			name = "claude nvim config",
+			builder = function()
+				return {
+					cmd = { "claude" },
+					cwd = vim.fn.stdpath("config"),
+				}
+			end,
 		})
 
 		overseer.register_template({
@@ -37,7 +49,7 @@ return {
 				}
 			end,
 		})
-		-- Custom cloud_iex tasks
+
 		local cloud_iex_envs = {
 			{ env = "prod" },
 			{ env = "staging", priority = 1 },
@@ -83,8 +95,33 @@ return {
 	keys = {
 		{ "<leader>rr", "<cmd>OverseerRun<cr>", desc = "Overseer Run" },
 		{ "<leader>re", "<cmd>OverseerToggle<cr>", desc = "Overseer Toggle" },
+		{ "<leader>rs", "<cmd>OverseerRunCmd<cr>", desc = "Runs a shell cmd" },
 		{ "<leader>ra", "<cmd>OverseerTaskAction<cr>", desc = "Overseer Task Action" },
-		{ "<leader>4", "<cmd>OverseerQuickAction open float<cr>", desc = "Open task output on a float window" },
+		{
+			"<leader>4",
+			function()
+				local overseer = require("overseer")
+				local tasks = overseer.list_tasks({ recent_first = true })
+				if #tasks == 0 then
+					vim.notify("No tasks found")
+					return
+				elseif #tasks == 1 then
+					overseer.run_action(tasks[1], "open float")
+				else
+					vim.ui.select(tasks, {
+						prompt = "Select task:",
+						format_item = function(task)
+							return task.name
+						end,
+					}, function(task)
+						if task then
+							overseer.run_action(task, "open float")
+						end
+					end)
+				end
+			end,
+			desc = "Pick task and open output in float window",
+		},
 		{
 			"<leader>R",
 			function()
