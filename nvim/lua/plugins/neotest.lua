@@ -1,9 +1,4 @@
 local function setup_keymaps()
-	vim.keymap.set("n", "<leader><BS>", function()
-		vim.cmd("w")
-		vim.cmd("colorscheme high-contrast")
-	end, { desc = "Save file & re-apply colorscheme" })
-
 	vim.keymap.set("n", "<leader>tt", function()
 		require("neotest").run.run()
 	end, { desc = "[T]est neares[T]" })
@@ -15,6 +10,10 @@ local function setup_keymaps()
 	vim.keymap.set("n", "<leader>ts", function()
 		require("neotest").summary.toggle()
 	end, { desc = "[T]est [S]ummary" })
+
+	vim.keymap.set("n", "<leader>tp", function()
+		require("neotest").output_panel.open()
+	end, { desc = "[T]est [O]utput" })
 
 	vim.keymap.set("n", "<leader>to", function()
 		require("neotest").output.open({ enter = true })
@@ -44,6 +43,10 @@ return {
 			adapters = { require("neotest-elixir") },
 			summary = {
 				open = "leftabove vsplit | vertical resize 50",
+			},
+			output_panel = {
+				enabled = true,
+				open = "botright split | resize 30",
 			},
 		})
 
