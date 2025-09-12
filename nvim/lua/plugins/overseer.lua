@@ -70,6 +70,12 @@ return {
 		end
 
 		overseer.register_template({
+			name = "mix compile",
+			builder = function()
+				return { cmd = { "mix" }, args = { "compile" } }
+			end,
+		})
+		overseer.register_template({
 			name = "mix credo",
 			builder = function()
 				return { cmd = { "mix" }, args = { "credo" } }
@@ -96,6 +102,20 @@ return {
 		{ "<leader>rr", "<cmd>OverseerRun<cr>", desc = "Overseer Run" },
 		{ "<leader>re", "<cmd>OverseerToggle<cr>", desc = "Overseer Toggle" },
 		{ "<leader>ra", "<cmd>OverseerTaskAction<cr>", desc = "Overseer Task Action" },
+		{
+			"<leader>rl",
+			function()
+				local overseer = require("overseer")
+				local tasks = overseer.list_tasks({ recent_first = true })
+				if #tasks == 0 then
+					vim.notify("No tasks found")
+					return
+				else
+					overseer.run_action(tasks[1], "restart")
+				end
+			end,
+			desc = "[R]un [L]ast",
+		},
 		{
 			"<leader>4",
 			function()

@@ -146,6 +146,7 @@ hi("LspReferenceWrite", { bg = "#471747" })
 -- Treesitter
 hi("@variable", { fg = colors.purple_dark, bold = true })
 hi("@variable.member", { fg = colors.purple })
+hi("@boolean.elixir", { fg = colors.orange })
 hi("@constant", { fg = colors.purple, italic = true })
 hi("@constant.builtin", { fg = colors.purple, italic = true })
 hi("@symbol", { fg = colors.purple, italic = true })
