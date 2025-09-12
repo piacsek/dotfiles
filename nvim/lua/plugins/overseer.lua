@@ -95,7 +95,6 @@ return {
 	keys = {
 		{ "<leader>rr", "<cmd>OverseerRun<cr>", desc = "Overseer Run" },
 		{ "<leader>re", "<cmd>OverseerToggle<cr>", desc = "Overseer Toggle" },
-		{ "<leader>rs", "<cmd>OverseerRunCmd<cr>", desc = "Runs a shell cmd" },
 		{ "<leader>ra", "<cmd>OverseerTaskAction<cr>", desc = "Overseer Task Action" },
 		{
 			"<leader>4",
