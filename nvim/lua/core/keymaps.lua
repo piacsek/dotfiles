@@ -48,3 +48,4 @@ vim.keymap.set("n", "<leader>fs", ":ScratchOpen<CR>", { desc = "[F]ump to [S]cra
 vim.keymap.set("n", "<leader>n", ":Scratch<CR>", { desc = "[N]ew scrach" })
 
 vim.keymap.set("n", "<leader><Del>", ":BufOnly<CR>", { desc = "[T]est [S]ummary" })
+vim.keymap.set("n", "<leader>i", ":Inspect<CR>", { desc = "[I]nspect" })

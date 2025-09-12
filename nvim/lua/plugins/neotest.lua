@@ -1,7 +1,7 @@
 local function setup_keymaps()
 	vim.keymap.set("n", "<leader><BS>", function()
 		vim.cmd("w")
-		-- vim.cmd("colorscheme high-contrast")
+		vim.cmd("colorscheme high-contrast")
 		local position_id, last_args = require("neotest").run.get_last_run()
 		if position_id and last_args then
 			require("neotest").run.run_last()

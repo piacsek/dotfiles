@@ -172,6 +172,9 @@ hi("@punctuation.bracket", { fg = colors.blue, bold = true })
 hi("@constructor", { fg = colors.blue, bold = true })
 hi("@type.qualifier", { fg = colors.blue, bold = true })
 hi("@operator", { fg = colors.green1, bold = true })
+hi("@tag.attribute.heex", { fg = colors.fg })
+hi("@string.special.elixir", { fg = colors.green })
+hi("@markup.raw.block.markdown", { fg = colors.grey })
 
 -- Telescope
 hi("TelescopeNormal", { fg = colors.fg, bg = colors.bg_float })
