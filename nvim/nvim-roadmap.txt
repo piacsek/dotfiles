@@ -1,7 +1,5 @@
 nvim roadmap:
 
-- centralize buffer(maybe zen plugin customized?)
-
 - figure out how to have project-specific configs & overseer tasks
 
 - explore & customize telescope;
