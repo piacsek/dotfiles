@@ -15,5 +15,3 @@ nvim roadmap:
 
 - map <leader>ft to "find test file";
 
-- have topbar display the complete filepath;
-

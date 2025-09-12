@@ -37,6 +37,7 @@ return {
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		{ "j-hui/fidget.nvim", opts = {} },
 		{ "folke/neodev.nvim", opts = {} },
+		"b0o/schemastore.nvim",
 	},
 	config = function()
 		vim.api.nvim_create_autocmd("LspAttach", {
@@ -95,11 +96,29 @@ return {
 					},
 				},
 			},
+			jsonls = {
+				settings = {
+					json = {
+						schemas = require("schemastore").json.schemas(),
+						validate = { enable = true },
+					},
+				},
+			},
+			yamlls = {
+				settings = {
+					yaml = {
+						schemas = {
+							["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+							["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "/docker-compose*.yml",
+						},
+					},
+				},
+			},
 		}
 
 		require("mason").setup()
 
-		local ensure_installed = { "elixir-ls", "lua_ls" }
+		local ensure_installed = { "elixir-ls", "lua_ls", "yaml-language-server", "json-lsp" }
 		vim.list_extend(ensure_installed, {
 			"stylua",
 		})
