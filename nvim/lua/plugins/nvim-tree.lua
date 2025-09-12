@@ -60,6 +60,10 @@ return {
 					quit_on_open = false,
 				},
 			},
+			update_focused_file = {
+				enable = true,
+				update_root = false,
+			},
 			on_attach = on_attach_mappings,
 		})
 
