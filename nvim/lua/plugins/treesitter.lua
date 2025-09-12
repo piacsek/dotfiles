@@ -14,6 +14,7 @@ return {
 			"elixir",
 			"heex",
 			"eex",
+			"json",
 		},
 		auto_install = true,
 		highlight = {

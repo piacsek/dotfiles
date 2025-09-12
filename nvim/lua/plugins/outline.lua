@@ -18,6 +18,6 @@ return {
 		})
 	end,
 	keys = {
-		{ "<leader>o", ":topleft Outline<cr>", desc = "Toggle Outline" },
+		{ "<leader>s", ":topleft Outline<cr>", desc = "Toggle Outline" },
 	},
 }

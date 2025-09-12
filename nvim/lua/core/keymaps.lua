@@ -39,7 +39,7 @@ vim.keymap.set("v", "<leader>s", '"sy:%s/<C-r>s/', { desc = "[S]ubstitute select
 vim.keymap.set("t", "<C-`>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 vim.keymap.set("n", "<C-`>", ":hide<CR>", { desc = "Exit terminal mode" })
 
-vim.keymap.set("n", "<leader>jo", function()
+vim.keymap.set("n", "<leader>o", function()
 	require("oil").open_float()
 end, { desc = "[J]ump to [O]il" })
 
