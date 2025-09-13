@@ -88,8 +88,6 @@ return {
 	config = function()
 		require("telescope").setup({
 			defaults = {
-				file_sorter = require("telescope.sorters").get_fzf_sorter,
-				generic_sorter = require("telescope.sorters").get_fzf_sorter,
 				sorting_strategy = "ascending",
 				layout_config = {
 					prompt_position = "top",
@@ -119,8 +117,6 @@ return {
 				},
 				fzf = {
 					fuzzy = true,
-					override_generic_sorter = true,
-					override_file_sorter = true,
 					case_mode = "smart_case",
 				},
 			},
