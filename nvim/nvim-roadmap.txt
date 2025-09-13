@@ -2,7 +2,7 @@ nvim roadmap:
 
 - figure out how to have project-specific configs & overseer tasks
 
-- explore & customize telescope;
+- explore & customize telescope -- compare FzfLua & Telescope;
 
 - add a plugin to connect to Postgres;
 
