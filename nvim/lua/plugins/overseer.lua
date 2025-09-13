@@ -41,6 +41,16 @@ return {
 		})
 
 		overseer.register_template({
+			name = "pr status",
+			builder = function()
+				return {
+					cmd = { "gh" },
+					args = { "pr", "checks" },
+				}
+			end,
+		})
+
+		overseer.register_template({
 			name = "dotfiles sync",
 			builder = function()
 				return {
