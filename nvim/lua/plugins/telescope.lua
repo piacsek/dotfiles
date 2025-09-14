@@ -10,6 +10,13 @@ local function setup_keymaps()
 		return #text > 0 and text or ""
 	end
 
+	function vim.getVisualSelectionEscaped()
+		local text = vim.getVisualSelection()
+		-- Escape special regex characters for grep/live_grep
+		text = vim.fn.escape(text, "()[]{}.*+?^$|\\")
+		return text
+	end
+
 	local builtin = require("telescope.builtin")
 	vim.keymap.set("n", "<leader>ff", function()
 		require("telescope.builtin").find_files({
@@ -39,16 +46,6 @@ local function setup_keymaps()
 	vim.keymap.set("n", "<leader><leader>", builtin.oldfiles, { desc = "[F]ind Recent Files" })
 	vim.keymap.set("n", "<leader>gh", builtin.git_bcommits, { desc = "[G]it [H]istory" })
 
-	vim.keymap.set("v", "<leader>fw", function()
-		local text = vim.getVisualSelection()
-		builtin.grep_string({ default_text = text, hidden = true })
-	end, { noremap = true, silent = true, desc = "[F]ind selected [W]ords" })
-
-	vim.keymap.set("v", "<leader>fg", function()
-		local text = vim.getVisualSelection()
-		builtin.live_grep({ default_text = text, hidden = true })
-	end, { noremap = true, silent = true, desc = "[F]ind selected [W]ords" })
-
 	vim.keymap.set("n", "<leader>/", function()
 		builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
 			winblend = 10,
@@ -67,6 +64,21 @@ local function setup_keymaps()
 	vim.keymap.set("n", "<leader>fc", function()
 		builtin.live_grep({ cwd = vim.fn.stdpath("config") })
 	end, { desc = "Grep config files" })
+
+	vim.keymap.set("v", "<leader>fw", function()
+		local text = vim.getVisualSelection()
+		builtin.grep_string({ default_text = text, hidden = true })
+	end, { desc = "[F]ind selected [W]ords" })
+
+	vim.keymap.set("v", "<leader>fg", function()
+		local text = vim.getVisualSelectionEscaped()
+		builtin.live_grep({ default_text = text, hidden = true })
+	end, { desc = "[G]rep selected" })
+
+	vim.keymap.set("v", "<leader>fc", function()
+		local text = vim.getVisualSelectionEscaped()
+		builtin.live_grep({ cwd = vim.fn.stdpath("config"), default_text = text })
+	end, { desc = "[G]rep selected [C]onfig" })
 end
 
 return {
@@ -89,12 +101,24 @@ return {
 		require("telescope").setup({
 			defaults = {
 				sorting_strategy = "ascending",
-				preview = false,
+				preview = {
+					hide_on_startup = true,
+				},
 				layout_strategy = "center",
+				mappings = {
+					i = {
+						["<C-k>"] = require("telescope.actions.layout").toggle_preview,
+					},
+					n = {
+						["<C-k>"] = require("telescope.actions.layout").toggle_preview,
+					},
+				},
 			},
 			pickers = {
 				live_grep = {
-					preview = true,
+					mappings = {
+						i = { ["<c-f>"] = require("telescope.actions").to_fuzzy_refine },
+					},
 				},
 				git_bcommits = {
 					mappings = {
