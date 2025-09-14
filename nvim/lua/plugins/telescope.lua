@@ -89,11 +89,13 @@ return {
 		require("telescope").setup({
 			defaults = {
 				sorting_strategy = "ascending",
-				layout_config = {
-					prompt_position = "top",
-				},
+				preview = false,
+				layout_strategy = "center",
 			},
 			pickers = {
+				live_grep = {
+					preview = true,
+				},
 				git_bcommits = {
 					mappings = {
 						i = {
