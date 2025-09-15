@@ -99,22 +99,22 @@ return {
 	},
 	config = function()
 		require("telescope").setup({
-			defaults = {
-				sorting_strategy = "ascending",
-				preview = {
-					hide_on_startup = true,
-				},
-				layout_strategy = "center",
-				mappings = {
-					i = {
-						["<C-k>"] = require("telescope.actions.layout").toggle_preview,
-					},
-					n = {
-						["<C-k>"] = require("telescope.actions.layout").toggle_preview,
-					},
-				},
-			},
 			pickers = {
+				find_files = {
+					sorting_strategy = "ascending",
+					preview = {
+						hide_on_startup = true,
+					},
+					layout_strategy = "center",
+					mappings = {
+						i = {
+							["<C-k>"] = require("telescope.actions.layout").toggle_preview,
+						},
+						n = {
+							["<C-k>"] = require("telescope.actions.layout").toggle_preview,
+						},
+					},
+				},
 				live_grep = {
 					mappings = {
 						i = { ["<c-f>"] = require("telescope.actions").to_fuzzy_refine },
