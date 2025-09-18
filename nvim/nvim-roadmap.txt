@@ -13,6 +13,7 @@ nvim roadmap:
 
 - figure out find/replace within buffer:
 	- for simple cases, <C-g> is now doing the job;
+	- multicursor?
 
 - learn how to use quickfix list properly:
 	- How do I apply macros to results? 
