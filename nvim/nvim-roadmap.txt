@@ -6,6 +6,7 @@ nvim roadmap:
 
 - neotest customization:
 	- make output a large screen w/ border, like overseer does;
+	- reduce parallelism to prevent neovim from choking when running a whole dir of tests;
 	- create a binding that shows the full output from the test;
 
 - explore & customize telescope:
