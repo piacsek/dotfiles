@@ -41,6 +41,16 @@ return {
 		})
 
 		overseer.register_template({
+			name = "view pr in the browser",
+			builder = function()
+				return {
+					cmd = { "gh" },
+					args = { "pr", "view", "-w" },
+				}
+			end,
+		})
+
+		overseer.register_template({
 			name = "pr status",
 			builder = function()
 				return {
@@ -82,7 +92,7 @@ return {
 		overseer.register_template({
 			name = "mix compile",
 			builder = function()
-				return { cmd = { "mix" }, args = { "compile" } }
+				return { cmd = { "mix" }, args = { "compile", "--warnings-as-errors" } }
 			end,
 		})
 		overseer.register_template({

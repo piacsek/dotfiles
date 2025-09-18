@@ -12,6 +12,9 @@ return {
 		i(1),
 		t('")'),
 	}),
+	s("linfo", {
+		t("|> Logger.info()"),
+	}),
 	s({ trig = "ttest", priority = 1000 }, {
 		t("@tag :skip"),
 		t({ "", 'test "' }),
