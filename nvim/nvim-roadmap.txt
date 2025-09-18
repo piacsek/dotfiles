@@ -8,11 +8,11 @@ nvim roadmap:
 	- make output a large screen w/ border, like overseer does;
 	- create a binding that shows the full output from the test;
 
-- figure out how to have project-specific configs & overseer tasks
-
 - explore & customize telescope:
 	-- scope searchs to dir using nvim-tree;
 	-- compare FzfLua & Telescope;
+
+- figure out how to have project-specific configs & overseer tasks
 
 - add a plugin to connect to Postgres;
 
