@@ -1,9 +1,14 @@
 nvim roadmap:
 
-- figure out how to have project-specific configs & overseer tasks
+- learn how to use quickfix list properly:
+	- How do I apply macros to results? 
+	- How do I copy only the matched content, without the file info?
+
 - neotest customization:
 	- make output a large screen w/ border, like overseer does;
 	- create a binding that shows the full output from the test;
+
+- figure out how to have project-specific configs & overseer tasks
 
 - explore & customize telescope:
 	-- scope searchs to dir using nvim-tree;
@@ -14,10 +19,6 @@ nvim roadmap:
 - figure out find/replace within buffer:
 	- for simple cases, <C-g> is now doing the job;
 	- multicursor?
-
-- learn how to use quickfix list properly:
-	- How do I apply macros to results? 
-	- How do I copy only the matched content, without the file info?
 
 - map <leader>ft to "find test file";
 
