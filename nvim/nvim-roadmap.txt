@@ -14,6 +14,12 @@ nvim roadmap:
 
 - figure out how to have project-specific configs & overseer tasks
 
+- improve high-contrast theme:
+	- neotest;
+	- overseer;
+	- telescope;
+	- customize whitebars?
+
 - add a plugin to connect to Postgres;
 
 - figure out find/replace within buffer:
