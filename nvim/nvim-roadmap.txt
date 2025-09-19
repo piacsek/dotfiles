@@ -2,6 +2,9 @@ nvim roadmap:
 
 - try to allocate more resources for nvim's process;
 
+- add credo(nvim-lint?)
+- try sticky buff again;
+
 - learn how to use quickfix list properly:
 	- How do I apply macros to results? 
 	- How do I copy only the matched content, without the file info?
