@@ -4,7 +4,6 @@ nvim roadmap:
 
 - add credo(nvim-lint?)
 - try sticky buff again;
-I wonder what happens on a conflict;
 
 - learn how to use quickfix list properly:
 	- How do I apply macros to results? 
@@ -14,6 +13,7 @@ I wonder what happens on a conflict;
 	- make output a large screen w/ border, like overseer does;
 	- reduce parallelism to prevent neovim from choking when running a whole dir of tests;
 	- create a binding that shows the full output from the test;
+	- debug;
 
 - explore & customize telescope:
 	-- scope searchs to dir using nvim-tree;
