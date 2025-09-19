@@ -4,6 +4,7 @@ nvim roadmap:
 
 - add credo(nvim-lint?)
 - try sticky buff again;
+I wonder what happens on a conflict;
 
 - learn how to use quickfix list properly:
 	- How do I apply macros to results? 
