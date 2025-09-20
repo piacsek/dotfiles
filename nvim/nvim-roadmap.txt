@@ -1,19 +1,16 @@
 nvim roadmap:
 
-
-- try sticky buff again;
+- neotest customization:
+	- make output a large screen w/ border, like overseer does;
+	- reduce parallelism to prevent neovim from choking when running a whole dir of tests;
+	- create a binding that shows the full output from the test;
+	- debug;
 
 - figure out how to have project-specific configs & overseer tasks
 
 - learn how to use quickfix list properly:
 	- How do I apply macros to results? 
 	- How do I copy only the matched content, without the file info?
-
-- neotest customization:
-	- make output a large screen w/ border, like overseer does;
-	- reduce parallelism to prevent neovim from choking when running a whole dir of tests;
-	- create a binding that shows the full output from the test;
-	- debug;
 
 - explore & customize telescope:
 	-- scope searchs to dir using nvim-tree;
