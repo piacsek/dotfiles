@@ -20,7 +20,6 @@ local function setup_keymaps()
 	local builtin = require("telescope.builtin")
 	vim.keymap.set("n", "<leader>ff", function()
 		require("telescope.builtin").find_files({
-			hidden = true,
 			no_ignore = false,
 		})
 	end, { desc = "[F]ind [F]iles" })
@@ -28,7 +27,6 @@ local function setup_keymaps()
 	vim.keymap.set("v", "<leader>ff", function()
 		local text = vim.getVisualSelection()
 		require("telescope.builtin").find_files({
-			hidden = true,
 			no_ignore = false,
 			default_text = text,
 		})
