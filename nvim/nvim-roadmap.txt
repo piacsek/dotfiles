@@ -7,10 +7,13 @@ nvim roadmap:
 	- debug;
 
 - overseer:
-	- project-specific tasks;
+	- project-specific tasks(k9s);
 	- Mini CI!!!:
 		- Run an arbitrary chain of commands based on the current file type;
-		- Notify progress minimalistically;
+		- Notify progress minimalistically:
+			- [1/3] Compiling...
+			- [2/3] Linting...
+			- [3/3] Testing...
 	- Add ability to "attach to onsave";
 
 - learn how to use quickfix list properly:
