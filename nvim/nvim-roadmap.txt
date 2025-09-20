@@ -1,8 +1,9 @@
 nvim roadmap:
 
 
-- add credo(nvim-lint?)
 - try sticky buff again;
+
+- figure out how to have project-specific configs & overseer tasks
 
 - learn how to use quickfix list properly:
 	- How do I apply macros to results? 
@@ -17,8 +18,6 @@ nvim roadmap:
 - explore & customize telescope:
 	-- scope searchs to dir using nvim-tree;
 	-- compare FzfLua & Telescope;
-
-- figure out how to have project-specific configs & overseer tasks
 
 - improve high-contrast theme:
 	- neotest;
