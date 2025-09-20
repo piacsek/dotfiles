@@ -18,6 +18,15 @@ local function setup_keymaps()
 	vim.keymap.set("n", "<leader>to", function()
 		require("neotest").output.open({ enter = true })
 	end, { desc = "[T]est [O]utput" })
+
+	vim.keymap.set("n", "<leader><BS>", function()
+		vim.cmd("w")
+		vim.cmd("colorscheme high-contrast")
+		local position_id, last_args = require("neotest").run.get_last_run()
+		if position_id and last_args then
+			require("neotest").run.run_last()
+		end
+	end, { desc = "Save file and re-run last test (if any)" })
 end
 
 return {

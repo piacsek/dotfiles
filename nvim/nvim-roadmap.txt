@@ -1,6 +1,5 @@
 nvim roadmap:
 
-- try to allocate more resources for nvim's process;
 
 - add credo(nvim-lint?)
 - try sticky buff again;
@@ -35,3 +34,6 @@ nvim roadmap:
 
 - map <leader>ft to "find test file";
 
+
+- optimize configs to avoid freezing:
+	- (Claude) Saved the performance analysis to /Users/piacsek/.config/nvim/PERFORMANCE_ANALYSIS.md

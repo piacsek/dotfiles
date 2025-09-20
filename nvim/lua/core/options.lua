@@ -24,5 +24,23 @@ vim.opt.splitright = true
 vim.opt.splitbelow = true
 vim.opt.tabstop = 2
 vim.opt.timeoutlen = 300
-vim.opt.updatetime = 250
+vim.opt.updatetime = 500
 vim.opt.undofile = true
+
+vim.diagnostic.config({
+	virtual_text = {
+		prefix = "●",
+		spacing = 4,
+		severity = { min = vim.diagnostic.severity.WARN },
+	},
+	float = {
+		focusable = false,
+		style = "minimal",
+		border = "rounded",
+		source = "always",
+		header = "",
+		prefix = "",
+	},
+	severity_sort = true,
+	update_in_insert = false,
+})
