@@ -6,7 +6,12 @@ nvim roadmap:
 	- create a binding that shows the full output from the test;
 	- debug;
 
-- figure out how to have project-specific configs & overseer tasks
+- overseer:
+	- project-specific tasks;
+	- Mini CI!!!:
+		- Run an arbitrary chain of commands based on the current file type;
+		- Notify progress minimalistically;
+	- Add ability to "attach to onsave";
 
 - learn how to use quickfix list properly:
 	- How do I apply macros to results? 
