@@ -73,6 +73,19 @@ local function setup_keymaps()
 		builtin.live_grep({ default_text = text, hidden = true })
 	end, { desc = "[G]rep selected" })
 
+	vim.keymap.set("v", "<leader>/", function()
+		local text = vim.getVisualSelectionEscaped()
+		builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
+			default_text = text,
+			winblend = 10,
+			previewer = false,
+			layout_config = {
+				width = 120,
+				height = 40,
+			},
+		}))
+	end, { desc = "[/] Fuzzily search in current buffer" })
+
 	vim.keymap.set("v", "<leader>fc", function()
 		local text = vim.getVisualSelectionEscaped()
 		builtin.live_grep({ cwd = vim.fn.stdpath("config"), default_text = text })
