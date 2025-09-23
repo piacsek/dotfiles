@@ -1,12 +1,8 @@
 nvim roadmap:
 
-- neotest customization:
-	- make output a large screen w/ border, like overseer does;
-	- reduce parallelism to prevent neovim from choking when running a whole dir of tests;
-	- create a binding that shows the full output from the test;
-	- debug;
-
 - overseer:
+	- project-specific tasks(k9s);
+	- Add ability to "attach to onsave";
 	- Mini CI!!!:
 		- Run an arbitrary chain of commands based on the current file type;
 		- Notify progress minimalistically while succeeding:
@@ -14,8 +10,6 @@ nvim roadmap:
 			- [2/3] Linting...
 			- [3/3] Testing...
 		- Open a floating window with the full output when there's a faiure;
-	- project-specific tasks(k9s);
-	- Add ability to "attach to onsave";
 
 - learn how to use quickfix list properly:
 	- How do I apply macros to results? 
