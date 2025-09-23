@@ -19,14 +19,6 @@ return {
 				{ type = "echo", level = vim.log.levels.INFO },
 				{ type = "file", filename = "overseer.log", level = vim.log.levels.INFO },
 			},
-			component_aliases = {
-				default_neotest = {
-					"on_output_summarize",
-					"on_exit_set_status",
-					"on_complete_notify",
-					-- "on_complete_dispose", -- Remove this to prevent auto-closing
-				},
-			},
 		})
 
 		overseer.register_template({
@@ -43,7 +35,6 @@ return {
 			builder = function()
 				return {
 					cmd = { "claude" },
-					args = { "-r" },
 					cwd = vim.fn.stdpath("config"),
 				}
 			end,
