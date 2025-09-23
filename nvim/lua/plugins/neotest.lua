@@ -50,6 +50,9 @@ return {
 
 		require("neotest").setup({
 			adapters = { require("neotest-elixir") },
+			consumers = {
+				overseer = require("neotest.consumers.overseer"),
+			},
 			summary = {
 				open = "leftabove vsplit | vertical resize 50",
 			},
