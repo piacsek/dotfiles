@@ -7,10 +7,8 @@ return {
 	s("skip", {
 		t("@tag :skip"),
 	}),
-	s("ioinspect", {
-		t('|> IO.inspect(label: "'),
-		i(1),
-		t('")'),
+	s("dbg", {
+		t("|> dbg()"),
 	}),
 	s("linfo", {
 		t("|> Logger.info()"),
