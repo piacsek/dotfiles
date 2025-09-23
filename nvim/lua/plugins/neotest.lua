@@ -3,17 +3,13 @@ local function setup_keymaps()
 		require("neotest").run.run()
 	end, { desc = "[T]est neares[T]" })
 
-	vim.keymap.set("n", "<leader>tf", function()
+	vim.keymap.set("n", "<leader tf", function()
 		require("neotest").run.run(vim.fn.expand("%"))
 	end, { desc = "[T]est [F]ile" })
 
 	vim.keymap.set("n", "<leader>ts", function()
 		require("neotest").summary.toggle()
 	end, { desc = "[T]est [S]ummary" })
-
-	vim.keymap.set("n", "<leader>tp", function()
-		require("neotest").output_panel.open()
-	end, { desc = "[T]est [O]utput" })
 
 	vim.keymap.set("n", "<leader>to", function()
 		require("neotest").output.open({ enter = true })
