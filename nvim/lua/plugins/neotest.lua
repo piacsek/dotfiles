@@ -3,7 +3,7 @@ local function setup_keymaps()
 		require("neotest").run.run()
 	end, { desc = "[T]est neares[T]" })
 
-	vim.keymap.set("n", "<leader tf", function()
+	vim.keymap.set("n", "<leader>tf", function()
 		require("neotest").run.run(vim.fn.expand("%"))
 	end, { desc = "[T]est [F]ile" })
 

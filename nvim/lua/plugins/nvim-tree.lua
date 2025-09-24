@@ -24,7 +24,6 @@ return {
 			api.config.mappings.default_on_attach(bufnr)
 
 			-- Remove tab mapping(to avoid messing w/ my navigation) and add space for preview
-			vim.keymap.del("n", "<Tab>", { buffer = bufnr })
 			vim.keymap.del("n", ">", { buffer = bufnr })
 			vim.keymap.del("n", "<", { buffer = bufnr })
 			vim.keymap.set("n", "p", api.node.open.preview, opts("[P]review"))

@@ -6,8 +6,6 @@ vim.keymap.set({ "n", "i", "v", "c", "t" }, "<Right>", "<Nop>", arrow_disabling_
 
 vim.keymap.set("n", "<C-g>", "#*viw", { desc = "Multiple cursor replacement" })
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Remove search results highlights" })
-vim.keymap.set("n", "<Tab>", "<C-w>w", { desc = "Go to next window" })
-vim.keymap.set("n", "<S-Tab>", "<C-w>p", { desc = "Go to previous window" })
 
 vim.keymap.set("n", "<leader><Esc>", ":hide<CR>", { desc = "Hide window" })
 vim.keymap.set("n", "Y", "y$", { desc = "[Y]ank till the end of the line" })
@@ -15,6 +13,11 @@ vim.keymap.set("n", "V", "v$", { desc = "[V]isually select till the end of the l
 vim.keymap.set("n", "<leader>vp", vim.cmd.Ex, { desc = "Hide window" })
 
 vim.keymap.set("n", "Q", "<nop>", { desc = "Avoiding Q" })
+
+vim.keymap.set("n", "<C-6>", "<C-w>h", { desc = "Go to the buffer on the left" })
+vim.keymap.set("n", "<C-7>", "<C-w>j", { desc = "Go to the buffer on the bottom" })
+vim.keymap.set("n", "<C-8>", "<C-w>k", { desc = "Go to the buffer on the top" })
+vim.keymap.set("n", "<C-9>", "<C-w>l", { desc = "Go to the buffer on the right" })
 
 vim.keymap.set("x", "<leader>p", [["_dP]], { desc = 'Pastes content without losing current "0 contents' })
 
