@@ -27,6 +27,23 @@ return {
 			vim.keymap.del("n", ">", { buffer = bufnr })
 			vim.keymap.del("n", "<", { buffer = bufnr })
 			vim.keymap.set("n", "p", api.node.open.preview, opts("[P]review"))
+			vim.keymap.set("n", "fg", function()
+				local node = api.tree.get_node_under_cursor()
+				if not node then
+					return
+				end
+				local path
+				if node.type == "directory" then
+					path = node.absolute_path
+				else
+					path = vim.fn.fnamemodify(node.absolute_path, ":h")
+				end
+				local relative_path = vim.fn.fnamemodify(path, ":~:.")
+				require("telescope.builtin").live_grep({
+					cwd = path,
+					prompt_title = "Live Grep (" .. relative_path .. ")"
+				})
+			end, opts("[F]ind [Grep]"))
 		end
 
 		require("nvim-tree").setup({

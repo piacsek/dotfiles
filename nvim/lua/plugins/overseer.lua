@@ -13,6 +13,7 @@ return {
 				min_height = 0.5,
 				bindings = {
 					["<Esc>"] = "Close",
+					["r"] = "<CMD>OverseerQuickAction restart<CR>",
 					["w"] = "<CMD>OverseerQuickAction watch<CR>",
 					["W"] = "<CMD>OverseerQuickAction unwatch<CR>",
 				},
