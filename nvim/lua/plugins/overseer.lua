@@ -27,6 +27,7 @@ return {
 				default = {
 					"display_duration",
 					"on_output_summarize",
+					"on_output_notify",
 					"on_exit_set_status",
 					"neotest_notifier",
 				},
