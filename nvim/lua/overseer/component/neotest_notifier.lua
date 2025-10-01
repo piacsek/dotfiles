@@ -6,6 +6,12 @@ return {
 		local current_notification = nil
 		local has_error = false
 		return {
+			on_start = function(self, task)
+				current_notification = vim.notify("Starting " .. task.name .. "...", vim.log.levels.INFO, {
+					timeout = false,
+					hide_from_history = true,
+				})
+			end,
 			on_output_lines = function(self, task, lines)
 				for _, line in ipairs(lines) do
 					if line:match("Compiling %d+ file") then
