@@ -42,7 +42,11 @@ return {
 					has_error = false
 					return
 				elseif test_result_line then
-					vim.notify(test_result_line, vim.log.levels.INFO, {
+					local level = vim.log.levels.INFO
+					if status == "FAILURE" then
+						level = vim.log.levels.ERROR
+					end
+					vim.notify(test_result_line, level, {
 						replace = current_notification,
 						timeout = 3000,
 					})

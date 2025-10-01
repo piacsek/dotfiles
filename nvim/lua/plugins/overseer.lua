@@ -24,10 +24,9 @@ return {
 				{ type = "file", filename = "overseer.log", level = vim.log.levels.INFO },
 			},
 			component_aliases = {
-				default = {
+				default_neotest = {
 					"display_duration",
 					"on_output_summarize",
-					"on_output_notify",
 					"on_exit_set_status",
 					"neotest_notifier",
 				},
