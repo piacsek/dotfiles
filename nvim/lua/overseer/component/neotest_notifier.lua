@@ -5,12 +5,15 @@ return {
 		local test_result_line = nil
 		local current_notification = nil
 		local has_error = false
+		local notification_title = nil
 		return {
 			on_start = function(self, task)
-				current_notification = vim.notify("Starting " .. task.name .. "...", vim.log.levels.INFO, {
-					timeout = false,
-					hide_from_history = true,
-				})
+				notification_title = task.name
+				current_notification = vim.notify(
+					"Initializing...",
+					vim.log.levels.INFO,
+					{ title = notification_title, timeout = false, hide_from_history = true }
+				)
 			end,
 			on_output_lines = function(self, task, lines)
 				for _, line in ipairs(lines) do
