@@ -16,6 +16,7 @@ return {
 		local has_error = false
 		local notification_title = nil
 		local left_pad = "   "
+		local start_time = nil
 
 		local function set_current_formatted_msg(message)
 			current_msg = left_pad .. message
@@ -23,6 +24,24 @@ return {
 
 		local function set_test_result_line(message)
 			test_result_line = left_pad .. message
+		end
+
+		local function format_elapsed_time()
+			if not start_time then
+				return "0s"
+			end
+			local elapsed = os.time() - start_time
+			if elapsed < 60 then
+				return string.format("%ds", elapsed)
+			else
+				local minutes = math.floor(elapsed / 60)
+				local seconds = elapsed % 60
+				return string.format("%dm %ds", minutes, seconds)
+			end
+		end
+
+		local function get_title_with_timer()
+			return notification_title .. string.rep(" ", 20) .. format_elapsed_time()
 		end
 
 		-- SPINNER: start/stop helpers
@@ -40,7 +59,7 @@ return {
 					-- re-post same message but only update the icon frame
 					current_notification = notify(current_msg or "Working…", vim.log.levels.INFO, {
 						render = "default",
-						title = notification_title,
+						title = get_title_with_timer(),
 						icon = spinner_frames[spinner_i],
 						replace = current_notification,
 						timeout = false,
@@ -61,10 +80,11 @@ return {
 		return {
 			on_start = function(self, task)
 				notification_title = task.name
+				start_time = os.time()
 				set_current_formatted_msg("Initializing...")
 				current_notification = vim.notify(current_msg, vim.log.levels.INFO, {
 					render = "default",
-					title = notification_title,
+					title = get_title_with_timer(),
 					icon = spinner_frames[spinner_i],
 					timeout = false,
 					hide_from_history = true,
@@ -78,7 +98,7 @@ return {
 						set_current_formatted_msg(line)
 						current_notification = vim.notify(current_msg, vim.log.levels.INFO, {
 							render = "default",
-							title = notification_title,
+							title = get_title_with_timer(),
 							icon = spinner_frames[spinner_i], -- keep spinner going
 							replace = current_notification,
 							timeout = false,
@@ -88,7 +108,7 @@ return {
 						set_current_formatted_msg("Compilation succeeded. Starting ExUnit...")
 						current_notification = vim.notify(current_msg, vim.log.levels.INFO, {
 							render = "default",
-							title = notification_title,
+							title = get_title_with_timer(),
 							icon = spinner_frames[spinner_i],
 							replace = current_notification,
 							timeout = false,
@@ -100,7 +120,7 @@ return {
 						stop_spinner() -- SPINNER: stop on hard error
 						current_notification = vim.notify(current_msg, vim.log.levels.ERROR, {
 							render = "default",
-							title = notification_title,
+							title = get_title_with_timer(),
 							replace = current_notification,
 							timeout = 3000,
 						})
@@ -108,7 +128,7 @@ return {
 						set_current_formatted_msg("Running ExUnit...")
 						current_notification = vim.notify(current_msg, vim.log.levels.INFO, {
 							render = "default",
-							title = notification_title,
+							title = get_title_with_timer(),
 							icon = spinner_frames[spinner_i],
 							replace = current_notification,
 							timeout = false,
@@ -124,6 +144,7 @@ return {
 				if has_error then
 					stop_spinner()
 					has_error = false
+					start_time = nil
 					return
 				elseif test_result_line then
 					stop_spinner()
@@ -135,19 +156,21 @@ return {
 					end
 					vim.notify(test_result_line, level, {
 						render = "default",
-						title = notification_title,
+						title = get_title_with_timer(),
 						icon = icon,
 						replace = current_notification,
 						timeout = 3000,
 					})
 					current_notification = nil
 					current_msg = nil
+					start_time = nil
 				elseif current_notification then
 					stop_spinner() -- ensure no stray timer
 					-- Dismiss notification if still active and no test results
 					require("notify").dismiss({ silent = true, pending = true })
 					current_notification = nil
 					current_msg = nil
+					start_time = nil
 				end
 			end,
 		}
