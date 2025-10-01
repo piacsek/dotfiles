@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "WebFetch(domain:github.com)",
-      "WebSearch"
+      "WebSearch",
+      "Read(//Users/piacsek/.local/share/nvim/lazy/overseer.nvim/lua/neotest/client/strategies/**)"
     ],
     "deny": [],
     "ask": []
