@@ -6,6 +6,11 @@ return {
 			stages = "fade",
 			timeout = 3000,
 			top_down = false,
+			icons = {
+				ERROR = "",
+				WARN = "",
+				INFO = "",
+			},
 			render = "compact",
 		})
 		vim.notify = notify
