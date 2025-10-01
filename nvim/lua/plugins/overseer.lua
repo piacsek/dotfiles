@@ -5,6 +5,7 @@ return {
 	},
 	config = function(_, _opts)
 		local overseer = require("overseer")
+
 		overseer.setup({
 			templates = {
 				mix = false,
@@ -21,6 +22,14 @@ return {
 			log = {
 				{ type = "echo", level = vim.log.levels.INFO },
 				{ type = "file", filename = "overseer.log", level = vim.log.levels.INFO },
+			},
+			component_aliases = {
+				default = {
+					"display_duration",
+					"on_output_summarize",
+					"on_exit_set_status",
+					"neotest_notifier",
+				},
 			},
 		})
 
