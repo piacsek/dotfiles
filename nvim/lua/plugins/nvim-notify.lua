@@ -6,7 +6,7 @@ return {
 			stages = "fade",
 			timeout = 3000,
 			top_down = false,
-			render = "minimal",
+			render = "compact",
 		})
 		vim.notify = notify
 	end,
