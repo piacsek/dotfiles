@@ -3,47 +3,54 @@ return {
 	params = {},
 	constructor = function()
 		local test_result_line = nil
-		local compiling_notification = nil
+		local current_notification = nil
+		local has_error = false
 		return {
 			on_output_lines = function(self, task, lines)
 				for _, line in ipairs(lines) do
 					if line:match("Compiling %d+ file") then
-						compiling_notification = vim.notify(line, vim.log.levels.INFO, {
+						current_notification = vim.notify(line, vim.log.levels.INFO, {
 							timeout = false,
 							hide_from_history = true,
 						})
 					elseif line:match("Generated %w+ app") then
-						if compiling_notification then
-							vim.notify("Compilation complete", vim.log.levels.INFO, {
-								replace = compiling_notification,
-								timeout = 3000,
+						current_notification =
+							vim.notify("Compilation succeeded. Starting ExUnit...", vim.log.levels.INFO, {
+								replace = current_notification,
+								timeout = false,
+								hide_from_history = true,
 							})
-							compiling_notification = nil
-						end
 					elseif line:match("== Compilation error") then
-						if compiling_notification then
-							vim.notify("Compilation error", vim.log.levels.ERROR, {
-								replace = compiling_notification,
-								timeout = 3000,
-							})
-							compiling_notification = nil
-						end
+						has_error = true
+						current_notification = vim.notify("Compilation error.", vim.log.levels.ERROR, {
+							replace = current_notification,
+							timeout = 3000,
+						})
 					elseif line:match("Running ExUnit") then
-						vim.notify(line, vim.log.levels.INFO)
+						current_notification = vim.notify("Running ExUnit...", vim.log.levels.INFO, {
+							replace = current_notification,
+							timeout = false,
+							hide_from_history = true,
+						})
 					elseif line:match("%d+ tests?, %d+ failures?") then
 						test_result_line = line
 					end
 				end
 			end,
 			on_complete = function(self, task, status, result)
-				-- Dismiss compiling notification if still active
-				if compiling_notification then
+				if has_error then
+					has_error = false
+					return
+				elseif test_result_line then
+					vim.notify(test_result_line, vim.log.levels.INFO, {
+						replace = current_notification,
+						timeout = 3000,
+					})
+					current_notification = nil
+				elseif current_notification then
+					-- Dismiss notification if still active and no test results
 					require("notify").dismiss({ silent = true, pending = true })
-					compiling_notification = nil
-				end
-
-				if test_result_line then
-					vim.notify(test_result_line, vim.log.levels.INFO)
+					current_notification = nil
 				end
 			end,
 		}
