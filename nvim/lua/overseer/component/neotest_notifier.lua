@@ -42,7 +42,7 @@ return {
 		end
 
 		local function get_title_with_timer()
-			return " " .. notification_title .. string.rep(" ", 32) .. format_elapsed_time()
+			return format_elapsed_time() .. " " .. notification_title
 		end
 
 		-- SPINNER: start/stop helpers
