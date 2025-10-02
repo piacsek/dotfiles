@@ -151,10 +151,10 @@ return {
 				elseif test_result_line then
 					stop_spinner()
 					local level = vim.log.levels.INFO
-					local icon = ""
+					local icon = "󰄬"
 					if status == "FAILURE" then
 						level = vim.log.levels.ERROR
-						icon = ""
+						icon = ""
 					end
 					vim.notify(test_result_line, level, {
 						render = render_mode,
