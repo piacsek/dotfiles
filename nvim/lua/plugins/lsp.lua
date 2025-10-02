@@ -119,9 +119,6 @@ return {
 		require("mason").setup()
 
 		local ensure_installed = { "elixir-ls", "lua_ls", "yaml-language-server", "json-lsp" }
-		vim.list_extend(ensure_installed, {
-			"stylua",
-		})
 		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
 		require("mason-lspconfig").setup({
