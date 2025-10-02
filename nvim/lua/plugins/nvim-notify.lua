@@ -14,5 +14,13 @@ return {
 			render = "compact",
 		})
 		vim.notify = notify
+
+		vim.keymap.set("n", "<leader>ml", function()
+			local history = notify.history()
+			if #history > 0 then
+				local last = history[#history]
+				notify.notify(last.message, last.level)
+			end
+		end, { desc = "Show last notification" })
 	end,
 }

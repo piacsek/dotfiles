@@ -64,7 +64,6 @@ return {
 						icon = spinner_frames[spinner_i],
 						replace = current_notification,
 						timeout = false,
-						hide_from_history = true,
 					})
 				end)
 			end)
@@ -88,7 +87,6 @@ return {
 					title = get_title_with_timer(),
 					icon = spinner_frames[spinner_i],
 					timeout = false,
-					hide_from_history = true,
 					time_formats = { notification = " " },
 				})
 				start_spinner() -- SPINNER: begin
@@ -104,7 +102,6 @@ return {
 							icon = spinner_frames[spinner_i], -- keep spinner going
 							replace = current_notification,
 							timeout = false,
-							hide_from_history = true,
 						})
 					elseif line:match("Generated %w+ app") then
 						set_current_formatted_msg("Compilation succeeded. Starting ExUnit...")
@@ -114,7 +111,6 @@ return {
 							icon = spinner_frames[spinner_i],
 							replace = current_notification,
 							timeout = false,
-							hide_from_history = true,
 						})
 					elseif line:match("== Compilation error") then
 						set_current_formatted_msg("Compilation error!")
@@ -134,7 +130,6 @@ return {
 							icon = spinner_frames[spinner_i],
 							replace = current_notification,
 							timeout = false,
-							hide_from_history = true,
 						})
 					elseif line:match("%d+ tests?, %d+ failures?") then
 						set_test_result_line(line)
