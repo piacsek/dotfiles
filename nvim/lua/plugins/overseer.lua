@@ -110,7 +110,27 @@ return {
 		overseer.register_template({
 			name = "mix credo",
 			builder = function()
-				return { cmd = { "mix" }, args = { "credo" } }
+				return {
+					cmd = { "mix" },
+					args = { "credo" },
+					components = {
+						{
+							"pattern_notifier",
+							patterns = {
+								{
+									pattern = "Checking (%d+) source file",
+								},
+								{
+									pattern = "(%d+) mods/funs",
+									once = true,
+								},
+							},
+						},
+						"on_output_summarize",
+						"on_exit_set_status",
+						"display_duration",
+					},
+				}
 			end,
 		})
 		overseer.register_template({
