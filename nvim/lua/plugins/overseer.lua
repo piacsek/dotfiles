@@ -112,7 +112,8 @@ return {
 							"pattern_notifier",
 							patterns = {
 								{ pattern = "Compiling (%d+) files" },
-								{ pattern = "Compilation failed", once = true },
+								{ pattern = "Generated %w+ app", once = true },
+								{ pattern = "Compilation error", once = true },
 							},
 						},
 						"on_output_summarize",
