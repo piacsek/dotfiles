@@ -50,6 +50,9 @@ return {
 		local current_msg = nil
 		local notification_title = nil
 		local start_time = nil
+		local default_initial_message = "   Starting..."
+		local default_completion_success_message = "   Finished successfully!"
+		local default_completion_failure_message = "   Error!"
 		local render_mode = "wrapped-default"
 		local matched_patterns = {}
 
@@ -105,7 +108,7 @@ return {
 			on_start = function(self, task)
 				notification_title = task.name
 				start_time = os.time()
-				current_msg = "   Starting..."
+				current_msg = default_initial_message
 				if params.show_spinner then
 					current_notification = vim.notify(current_msg, vim.log.levels.INFO, {
 						render = render_mode,
@@ -169,11 +172,20 @@ return {
 				if current_notification then
 					local level = vim.log.levels.INFO
 					local icon = "󰄬"
+					local fallback_message = default_completion_success_message
+
 					if status == "FAILURE" then
 						level = vim.log.levels.ERROR
 						icon = ""
+						fallback_message = default_completion_failure_message
 					end
-					vim.notify(current_msg, level, {
+
+					final_message = current_msg
+					if final_message == default_initial_message then
+						final_message = fallback_message
+					end
+
+					vim.notify(final_message, level, {
 						render = render_mode,
 						title = get_title_with_timer(),
 						icon = icon,
