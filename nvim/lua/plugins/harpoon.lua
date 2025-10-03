@@ -7,21 +7,8 @@ local function setup_keymaps()
 		require("harpoon"):list():add()
 	end)
 
-	local keys_that_toggle_selections = { "j", "k", "l", "h" }
-
-	for file_index, key in ipairs(keys_that_toggle_selections) do
-		local open_on_split_buffer_remap = ("<C-S-%s>"):format(key)
-		vim.keymap.set("n", open_on_split_buffer_remap, function()
-			require("harpoon"):list():select(file_index, { vsplit = true })
-		end)
-
-		local open_on_same_buffer_remap = ("<C-%s>"):format(key)
-		vim.keymap.set("n", open_on_same_buffer_remap, function()
-			require("harpoon"):list():select(file_index)
-		end)
-
-		local replace_file_remap = ("<leader><C-%s>"):format(key)
-		vim.keymap.set("n", replace_file_remap, function()
+	for file_index, key in ipairs({ "j", "k", "l", "h" }) do
+		vim.keymap.set("n", ("<C-%s>"):format(key), function()
 			require("harpoon"):list():select(file_index)
 		end)
 	end
@@ -37,4 +24,3 @@ return {
 		setup_keymaps()
 	end,
 }
-
