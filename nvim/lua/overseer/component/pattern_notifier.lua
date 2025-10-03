@@ -173,6 +173,7 @@ return {
 					local level = vim.log.levels.INFO
 					local icon = "󰄬"
 					local fallback_message = default_completion_success_message
+					local final_message = current_msg
 
 					if status == "FAILURE" then
 						level = vim.log.levels.ERROR
@@ -180,7 +181,6 @@ return {
 						fallback_message = default_completion_failure_message
 					end
 
-					final_message = current_msg
 					if final_message == default_initial_message then
 						final_message = fallback_message
 					end

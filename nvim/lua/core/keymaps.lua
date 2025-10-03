@@ -14,10 +14,10 @@ vim.keymap.set("n", "<leader>vp", vim.cmd.Ex, { desc = "Hide window" })
 
 vim.keymap.set("n", "Q", "<nop>", { desc = "Avoiding Q" })
 
-vim.keymap.set("n", "<C-6>", "<C-w>h", { desc = "Go to the buffer on the left" })
-vim.keymap.set("n", "<C-7>", "<C-w>j", { desc = "Go to the buffer on the bottom" })
-vim.keymap.set("n", "<C-8>", "<C-w>k", { desc = "Go to the buffer on the top" })
-vim.keymap.set("n", "<C-9>", "<C-w>l", { desc = "Go to the buffer on the right" })
+vim.keymap.set("n", "<M-h>", "<C-w>h", { desc = "Go to the buffer on the left" })
+vim.keymap.set("n", "<M-j>", "<C-w>j", { desc = "Go to the buffer on the bottom" })
+vim.keymap.set("n", "<M-k>", "<C-w>k", { desc = "Go to the buffer on the top" })
+vim.keymap.set("n", "<M-l>", "<C-w>l", { desc = "Go to the buffer on the right" })
 
 vim.keymap.set("x", "<leader>p", [["_dP]], { desc = 'Pastes content without losing current "0 contents' })
 
