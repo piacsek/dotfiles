@@ -28,7 +28,16 @@ return {
 					"display_duration",
 					"on_output_summarize",
 					"on_exit_set_status",
-					"neotest_notifier",
+					{
+						"pattern_notifier",
+						patterns = {
+							{ pattern = "Compiling (%d+) files" },
+							{ pattern = "Generated %w+ app", message = "Compilation succeeded. Starting ExUnit..." },
+							{ pattern = "Running ExUnit", message = "Running ExUnit..." },
+							{ pattern = "Compilation error" },
+							{ pattern = "%d+ tests?, %d+ failures?", once = true },
+						},
+					},
 				},
 			},
 		})
