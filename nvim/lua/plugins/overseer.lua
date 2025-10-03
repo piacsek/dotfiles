@@ -104,7 +104,22 @@ return {
 		overseer.register_template({
 			name = "mix compile",
 			builder = function()
-				return { cmd = { "mix" }, args = { "compile", "--warnings-as-errors" } }
+				return {
+					cmd = { "mix" },
+					args = { "compile", "--warnings-as-errors" },
+					components = {
+						{
+							"pattern_notifier",
+							patterns = {
+								{ pattern = "Compiling (%d+) files" },
+								{ pattern = "Compilation failed", once = true },
+							},
+						},
+						"on_output_summarize",
+						"on_exit_set_status",
+						"display_duration",
+					},
+				}
 			end,
 		})
 		overseer.register_template({
@@ -117,13 +132,8 @@ return {
 						{
 							"pattern_notifier",
 							patterns = {
-								{
-									pattern = "Checking (%d+) source file",
-								},
-								{
-									pattern = "(%d+) mods/funs",
-									once = true,
-								},
+								{ pattern = "Checking (%d+) source file" },
+								{ pattern = "(%d+) mods/funs", once = true },
 							},
 						},
 						"on_output_summarize",
