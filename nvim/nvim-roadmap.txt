@@ -2,7 +2,7 @@ nvim roadmap:
 
 - overseer:
 	- project-specific tasks(k9s);
-	- Add ability to "attach to onsave";
+	- Swap neotest_notifier with generic pattern_notifier;
 	- Mini CI!!!:
 		- Run an arbitrary chain of commands based on the current file type;
 		- Notify progress minimalistically while succeeding:
