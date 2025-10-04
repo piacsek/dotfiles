@@ -14,6 +14,11 @@ vim.keymap.set("n", "<leader>vp", vim.cmd.Ex, { desc = "Hide window" })
 
 vim.keymap.set("n", "Q", "<nop>", { desc = "Avoiding Q" })
 
+-- Quickfix
+vim.keymap.set("n", "<leader>jq", ":copen<CR>", { desc = "[J]ump to the quickfix list" })
+vim.keymap.set("n", "<M-n>", ":cnext<CR>", { desc = "Go to the [n]ext item in the quickfix list" })
+vim.keymap.set("n", "<M-p>", ":cprev<CR>", { desc = "Go to the [p]revious item in the quickfix list" })
+
 vim.keymap.set("n", "<M-h>", "<C-w>h", { desc = "Go to the buffer on the left" })
 vim.keymap.set("n", "<M-j>", "<C-w>j", { desc = "Go to the buffer on the bottom" })
 vim.keymap.set("n", "<M-k>", "<C-w>k", { desc = "Go to the buffer on the top" })
