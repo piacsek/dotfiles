@@ -63,6 +63,22 @@ local function setup_keymaps()
 		builtin.live_grep({ cwd = vim.fn.stdpath("config") })
 	end, { desc = "Grep config files" })
 
+	vim.keymap.set("n", "<leader>fm", function()
+		require("telescope.builtin").git_files({
+			git_command = { "git", "ls-files", "-m" }, -- only modified files
+			prompt_title = "Modified Files",
+		})
+	end, { desc = "[F]ind [M]odified git files" })
+
+	vim.keymap.set("v", "<leader>fm", function()
+		local text = vim.getVisualSelection()
+		require("telescope.builtin").git_files({
+			git_command = { "git", "ls-files", "-m" },
+			default_text = text,
+			prompt_title = "Modified Files",
+		})
+	end, { noremap = true, silent = true, desc = "[F]ind [M]odified git files with selection" })
+
 	vim.keymap.set("v", "<leader>fw", function()
 		local text = vim.getVisualSelection()
 		builtin.grep_string({ default_text = text, hidden = true })
