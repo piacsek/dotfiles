@@ -41,7 +41,7 @@ return {
 				local relative_path = vim.fn.fnamemodify(path, ":~:.")
 				require("telescope.builtin").live_grep({
 					cwd = path,
-					prompt_title = "Live Grep (" .. relative_path .. ")"
+					prompt_title = "Live Grep (" .. relative_path .. ")",
 				})
 			end, opts("[F]ind [Grep]"))
 		end
@@ -50,7 +50,7 @@ return {
 			sort_by = "case_sensitive",
 			view = {
 				width = 30,
-				side = "left",
+				side = "right",
 			},
 			renderer = {
 				group_empty = true,
