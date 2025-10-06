@@ -49,13 +49,6 @@ return {
 			consumers = {
 				overseer = require("neotest.consumers.overseer"),
 			},
-			summary = {
-				open = "leftabove vsplit | vertical resize 50",
-			},
-			output_panel = {
-				enabled = true,
-				open = "botright split | resize 30",
-			},
 		})
 
 		setup_keymaps()
