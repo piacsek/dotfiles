@@ -197,7 +197,7 @@ return {
 					vim.notify("No tasks found")
 					return
 				elseif #tasks == 1 then
-					overseer.run_action(tasks[1], "open float")
+					overseer.run_action(tasks[1], "open")
 				else
 					vim.ui.select(tasks, {
 						prompt = "Select task:",
@@ -206,18 +206,32 @@ return {
 						end,
 					}, function(task)
 						if task then
-							overseer.run_action(task, "open float")
+							overseer.run_action(task, "open")
 						end
 					end)
 				end
 			end,
-			desc = "Pick task and open output in float window",
+			desc = "Pick task and open its output",
+		},
+		{
+			"<leader>9",
+			function()
+				local overseer = require("overseer")
+				local tasks = overseer.list_tasks({ recent_first = true })
+				if #tasks == 0 then
+					vim.notify("No tasks found")
+					return
+				else
+					overseer.run_action(tasks[1], "open")
+				end
+			end,
+			desc = "Open the current task's output",
 		},
 		{
 			"<leader>R",
 			function()
 				vim.cmd.normal("yy")
-				vim.cmd("OverseerQuickAction open float")
+				vim.cmd("OverseerQuickAction open")
 				vim.cmd.normal("p")
 			end,
 			desc = "Pastes the current line on the most recent task buffer",
@@ -226,7 +240,7 @@ return {
 			"<leader>R",
 			function()
 				vim.cmd.normal('"vy"')
-				vim.cmd("OverseerQuickAction open float")
+				vim.cmd("OverseerQuickAction open")
 				vim.cmd.normal('"vp')
 			end,
 			desc = "Pastes the current selection on the most recent task buffer",
