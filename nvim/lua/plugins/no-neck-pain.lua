@@ -5,9 +5,7 @@ return {
 		width = 120,
 		buffers = {
 			right = { enabled = false },
-			bo = {
-				filetype = "no-neck-pain",
-			},
+			bo = { filetype = "no-neck-pain" },
 		},
 	},
 	keys = {
