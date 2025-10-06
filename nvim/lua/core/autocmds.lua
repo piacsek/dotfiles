@@ -20,3 +20,11 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		vim.highlight.on_yank()
 	end,
 })
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "no-neck-pain",
+	callback = function()
+		vim.opt_local.fillchars = { eob = " ", vert = " " }
+		vim.opt_local.winhighlight = "EndOfBuffer:Normal,VertSplit:Normal"
+	end,
+})
