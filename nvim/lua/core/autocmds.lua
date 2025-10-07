@@ -46,10 +46,17 @@ vim.api.nvim_create_autocmd("TermOpen", {
 
 				for i, line in ipairs(lines) do
 					-- Match file paths like lib/my/file.ex or src/foo/bar.rb
-					for match in line:gmatch("[%w_%-%.]+/[%w_%-%.%/]+%.%w+") do
+					for match in line:gmatch("[%w_%-%.]+/[%w_%-%.%/]+%.%w+:%d+") do
 						local start_col = line:find(match, 1, true)
 						if start_col then
-							vim.api.nvim_buf_add_highlight(buf, ns, "TermFilePath", i - 1, start_col - 1, start_col - 1 + #match)
+							vim.api.nvim_buf_add_highlight(
+								buf,
+								ns,
+								"TermFilePath",
+								i - 1,
+								start_col - 1,
+								start_col - 1 + #match
+							)
 						end
 					end
 				end
@@ -57,3 +64,4 @@ vim.api.nvim_create_autocmd("TermOpen", {
 		})
 	end,
 })
+
