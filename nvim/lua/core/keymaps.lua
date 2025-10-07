@@ -69,6 +69,7 @@ vim.keymap.set("n", "<leader><BS>", function()
 	vim.cmd("colorscheme high-contrast")
 end, { desc = "Save file & re-apply colorscheme" })
 
+vim.keymap.set("n", "g<Enter>", "gF", { desc = "Go to file with line number support" })
 vim.keymap.set("n", "<leader>gd", function()
 	require("gitsigns").diffthis("origin/main")
 end, { desc = "[G]it [D]iff against origin/main in floating window" })
