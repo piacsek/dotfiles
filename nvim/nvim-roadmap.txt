@@ -1,5 +1,13 @@
 nvim roadmap:
 
+- Harponify!!
+  - <C-h> on telescope finder to:
+	 	- clear harpoon files;
+		- find related files;
+		- add related files to harpoon;
+		- initiate claude with my "let's do a task" prompt - include harpooned files;
+		- open the test file buffer;
+		- run tests in the file;
 - overseer:
 	- project-specific tasks(k9s);
 
