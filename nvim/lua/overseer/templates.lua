@@ -91,6 +91,14 @@ return function(overseer)
 			}
 		end,
 	})
+
+	overseer.register_template({
+		name = "mix format",
+		builder = function()
+			return { cmd = { "mix" }, args = { "format" } }
+		end,
+	})
+
 	overseer.register_template({
 		name = "mix deps.get",
 		builder = function()

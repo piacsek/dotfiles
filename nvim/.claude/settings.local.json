@@ -6,7 +6,9 @@
       "Read(//Users/piacsek/.local/share/nvim/lazy/overseer.nvim/lua/neotest/client/strategies/**)",
       "Bash(~/.local/share/nvim/mason/bin/stylua --help)",
       "Read(//Users/piacsek/.local/share/nvim/mason/**)",
-      "Bash(~/.local/share/nvim/mason/bin/elixir-ls:*)"
+      "Bash(~/.local/share/nvim/mason/bin/elixir-ls:*)",
+      "Read(//Users/piacsek/Projects/wonderschool/ws-common/apps/nova/piacsek/overseer/**)",
+      "WebFetch(domain:raw.githubusercontent.com)"
     ],
     "deny": [],
     "ask": []
