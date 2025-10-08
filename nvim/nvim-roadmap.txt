@@ -1,6 +1,5 @@
 nvim roadmap:
 
-- <leader>o instead of <leader>`
 - <leader>jc jump to claude
 - Harponify!!
   - <C-h> on telescope finder to:
