@@ -1,9 +1,11 @@
 nvim roadmap:
 
+- <leader>o instead of <leader>`
+- <leader>jc jump to claude
 - Harponify!!
   - <C-h> on telescope finder to:
 	 	- clear harpoon files;
-		- find related files;
+		- find related files - test, impl, html.heex;
 		- add related files to harpoon;
 		- initiate claude with my "let's do a task" prompt - include harpooned files;
 		- open the test file buffer;
