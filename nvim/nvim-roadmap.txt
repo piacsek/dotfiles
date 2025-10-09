@@ -8,8 +8,6 @@ nvim roadmap:
 		- initiate claude with my "let's do a task" prompt - include harpooned files;
 		- open the test file buffer;
 		- run tests in the file;
-- overseer:
-	- project-specific tasks(k9s);
 
 - learn how to use quickfix list properly:
 	- How do I apply macros to results? 
