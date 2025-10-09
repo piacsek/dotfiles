@@ -9,7 +9,8 @@
       "Bash(~/.local/share/nvim/mason/bin/elixir-ls:*)",
       "Read(//Users/piacsek/Projects/wonderschool/ws-common/apps/nova/piacsek/overseer/**)",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "WebFetch(domain:k9scli.io)"
+      "WebFetch(domain:k9scli.io)",
+      "Read(//Users/piacsek/Projects/wonderschool/ws-common/apps/nova/piacsek/telescope/**)"
     ],
     "deny": [],
     "ask": []
