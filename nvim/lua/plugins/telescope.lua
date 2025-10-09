@@ -125,7 +125,7 @@ return {
 		{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
 	},
 	config = function()
-		require("telescope").setup({
+		local default_config = {
 			pickers = {
 				find_files = {
 					sorting_strategy = "ascending",
@@ -173,7 +173,17 @@ return {
 					case_mode = "smart_case",
 				},
 			},
-		})
+		}
+
+		local project_telescope_config = vim.fn.getcwd() .. "/piacsek/telescope/init.lua"
+		if vim.fn.filereadable(project_telescope_config) == 1 then
+			local project_config = dofile(project_telescope_config)
+			if type(project_config) == "table" then
+				default_config = vim.tbl_deep_extend("force", default_config, project_config)
+			end
+		end
+
+		require("telescope").setup(default_config)
 
 		pcall(require("telescope").load_extension, "fzf")
 		pcall(require("telescope").load_extension, "ui-select")

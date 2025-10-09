@@ -3,6 +3,9 @@ vim.keymap.set({ "n", "i", "v", "c", "t" }, "<Up>", "<Nop>", arrow_disabling_opt
 vim.keymap.set({ "n", "i", "v", "c", "t" }, "<Down>", "<Nop>", arrow_disabling_opts)
 vim.keymap.set({ "n", "i", "v", "c", "t" }, "<Left>", "<Nop>", arrow_disabling_opts)
 vim.keymap.set({ "n", "i", "v", "c", "t" }, "<Right>", "<Nop>", arrow_disabling_opts)
+vim.keymap.set("n", "<leader>Y", function()
+	vim.fn.setreg('"', vim.fn.fnamemodify(vim.fn.expand("%:p"), ":~:."))
+end, { desc = "Yank current file path" })
 
 vim.keymap.set("n", "<C-g>", "#*viw", { desc = "Multiple cursor replacement" })
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Remove search results highlights" })
