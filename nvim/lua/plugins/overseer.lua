@@ -42,10 +42,8 @@ return {
 			},
 		})
 
-		-- Load default task definitions
 		require("overseer.templates")(overseer)
 
-		-- Load project-specific task definitions if they exist
 		local project_templates = vim.fn.getcwd() .. "/piacsek/overseer/templates.lua"
 		if vim.fn.filereadable(project_templates) == 1 then
 			dofile(project_templates)(overseer)
@@ -126,6 +124,42 @@ return {
 			end,
 			desc = "Pastes the current selection on the most recent task buffer",
 			mode = { "v" },
+		},
+		{
+			"<leader>jc",
+			function()
+				local overseer = require("overseer")
+
+				local claude_running = vim.tbl_filter(function(task)
+					return task.name:lower():find("claude", 1, true)
+				end, overseer.list_tasks({ status = "RUNNING" }))
+
+				if #claude_running == 0 then
+					vim.ui.select({ "claude", "claude nvim config" }, {
+						prompt = "Select Claude task to run:",
+					}, function(task_name)
+						overseer.run_template({ name = task_name }, function(task)
+							if task then
+								overseer.run_action(task, "open")
+							end
+						end)
+					end)
+				elseif #claude_running == 1 then
+					overseer.run_action(claude_running[1], "open")
+				else
+					vim.ui.select(claude_running, {
+						prompt = "Select Claude task:",
+						format_item = function(task)
+							return task.name
+						end,
+					}, function(task)
+						if task then
+							overseer.run_action(task, "open")
+						end
+					end)
+				end
+			end,
+			desc = "[J]ump to [C]laude task",
 		},
 	},
 }
