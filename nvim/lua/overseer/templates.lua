@@ -13,7 +13,7 @@ return function(overseer)
 		builder = function()
 			return {
 				cmd = { "claude" },
-				cwd = vim.fn.stdpath("config"),
+				cwd = { "~/dotfiles/nvim/" },
 			}
 		end,
 	})
@@ -42,7 +42,7 @@ return function(overseer)
 		name = "dotfiles sync",
 		builder = function()
 			return {
-				cmd = { "/Users/piacsek/dotfiles/sync_dotfiles.sh" },
+				cmd = { "~/dotfiles/sync_dotfiles.sh" },
 				args = { "sync" },
 			}
 		end,
