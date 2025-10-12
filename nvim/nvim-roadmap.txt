@@ -22,8 +22,6 @@ nvim roadmap:
 	- for simple cases, <C-g> is now doing the job;
 	- multicursor?
 
-- map <leader>ft to "find test file";
-
 
 - optimize configs to avoid freezing:
 	- (Claude) Saved the performance analysis to /Users/piacsek/.config/nvim/PERFORMANCE_ANALYSIS.md
