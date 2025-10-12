@@ -13,7 +13,7 @@ return function(overseer)
 		builder = function()
 			return {
 				cmd = { "claude" },
-				cwd = { "/Users/piacsek/dotfiles/nvim/" },
+				cwd = "/Users/piacsek/dotfiles/nvim/",
 			}
 		end,
 	})
