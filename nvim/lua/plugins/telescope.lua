@@ -62,10 +62,6 @@ local function setup_keymaps()
 		builtin.find_files({ cwd = "~/dotfiles", file_ignore_patterns = { "git/" } })
 	end, { desc = "[F]ind [D]otfiles" })
 
-	vim.keymap.set("n", "<leader>fn", function()
-		builtin.find_files({ cwd = vim.fn.stdpath("config") })
-	end, { desc = "[F]ind [N]eovim files" })
-
 	vim.keymap.set("n", "<leader>fc", function()
 		builtin.live_grep({ cwd = vim.fn.stdpath("config") })
 	end, { desc = "Grep config files" })

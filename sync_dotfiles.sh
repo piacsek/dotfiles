@@ -6,9 +6,8 @@
 DOTFILES_DIR="/Users/piacsek/dotfiles"
 LOG_FILE="$DOTFILES_DIR/.sync.log"
 
-# Configuration directories to watch and their corresponding dotfiles paths
-CONFIG_SOURCE="$HOME/.config/nvim"
-CONFIG_DEST="$DOTFILES_DIR/nvim"
+CONFIG_SOURCE="$DOTFILES_DIR/nvim"
+CONFIG_DEST="$HOME/.config/nvim"
 
 # Function to log messages
 log_message() {
