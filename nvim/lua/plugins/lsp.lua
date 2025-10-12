@@ -50,6 +50,7 @@ return {
 		capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
 		local servers = {
+			tailwindcss = {},
 			elixirls = {
 				root_dir = require("lspconfig.util").root_pattern("mix.exs"),
 				settings = {
@@ -93,7 +94,7 @@ return {
 
 		require("mason").setup()
 
-		local ensure_installed = { "elixir-ls", "lua_ls", "yaml-language-server", "json-lsp" }
+		local ensure_installed = { "elixir-ls", "lua_ls", "yaml-language-server", "json-lsp", "tailwindcss" }
 		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
 		require("mason-lspconfig").setup({
