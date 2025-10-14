@@ -58,7 +58,8 @@ return {
 						dialyzerEnabled = false,
 						fetchDeps = false,
 						enableTestLenses = false,
-						suggestSpecs = true,
+						-- suggestSpecs requires dialyzer
+						suggestSpecs = false,
 						mixEnv = "dev",
 					},
 				},
