@@ -63,7 +63,7 @@ local function setup_keymaps()
 	end, { desc = "[F]ind [D]otfiles" })
 
 	vim.keymap.set("n", "<leader>fc", function()
-		builtin.live_grep({ cwd = vim.fn.stdpath("config") })
+		builtin.live_grep({ cwd = "~/dotfiles", file_ignore_patterns = { "git/" } })
 	end, { desc = "Grep config files" })
 
 	vim.keymap.set("n", "<leader>fm", function()
