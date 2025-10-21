@@ -54,14 +54,12 @@ return {
 			elixirls = {
 				root_dir = require("lspconfig.util").root_pattern("mix.exs"),
 				settings = {
-					elixirLS = {
-						dialyzerEnabled = false,
-						fetchDeps = false,
-						enableTestLenses = false,
-						-- suggestSpecs requires dialyzer
-						suggestSpecs = false,
-						mixEnv = "dev",
-					},
+					dialyzerEnabled = false,
+					fetchDeps = false,
+					enableTestLenses = false,
+					-- suggestSpecs requires dialyzer
+					suggestSpecs = false,
+					mixEnv = "dev",
 				},
 			},
 			lua_ls = {
