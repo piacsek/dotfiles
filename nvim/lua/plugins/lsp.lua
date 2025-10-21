@@ -50,16 +50,19 @@ return {
 		capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
 		local servers = {
+			html_lsp = {},
 			tailwindcss = {},
 			elixirls = {
 				root_dir = require("lspconfig.util").root_pattern("mix.exs"),
 				settings = {
-					dialyzerEnabled = false,
-					fetchDeps = false,
-					enableTestLenses = false,
-					-- suggestSpecs requires dialyzer
-					suggestSpecs = false,
-					mixEnv = "dev",
+					elixirLS = {
+						dialyzerEnabled = false,
+						fetchDeps = false,
+						enableTestLenses = false,
+						-- suggestSpecs requires dialyzer
+						suggestSpecs = false,
+						mixEnv = "dev",
+					},
 				},
 			},
 			lua_ls = {
