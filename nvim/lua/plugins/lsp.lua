@@ -109,20 +109,6 @@ return {
 			},
 		})
 
-		require("lspconfig").elixirls.setup({
-			root_dir = require("lspconfig.util").root_pattern("mix.exs"),
-			settings = {
-				elixirLS = {
-					dialyzerEnabled = false,
-					fetchDeps = false,
-					enableTestLenses = false,
-					-- suggestSpecs requires dialyzer
-					suggestSpecs = false,
-					mixEnv = "dev",
-				},
-			},
-		})
-
 		setup_general_lsp_keymaps()
 	end,
 }
