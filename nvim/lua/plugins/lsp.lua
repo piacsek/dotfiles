@@ -96,7 +96,7 @@ return {
 
 		require("mason").setup()
 
-		local ensure_installed = { "elixir-ls", "lua_ls", "yaml-language-server", "json-lsp", "tailwindcss" }
+		local ensure_installed = { "elixirls", "lua_ls", "yaml-language-server", "json-lsp", "tailwindcss" }
 		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
 		require("mason-lspconfig").setup({
