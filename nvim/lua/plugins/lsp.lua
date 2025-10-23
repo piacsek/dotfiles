@@ -39,140 +39,13 @@ return {
 		"b0o/schemastore.nvim",
 	},
 	config = function()
-		local MAX_BUFFERS_PER_CLIENT = 4
-		local client_fifo = {} -- [client_id] = {buf1, buf2, ...} (oldest first)
-		local client_set = {} -- [client_id] = { [bufnr]=true, ... }
-
-		local function ensure_client_tables(client_id)
-			client_fifo[client_id] = client_fifo[client_id] or {}
-			client_set[client_id] = client_set[client_id] or {}
-		end
-
-		local function client_attached_to_buf(client_id, bufnr)
-			for _, c in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
-				if c.id == client_id then
-					return true
-				end
-			end
-			return false
-		end
-
-		local function prune_dead(client_id)
-			local fifo = client_fifo[client_id]
-			local set = client_set[client_id]
-			if not fifo or not set then
-				return
-			end
-			local i = 1
-			while i <= #fifo do
-				local b = fifo[i]
-				if not client_attached_to_buf(client_id, b) then
-					table.remove(fifo, i)
-					set[b] = nil
-				else
-					i = i + 1
-				end
-			end
-			if #fifo == 0 then
-				client_fifo[client_id], client_set[client_id] = nil, nil
-			end
-		end
-
-		local function remove_from_tracking(client_id, bufnr)
-			local fifo = client_fifo[client_id]
-			local set = client_set[client_id]
-			if not fifo or not set or not set[bufnr] then
-				return
-			end
-			set[bufnr] = nil
-			for i, b in ipairs(fifo) do
-				if b == bufnr then
-					table.remove(fifo, i)
-					break
-				end
-			end
-			if #fifo == 0 then
-				client_fifo[client_id], client_set[client_id] = nil, nil
-			end
-		end
-
-		-- === Autocommands ===
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
 			callback = function(event)
-				local bufnr = event.buf
-				local client_id = event.data and event.data.client_id
-				if not bufnr or not client_id then
-					return
-				end
-
-				ensure_client_tables(client_id)
-				prune_dead(client_id)
-
-				local fifo = client_fifo[client_id]
-				local set = client_set[client_id]
-
-				if set[bufnr] then
-					for i, b in ipairs(fifo) do
-						if b == bufnr then
-							table.remove(fifo, i)
-							break
-						end
-					end
-					table.insert(fifo, bufnr)
-				else
-					if #fifo >= MAX_BUFFERS_PER_CLIENT then
-						local oldest = table.remove(fifo, 1)
-						set[oldest] = nil
-						local client = vim.lsp.get_client_by_id(client_id)
-						vim.schedule(function()
-							vim.lsp.buf_detach_client(oldest, client_id)
-							if client then
-								vim.notify(
-									string.format(
-										"LSP '%s': detached oldest buffer #%d to keep max=%d",
-										client.name,
-										oldest,
-										MAX_BUFFERS_PER_CLIENT
-									),
-									vim.log.levels.WARN
-								)
-							end
-						end)
-					end
-					table.insert(fifo, bufnr)
-					set[bufnr] = true
-				end
-
 				setup_lsp_keymaps(event)
 			end,
 		})
 
-		vim.api.nvim_create_autocmd("LspDetach", {
-			group = vim.api.nvim_create_augroup("kickstart-lsp-detach", { clear = true }),
-			callback = function(event)
-				local bufnr = event.buf
-				local client_id = event.data and event.data.client_id
-				if not bufnr or not client_id then
-					return
-				end
-				remove_from_tracking(client_id, bufnr)
-			end,
-		})
-
-		vim.api.nvim_create_autocmd("BufWipeout", {
-			group = vim.api.nvim_create_augroup("kickstart-lsp-bufwipe", { clear = true }),
-			callback = function(event)
-				local bufnr = event.buf
-				for client_id, set in pairs(client_set) do
-					if set[bufnr] then
-						remove_from_tracking(client_id, bufnr)
-					end
-				end
-			end,
-		})
-
-		-- === Capabilities and Servers ===
 		local capabilities = vim.lsp.protocol.make_client_capabilities()
 		capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
@@ -186,6 +59,7 @@ return {
 						dialyzerEnabled = false,
 						fetchDeps = false,
 						enableTestLenses = false,
+						-- suggestSpecs requires dialyzer
 						suggestSpecs = false,
 						mixEnv = "dev",
 					},
@@ -194,7 +68,9 @@ return {
 			lua_ls = {
 				settings = {
 					Lua = {
-						completion = { callSnippet = "Replace" },
+						completion = {
+							callSnippet = "Replace",
+						},
 					},
 				},
 			},
