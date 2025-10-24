@@ -50,7 +50,7 @@ return {
 				overseer = require("neotest.consumers.overseer"),
 			},
 			summary = {
-				open = "botright vsplit | vertical resize 50%",
+				open = "botright vsplit",
 			},
 		})
 
