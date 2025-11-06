@@ -29,6 +29,7 @@ return {
 	"nvim-neotest/neotest",
 	dependencies = {
 		"nvim-neotest/nvim-nio",
+		"nvim-neotest/neotest-jest",
 		"nvim-lua/plenary.nvim",
 		"antoinemadec/FixCursorHold.nvim",
 		"nvim-treesitter/nvim-treesitter",
@@ -45,7 +46,7 @@ return {
 		end
 
 		require("neotest").setup({
-			adapters = { require("neotest-elixir") },
+			adapters = { require("neotest-elixir"), require("neotest-jest") },
 			consumers = {
 				overseer = require("neotest.consumers.overseer"),
 			},
