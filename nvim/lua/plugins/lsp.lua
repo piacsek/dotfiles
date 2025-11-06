@@ -35,7 +35,7 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		"SmiteshP/nvim-navbuddy",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
-		{ "folke/neodev.nvim", opts = {} },
+		{ "folke/neodev.nvim", enabled = false, opts = {} },
 		"b0o/schemastore.nvim",
 	},
 	config = function()
