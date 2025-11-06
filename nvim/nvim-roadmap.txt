@@ -1,5 +1,6 @@
 nvim roadmap:
 
+- Redo LSP setup without LLM help;
 - Harponify!!
   - <C-h> on telescope finder to:
 	 	- clear harpoon files;
