@@ -50,8 +50,15 @@ return {
 		capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
 		local servers = {
-			html_lsp = {},
+			html = {
+				filetypes = { "html", "heex" },
+			},
+			emmet_ls = {
+				filetypes = { "html", "heex", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
+			},
 			tailwindcss = {},
+			vimls = {},
+			ts_ls = {},
 			elixirls = {
 				root_dir = require("lspconfig.util").root_pattern("mix.exs"),
 				settings = {
@@ -96,7 +103,17 @@ return {
 
 		require("mason").setup()
 
-		local ensure_installed = { "elixirls", "lua_ls", "yaml-language-server", "json-lsp", "tailwindcss" }
+		local ensure_installed = {
+			"vimls",
+			"elixirls",
+			"lua_ls",
+			"yaml-language-server",
+			"json-lsp",
+			"tailwindcss",
+			"html",
+			"emmet-ls",
+			"typescript-language-server",
+		}
 		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
 		require("mason-lspconfig").setup({
@@ -108,6 +125,13 @@ return {
 				end,
 			},
 		})
+		vim.lsp.config["html"] = {
+			filetypes = { "html", "heex" },
+		}
+		vim.lsp.config["emmet_ls"] = {
+			capabilities = capabilities,
+			filetypes = { "html", "heex", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
+		}
 
 		setup_general_lsp_keymaps()
 	end,
