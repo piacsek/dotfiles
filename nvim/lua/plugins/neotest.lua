@@ -45,8 +45,27 @@ return {
 			vim.env.LUA_PATH = lua_paths
 		end
 
+		-- Only load jest adapter if package.json exists
+		local adapters = { require("neotest-elixir") }
+
+		local cwd = vim.fn.getcwd()
+		local package_json_path = cwd .. "/package.json"
+
+		-- Check for project-specific jest config
+		local project_jest_config = cwd .. "/piacsek/neotest/jest.lua"
+		if vim.fn.filereadable(project_jest_config) == 1 then
+			local ok, config = pcall(dofile, project_jest_config)
+			if ok and type(config) == "table" and config.package_json_path then
+				package_json_path = cwd .. "/" .. config.package_json_path
+			end
+		end
+
+		if vim.fn.filereadable(package_json_path) == 1 then
+			table.insert(adapters, require("neotest-jest"))
+		end
+
 		require("neotest").setup({
-			adapters = { require("neotest-elixir"), require("neotest-jest") },
+			adapters = adapters,
 			consumers = {
 				overseer = require("neotest.consumers.overseer"),
 			},
