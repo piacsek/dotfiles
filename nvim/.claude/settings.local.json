@@ -10,7 +10,8 @@
       "Read(//Users/piacsek/Projects/wonderschool/ws-common/apps/nova/piacsek/overseer/**)",
       "WebFetch(domain:raw.githubusercontent.com)",
       "WebFetch(domain:k9scli.io)",
-      "Read(//Users/piacsek/Projects/wonderschool/ws-common/apps/nova/piacsek/telescope/**)"
+      "Read(//Users/piacsek/Projects/wonderschool/ws-common/apps/nova/piacsek/telescope/**)",
+      "Bash(prettierd:*)"
     ],
     "deny": [],
     "ask": []
