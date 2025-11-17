@@ -29,16 +29,6 @@ return {
 			json = { "prettierd", "prettier", stop_after_first = true },
 			css = { "prettierd", "prettier", stop_after_first = true },
 			html = { "prettierd", "prettier", stop_after_first = true },
-			elixir = { "mix" },
-			eelixir = { "mix" },
-			heex = { "mix" },
-		},
-		formatters = {
-			mix = {
-				command = "mix",
-				args = { "format", "-" },
-				stdin = true,
-			},
 		},
 	},
 }
