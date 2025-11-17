@@ -126,9 +126,9 @@ return {
 				end,
 			},
 		})
-		vim.lsp.config["html"] = {
-			filetypes = { "html", "heex" },
-		}
+		-- vim.lsp.config["html"] = {
+		-- 	filetypes = { "html", "heex" },
+		-- }
 		vim.lsp.config["emmet_ls"] = {
 			capabilities = capabilities,
 			filetypes = { "html", "heex", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
