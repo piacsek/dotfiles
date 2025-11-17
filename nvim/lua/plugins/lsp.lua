@@ -125,9 +125,6 @@ return {
 				end,
 			},
 		})
-		vim.lsp.config["elixirls"] = {
-			filetypes = { "ex", "eex", "exs", "heex" },
-		}
 		vim.lsp.config["html"] = {
 			filetypes = { "html", "heex" },
 		}
