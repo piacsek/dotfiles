@@ -10,7 +10,7 @@ return {
 		},
 		current_line_blame = true,
 		current_line_blame_opts = {
-			delay = 300,
+			delay = 100,
 			virt_text = true,
 			virt_text_pos = "eol", -- 'eol' | 'overlay' | 'right_align'
 		},
