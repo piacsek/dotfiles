@@ -51,7 +51,7 @@ return {
 
 		local servers = {
 			html = {
-				filetypes = { "html", "heex" },
+				filetypes = { "html" },
 			},
 			emmet_ls = {
 				filetypes = { "html", "heex", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
