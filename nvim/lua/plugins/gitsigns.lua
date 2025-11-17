@@ -8,7 +8,7 @@ return {
 			topdelete = { text = "‾" },
 			changedelete = { text = "~" },
 		},
-		current_line_blame = true,
+		current_line_blame = false,
 		current_line_blame_opts = {
 			delay = 0,
 			virt_text = true,
@@ -20,6 +20,12 @@ return {
 				"<leader>u",
 				"<cmd>Gitsigns reset_hunk<CR>",
 				{ desc = "Reset git hunk", buffer = bufnr }
+			)
+			vim.keymap.set(
+				"n",
+				"<leader>gb",
+				"<cmd>Gitsigns toggle_current_line_blame<CR>",
+				{ desc = "[G]it [B]lame toggle", buffer = bufnr }
 			)
 			vim.keymap.set(
 				"n",
