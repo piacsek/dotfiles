@@ -126,9 +126,10 @@ return {
 				end,
 			},
 		})
-		-- vim.lsp.config["html"] = {
-		-- 	filetypes = { "html", "heex" },
-		-- }
+		vim.lsp.config["tailwindcss"] = {
+			capabilities = capabilities,
+			filetypes = { "html", "heex", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
+		}
 		vim.lsp.config["emmet_ls"] = {
 			capabilities = capabilities,
 			filetypes = { "html", "heex", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
