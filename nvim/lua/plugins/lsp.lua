@@ -60,6 +60,7 @@ return {
 			vimls = {},
 			ts_ls = {},
 			elixirls = {
+				filetypes = { "elixir", "eelixir", "heex", "surface" },
 				root_dir = require("lspconfig.util").root_pattern("mix.exs"),
 				settings = {
 					elixirLS = {
