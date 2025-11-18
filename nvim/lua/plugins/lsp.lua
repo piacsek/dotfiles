@@ -58,6 +58,12 @@ return {
 			},
 			tailwindcss = {
 			filetypes = { "html", "heex", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
+			root_dir = require("lspconfig.util").root_pattern(
+				"tailwind.config.js",
+				"tailwind.config.cjs",
+				"tailwind.config.mjs",
+				"tailwind.config.ts"
+			),
 		},
 			vimls = {},
 			ts_ls = {},
