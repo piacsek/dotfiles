@@ -57,27 +57,8 @@ return {
 				filetypes = { "html", "heex", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
 			},
 			tailwindcss = {
-			filetypes = { "html", "heex", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
-			root_dir = function(fname)
-				local util = require("lspconfig.util")
-				-- First try to find mix.exs to identify the project root
-				local mix_root = util.root_pattern("mix.exs")(fname)
-				if mix_root then
-					-- Then look for tailwind.config.js in the assets subdirectory
-					local assets_config = util.path.join(mix_root, "assets", "tailwind.config.js")
-					if vim.fn.filereadable(assets_config) == 1 then
-						return util.path.join(mix_root, "assets")
-					end
-				end
-				-- Fallback to standard tailwind config search
-				return util.root_pattern(
-					"tailwind.config.js",
-					"tailwind.config.cjs",
-					"tailwind.config.mjs",
-					"tailwind.config.ts"
-				)(fname)
-			end,
-		},
+				filetypes = { "html", "heex", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
+			},
 			vimls = {},
 			ts_ls = {},
 			elixirls = {
