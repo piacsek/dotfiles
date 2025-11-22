@@ -1,4 +1,13 @@
 return function(overseer)
+	overseer.register_template({
+		name = "simple task",
+		builder = function()
+			return {
+				cmd = { "echo" },
+				args = { "hello" },
+			}
+		end,
+	})
 	local cloud_iex_envs = {
 		{ env = "prod" },
 		{ env = "staging", priority = 1 },
