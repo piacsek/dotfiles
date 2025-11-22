@@ -4,6 +4,7 @@ return function(overseer)
 		builder = function()
 			return {
 				cmd = { "echo" },
+				cwd = "../my/path",
 				args = { "hello" },
 			}
 		end,
