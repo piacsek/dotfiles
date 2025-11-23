@@ -115,4 +115,14 @@ return function(overseer)
 			}
 		end,
 	})
+
+	overseer.register_template({
+		name = "gh run watch",
+		builder = function()
+			return {
+				cmd = { "gh" },
+				args = { "run", "watch" },
+			}
+		end,
+	})
 end
