@@ -71,7 +71,9 @@ return {
 			elixirls = {
 				filetypes = { "elixir", "eelixir", "heex", "surface" },
 				root_dir = require("lspconfig.util").root_pattern("mix.exs"),
-				settings = elixirLSSettings,
+				settings = {
+					elixirLS = elixirLSSettings,
+				},
 			},
 			lua_ls = {
 				settings = {
@@ -106,7 +108,7 @@ return {
 
 		local ensure_installed = {
 			"vimls",
-			"elixir-ls",
+			"elixirls",
 			"lua_ls",
 			"yaml-language-server",
 			"json-lsp",
