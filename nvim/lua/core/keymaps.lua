@@ -4,13 +4,13 @@ vim.keymap.set({ "n", "i", "v", "c" }, "<Down>", "<Nop>", arrow_disabling_opts)
 vim.keymap.set({ "n", "i", "v", "c" }, "<Left>", "<Nop>", arrow_disabling_opts)
 vim.keymap.set({ "n", "i", "v", "c" }, "<Right>", "<Nop>", arrow_disabling_opts)
 
--- vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { desc = "[Y]ank to system clipboard" })
+vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { desc = "[Y]ank to system clipboard" })
 vim.keymap.set("n", "<leader>yp", function()
 	vim.fn.setreg('"', vim.fn.fnamemodify(vim.fn.expand("%:p"), ":~:."))
 end, { desc = "Yank current file path" })
 
 vim.keymap.set("n", "<leader>YP", function()
-	vim.fn.setreg('"+y', vim.fn.fnamemodify(vim.fn.expand("%:p"), ":~:."))
+	vim.fn.setreg("+", vim.fn.fnamemodify(vim.fn.expand("%:p"), ":~:."))
 end, { desc = "Yank current file path" })
 
 vim.keymap.set("n", "<C-g>", "#*viw", { desc = "Multiple cursor replacement" })
