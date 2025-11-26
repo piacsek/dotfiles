@@ -128,15 +128,11 @@ return {
 				end,
 			},
 		})
-		vim.lsp.config["elixirls"] = {
-			cmd = { vim.fn.stdpath("data") .. "/mason/bin/elixir-ls" },
-			filetypes = { "elixir", "eelixir", "heex", "surface" },
-			capabilities = capabilities,
-			root_dir = require("lspconfig.util").root_pattern("mix.exs"),
+		vim.lsp.config["elixirls"] = vim.tbl_deep_extend("force", vim.lsp.config["elixirls"] or {}, {
 			settings = {
 				elixirLS = elixirLSSettings,
 			},
-		}
+		})
 		vim.lsp.config["emmet_ls"] = {
 			capabilities = capabilities,
 			filetypes = { "html", "heex", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
