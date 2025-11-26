@@ -1,16 +1,9 @@
 return function(overseer)
-	local default_components = {
-		"on_output_summarize",
-		"on_exit_set_status",
-		"display_duration",
-		{ "on_complete_dispose", statuses = { "SUCCESS" }, timeout = 1 },
-	}
 	overseer.register_template({
 		name = "claude",
 		builder = function()
 			return {
 				cmd = { "claude" },
-				components = default_components,
 			}
 		end,
 	})
@@ -21,7 +14,6 @@ return function(overseer)
 			return {
 				cmd = { "claude" },
 				cwd = "/Users/piacsek/dotfiles/nvim/",
-				components = default_components,
 			}
 		end,
 	})
@@ -32,7 +24,6 @@ return function(overseer)
 			return {
 				cmd = { "gh" },
 				args = { "pr", "view", "-w" },
-				components = default_components,
 			}
 		end,
 	})
@@ -43,7 +34,6 @@ return function(overseer)
 			return {
 				cmd = { "gh" },
 				args = { "pr", "checks" },
-				components = default_components,
 			}
 		end,
 	})
@@ -54,7 +44,6 @@ return function(overseer)
 			return {
 				cmd = { "/Users/piacsek/dotfiles/sync_dotfiles.sh" },
 				args = { "sync" },
-				components = default_components,
 			}
 		end,
 	})
@@ -98,7 +87,6 @@ return function(overseer)
 					"on_output_summarize",
 					"on_exit_set_status",
 					"display_duration",
-					{ "on_complete_dispose", statuses = { "SUCCESS" }, timeout = 1 },
 				},
 			}
 		end,
@@ -107,22 +95,14 @@ return function(overseer)
 	overseer.register_template({
 		name = "mix format",
 		builder = function()
-			return {
-				cmd = { "mix" },
-				args = { "format" },
-				components = default_components,
-			}
+			return { cmd = { "mix" }, args = { "format" } }
 		end,
 	})
 
 	overseer.register_template({
 		name = "mix deps.get",
 		builder = function()
-			return {
-				cmd = { "mix" },
-				args = { "deps.get" },
-				components = default_components,
-			}
+			return { cmd = { "mix" }, args = { "deps.get" } }
 		end,
 	})
 
@@ -142,7 +122,6 @@ return function(overseer)
 			return {
 				cmd = { "gh" },
 				args = { "run", "watch" },
-				components = default_components,
 			}
 		end,
 	})
