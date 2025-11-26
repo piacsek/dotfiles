@@ -129,6 +129,7 @@ return {
 			},
 		})
 		vim.lsp.config["elixirls"] = {
+			cmd = { vim.fn.stdpath("data") .. "/mason/bin/elixir-ls" },
 			filetypes = { "elixir", "eelixir", "heex", "surface" },
 			capabilities = capabilities,
 			root_dir = require("lspconfig.util").root_pattern("mix.exs"),
