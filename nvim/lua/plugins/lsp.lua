@@ -128,6 +128,11 @@ return {
 				end,
 			},
 		})
+		vim.lsp.config["elixirls"] = {
+			settings = {
+				elixirLS = elixirLSSettings,
+			},
+		}
 		vim.lsp.config["emmet_ls"] = {
 			capabilities = capabilities,
 			filetypes = { "html", "heex", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
