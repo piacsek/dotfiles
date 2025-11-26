@@ -66,7 +66,7 @@ return function(overseer)
 					"on_output_summarize",
 					"on_exit_set_status",
 					"display_duration",
-					{ "on_complete_dispose", statuses = { "SUCCESS" } },
+					{ "on_complete_dispose", require_view = { "FAILURE" } },
 				},
 			}
 		end,
