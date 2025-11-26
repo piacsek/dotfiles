@@ -61,28 +61,7 @@ return {
 			},
 			vimls = {},
 			ts_ls = {},
-			elixirls = {
-				filetypes = { "elixir", "eelixir", "heex", "surface" },
-				root_dir = require("lspconfig.util").root_pattern("mix.exs"),
-				settings = {
-					elixirLS = {
-						dialyzerEnabled = false,
-						fetchDeps = false,
-						enableTestLenses = false,
-						-- suggestSpecs requires dialyzer
-						suggestSpecs = false,
-						mixEnv = "dev",
-					},
-				},
-				-- ElixirLS also reads from init_options
-				init_options = {
-					dialyzerEnabled = false,
-					fetchDeps = false,
-					enableTestLenses = false,
-					suggestSpecs = false,
-					mixEnv = "dev",
-				},
-			},
+			elixirls = {},
 			lua_ls = {
 				settings = {
 					Lua = {
@@ -131,34 +110,8 @@ return {
 			handlers = {
 				function(server_name)
 					local server = servers[server_name] or {}
-					-- Ensure capabilities are properly merged
 					server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-
 					require("lspconfig")[server_name].setup(server)
-				end,
-				-- Specific handler for elixirls to ensure settings are applied
-				elixirls = function()
-					require("lspconfig").elixirls.setup({
-						capabilities = capabilities,
-						filetypes = { "elixir", "eelixir", "heex", "surface" },
-						root_dir = require("lspconfig.util").root_pattern("mix.exs"),
-						init_options = {
-							dialyzerEnabled = false,
-							fetchDeps = false,
-							enableTestLenses = false,
-							suggestSpecs = false,
-							mixEnv = "dev",
-						},
-						settings = {
-							elixirLS = {
-								dialyzerEnabled = false,
-								fetchDeps = false,
-								enableTestLenses = false,
-								suggestSpecs = false,
-								mixEnv = "dev",
-							},
-						},
-					})
 				end,
 			},
 		})
