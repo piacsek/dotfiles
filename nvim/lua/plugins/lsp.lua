@@ -123,7 +123,14 @@ return {
 			handlers = {
 				function(server_name)
 					local server = servers[server_name] or {}
+					-- Ensure capabilities are properly merged
 					server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+
+					-- Debug logging to verify settings are being passed
+					if server_name == "elixirls" then
+						vim.notify("Setting up elixirls with settings: " .. vim.inspect(server.settings), vim.log.levels.INFO)
+					end
+
 					require("lspconfig")[server_name].setup(server)
 				end,
 			},
