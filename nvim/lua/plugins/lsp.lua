@@ -48,11 +48,10 @@ return {
 
 		local capabilities = vim.lsp.protocol.make_client_capabilities()
 		capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
-		elixirLSSettings = {
+		local elixirLSSettings = {
 			dialyzerEnabled = false,
 			fetchDeps = false,
 			enableTestLenses = false,
-			-- suggestSpecs requires dialyzer
 			suggestSpecs = false,
 			mixEnv = "dev",
 		}
@@ -75,7 +74,6 @@ return {
 				settings = {
 					elixirLS = elixirLSSettings,
 				},
-				init_options = elixirLSSettings,
 			},
 			lua_ls = {
 				settings = {
@@ -110,7 +108,7 @@ return {
 
 		local ensure_installed = {
 			"vimls",
-			"elixirls",
+			"elixir-ls",
 			"lua_ls",
 			"yaml-language-server",
 			"json-lsp",
