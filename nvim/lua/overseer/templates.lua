@@ -4,6 +4,7 @@ return function(overseer)
 		builder = function()
 			return {
 				cmd = { "claude" },
+				components = { "on_complete_dispose", statuses = { "SUCCESS", "FAILURE" }, timeout = 1 },
 			}
 		end,
 	})
@@ -14,6 +15,7 @@ return function(overseer)
 			return {
 				cmd = { "claude" },
 				cwd = "/Users/piacsek/dotfiles/nvim/",
+				components = { "on_complete_dispose", statuses = { "SUCCESS", "FAILURE" }, timeout = 1 },
 			}
 		end,
 	})
@@ -24,6 +26,7 @@ return function(overseer)
 			return {
 				cmd = { "gh" },
 				args = { "pr", "view", "-w" },
+				components = { "on_complete_dispose", statuses = { "SUCCESS" }, timeout = 1 },
 			}
 		end,
 	})
@@ -34,6 +37,7 @@ return function(overseer)
 			return {
 				cmd = { "gh" },
 				args = { "pr", "checks" },
+				components = { "on_complete_dispose", statuses = { "SUCCESS" }, timeout = 1 },
 			}
 		end,
 	})
@@ -44,6 +48,7 @@ return function(overseer)
 			return {
 				cmd = { "/Users/piacsek/dotfiles/sync_dotfiles.sh" },
 				args = { "sync" },
+				components = { "on_complete_dispose", statuses = { "SUCCESS" }, timeout = 1 },
 			}
 		end,
 	})
@@ -96,14 +101,22 @@ return function(overseer)
 	overseer.register_template({
 		name = "mix format",
 		builder = function()
-			return { cmd = { "mix" }, args = { "format" } }
+			return {
+				cmd = { "mix" },
+				args = { "format" },
+				components = { "on_complete_dispose", statuses = { "SUCCESS" }, timeout = 1 },
+			}
 		end,
 	})
 
 	overseer.register_template({
 		name = "mix deps.get",
 		builder = function()
-			return { cmd = { "mix" }, args = { "deps.get" } }
+			return {
+				cmd = { "mix" },
+				args = { "deps.get" },
+				components = { "on_complete_dispose", statuses = { "SUCCESS" }, timeout = 1 },
+			}
 		end,
 	})
 
@@ -123,6 +136,7 @@ return function(overseer)
 			return {
 				cmd = { "gh" },
 				args = { "run", "watch" },
+				components = { "on_complete_dispose", statuses = { "SUCCESS" }, timeout = 1 },
 			}
 		end,
 	})
