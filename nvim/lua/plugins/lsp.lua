@@ -129,9 +129,9 @@ return {
 			},
 		})
 		vim.lsp.config["elixirls"] = {
+			filetypes = { "elixir", "eelixir", "heex", "surface" },
+			capabilities = capabilities,
 			settings = {
-				filetypes = { "elixir", "eelixir", "heex", "surface" },
-				capabilities = capabilities,
 				elixirLS = elixirLSSettings,
 			},
 		}
