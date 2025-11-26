@@ -3,8 +3,14 @@ vim.keymap.set({ "n", "i", "v", "c" }, "<Up>", "<Nop>", arrow_disabling_opts)
 vim.keymap.set({ "n", "i", "v", "c" }, "<Down>", "<Nop>", arrow_disabling_opts)
 vim.keymap.set({ "n", "i", "v", "c" }, "<Left>", "<Nop>", arrow_disabling_opts)
 vim.keymap.set({ "n", "i", "v", "c" }, "<Right>", "<Nop>", arrow_disabling_opts)
-vim.keymap.set("n", "<leader>Y", function()
+
+-- vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { desc = "[Y]ank to system clipboard" })
+vim.keymap.set("n", "<leader>yp", function()
 	vim.fn.setreg('"', vim.fn.fnamemodify(vim.fn.expand("%:p"), ":~:."))
+end, { desc = "Yank current file path" })
+
+vim.keymap.set("n", "<leader>YP", function()
+	vim.fn.setreg('"+y', vim.fn.fnamemodify(vim.fn.expand("%:p"), ":~:."))
 end, { desc = "Yank current file path" })
 
 vim.keymap.set("n", "<C-g>", "#*viw", { desc = "Multiple cursor replacement" })
@@ -13,7 +19,6 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Remove search resu
 vim.keymap.set("n", "<leader><Esc>", ":hide<CR>", { desc = "Hide window" })
 vim.keymap.set("n", "Y", "y$", { desc = "[Y]ank till the end of the line" })
 vim.keymap.set("n", "V", "v$", { desc = "[V]isually select till the end of the line" })
-vim.keymap.set("n", "<leader>vp", vim.cmd.Ex, { desc = "Hide window" })
 
 vim.keymap.set("n", "Q", "<nop>", { desc = "Avoiding Q" })
 
@@ -39,7 +44,6 @@ vim.keymap.set("n", "}", function()
 end, { desc = "Go to next git hunk" })
 vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
-vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { desc = "[Y]ank to system clipboard" })
 vim.keymap.set({ "n", "v" }, "<C-s>", ":w<CR>", { desc = "[S]ave" })
 
 vim.keymap.set("n", "<C-.>", ":horizontal resize +5<CR>", { desc = "Increase window horizontal size" })
