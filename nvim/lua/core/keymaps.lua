@@ -9,6 +9,8 @@ vim.keymap.set("n", "<leader>yp", function()
 	vim.fn.setreg('"', vim.fn.fnamemodify(vim.fn.expand("%:p"), ":~:."))
 end, { desc = "Yank current file path" })
 
+vim.keymap.set("n", "<leader>yb", ":%yank <CR>", { desc = "[Y]ank [B]uffer" })
+vim.keymap.set("n", "<leader>YB", ":%yank +<CR>", { desc = "[Y]ank [B]uffer to system clipboard" })
 vim.keymap.set("n", "<leader>YP", function()
 	vim.fn.setreg("+", vim.fn.fnamemodify(vim.fn.expand("%:p"), ":~:."))
 end, { desc = "Yank current file path" })
