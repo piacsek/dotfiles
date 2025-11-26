@@ -32,7 +32,6 @@ return {
 	"neovim/nvim-lspconfig",
 	dependencies = {
 		{ "williamboman/mason.nvim", config = true },
-		"williamboman/mason-lspconfig.nvim",
 		"SmiteshP/nvim-navbuddy",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		{ "folke/neodev.nvim", enabled = false, opts = {} },
@@ -129,6 +128,7 @@ return {
 			},
 		})
 		vim.lsp.config["elixirls"] = vim.tbl_deep_extend("force", vim.lsp.config["elixirls"] or {}, {
+			capabilities = capabilities,
 			settings = {
 				elixirLS = elixirLSSettings,
 			},
