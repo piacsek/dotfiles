@@ -8,8 +8,7 @@ vim.g.colors_name = "high-contrast"
 
 local colors = {
 	-- Background colors
-	-- bg(Not so black) = "#131314",
-	bg = "#000000",
+	bg = "#131314",
 	bg_float = "#131314",
 	bg_highlight = "#000066", -- caret row
 	bg_popup = "#281A33",
