@@ -74,6 +74,14 @@ return {
 						mixEnv = "dev",
 					},
 				},
+				-- ElixirLS also reads from init_options
+				init_options = {
+					dialyzerEnabled = false,
+					fetchDeps = false,
+					enableTestLenses = false,
+					suggestSpecs = false,
+					mixEnv = "dev",
+				},
 			},
 			lua_ls = {
 				settings = {
