@@ -131,6 +131,7 @@ return {
 		vim.lsp.config["elixirls"] = {
 			filetypes = { "elixir", "eelixir", "heex", "surface" },
 			capabilities = capabilities,
+			root_dir = require("lspconfig.util").root_pattern("mix.exs"),
 			settings = {
 				elixirLS = elixirLSSettings,
 			},
