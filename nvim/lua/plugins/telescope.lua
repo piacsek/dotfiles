@@ -54,6 +54,10 @@ local function setup_keymaps()
 		}))
 	end, { desc = "[/] Fuzzily search in current buffer" })
 
+	vim.keymap.set("n", "<leader>fw", function()
+		vim.cmd("require'telescope'.extensions.project.project{}")
+	end, { desc = "[F]ind [W]orkspaces" })
+
 	vim.keymap.set("n", "<leader>fp", function()
 		builtin.find_files({ cwd = vim.fn.getcwd() .. "/piacsek" })
 	end, { desc = "[F]ind [P]iacsek files" })
@@ -81,11 +85,6 @@ local function setup_keymaps()
 			prompt_title = "Modified Files",
 		})
 	end, { noremap = true, silent = true, desc = "[F]ind [M]odified git files with selection" })
-
-	vim.keymap.set("v", "<leader>fw", function()
-		local text = vim.getVisualSelection()
-		builtin.grep_string({ default_text = text, hidden = true })
-	end, { desc = "[F]ind selected [W]ords" })
 
 	vim.keymap.set("v", "<leader>fg", function()
 		local text = vim.getVisualSelectionEscaped()
@@ -189,7 +188,7 @@ return {
 
 		require("telescope").setup(default_config)
 
-		pcall(require("telescope").load_extension, "project")
+		-- pcall(require("telescope").load_extension, "project")
 		pcall(require("telescope").load_extension, "fzf")
 		pcall(require("telescope").load_extension, "ui-select")
 
