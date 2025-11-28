@@ -125,6 +125,7 @@ return {
 			end,
 		},
 		{ "nvim-telescope/telescope-ui-select.nvim" },
+		{ "nvim-telescope/telescope-project.nvim" },
 		{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
 	},
 	config = function()
@@ -188,6 +189,7 @@ return {
 
 		require("telescope").setup(default_config)
 
+		pcall(require("telescope").load_extension, "project")
 		pcall(require("telescope").load_extension, "fzf")
 		pcall(require("telescope").load_extension, "ui-select")
 
