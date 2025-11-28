@@ -10,3 +10,10 @@ vim.api.nvim_create_user_command('BufOnly', function()
     end
   end
 end, { desc = 'Close all buffers except current' })
+
+-- Clear the oldfiles list
+vim.api.nvim_create_user_command('ClearOldfiles', function()
+  vim.v.oldfiles = {}
+  vim.cmd('wshada!')
+  vim.notify('Oldfiles list cleared', vim.log.levels.INFO)
+end, { desc = 'Clear the oldfiles list' })
