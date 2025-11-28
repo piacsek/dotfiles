@@ -35,7 +35,6 @@ local function setup_keymaps()
 	vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "[F]ind [H]elp" })
 	vim.keymap.set("n", "<leader>ft", builtin.colorscheme, { desc = "[F]ind [T]heme" })
 	vim.keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "[F]ind [K]eymaps" })
-	vim.keymap.set("n", "<leader>fw", builtin.grep_string, { desc = "[F]ind current [W]ord" })
 	vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "[F]ind by [G]rep" })
 	vim.keymap.set("n", "<leader>fr", builtin.resume, { desc = "[F]ind [R]esume" })
 	vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "[F]ind [B]uffer" })
@@ -55,7 +54,7 @@ local function setup_keymaps()
 	end, { desc = "[/] Fuzzily search in current buffer" })
 
 	vim.keymap.set("n", "<leader>fw", function()
-		vim.cmd("require'telescope'.extensions.project.project{}")
+		vim.cmd("lua require'telescope'.extensions.project.project{}")
 	end, { desc = "[F]ind [W]orkspaces" })
 
 	vim.keymap.set("n", "<leader>fp", function()
@@ -188,7 +187,7 @@ return {
 
 		require("telescope").setup(default_config)
 
-		-- pcall(require("telescope").load_extension, "project")
+		pcall(require("telescope").load_extension, "project")
 		pcall(require("telescope").load_extension, "fzf")
 		pcall(require("telescope").load_extension, "ui-select")
 
