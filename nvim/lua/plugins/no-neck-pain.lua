@@ -3,6 +3,7 @@ return {
 	version = "*",
 	lazy = false,
 	opts = {
+		debug = true,
 		width = 120,
 		autocmds = {
 			enableOnVimEnter = false,
