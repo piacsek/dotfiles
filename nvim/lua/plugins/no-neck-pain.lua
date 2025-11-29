@@ -3,6 +3,7 @@ return {
 	version = "*",
 	lazy = false,
 	disableOnLastBuffer = true,
+	killAllBuffersOnDisable = true,
 	opts = {
 		width = 120,
 		autocmds = {
