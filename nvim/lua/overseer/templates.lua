@@ -93,6 +93,13 @@ return function(overseer)
 	})
 
 	overseer.register_template({
+		name = "mix ecto.reset",
+		builder = function()
+			return { cmd = { "mix" }, args = { "ecto.reset" } }
+		end,
+	})
+
+	overseer.register_template({
 		name = "mix format",
 		builder = function()
 			return { cmd = { "mix" }, args = { "format" } }
