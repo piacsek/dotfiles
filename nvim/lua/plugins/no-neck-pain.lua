@@ -5,7 +5,7 @@ return {
 	opts = {
 		width = 120,
 		autocmds = {
-			enableOnVimEnter = false,
+			enableOnVimEnter = true,
 			skipEnteringNoNeckPainBuffer = true,
 		},
 		buffers = {
