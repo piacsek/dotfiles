@@ -19,11 +19,11 @@ vim.keymap.set("n", "<C-g>", "#*viw", { desc = "Multiple cursor replacement" })
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Remove search results highlights" })
 
 vim.keymap.set("n", "<leader><Esc>", function()
-	type = vim.bo.buftype
+	local type = vim.bo.buftype
 	if type == "" or type == "nofile" or type == "help" then
 		vim.cmd("bd")
 	end
-end, { desc = "Hide window or close buffer" })
+end, { desc = "Delete buffer" })
 vim.keymap.set("n", "Y", "y$", { desc = "[Y]ank till the end of the line" })
 vim.keymap.set("n", "V", "v$", { desc = "[V]isually select till the end of the line" })
 
