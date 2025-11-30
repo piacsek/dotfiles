@@ -11,7 +11,8 @@
       "WebFetch(domain:raw.githubusercontent.com)",
       "WebFetch(domain:k9scli.io)",
       "Read(//Users/piacsek/Projects/wonderschool/ws-common/apps/nova/piacsek/telescope/**)",
-      "Bash(prettierd:*)"
+      "Bash(prettierd:*)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []
