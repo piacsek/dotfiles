@@ -12,7 +12,8 @@
       "WebFetch(domain:k9scli.io)",
       "Read(//Users/piacsek/Projects/wonderschool/ws-common/apps/nova/piacsek/telescope/**)",
       "Bash(prettierd:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(npm install:*)"
     ],
     "deny": [],
     "ask": []
