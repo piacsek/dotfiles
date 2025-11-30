@@ -17,8 +17,7 @@ vim.api.nvim_create_user_command("ClearOldfiles", function()
 	vim.notify("Oldfiles list cleared", vim.log.levels.INFO)
 end, { desc = "Clear the oldfiles list" })
 
-vim.api.nvim_create_user_command("SetLineNumbers", function()
+vim.api.nvim_create_user_command("LineNumbers", function()
 	vim.opt.relativenumber = true
 	vim.opt.number = true
 end, { desc = "Force line numbers to appear" })
-
