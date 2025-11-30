@@ -19,6 +19,7 @@ vim.keymap.set("n", "<C-g>", "#*viw", { desc = "Multiple cursor replacement" })
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Remove search results highlights" })
 
 vim.keymap.set("n", "<leader><Esc>", function()
+	vim.notify(vim.bo.buftype, vim.log.levels.INFO)
 	if vim.bo.buftype ~= "terminal" then
 		vim.cmd("bd")
 	end
