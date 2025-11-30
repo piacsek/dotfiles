@@ -22,8 +22,6 @@ vim.keymap.set("n", "<leader><Esc>", function()
 	local type = vim.bo.buftype
 	if type == "" or type == "nofile" or type == "help" then
 		vim.cmd("bd")
-		vim.opt.number = true
-		vim.opt.relativenumber = true
 	end
 end, { desc = "Delete buffer" })
 vim.keymap.set("n", "Y", "y$", { desc = "[Y]ank till the end of the line" })
