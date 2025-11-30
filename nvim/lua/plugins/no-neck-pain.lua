@@ -6,7 +6,7 @@ return {
 		width = 120,
 		autocmds = {
 			enableOnVimEnter = true,
-			skipEnteringNoNeckPainBuffer = true,
+			skipEnteringNoNeckPainBuffer = false,
 		},
 		buffers = {
 			right = { enabled = false },
