@@ -19,8 +19,8 @@ vim.keymap.set("n", "<C-g>", "#*viw", { desc = "Multiple cursor replacement" })
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Remove search results highlights" })
 
 vim.keymap.set("n", "<leader><Esc>", function()
-	vim.notify(vim.bo.buftype, vim.log.levels.INFO)
-	if vim.bo.buftype == nil then
+	type = vim.bo.buftype
+	if type == "" or type == "nofile" or type == "help" then
 		vim.cmd("bd")
 	end
 end, { desc = "Hide window or close buffer" })
