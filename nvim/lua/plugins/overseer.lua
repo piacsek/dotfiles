@@ -15,6 +15,7 @@ return {
 				bindings = {
 					["<Esc>"] = "Close",
 					["r"] = "<CMD>OverseerQuickAction restart<CR>",
+					["s"] = "<CMD>OverseerQuickAction stop<CR>",
 					["w"] = "<CMD>OverseerQuickAction watch<CR>",
 					["W"] = "<CMD>OverseerQuickAction unwatch<CR>",
 				},
