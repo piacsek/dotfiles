@@ -20,6 +20,17 @@ return {
 				lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
 			}
 		end,
+		formatters = {
+			prettierd = {
+				cwd = require("conform.util").root_file({
+					".prettierrc",
+					".prettierrc.json",
+					".prettierrc.js",
+					"prettier.config.js",
+					"package.json",
+				}),
+			},
+		},
 		formatters_by_ft = {
 			lua = { "stylua" },
 			javascript = { "prettierd", "prettier", stop_after_first = true },
