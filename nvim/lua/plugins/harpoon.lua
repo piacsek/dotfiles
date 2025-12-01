@@ -1,15 +1,20 @@
-local function setup_keymaps()
+local function setup_keymaps(harpoon)
 	vim.keymap.set("n", "<leader>e", function()
-		require("harpoon").ui:toggle_quick_menu(require("harpoon"):list())
+		harpoon.ui:toggle_quick_menu(require("harpoon"):list())
 	end)
 
 	vim.keymap.set("n", "<leader>a", function()
-		require("harpoon"):list():add()
+		harpoon:list():add()
+	end)
+
+	vim.keymap.set("n", "<leader>A", function()
+		harpoon:list():clear()
+		harpoon:list():add()
 	end)
 
 	for file_index, key in ipairs({ "j", "k", "l", "h" }) do
 		vim.keymap.set("n", ("<C-%s>"):format(key), function()
-			require("harpoon"):list():select(file_index)
+			harpoon:list():select(file_index)
 		end)
 	end
 end
@@ -21,6 +26,6 @@ return {
 	config = function()
 		local harpoon = require("harpoon")
 		harpoon:setup()
-		setup_keymaps()
+		setup_keymaps(harpoon)
 	end,
 }
