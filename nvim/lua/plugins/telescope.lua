@@ -39,7 +39,12 @@ local function setup_keymaps()
 	vim.keymap.set("n", "<leader>fr", builtin.resume, { desc = "[F]ind [R]esume" })
 	vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "[F]ind [B]uffer" })
 	vim.keymap.set("n", "<leader>F", builtin.resume, { desc = "Resume last search" })
-	vim.keymap.set("n", "<leader><leader>", builtin.oldfiles, { desc = "[F]ind Recent Files" })
+	-- vim.keymap.set("n", "<leader><leader>", builtin.oldfiles, { desc = "[F]ind Recent Files" })
+	vim.keymap.set("n", "<leader><leader>", function()
+		require("telescope.builtin").find_files({
+			no_ignore = false,
+		})
+	end, { desc = "[F]ind [F]iles temp" })
 	vim.keymap.set("n", "<leader>gh", builtin.git_bcommits, { desc = "[G]it [H]istory" })
 
 	vim.keymap.set("n", "<leader>/", function()
