@@ -21,3 +21,12 @@ vim.api.nvim_create_user_command("LineNumbers", function()
 	vim.opt.relativenumber = true
 	vim.opt.number = true
 end, { desc = "Force line numbers to appear" })
+
+vim.api.nvim_create_user_command("NotificationsOff", function()
+	require("notify").setup({ level = vim.log.levels.OFF })
+end, { desc = "Disable notifications" })
+
+vim.api.nvim_create_user_command("NotificationsOn", function()
+	require("notify").setup({ level = vim.log.levels.INFO })
+	vim.notify("Notifications enabled", vim.log.levels.INFO)
+end, { desc = "Enable notifications" })
