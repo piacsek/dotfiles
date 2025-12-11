@@ -62,7 +62,7 @@ return function(overseer)
 							{ pattern = "Generated %w+ app", once = true },
 							{ pattern = "Compilation error", once = true },
 							{ pattern = "Generating docs...", once = true },
-							{ pattern = "View %w+ docs at", once = true },
+							{ pattern = 'View "html" docs at', once = true },
 						},
 					},
 					"on_output_summarize",
