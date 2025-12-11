@@ -49,6 +49,16 @@ return function(overseer)
 	})
 
 	overseer.register_template({
+		name = "mix docs",
+		builder = function()
+			return {
+				cmd = { "mix" },
+				args = { "docs" },
+			}
+		end,
+	})
+
+	overseer.register_template({
 		name = "mix compile",
 		builder = function()
 			return {
