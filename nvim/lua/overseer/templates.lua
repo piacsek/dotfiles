@@ -54,6 +54,19 @@ return function(overseer)
 			return {
 				cmd = { "mix" },
 				args = { "docs" },
+				components = {
+					{
+						"pattern_notifier",
+						patterns = {
+							{ pattern = "Compiling (%d+) files" },
+							{ pattern = "Generated %w+ app", once = true },
+							{ pattern = "Compilation error", once = true },
+							{ pattern = "Generating docs...", once = true },
+							{ pattern = "View %w+ docs at", once = true },
+						},
+					},
+					"default",
+				},
 			}
 		end,
 	})
