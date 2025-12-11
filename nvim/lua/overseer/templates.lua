@@ -65,7 +65,9 @@ return function(overseer)
 							{ pattern = "View %w+ docs at", once = true },
 						},
 					},
-					"default",
+					"on_output_summarize",
+					"on_exit_set_status",
+					"display_duration",
 				},
 			}
 		end,
