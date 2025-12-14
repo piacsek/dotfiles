@@ -1,6 +1,5 @@
 nvim roadmap:
 
-- add border to doc hover;
 - redo LSP setup;
 - upgrade overseer;
 - review neotest setup;
