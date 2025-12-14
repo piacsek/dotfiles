@@ -43,17 +43,6 @@ vim.lsp.config["elixir_ls"] = {
 	},
 }
 
-vim.api.nvim_create_user_command("LspInfo", function()
-	local clients = vim.lsp.get_clients({ bufnr = 0 })
-	if #clients == 0 then
-		print("No LSP clients attached to this buffer")
-		return
-	end
-	for _, client in ipairs(clients) do
-		print(string.format("Client: %s (id: %d)", client.name, client.id))
-	end
-end, {})
-
 vim.lsp.enable("lua_ls")
 vim.lsp.enable("vimls")
 vim.lsp.enable("ts_ls")
