@@ -1,6 +1,10 @@
 nvim roadmap:
 
-- Redo LSP setup without LLM help;
+- add border to doc hover;
+- redo LSP setup;
+- upgrade overseer;
+- review neotest setup;
+
 - Harponify!!
   - <C-h> on telescope finder to:
 	 	- clear harpoon files;
