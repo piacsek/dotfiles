@@ -9,14 +9,19 @@ return {
 			},
 		},
 	},
-	opts = {},
+	opts = {
+		events = {
+			render_buffer = {},
+			clear_buffer = { "BufLeave" },
+		},
+	},
 	config = function()
 		require("diagram").setup({
 			integrations = {
 				require("diagram.integrations.markdown"),
 			},
 			renderer_options = {
-				mermaid = { theme = "forest" },
+				mermaid = { theme = "dark", scale = 2 },
 			},
 		})
 	end,
