@@ -21,7 +21,7 @@ return {
 				require("diagram.integrations.markdown"),
 			},
 			renderer_options = {
-				mermaid = { theme = "dark", scale = 2 },
+				mermaid = { theme = "dark", scale = 8 },
 			},
 		})
 	end,
