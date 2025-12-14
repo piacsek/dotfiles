@@ -42,6 +42,7 @@ return {
 			},
 			completion = {
 				autocomplete = false,
+				completeopt = "menu,menuone,noinsert",
 			},
 			mapping = get_cmp_mappings(cmp, luasnip),
 			sources = {
