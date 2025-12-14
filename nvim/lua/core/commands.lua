@@ -22,11 +22,10 @@ vim.api.nvim_create_user_command("LineNumbers", function()
 	vim.opt.number = true
 end, { desc = "Force line numbers to appear" })
 
-vim.api.nvim_create_user_command("NotificationsOff", function()
-	require("notify").setup({ level = vim.log.levels.OFF })
-end, { desc = "Disable notifications" })
+vim.api.nvim_create_user_command("LspInfo", function()
+	vim.cmd("vertical checkhealth vim.lsp")
+end, { desc = "Show LSP health check" })
 
-vim.api.nvim_create_user_command("NotificationsOn", function()
-	require("notify").setup({ level = vim.log.levels.INFO })
-	vim.notify("Notifications enabled", vim.log.levels.INFO)
-end, { desc = "Enable notifications" })
+vim.api.nvim_create_user_command("LspLogs", function()
+	vim.cmd.edit(vim.lsp.get_log_path())
+end, { desc = "Show LSP health check" })
