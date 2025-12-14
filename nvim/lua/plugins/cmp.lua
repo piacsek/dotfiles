@@ -5,7 +5,7 @@ local function get_cmp_mappings(cmp, luasnip)
 		["<C-b>"] = cmp.mapping.scroll_docs(-4),
 		["<C-f>"] = cmp.mapping.scroll_docs(4),
 		["<C-y>"] = cmp.mapping.confirm({ select = true }),
-		["<C-Space>"] = cmp.mapping.complete(),
+		["<C-m>"] = cmp.mapping.complete(),
 	})
 end
 
