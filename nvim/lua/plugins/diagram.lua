@@ -22,7 +22,7 @@ return {
 	end,
 	keys = {
 		{
-			"K",
+			"H",
 			function()
 				require("diagram").show_diagram_hover()
 			end,
