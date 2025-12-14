@@ -1,3 +1,4 @@
+-- For some reason, elixir_ls's config is not picked up from nvim-lspconfig
 vim.lsp.config["elixir_ls"] = {
 	cmd = { "elixir-ls" },
 	filetypes = { "elixir", "eelixir", "heex", "surface" },
