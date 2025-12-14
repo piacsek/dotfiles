@@ -21,11 +21,3 @@ vim.api.nvim_create_user_command("LineNumbers", function()
 	vim.opt.relativenumber = true
 	vim.opt.number = true
 end, { desc = "Force line numbers to appear" })
-
-vim.api.nvim_create_user_command("LspInfo", function()
-	vim.cmd("vertical checkhealth vim.lsp")
-end, { desc = "Show LSP health check" })
-
-vim.api.nvim_create_user_command("LspLogs", function()
-	vim.cmd.edit(vim.lsp.get_log_path())
-end, { desc = "Show LSP health check" })
