@@ -34,13 +34,13 @@ vim.lsp.config["elixir_ls"] = {
 
 		on_dir(root_dir)
 	end,
-	settings = {
-		dialyzerEnabled = false,
-		fetchDeps = false,
-		enableTestLenses = false,
-		suggestSpecs = false,
-		mixEnv = "dev",
-	},
+	-- settings = {
+	-- 	dialyzerEnabled = false,
+	-- 	fetchDeps = false,
+	-- 	enableTestLenses = false,
+	-- 	suggestSpecs = false,
+	-- 	mixEnv = "dev",
+	-- },
 }
 
 vim.lsp.enable("lua_ls")
