@@ -1,6 +1,5 @@
 nvim roadmap:
 
-- redo LSP setup;
 - upgrade overseer;
 - review neotest setup;
 
