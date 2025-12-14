@@ -40,7 +40,7 @@ return {
 					luasnip.lsp_expand(args.body)
 				end,
 			},
-			completion = { autocomplete = false },
+			completion = { completeopt = "menu,menuone,noinsert" },
 			mapping = get_cmp_mappings(cmp, luasnip),
 			sources = {
 				{ name = "nvim_lsp" },
