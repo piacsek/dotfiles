@@ -78,11 +78,6 @@ vim.keymap.set("i", "<C-p>", function()
 	vim.cmd.normal("p")
 end, { desc = "[P]aste in insert mode" })
 
-vim.keymap.set("n", "<leader><BS>", function()
-	vim.cmd("w")
-	vim.cmd("colorscheme high-contrast")
-end, { desc = "Save file & re-apply colorscheme" })
-
 vim.keymap.set("n", "g<Enter>", "gF", { desc = "Go to file with line number support" })
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to file with line number support" })
 vim.keymap.set("n", "<leader>gd", function()
