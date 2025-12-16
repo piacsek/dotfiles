@@ -54,21 +54,6 @@ return function(overseer)
 			return {
 				cmd = { "mix" },
 				args = { "docs" },
-				components = {
-					{
-						"pattern_notifier",
-						patterns = {
-							{ pattern = "Compiling (%d+) files" },
-							{ pattern = "Generated %w+ app", once = true },
-							{ pattern = "Compilation error", once = true },
-							{ pattern = "Generating docs...", once = true },
-							{ pattern = 'View "html" docs at', once = true },
-						},
-					},
-					"on_output_summarize",
-					"on_exit_set_status",
-					"display_duration",
-				},
 			}
 		end,
 	})
@@ -79,19 +64,6 @@ return function(overseer)
 			return {
 				cmd = { "mix" },
 				args = { "compile", "--warnings-as-errors" },
-				-- components = {
-				-- 	{
-				-- 		"pattern_notifier",
-				-- 		patterns = {
-				-- 			{ pattern = "Compiling (%d+) files" },
-				-- 			{ pattern = "Generated %w+ app", once = true },
-				-- 			{ pattern = "Compilation error", once = true },
-				-- 		},
-				-- 	},
-				-- 	"on_output_summarize",
-				-- 	"on_exit_set_status",
-				-- 	"display_duration",
-				-- },
 			}
 		end,
 	})
@@ -101,18 +73,6 @@ return function(overseer)
 			return {
 				cmd = { "mix" },
 				args = { "credo" },
-				components = {
-					{
-						"pattern_notifier",
-						patterns = {
-							{ pattern = "Checking (%d+) source file" },
-							{ pattern = "(%d+) mods/funs", once = true },
-						},
-					},
-					"on_output_summarize",
-					"on_exit_set_status",
-					"display_duration",
-				},
 			}
 		end,
 	})
