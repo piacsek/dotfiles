@@ -6,6 +6,7 @@ return {
 			stages = "fade",
 			timeout = 3000,
 			top_down = false,
+			position = "bottom_left",
 			merge_duplicates = true,
 			icons = {
 				ERROR = "",
