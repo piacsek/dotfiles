@@ -72,6 +72,9 @@ return {
 			summary = {
 				open = "botright vsplit",
 			},
+			output = {
+				open_on_run = false,
+			},
 		})
 
 		setup_keymaps()
