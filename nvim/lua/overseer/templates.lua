@@ -79,19 +79,19 @@ return function(overseer)
 			return {
 				cmd = { "mix" },
 				args = { "compile", "--warnings-as-errors" },
-				components = {
-					{
-						"pattern_notifier",
-						patterns = {
-							{ pattern = "Compiling (%d+) files" },
-							{ pattern = "Generated %w+ app", once = true },
-							{ pattern = "Compilation error", once = true },
-						},
-					},
-					"on_output_summarize",
-					"on_exit_set_status",
-					"display_duration",
-				},
+				-- components = {
+				-- 	{
+				-- 		"pattern_notifier",
+				-- 		patterns = {
+				-- 			{ pattern = "Compiling (%d+) files" },
+				-- 			{ pattern = "Generated %w+ app", once = true },
+				-- 			{ pattern = "Compilation error", once = true },
+				-- 		},
+				-- 	},
+				-- 	"on_output_summarize",
+				-- 	"on_exit_set_status",
+				-- 	"display_duration",
+				-- },
 			}
 		end,
 	})
