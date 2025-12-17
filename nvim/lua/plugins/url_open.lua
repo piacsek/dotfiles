@@ -8,7 +8,13 @@ return {
 		if not status_ok then
 			return
 		end
-		url_open.setup({})
+		url_open.setup({
+			highlight_url = {
+				cursor_move = {
+					enabled = false, -- Don't highlight on every cursor move
+				},
+			},
+		})
 	end,
 	keys = {
 		{ "<leader>jw", "<esc>:URLOpenUnderCursor<cr>", desc = "[J]ump to [W]eb browser" },
