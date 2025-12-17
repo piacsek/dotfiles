@@ -1,5 +1,6 @@
 return {
 	"nvim-lualine/lualine.nvim",
+	enabled = false,
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 	config = function()
 		vim.g.gitblame_display_virtual_text = 0
