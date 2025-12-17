@@ -21,3 +21,13 @@ vim.api.nvim_create_user_command("LineNumbers", function()
 	vim.opt.relativenumber = true
 	vim.opt.number = true
 end, { desc = "Force line numbers to appear" })
+
+vim.api.nvim_create_user_command("VerboseModeEnable", function()
+	vim.opt.verbose = 12
+	vim.opt.verbosefile = "/tmp/nvim-verbose.log"
+end, { desc = "Enable verbose mode and log to /tmp/nvim-verbose.log" })
+
+vim.api.nvim_create_user_command("VerboseModeDisable", function()
+	vim.opt.verbose = 0
+	vim.opt.verbosefile = ""
+end, { desc = "Disable verbose mode" })
