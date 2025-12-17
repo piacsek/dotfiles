@@ -1,28 +1,27 @@
-local function setup_keymaps()
+local function setup_keymaps(neotest)
 	vim.keymap.set("n", "<leader>tt", function()
-		require("neotest").run.run()
+		neotest.run.run()
 	end, { desc = "[T]est neares[T]" })
 
 	vim.keymap.set("n", "<leader>tf", function()
-		require("neotest").run.run(vim.fn.expand("%"))
+		neotest.run.run(vim.fn.expand("%"))
 	end, { desc = "[T]est [F]ile" })
 
 	vim.keymap.set("n", "<leader>ts", function()
-		require("neotest").summary.toggle()
+		neotest.summary.toggle()
 	end, { desc = "[T]est [S]ummary" })
 
 	vim.keymap.set("n", "<leader>to", function()
-		require("neotest").output.open({ enter = true })
+		neotest.output.open({ enter = true })
 	end, { desc = "[T]est [O]utput" })
 
 	vim.keymap.set("n", "<leader><BS>", function()
 		if vim.bo.buftype == "" then
 			vim.cmd("w")
 		end
-		vim.cmd("colorscheme high-contrast")
-		local position_id, last_args = require("neotest").run.get_last_run()
+		local position_id, last_args = neotest.run.get_last_run()
 		if position_id and last_args then
-			require("neotest").run.run_last()
+			neotest.run.run_last()
 		end
 	end, { desc = "Save file and re-run last test (if any)" })
 end
@@ -66,7 +65,8 @@ return {
 			table.insert(adapters, require("neotest-jest"))
 		end
 
-		require("neotest").setup({
+		local neotest = require("neotest")
+		neotest.setup({
 			adapters = adapters,
 			consumers = {
 				overseer = require("neotest.consumers.overseer"),
@@ -79,6 +79,6 @@ return {
 			},
 		})
 
-		setup_keymaps()
+		setup_keymaps(neotest)
 	end,
 }
