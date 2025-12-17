@@ -10,6 +10,11 @@ return {
 				component_separators = { left = "", right = "" },
 				section_separators = { left = "", right = "" },
 				globalstatus = true,
+				refresh = {
+					statusline = 1000, -- Refresh every 1000ms instead of on every event
+					tabline = 1000,
+					winbar = 1000,
+				},
 			},
 			sections = {
 				lualine_a = { "mode" },
