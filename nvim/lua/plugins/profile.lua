@@ -28,8 +28,6 @@ return {
 				prof.start("*")
 			end
 		end
-		vim.keymap.set("", "<f1>", toggle_profile)
-
 		vim.keymap.set("n", "<leader>dp", toggle_profile, { desc = "[D]ebug [P]rofile toggle" })
 	end,
 }
