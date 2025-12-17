@@ -14,7 +14,9 @@ return {
 
 		local function toggle_profile()
 			local prof = require("profile")
+			vim.notify("Toggling profile...")
 			if prof.is_recording() then
+				vim.notify("is_recording is true...")
 				prof.stop()
 				vim.ui.input(
 					{ prompt = "Save profile to:", completion = "file", default = "/tmp/profile.json" },
@@ -25,6 +27,7 @@ return {
 						end
 					end
 				)
+				vim.notify("post ui.input")
 			else
 				prof.start("*")
 			end
