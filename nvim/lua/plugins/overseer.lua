@@ -21,9 +21,9 @@ return {
 					["W"] = "<CMD>OverseerQuickAction unwatch<CR>",
 				},
 				-- Throttle updates to reduce lag from rapid task output
-				update_events = {
-					min_delay = 100, -- Minimum 100ms between updates
-				},
+				-- update_events = {
+				-- min_delay = 100, -- Minimum 100ms between updates
+				-- },
 			},
 			log = {
 				{ type = "echo", level = vim.log.levels.INFO },
