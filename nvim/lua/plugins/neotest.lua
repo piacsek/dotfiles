@@ -38,13 +38,13 @@ return {
 	config = function()
 		-- Hack: neotest spawns a headless nvim which doesn't have everything loaded up like the regular instance
 		-- And neotest elixir requires some stuff to be loaded in order to run return "require("neotest-elixir")._build_position"
-		if not vim.env.LUA_PATH then
-			local adapter_dir = vim.fn.stdpath("data") .. "/lazy/neotest-elixir"
-			local lua_paths = table.concat({ adapter_dir .. "/lua/?.lua", adapter_dir .. "/lua/?/init.lua" }, ";")
-
-			vim.env.LUA_PATH = lua_paths
-		end
-
+		-- if not vim.env.LUA_PATH then
+		-- 	local adapter_dir = vim.fn.stdpath("data") .. "/lazy/neotest-elixir"
+		-- 	local lua_paths = table.concat({ adapter_dir .. "/lua/?.lua", adapter_dir .. "/lua/?/init.lua" }, ";")
+		--
+		-- 	vim.env.LUA_PATH = lua_paths
+		-- end
+		--
 		-- Only load jest adapter if package.json exists
 		local adapters = { require("neotest-elixir") }
 
