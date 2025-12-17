@@ -31,3 +31,11 @@ vim.api.nvim_create_user_command("VerboseModeDisable", function()
 	vim.opt.verbose = 0
 	vim.opt.verbosefile = ""
 end, { desc = "Disable verbose mode" })
+
+vim.api.nvim_create_user_command("VerboseModeOpenFile", function()
+	vim.cmd("e /tmp/nvim-verbose.log")
+end, { desc = "Opens verbose mode log file" })
+
+vim.api.nvim_create_user_command("VerboseModeDeleteFile", function()
+	vim.cmd("!rm /tmp/nvim-verbose.log")
+end, { desc = "Deletes verbose mode log file" })
