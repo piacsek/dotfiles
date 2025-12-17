@@ -32,7 +32,6 @@ return {
 		"nvim-neotest/nvim-nio",
 		"nvim-neotest/neotest-jest",
 		"nvim-lua/plenary.nvim",
-		"nvim-treesitter/nvim-treesitter",
 		"jfpedroza/neotest-elixir",
 	},
 	config = function()
