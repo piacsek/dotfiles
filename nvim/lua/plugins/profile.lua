@@ -19,7 +19,7 @@ return {
 				vim.notify("is_recording is true...")
 				prof.stop()
 				vim.ui.input(
-					{ prompt = "Save profile to:", completion = "file", default = "~/nvim_profile.json" },
+					{ prompt = "Save profile to:", completion = "file", default = "/users/piacsek/nvim_profile.json" },
 					function(filename)
 						if filename then
 							prof.export(filename)
