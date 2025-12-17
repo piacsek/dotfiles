@@ -13,7 +13,9 @@
       "Read(//Users/piacsek/Projects/wonderschool/ws-common/apps/nova/piacsek/telescope/**)",
       "Bash(prettierd:*)",
       "Bash(cat:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(nvim --headless +\"autocmd | grep -i lualine\" +q)",
+      "Bash(nvim:*)"
     ],
     "deny": [],
     "ask": []
