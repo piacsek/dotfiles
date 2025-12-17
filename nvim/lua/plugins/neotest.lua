@@ -36,37 +36,10 @@ return {
 		"jfpedroza/neotest-elixir",
 	},
 	config = function()
-		-- Hack: neotest spawns a headless nvim which doesn't have everything loaded up like the regular instance
-		-- And neotest elixir requires some stuff to be loaded in order to run return "require("neotest-elixir")._build_position"
-		-- if not vim.env.LUA_PATH then
-		-- 	local adapter_dir = vim.fn.stdpath("data") .. "/lazy/neotest-elixir"
-		-- 	local lua_paths = table.concat({ adapter_dir .. "/lua/?.lua", adapter_dir .. "/lua/?/init.lua" }, ";")
-		--
-		-- 	vim.env.LUA_PATH = lua_paths
-		-- end
-		--
-		-- Only load jest adapter if package.json exists
-		local adapters = { require("neotest-elixir") }
-
-		local cwd = vim.fn.getcwd()
-		local package_json_path = cwd .. "/package.json"
-
-		-- Check for project-specific jest config
-		local project_jest_config = cwd .. "/piacsek/neotest/jest.lua"
-		if vim.fn.filereadable(project_jest_config) == 1 then
-			local ok, config = pcall(dofile, project_jest_config)
-			if ok and type(config) == "table" and config.package_json_path then
-				package_json_path = cwd .. "/" .. config.package_json_path
-			end
-		end
-
-		if vim.fn.filereadable(package_json_path) == 1 then
-			table.insert(adapters, require("neotest-jest"))
-		end
-
 		local neotest = require("neotest")
+
 		neotest.setup({
-			adapters = adapters,
+			adapters = { require("neotest-elixir"), require("neotest-jest") },
 			consumers = {
 				overseer = require("neotest.consumers.overseer"),
 			},
