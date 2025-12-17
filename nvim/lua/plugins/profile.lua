@@ -30,6 +30,7 @@ return {
 				vim.notify("post ui.input")
 			else
 				prof.start("*")
+				vim.notify("starting profiling")
 			end
 		end
 		vim.keymap.set("n", "<leader>dp", toggle_profile, { desc = "[D]ebug [P]rofile toggle" })
