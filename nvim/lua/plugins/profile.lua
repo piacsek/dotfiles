@@ -3,6 +3,7 @@ return {
 	config = function()
 		local should_profile = os.getenv("NVIM_PROFILE")
 		if should_profile then
+			vim.notify("Should profile")
 			require("profile").instrument_autocmds()
 			if should_profile:lower():match("^start") then
 				require("profile").start("*")
