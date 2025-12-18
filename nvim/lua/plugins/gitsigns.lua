@@ -54,5 +54,9 @@ return {
 				{ desc = "Shows diff against main", buffer = bufnr }
 			)
 		end,
+		config = function()
+			vim.keymap.set("n", "<leader>ga", "<cmd>Gitsigns attach<CR>", { desc = "Attaches" })
+			vim.keymap.set("n", "<leader>gq", "<cmd>Gitsigns detach_all<CR>", { desc = "Detaches all" })
+		end,
 	},
 }
