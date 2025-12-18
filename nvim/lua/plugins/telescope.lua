@@ -180,13 +180,6 @@ return {
 					},
 				},
 			},
-			harpoon = {
-				layout_config = {
-					width = 0.9,
-					height = 0.9,
-				},
-				path_display = { "smart" },
-			},
 			extensions = {
 				["ui-select"] = {
 					require("telescope.themes").get_dropdown(),
