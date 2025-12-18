@@ -9,6 +9,7 @@ return {
 			changedelete = { text = "~" },
 		},
 		current_line_blame = false,
+		auto_attach = false,
 		current_line_blame_opts = {
 			delay = 0,
 			virt_text = true,
