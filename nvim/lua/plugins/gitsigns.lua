@@ -36,10 +36,15 @@ return {
 			vim.keymap.set(
 				"n",
 				"{",
-				"<cmd>Gitsigns navhunk prev<CR>",
+				"<cmd>Gitsigns nav_hunk prev<CR>",
 				{ desc = "Go to previous git hunk", buffer = bufnr }
 			)
-			vim.keymap.set("n", "}", "<cmd>Gitsigns navhunk next<CR>", { desc = "Go to next git hunk", buffer = bufnr })
+			vim.keymap.set(
+				"n",
+				"}",
+				"<cmd>Gitsigns nav_hunk next<CR>",
+				{ desc = "Go to next git hunk", buffer = bufnr }
+			)
 		end,
 	},
 }
