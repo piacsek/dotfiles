@@ -4,11 +4,14 @@ local function setup_keymaps(harpoon)
 	end)
 
 	vim.keymap.set("n", "<leader>a", function()
+		vim.cmd("Gitsigns attach")
 		harpoon:list():add()
 	end)
 
 	vim.keymap.set("n", "<leader>A", function()
+		vim.cmd("Gitsigns detach_all")
 		harpoon:list():clear()
+		vim.cmd("Gitsigns attach")
 		harpoon:list():add()
 	end)
 
