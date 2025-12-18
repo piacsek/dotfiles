@@ -128,6 +128,21 @@ return {
 	config = function()
 		local default_config = {
 			pickers = {
+				harpoon = {
+					sorting_strategy = "ascending",
+					preview = {
+						hide_on_startup = true,
+					},
+					layout_strategy = "center",
+					mappings = {
+						i = {
+							["<C-k>"] = require("telescope.actions.layout").toggle_preview,
+						},
+						n = {
+							["<C-k>"] = require("telescope.actions.layout").toggle_preview,
+						},
+					},
+				},
 				find_files = {
 					sorting_strategy = "ascending",
 					preview = {
