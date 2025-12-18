@@ -33,6 +33,13 @@ return {
 				"<cmd>Telescope git_bcommits<CR>",
 				{ desc = "[G]it [L]og for current file", buffer = bufnr }
 			)
+			vim.keymap.set(
+				"n",
+				"{",
+				"<cmd>Gitsigns navhunk prev<CR>",
+				{ desc = "Go to previous git hunk", buffer = bufnr }
+			)
+			vim.keymap.set("n", "}", "<cmd>Gitsigns navhunk next<CR>", { desc = "Go to next git hunk", buffer = bufnr })
 		end,
 	},
 }
