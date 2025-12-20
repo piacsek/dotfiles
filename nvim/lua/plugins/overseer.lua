@@ -1,6 +1,5 @@
 return {
 	"stevearc/overseer.nvim",
-	version = "1.6.0",
 	opts = {
 		templates = { "builtin" },
 	},
@@ -29,7 +28,7 @@ return {
 				default_neotest = {
 					{ "on_output_summarize", max_lines = 4 },
 					"on_exit_set_status",
-					{ "display_duration", detail_level = 2 },  -- Only show in detailed view
+					{ "display_duration", detail_level = 1 },
 				},
 			},
 		})
