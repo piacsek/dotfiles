@@ -131,22 +131,6 @@ return {
 				if #claude_buffers == 1 then
 					vim.api.nvim_set_current_buf(claude_buffers[1])
 					vim.cmd("startinsert")
-				elseif #claude_buffers > 1 then
-					local choices = {}
-					for _, bufnr in ipairs(claude_buffers) do
-						table.insert(choices, vim.api.nvim_buf_get_name(bufnr))
-					end
-					vim.ui.select(choices, {
-						prompt = "Select Claude session:",
-						format_item = function(item)
-							return item:match("term://(.*)//%d+:") or item
-						end,
-					}, function(choice, idx)
-						if choice then
-							vim.api.nvim_set_current_buf(claude_buffers[idx])
-							vim.cmd("startinsert")
-						end
-					end)
 				else
 					vim.ui.select({ "claude", "claude nvim" }, {
 						prompt = "Start Claude in:",
