@@ -27,7 +27,6 @@ return {
 			},
 			component_aliases = {
 				default_neotest = {
-					"display_duration",
 					"on_output_summarize",
 					"on_exit_set_status",
 				},
