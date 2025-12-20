@@ -117,4 +117,14 @@ return function(overseer)
 			}
 		end,
 	})
+
+	overseer.register_template({
+		name = "mix test current file",
+		builder = function()
+			return {
+				cmd = { "mix" },
+				args = { "test", vim.fn.expand("%:p") },
+			}
+		end,
+	})
 end
