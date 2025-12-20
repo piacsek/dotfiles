@@ -118,38 +118,21 @@ return {
 		{
 			"<leader>jc",
 			function()
-				local overseer = require("overseer")
-
-				local claude_running = vim.tbl_filter(function(task)
-					return task.name:lower():find("claude", 1, true)
-				end, overseer.list_tasks({ status = "RUNNING", include_ephemeral = true }))
-
-				if #claude_running == 0 then
-					vim.ui.select({ "claude", "claude nvim config" }, {
-						prompt = "Select Claude task to run:",
-					}, function(task_name)
-						overseer.run_task({ name = task_name }, function(task)
-							if task then
-								task:open_output()
-							end
-						end)
-					end)
-				elseif #claude_running == 1 then
-					claude_running[1]:open_output()
+				local bufnr = vim.fn.bufnr("term://.*claude")
+				if bufnr ~= -1 and vim.api.nvim_buf_is_valid(bufnr) then
+					local wins = vim.fn.win_findbuf(bufnr)
+					if #wins > 0 then
+						vim.api.nvim_set_current_win(wins[1])
+					else
+						vim.cmd("split")
+						vim.api.nvim_win_set_buf(0, bufnr)
+					end
 				else
-					vim.ui.select(claude_running, {
-						prompt = "Select Claude task:",
-						format_item = function(task)
-							return task.name
-						end,
-					}, function(task)
-						if task then
-							task:open_output()
-						end
-					end)
+					vim.cmd("split | terminal claude")
+					vim.cmd("startinsert")
 				end
 			end,
-			desc = "[J]ump to [C]laude task",
+			desc = "[J]ump to [C]laude terminal",
 		},
 	},
 }

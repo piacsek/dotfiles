@@ -1,24 +1,5 @@
 return function(overseer)
 	overseer.register_template({
-		name = "claude",
-		builder = function()
-			return {
-				cmd = { "claude" },
-			}
-		end,
-	})
-
-	overseer.register_template({
-		name = "claude nvim config",
-		builder = function()
-			return {
-				cmd = { "claude" },
-				cwd = "/Users/piacsek/dotfiles/nvim/",
-			}
-		end,
-	})
-
-	overseer.register_template({
 		name = "view pr in the browser",
 		builder = function()
 			return {
