@@ -39,3 +39,13 @@ end, { desc = "Opens verbose mode log file" })
 vim.api.nvim_create_user_command("VerboseModeDeleteFile", function()
 	vim.cmd("!rm /tmp/nvim-verbose.log")
 end, { desc = "Deletes verbose mode log file" })
+
+vim.api.nvim_create_user_command("K9s", function()
+	vim.ui.input({ prompt = "Namespace (leave empty for default): " }, function(input)
+		if input and input ~= "" then
+			vim.cmd("terminal k9s -n " .. input)
+		else
+			vim.cmd("terminal k9s")
+		end
+	end)
+end, { desc = "Run k9s in a terminal buffer" })
