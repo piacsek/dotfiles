@@ -24,13 +24,6 @@ return {
 				{ type = "echo", level = vim.log.levels.INFO },
 				{ type = "file", filename = "overseer.log", level = vim.log.levels.INFO },
 			},
-			component_aliases = {
-				default_neotest = {
-					{ "on_output_summarize", max_lines = 4 },
-					"on_exit_set_status",
-					{ "display_duration", detail_level = 1 },
-				},
-			},
 		})
 
 		require("overseer.templates")(overseer)
