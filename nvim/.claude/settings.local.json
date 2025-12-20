@@ -15,7 +15,8 @@
       "Bash(cat:*)",
       "Bash(npm install:*)",
       "Bash(nvim --headless +\"autocmd | grep -i lualine\" +q)",
-      "Bash(nvim:*)"
+      "Bash(nvim:*)",
+      "Bash(find:*)"
     ],
     "deny": [],
     "ask": []
