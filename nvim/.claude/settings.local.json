@@ -16,7 +16,12 @@
       "Bash(npm install:*)",
       "Bash(nvim --headless +\"autocmd | grep -i lualine\" +q)",
       "Bash(nvim:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(for ft in oil notify elixir heex)",
+      "Bash(do echo -n \"$ft: \")",
+      "Bash(done)",
+      "Bash(do echo \"$ft:\")"
     ],
     "deny": [],
     "ask": []
