@@ -61,7 +61,7 @@ return {
 					vim.notify("No tasks found")
 					return
 				elseif #tasks == 1 then
-					overseer.run_action(tasks[1], "open")
+					tasks[1]:open_output()
 				else
 					vim.ui.select(tasks, {
 						prompt = "Select task:",
@@ -70,7 +70,7 @@ return {
 						end,
 					}, function(task)
 						if task then
-							overseer.run_action(task, "open")
+							task:open_output()
 						end
 					end)
 				end
