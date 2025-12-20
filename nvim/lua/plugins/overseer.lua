@@ -27,8 +27,9 @@ return {
 			},
 			component_aliases = {
 				default_neotest = {
-					"on_output_summarize",
+					{ "on_output_summarize", max_lines = 4 },
 					"on_exit_set_status",
+					{ "display_duration", detail_level = 2 },  -- Only show in detailed view
 				},
 			},
 		})
