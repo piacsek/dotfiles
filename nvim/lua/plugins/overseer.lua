@@ -118,28 +118,50 @@ return {
 		{
 			"<leader>jc",
 			function()
-				vim.ui.select({ "claude", "claude nvim" }, {
-					prompt = "Select Claude session:",
-				}, function(choice)
-					if not choice then
-						return
+				local claude_buffers = {}
+				for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+					if vim.api.nvim_buf_is_valid(bufnr) then
+						local bufname = vim.api.nvim_buf_get_name(bufnr)
+						if bufname:match("term://.*claude") then
+							table.insert(claude_buffers, bufnr)
+						end
 					end
+				end
 
-					local cwd = choice == "claude nvim" and "/Users/piacsek/dotfiles/nvim" or vim.fn.getcwd()
-					local pattern = "term://" .. vim.pesc(cwd) .. "//.*claude"
-					local bufnr = vim.fn.bufnr(pattern)
-
-					if bufnr ~= -1 and vim.api.nvim_buf_is_valid(bufnr) then
-						vim.api.nvim_set_current_buf(bufnr)
-					else
+				if #claude_buffers == 1 then
+					vim.api.nvim_set_current_buf(claude_buffers[1])
+					vim.cmd("startinsert")
+				elseif #claude_buffers > 1 then
+					local choices = {}
+					for _, bufnr in ipairs(claude_buffers) do
+						table.insert(choices, vim.api.nvim_buf_get_name(bufnr))
+					end
+					vim.ui.select(choices, {
+						prompt = "Select Claude session:",
+						format_item = function(item)
+							return item:match("term://(.*)//%d+:") or item
+						end,
+					}, function(choice, idx)
+						if choice then
+							vim.api.nvim_set_current_buf(claude_buffers[idx])
+							vim.cmd("startinsert")
+						end
+					end)
+				else
+					vim.ui.select({ "claude", "claude nvim" }, {
+						prompt = "Start Claude in:",
+					}, function(choice)
+						if not choice then
+							return
+						end
 						local cmd = "terminal claude"
 						if choice == "claude nvim" then
 							cmd = "terminal cd /Users/piacsek/dotfiles/nvim && claude"
 						end
 						vim.cmd(cmd)
-					end
-					vim.cmd("startinsert")
-				end)
+						vim.cmd("startinsert")
+					end)
+				end
 			end,
 			desc = "[J]ump to [C]laude terminal",
 		},
