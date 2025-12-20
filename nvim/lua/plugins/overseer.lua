@@ -125,12 +125,12 @@ return {
 					}, function(task_name)
 						overseer.run_template({ name = task_name }, function(task)
 							if task then
-								overseer.run_action(task, "open")
+								task:open_output()
 							end
 						end)
 					end)
 				elseif #claude_running == 1 then
-					overseer.run_action(claude_running[1], "open")
+					claude_running[1]:open_output()
 				else
 					vim.ui.select(claude_running, {
 						prompt = "Select Claude task:",
@@ -139,7 +139,7 @@ return {
 						end,
 					}, function(task)
 						if task then
-							overseer.run_action(task, "open")
+							task:open_output()
 						end
 					end)
 				end
