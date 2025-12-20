@@ -123,7 +123,7 @@ return function(overseer)
 		builder = function()
 			return {
 				cmd = { "mix" },
-				args = { "test", vim.fn.expand("%:p") },
+				args = { "test", "--trace", vim.fn.expand("%:p") },
 			}
 		end,
 	})
