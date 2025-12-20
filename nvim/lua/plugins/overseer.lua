@@ -8,6 +8,13 @@ return {
 
 		overseer.setup({
 			disable_template_modules = { "^overseer.template" },
+			component_aliases = {
+				default_neotest = {
+					"on_exit_set_status",
+					"on_complete_notify",
+					{ "on_complete_dispose", require_view = { "SUCCESS", "FAILURE" } },
+				},
+			},
 			task_list = {
 				min_height = 0.5,
 				bindings = {
