@@ -115,39 +115,5 @@ return {
 			desc = "Pastes the current selection on the most recent task buffer",
 			mode = { "v" },
 		},
-		{
-			"<leader>jc",
-			function()
-				local claude_buffers = {}
-				for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-					if vim.api.nvim_buf_is_valid(bufnr) then
-						local bufname = vim.api.nvim_buf_get_name(bufnr)
-						if bufname:match("term://.*claude") then
-							table.insert(claude_buffers, bufnr)
-						end
-					end
-				end
-
-				if #claude_buffers == 1 then
-					vim.api.nvim_set_current_buf(claude_buffers[1])
-					vim.cmd("startinsert")
-				else
-					vim.ui.select({ "claude", "claude nvim" }, {
-						prompt = "Start Claude in:",
-					}, function(choice)
-						if not choice then
-							return
-						end
-						local cmd = "terminal claude"
-						if choice == "claude nvim" then
-							cmd = "terminal cd /Users/piacsek/dotfiles/nvim && claude"
-						end
-						vim.cmd(cmd)
-						vim.cmd("startinsert")
-					end)
-				end
-			end,
-			desc = "[J]ump to [C]laude terminal",
-		},
 	},
 }
