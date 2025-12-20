@@ -86,7 +86,7 @@ return {
 					vim.notify("No tasks found")
 					return
 				else
-					overseer.run_action(tasks[1], "open")
+					tasks[1]:open_output()
 				end
 			end,
 			desc = "Open the current task's output",
