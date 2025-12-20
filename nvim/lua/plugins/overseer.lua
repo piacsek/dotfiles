@@ -42,7 +42,7 @@ return {
 			"<leader>rl",
 			function()
 				local overseer = require("overseer")
-				local tasks = overseer.list_tasks({ recent_first = true })
+				local tasks = overseer.list_tasks({ recent_first = true, include_ephemeral = true })
 				if #tasks == 0 then
 					vim.notify("No tasks found")
 					return
@@ -56,7 +56,7 @@ return {
 			"<leader>4",
 			function()
 				local overseer = require("overseer")
-				local tasks = overseer.list_tasks({ recent_first = true })
+				local tasks = overseer.list_tasks({ recent_first = true, include_ephemeral = true })
 				if #tasks == 0 then
 					vim.notify("No tasks found")
 					return
@@ -81,17 +81,12 @@ return {
 			"<leader>9",
 			function()
 				local overseer = require("overseer")
-				local tasks = overseer.list_tasks({ recent_first = true })
+				local tasks = overseer.list_tasks({ recent_first = true, include_ephemeral = true })
 				if #tasks == 0 then
 					vim.notify("No tasks found")
 					return
-				end
-				local task = tasks[1]
-				local bufnr = task:get_bufnr()
-				if bufnr then
-					task:open_output()
 				else
-					vim.notify("Task has no output buffer yet")
+					tasks[1]:open_output()
 				end
 			end,
 			desc = "Open the current task's output",
@@ -122,7 +117,7 @@ return {
 
 				local claude_running = vim.tbl_filter(function(task)
 					return task.name:lower():find("claude", 1, true)
-				end, overseer.list_tasks({ status = "RUNNING" }))
+				end, overseer.list_tasks({ status = "RUNNING", include_ephemeral = true }))
 
 				if #claude_running == 0 then
 					vim.ui.select({ "claude", "claude nvim config" }, {
