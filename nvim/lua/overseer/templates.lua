@@ -122,8 +122,8 @@ return function(overseer)
 		name = "mix test current file",
 		builder = function()
 			return {
-				cmd = { "mix" },
-				args = { "test", "--trace", vim.fn.expand("%:p") },
+				cmd = { "elixir" },
+				args = { "-S", "mix", "test", "--trace", vim.fn.expand("%:p") },
 			}
 		end,
 	})
