@@ -85,8 +85,13 @@ return {
 				if #tasks == 0 then
 					vim.notify("No tasks found")
 					return
+				end
+				local task = tasks[1]
+				local bufnr = task:get_bufnr()
+				if bufnr then
+					task:open_output()
 				else
-					tasks[1]:open_output()
+					vim.notify("Task has no output buffer yet")
 				end
 			end,
 			desc = "Open the current task's output",
