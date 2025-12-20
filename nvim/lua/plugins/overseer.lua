@@ -24,8 +24,6 @@ return {
 			},
 		})
 
-		require("overseer.templates")(overseer)
-
 		local project_templates = vim.fn.getcwd() .. "/piacsek/overseer/templates.lua"
 		if vim.fn.filereadable(project_templates) == 1 then
 			dofile(project_templates)(overseer)
