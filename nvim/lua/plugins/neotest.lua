@@ -38,6 +38,7 @@ return {
 			output = {
 				open_on_run = false,
 			},
+			default_strategy = "overseer",
 		})
 
 		vim.keymap.set("n", "<leader>tt", function()
