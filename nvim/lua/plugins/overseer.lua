@@ -7,9 +7,7 @@ return {
 		local overseer = require("overseer")
 
 		overseer.setup({
-			templates = {
-				mix = false,
-			},
+			templates = {},
 			task_list = {
 				min_height = 0.5,
 				bindings = {
