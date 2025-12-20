@@ -24,12 +24,14 @@ return {
 			},
 		})
 
+		local global_templates = vim.fn.stdpath("config") .. "/lua/overseer/templates.lua"
+		if vim.fn.filereadable(global_templates) == 1 then
+			dofile(global_templates)(overseer)
+		end
+
 		local project_templates = vim.fn.getcwd() .. "/piacsek/overseer/templates.lua"
 		if vim.fn.filereadable(project_templates) == 1 then
-			vim.notify("Loading: " .. project_templates)
 			dofile(project_templates)(overseer)
-		else
-			vim.notify("Not found: " .. project_templates)
 		end
 	end,
 	keys = {
