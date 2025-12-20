@@ -22,8 +22,12 @@ return {
 		auto_install = true,
 		highlight = {
 			enable = true,
+			disable = { "oil", "notify" },
 		},
-		indent = { enable = true },
+		indent = {
+			enable = true,
+			disable = { "oil", "notify" },
+		},
 	},
 	config = function(_, opts)
 		require("nvim-treesitter.install").prefer_git = true
