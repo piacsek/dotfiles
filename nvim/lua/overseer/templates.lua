@@ -117,14 +117,4 @@ return function(overseer)
 			}
 		end,
 	})
-
-	overseer.register_template({
-		name = "mix test current file",
-		builder = function()
-			return {
-				cmd = { "elixir" },
-				args = { "-S", "mix", "test", "--trace", vim.fn.expand("%:p") },
-			}
-		end,
-	})
 end
