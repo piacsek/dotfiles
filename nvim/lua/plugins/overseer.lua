@@ -130,7 +130,7 @@ return {
 					vim.ui.select({ "claude", "claude nvim config" }, {
 						prompt = "Select Claude task to run:",
 					}, function(task_name)
-						overseer.run_template({ name = task_name }, function(task)
+						overseer.run_task({ name = task_name }, function(task)
 							if task then
 								task:open_output()
 							end
