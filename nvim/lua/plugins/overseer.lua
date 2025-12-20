@@ -15,12 +15,12 @@ return {
 			},
 			task_list = {
 				min_height = 0.5,
-				bindings = {
-					["<Esc>"] = "Close",
-					["r"] = "<CMD>OverseerQuickAction restart<CR>",
-					["s"] = "<CMD>OverseerQuickAction stop<CR>",
-					["w"] = "<CMD>OverseerQuickAction watch<CR>",
-					["W"] = "<CMD>OverseerQuickAction unwatch<CR>",
+				keymaps = {
+					["<Esc>"] = { "<CMD>close<CR>", desc = "Close task list" },
+					["r"] = { "keymap.run_action", opts = { action = "restart" }, desc = "Restart task" },
+					["s"] = { "keymap.run_action", opts = { action = "stop" }, desc = "Stop task" },
+					["w"] = { "keymap.run_action", opts = { action = "watch" }, desc = "Watch task" },
+					["W"] = { "keymap.run_action", opts = { action = "unwatch" }, desc = "Unwatch task" },
 				},
 			},
 			log = {
