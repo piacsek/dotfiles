@@ -118,19 +118,28 @@ return {
 		{
 			"<leader>jc",
 			function()
-				local bufnr = vim.fn.bufnr("term://.*claude")
-				if bufnr ~= -1 and vim.api.nvim_buf_is_valid(bufnr) then
-					local wins = vim.fn.win_findbuf(bufnr)
-					if #wins > 0 then
-						vim.api.nvim_set_current_win(wins[1])
-					else
-						vim.cmd("split")
-						vim.api.nvim_win_set_buf(0, bufnr)
+				vim.ui.select({ "claude", "claude nvim" }, {
+					prompt = "Select Claude session:",
+				}, function(choice)
+					if not choice then
+						return
 					end
-				else
-					vim.cmd("split | terminal claude")
+
+					local cwd = choice == "claude nvim" and "/Users/piacsek/dotfiles/nvim" or vim.fn.getcwd()
+					local pattern = "term://" .. vim.pesc(cwd) .. "//.*claude"
+					local bufnr = vim.fn.bufnr(pattern)
+
+					if bufnr ~= -1 and vim.api.nvim_buf_is_valid(bufnr) then
+						vim.api.nvim_set_current_buf(bufnr)
+					else
+						local cmd = "terminal claude"
+						if choice == "claude nvim" then
+							cmd = "terminal cd /Users/piacsek/dotfiles/nvim && claude"
+						end
+						vim.cmd(cmd)
+					end
 					vim.cmd("startinsert")
-				end
+				end)
 			end,
 			desc = "[J]ump to [C]laude terminal",
 		},
