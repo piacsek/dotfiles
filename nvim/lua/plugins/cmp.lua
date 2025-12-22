@@ -45,6 +45,8 @@ return {
 					winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
 					col_offset = -3,
 					side_padding = 0,
+					max_width = 60,
+					max_height = 15,
 				},
 				documentation = cmp.config.disable,
 			},
