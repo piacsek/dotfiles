@@ -40,6 +40,11 @@ return {
 		require("luasnip.loaders.from_lua").load({ paths = vim.fn.stdpath("config") .. "/snippets" })
 
 		cmp.setup({
+			view = {
+				docs = {
+					auto_open = false,
+				},
+			},
 			window = {
 				completion = {
 					winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
@@ -48,7 +53,6 @@ return {
 					max_width = 60,
 					max_height = 15,
 				},
-				documentation = cmp.config.disable,
 			},
 			formatting = {
 				fields = { "kind", "abbr", "menu" },
