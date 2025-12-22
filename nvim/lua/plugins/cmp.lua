@@ -4,6 +4,13 @@ local function get_cmp_mappings(cmp, luasnip)
 		["<C-p>"] = cmp.mapping.select_prev_item(),
 		["<C-b>"] = cmp.mapping.scroll_docs(-4),
 		["<C-f>"] = cmp.mapping.scroll_docs(4),
+		["<C-k>"] = cmp.mapping(function()
+			if cmp.visible_docs() then
+				cmp.close_docs()
+			else
+				cmp.open_docs()
+			end
+		end),
 		["<C-y>"] = cmp.mapping.confirm({ select = true }),
 	})
 end
@@ -39,6 +46,7 @@ return {
 					col_offset = -3,
 					side_padding = 0,
 				},
+				documentation = cmp.config.disable,
 			},
 			formatting = {
 				fields = { "kind", "abbr", "menu" },
