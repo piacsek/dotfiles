@@ -96,9 +96,11 @@ vim.keymap.set(
 		open = function()
 			vim.ui.input({ prompt = "Namespace (leave empty for staging): " }, function(input)
 				if input and input ~= "" then
+					vim.cmd("tsh kub login production-gke-cluster-1")
 					vim.cmd("terminal k9s -n " .. input)
 				else
-					vim.cmd("terminal k9s staging")
+					vim.cmd("tsh kub login staging-gke-cluster-1")
+					vim.cmd("terminal k9s -n staging")
 				end
 			end)
 		end,
