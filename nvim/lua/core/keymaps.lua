@@ -94,12 +94,11 @@ vim.keymap.set(
 	singleton_term.make({
 		key = "k9s",
 		open = function()
-			vim.ui.input({ prompt = "Namespace (leave empty for staging): " }, function(input)
-				if input and input ~= "" then
-					vim.cmd("terminal tsh kube login " .. input .. "-gke-cluster-1 && k9s -n " .. input)
-				else
-					vim.cmd("terminal tsh kube login staging-gke-cluster-1 && k9s -n staging")
+			vim.ui.input({ prompt = "Environment (leave empty for staging): " }, function(input)
+				if not (input and input ~= "") then
+					input = "staging"
 				end
+				vim.cmd("terminal tsh kube login " .. input .. "-gke-cluster-1 && k9s")
 			end)
 		end,
 	}),
