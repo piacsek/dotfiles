@@ -83,6 +83,20 @@ vim.keymap.set(
 		key = "claude",
 		open = function()
 			vim.cmd("terminal claude")
+			vim.ui.input({ prompt = "CWD (1=current dir[default], 2=nvim): " }, function(input)
+				local dir = ""
+				if input == "1" or input == "" then
+					dir = "$PWD"
+				elseif input == "2" then
+					dir = "$HOME/dotfiles/nvim/"
+				end
+
+				if dir == "" then
+					vim.notify("Claude: invalid selection " .. input)
+				else
+					vim.cmd("terminal cd " .. dir .. " && claude")
+				end
+			end)
 		end,
 	}),
 	{ desc = "[J]ump to [C]laude (singleton)" }
