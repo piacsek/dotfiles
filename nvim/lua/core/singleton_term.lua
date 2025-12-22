@@ -20,7 +20,6 @@ function M.make(opts)
 		if bufnr and vim.api.nvim_buf_is_valid(bufnr) then
 			if vim.b[bufnr][bmark] and vim.bo[bufnr].buftype == "terminal" then
 				vim.cmd("buffer " .. bufnr)
-				vim.cmd("startinsert")
 				return
 			end
 		end
@@ -29,7 +28,6 @@ function M.make(opts)
 			if vim.api.nvim_buf_is_valid(b) and vim.b[b][bmark] and vim.bo[b].buftype == "terminal" then
 				vim.g[gkey] = b
 				vim.cmd("buffer " .. b)
-				vim.cmd("startinsert")
 				return
 			end
 		end
@@ -38,7 +36,6 @@ function M.make(opts)
 		local newb = vim.api.nvim_get_current_buf()
 		vim.b[newb][bmark] = true
 		vim.g[gkey] = newb
-		vim.cmd("startinsert")
 	end
 end
 

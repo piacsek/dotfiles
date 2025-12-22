@@ -1,4 +1,4 @@
--- local singleton_term = require("singleton_term")
+local singleton_term = require("core.singleton_term")
 
 local arrow_disabling_opts = { noremap = true, silent = true }
 vim.keymap.set({ "n", "i", "v", "c" }, "<Up>", "<Nop>", arrow_disabling_opts)
@@ -64,30 +64,30 @@ vim.keymap.set("n", "<leader>o", function()
 	require("oil").open()
 end, { desc = "[J]ump to [O]il" })
 
--- vim.keymap.set(
--- 	"n",
--- 	"<leader>js",
--- 	singleton_term.make({
--- 		key = "shell",
--- 		open = function()
--- 			vim.cmd("terminal")
--- 		end,
--- 	}),
--- 	{ desc = "[J]ump to [S]hell (singleton)" }
--- )
---
--- vim.keymap.set(
--- 	"n",
--- 	"<leader>jc",
--- 	singleton_term.make({
--- 		key = "claude",
--- 		open = function()
--- 			vim.cmd("terminal claude")
--- 		end,
--- 	}),
--- 	{ desc = "[J]ump to [C]laude (singleton)" }
--- )
---
+vim.keymap.set(
+	"n",
+	"<leader>js",
+	singleton_term.make({
+		key = "shell",
+		open = function()
+			vim.cmd("terminal")
+		end,
+	}),
+	{ desc = "[J]ump to [S]hell (singleton)" }
+)
+
+vim.keymap.set(
+	"n",
+	"<leader>jc",
+	singleton_term.make({
+		key = "claude",
+		open = function()
+			vim.cmd("terminal claude")
+		end,
+	}),
+	{ desc = "[J]ump to [C]laude (singleton)" }
+)
+
 vim.keymap.set("n", "<leader>fs", ":ScratchOpen<CR>", { desc = "[F]ump to [S]cratch" })
 vim.keymap.set("n", "<leader>n", ":Scratch<CR>", { desc = "[N]ew scrach" })
 
