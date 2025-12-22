@@ -82,7 +82,6 @@ vim.keymap.set(
 	singleton_term.make({
 		key = "claude",
 		open = function()
-			vim.cmd("terminal claude")
 			vim.ui.input({ prompt = "CWD (1=current dir[default], 2=nvim): " }, function(input)
 				local dir = ""
 				if input == "1" or input == "" then
