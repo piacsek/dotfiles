@@ -88,6 +88,24 @@ vim.keymap.set(
 	{ desc = "[J]ump to [C]laude (singleton)" }
 )
 
+vim.keymap.set(
+	"n",
+	"<leader>jk",
+	singleton_term.make({
+		key = "k9s",
+		open = function()
+			vim.ui.input({ prompt = "Namespace (leave empty for staging): " }, function(input)
+				if input and input ~= "" then
+					vim.cmd("terminal k9s -n " .. input)
+				else
+					vim.cmd("terminal k9s staging")
+				end
+			end)
+		end,
+	}),
+	{ desc = "[J]ump to [K]9s (singleton)" }
+)
+
 vim.keymap.set("n", "<leader>fs", ":ScratchOpen<CR>", { desc = "[F]ump to [S]cratch" })
 vim.keymap.set("n", "<leader>n", ":Scratch<CR>", { desc = "[N]ew scrach" })
 
