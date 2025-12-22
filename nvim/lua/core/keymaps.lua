@@ -102,7 +102,7 @@ vim.keymap.set(
 					env = "production"
 				end
 
-				if env and env ~= "" then
+				if env == "" then
 					vim.notify("Invalid option " .. input)
 				else
 					vim.cmd("terminal tsh kube login " .. env .. "-gke-cluster-1 && k9s -n nova")
