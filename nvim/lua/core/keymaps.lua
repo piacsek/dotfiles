@@ -94,11 +94,19 @@ vim.keymap.set(
 	singleton_term.make({
 		key = "k9s",
 		open = function()
-			vim.ui.input({ prompt = "Environment (leave empty for staging): " }, function(input)
-				if not (input and input ~= "") then
-					input = "staging"
+			vim.ui.input({ prompt = "Environment (1=staging[default], 2=production): " }, function(input)
+				local env = ""
+				if input == "1" or input == "" then
+					env = "staging"
+				elseif input == "2" then
+					env = "production"
 				end
-				vim.cmd("terminal tsh kube login " .. input .. "-gke-cluster-1 && k9s")
+
+				if env and env ~= "" then
+					vim.notify("Invalid option " .. input)
+				else
+					vim.cmd("terminal tsh kube login " .. env .. "-gke-cluster-1 && k9s -n nova")
+				end
 			end)
 		end,
 	}),
