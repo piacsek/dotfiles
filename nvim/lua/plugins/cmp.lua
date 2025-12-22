@@ -5,7 +5,6 @@ local function get_cmp_mappings(cmp, luasnip)
 		["<C-b>"] = cmp.mapping.scroll_docs(-4),
 		["<C-f>"] = cmp.mapping.scroll_docs(4),
 		["<C-y>"] = cmp.mapping.confirm({ select = true }),
-		["<C-m>"] = cmp.mapping.complete(),
 	})
 end
 
@@ -31,17 +30,33 @@ return {
 		local cmp = require("cmp")
 		local luasnip = require("luasnip")
 		luasnip.config.setup({})
-
 		require("luasnip.loaders.from_lua").load({ paths = vim.fn.stdpath("config") .. "/snippets" })
 
 		cmp.setup({
+			window = {
+				completion = {
+					winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+					col_offset = -3,
+					side_padding = 0,
+				},
+			},
+			formatting = {
+				fields = { "kind", "abbr", "menu" },
+				format = function(entry, vim_item)
+					local kind = require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry, vim_item)
+					local strings = vim.split(kind.kind, "%s", { trimempty = true })
+					kind.kind = " " .. (strings[1] or "") .. " "
+					kind.menu = "    (" .. (strings[2] or "") .. ")"
+
+					return kind
+				end,
+			},
 			snippet = {
 				expand = function(args)
 					luasnip.lsp_expand(args.body)
 				end,
 			},
 			completion = {
-				autocomplete = false,
 				completeopt = "menu,menuone,noinsert",
 			},
 			mapping = get_cmp_mappings(cmp, luasnip),
