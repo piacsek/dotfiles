@@ -1,11 +1,29 @@
 -- Cache for elixir-ls root directory lookups to avoid expensive filesystem searches
 local elixir_root_cache = {}
 
+-- Load project-specific elixir root if configured
+local project_elixir_root = nil
+local project_lsp_config = vim.fn.getcwd() .. "/piacsek/lsp.lua"
+if vim.fn.filereadable(project_lsp_config) == 1 then
+	local ok, config = pcall(dofile, project_lsp_config)
+	if ok and type(config) == "table" and config.elixir_root then
+		project_elixir_root = config.elixir_root
+		vim.notify("✅ Using project-defined elixir root: " .. project_elixir_root, vim.log.levels.INFO)
+	end
+end
+
 -- For some reason, elixir_ls's config is not picked up from nvim-lspconfig
 vim.lsp.config["elixir_ls"] = {
 	cmd = { "elixir-ls" },
 	filetypes = { "elixir", "eelixir", "heex", "surface" },
 	root_dir = function(bufnr, on_dir)
+		-- If project has configured a static root, use it immediately
+		if project_elixir_root then
+			vim.notify("⚡ Using project elixir root: " .. vim.fn.fnamemodify(project_elixir_root, ":t"), vim.log.levels.INFO)
+			on_dir(project_elixir_root)
+			return
+		end
+
 		local fname = vim.api.nvim_buf_get_name(bufnr)
 
 		-- Check cache first to avoid filesystem search
