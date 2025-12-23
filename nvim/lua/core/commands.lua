@@ -59,7 +59,7 @@ vim.api.nvim_create_user_command("BufferStats", function()
 			end
 
 			-- Check if modified
-			if vim.api.nvim_buf_get_option(buf, "modified") then
+			if vim.api.nvim_get_option_value("modified", { buf = buf }) then
 				modified = modified + 1
 			end
 
@@ -94,7 +94,7 @@ vim.api.nvim_create_user_command("CleanHiddenBuffers", function()
 	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
 		if buf ~= current and vim.api.nvim_buf_is_loaded(buf) then
 			local buftype = vim.api.nvim_get_option_value("buftype", { buf = buf })
-			local modified = vim.api.nvim_buf_get_option(buf, "modified")
+			local modified = vim.api.nvim_get_option_value("modified", { buf = buf })
 			local wins = vim.fn.win_findbuf(buf)
 
 			-- Only delete if: not special buffer, not modified, and hidden
@@ -107,50 +107,3 @@ vim.api.nvim_create_user_command("CleanHiddenBuffers", function()
 
 	vim.notify(string.format("Cleaned %d hidden buffers", deleted), vim.log.levels.INFO)
 end, { desc = "Delete all unmodified hidden buffers" })
-
--- Profile what's taking time when opening files
-vim.api.nvim_create_user_command("ProfileFileOpen", function()
-	local times = {}
-
-	-- Track gitsigns attach
-	vim.api.nvim_create_autocmd("User", {
-		pattern = "GitSignsAttach",
-		once = true,
-		callback = function()
-			times.gitsigns = vim.uv.hrtime()
-		end,
-	})
-
-	-- Track LSP attach
-	vim.api.nvim_create_autocmd("LspAttach", {
-		once = true,
-		callback = function()
-			times.lsp_attach = vim.uv.hrtime()
-		end,
-	})
-
-	-- Track when file is fully loaded
-	vim.api.nvim_create_autocmd("BufReadPost", {
-		once = true,
-		callback = function()
-			times.buf_read = vim.uv.hrtime()
-		end,
-	})
-
-	vim.notify("Profiling enabled. Open a new file to measure timings.", vim.log.levels.INFO)
-
-	-- After 5 seconds, report results
-	vim.defer_fn(function()
-		local start = times.buf_read or 0
-		local report = "File open timings:\n"
-
-		if times.gitsigns then
-			report = report .. string.format("  Gitsigns: +%.2fms\n", (times.gitsigns - start) / 1e6)
-		end
-		if times.lsp_attach then
-			report = report .. string.format("  LSP attach: +%.2fms\n", (times.lsp_attach - start) / 1e6)
-		end
-
-		vim.notify(report, vim.log.levels.INFO)
-	end, 5000)
-end, { desc = "Profile file opening performance" })
