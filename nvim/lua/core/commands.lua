@@ -39,3 +39,65 @@ end, { desc = "Opens verbose mode log file" })
 vim.api.nvim_create_user_command("VerboseModeDeleteFile", function()
 	vim.cmd("!rm /tmp/nvim-verbose.log")
 end, { desc = "Deletes verbose mode log file" })
+
+vim.api.nvim_create_user_command("BufferStats", function()
+	local buffers = vim.api.nvim_list_bufs()
+	local loaded = 0
+	local hidden = 0
+	local modified = 0
+	local with_lsp = 0
+
+	for _, buf in ipairs(buffers) do
+		if vim.api.nvim_buf_is_loaded(buf) then
+			loaded = loaded + 1
+
+			-- Check if hidden
+			local wins = vim.fn.win_findbuf(buf)
+			if #wins == 0 then
+				hidden = hidden + 1
+			end
+
+			-- Check if modified
+			if vim.api.nvim_buf_get_option(buf, "modified") then
+				modified = modified + 1
+			end
+
+			-- Check LSP attachment
+			local clients = vim.lsp.get_clients({ bufnr = buf })
+			if #clients > 0 then
+				with_lsp = with_lsp + 1
+			end
+		end
+	end
+
+	local msg = string.format(
+		"Buffers:\n  Total loaded: %d\n  Hidden: %d\n  Modified: %d\n  With LSP: %d",
+		loaded,
+		hidden,
+		modified,
+		with_lsp
+	)
+	vim.notify(msg, vim.log.levels.INFO)
+end, { desc = "Show buffer statistics" })
+
+-- Auto-cleanup hidden buffers that haven't been used in a while
+vim.api.nvim_create_user_command("CleanHiddenBuffers", function()
+	local current = vim.api.nvim_get_current_buf()
+	local deleted = 0
+
+	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+		if buf ~= current and vim.api.nvim_buf_is_loaded(buf) then
+			local buftype = vim.api.nvim_get_option_value("buftype", { buf = buf })
+			local modified = vim.api.nvim_buf_get_option(buf, "modified")
+			local wins = vim.fn.win_findbuf(buf)
+
+			-- Only delete if: not special buffer, not modified, and hidden
+			if buftype == "" and not modified and #wins == 0 then
+				pcall(vim.api.nvim_buf_delete, buf, { force = false })
+				deleted = deleted + 1
+			end
+		end
+	end
+
+	vim.notify(string.format("Cleaned %d hidden buffers", deleted), vim.log.levels.INFO)
+end, { desc = "Delete all unmodified hidden buffers" })

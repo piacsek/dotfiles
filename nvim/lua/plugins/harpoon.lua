@@ -4,21 +4,17 @@ local function setup_keymaps(harpoon)
 	end)
 
 	vim.keymap.set("n", "<leader>a", function()
-		vim.cmd("Gitsigns attach")
 		harpoon:list():add()
 	end)
 
 	vim.keymap.set("n", "<leader>A", function()
-		vim.cmd("Gitsigns detach_all")
 		harpoon:list():clear()
-		vim.cmd("Gitsigns attach")
 		harpoon:list():add()
 	end)
 
 	for file_index, key in ipairs({ "j", "k", "l", "h" }) do
 		vim.keymap.set("n", ("<C-%s>"):format(key), function()
 			harpoon:list():select(file_index)
-			vim.cmd("Gitsigns attach")
 		end)
 	end
 end

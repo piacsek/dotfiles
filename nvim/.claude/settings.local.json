@@ -21,7 +21,9 @@
       "Bash(for ft in oil notify elixir heex)",
       "Bash(do echo -n \"$ft: \")",
       "Bash(done)",
-      "Bash(do echo \"$ft:\")"
+      "Bash(do echo \"$ft:\")",
+      "Bash(wc:*)",
+      "Bash(ls:*)"
     ],
     "deny": [],
     "ask": []
