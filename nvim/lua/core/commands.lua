@@ -117,7 +117,7 @@ vim.api.nvim_create_user_command("ProfileFileOpen", function()
 		pattern = "GitSignsAttach",
 		once = true,
 		callback = function()
-			times.gitsigns = vim.loop.hrtime()
+			times.gitsigns = vim.uv.hrtime()
 		end,
 	})
 
@@ -125,7 +125,7 @@ vim.api.nvim_create_user_command("ProfileFileOpen", function()
 	vim.api.nvim_create_autocmd("LspAttach", {
 		once = true,
 		callback = function()
-			times.lsp_attach = vim.loop.hrtime()
+			times.lsp_attach = vim.uv.hrtime()
 		end,
 	})
 
@@ -133,7 +133,7 @@ vim.api.nvim_create_user_command("ProfileFileOpen", function()
 	vim.api.nvim_create_autocmd("BufReadPost", {
 		once = true,
 		callback = function()
-			times.buf_read = vim.loop.hrtime()
+			times.buf_read = vim.uv.hrtime()
 		end,
 	})
 
