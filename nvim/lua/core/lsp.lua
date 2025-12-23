@@ -8,7 +8,6 @@ if vim.fn.filereadable(project_lsp_config) == 1 then
 	local ok, config = pcall(dofile, project_lsp_config)
 	if ok and type(config) == "table" and config.elixir_root then
 		project_elixir_root = config.elixir_root
-		vim.notify("✅ Using project-defined elixir root: " .. project_elixir_root, vim.log.levels.INFO)
 	end
 end
 
@@ -21,6 +20,7 @@ vim.lsp.config["elixir_ls"] = {
 			return
 		end
 
+		vim.notify("⚠️ elixir root not defined in piacsek/lsp.lua. Fallback search starting", vim.log.levels.WARN)
 		local fname = vim.api.nvim_buf_get_name(bufnr)
 
 		if elixir_root_cache[fname] then
