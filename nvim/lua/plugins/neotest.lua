@@ -58,11 +58,24 @@ return {
 		end, { desc = "[T]est [O]utput" })
 
 		vim.keymap.set("n", "<leader>ta", function()
-			neotest.summary.target(vim.fn.expand("%"))
+			local file_path = vim.fn.expand("%:p")
+			local adapter_ids = neotest.state.adapter_ids()
+			if #adapter_ids > 0 then
+				-- Use the first adapter - you could make this smarter by detecting which adapter owns the file
+				neotest.summary.target(adapter_ids[1], file_path)
+			else
+				vim.notify("No neotest adapters found", vim.log.levels.WARN)
+			end
 		end, { desc = "[T]est set t[A]rget" })
 
 		vim.keymap.set("n", "<leader>tq", function()
-			neotest.summary.target(nil)
+			local adapter_ids = neotest.state.adapter_ids()
+			if #adapter_ids > 0 then
+				-- Clear target for all adapters
+				for _, adapter_id in ipairs(adapter_ids) do
+					neotest.summary.target(adapter_id, nil)
+				end
+			end
 		end, { desc = "[T]est clear target ([Q]uit)" })
 
 		vim.keymap.set("n", "<leader><BS>", function()
