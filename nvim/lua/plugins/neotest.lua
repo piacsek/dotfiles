@@ -27,14 +27,21 @@ return {
 		end
 
 		local neotest = require("neotest")
+		---@diagnostic disable-next-line: missing-fields
 		neotest.setup({
 			adapters = adapters,
+			running = {
+				concurrent = false,
+			},
 			consumers = {
+				---@diagnostic disable-next-line: assign-type-mismatch
 				overseer = require("neotest.consumers.overseer"),
 			},
+			---@diagnostic disable-next-line: missing-fields
 			summary = {
-				open = "botright vsplit",
+				open = "vsplit",
 			},
+			---@diagnostic disable-next-line: missing-fields
 			output = {
 				open_on_run = false,
 			},
