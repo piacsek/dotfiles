@@ -103,8 +103,9 @@ return {
 		{
 			"<leader>R",
 			function()
+				local overseer = require("overseer")
 				vim.cmd.normal("yy")
-				vim.cmd("OverseerQuickAction open")
+				open_last_task_output(overseer)
 				vim.cmd.normal("p")
 			end,
 			desc = "Pastes the current line on the most recent task buffer",
@@ -112,8 +113,9 @@ return {
 		{
 			"<leader>R",
 			function()
+				local overseer = require("overseer")
 				vim.cmd.normal('"vy"')
-				vim.cmd("OverseerQuickAction open")
+				open_last_task_output(overseer)
 				vim.cmd.normal('"vp')
 			end,
 			desc = "Pastes the current selection on the most recent task buffer",
