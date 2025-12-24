@@ -30,16 +30,13 @@ return {
 		---@diagnostic disable-next-line: missing-fields
 		neotest.setup({
 			adapters = adapters,
-			running = {
-				concurrent = false,
-			},
 			consumers = {
 				---@diagnostic disable-next-line: assign-type-mismatch
 				overseer = require("neotest.consumers.overseer"),
 			},
 			---@diagnostic disable-next-line: missing-fields
 			summary = {
-				open = "vsplit",
+				open = "topleft vsplit | vertical resize 50",
 			},
 			---@diagnostic disable-next-line: missing-fields
 			output = {
