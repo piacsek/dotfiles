@@ -36,7 +36,8 @@ return {
 			},
 			---@diagnostic disable-next-line: missing-fields
 			summary = {
-				open = "topleft vsplit | vertical resize 50",
+				-- open = "topleft vsplit | vertical resize 50",
+				open = "split | resize 15",
 			},
 			---@diagnostic disable-next-line: missing-fields
 			output = {
