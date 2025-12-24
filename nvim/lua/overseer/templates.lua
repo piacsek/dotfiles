@@ -83,8 +83,8 @@ return function(overseer)
 		name = "iex -S mix phx.server",
 		builder = function()
 			return {
-				cmd = { "iex" },
-				args = { "-S", "mix", "phx.server" },
+				cmd = { "sh" },
+				args = { "-c", "killall esbuild 2>/dev/null; iex -S mix phx.server" },
 			}
 		end,
 	})
