@@ -76,9 +76,9 @@ return {
 		vim.keymap.set("n", "<leader>tq", function()
 			local adapter_ids = neotest.state.adapter_ids()
 			if #adapter_ids > 0 then
-				-- Clear target for all adapters
+				-- Clear target for all adapters (pcall protects against uninitialized adapters)
 				for _, adapter_id in ipairs(adapter_ids) do
-					neotest.summary.target(adapter_id, nil)
+					pcall(neotest.summary.target, adapter_id, nil)
 				end
 			end
 		end, { desc = "[T]est clear target ([Q]uit)" })
