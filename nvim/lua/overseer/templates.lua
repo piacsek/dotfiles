@@ -80,11 +80,30 @@ return function(overseer)
 	})
 
 	overseer.register_template({
+		name = "killall esbuild",
+		builder = function()
+			return {
+				cmd = { "killall" },
+				args = { "esbuild" },
+			}
+		end,
+	})
+
+	overseer.register_template({
 		name = "iex -S mix phx.server",
 		builder = function()
 			return {
-				cmd = { "sh" },
-				args = { "-c", "killall esbuild 2>/dev/null; iex -S mix phx.server" },
+				name = "Phoenix Server",
+				cmd = { "iex" },
+				args = { "-S", "mix", "phx.server" },
+				components = {
+					{
+						"dependencies",
+						task_names = { "killall esbuild" },
+						sequential = true,
+					},
+					"default",
+				},
 			}
 		end,
 	})
