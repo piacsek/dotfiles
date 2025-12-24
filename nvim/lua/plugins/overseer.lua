@@ -1,3 +1,12 @@
+local open_last_task_output = function(overseer)
+	local tasks = overseer.list_tasks({ recent_first = true, include_ephemeral = true })
+	if #tasks == 0 then
+		vim.notify("No tasks found")
+		return
+	else
+		tasks[1]:open_output()
+	end
+end
 return {
 	"stevearc/overseer.nvim",
 	opts = {
@@ -87,13 +96,7 @@ return {
 			"<leader>9",
 			function()
 				local overseer = require("overseer")
-				local tasks = overseer.list_tasks({ recent_first = true, include_ephemeral = true })
-				if #tasks == 0 then
-					vim.notify("No tasks found")
-					return
-				else
-					tasks[1]:open_output()
-				end
+				open_last_task_output(overseer)
 			end,
 			desc = "Open the current task's output",
 		},
