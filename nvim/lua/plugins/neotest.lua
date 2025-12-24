@@ -57,6 +57,14 @@ return {
 			neotest.output.open({ enter = true })
 		end, { desc = "[T]est [O]utput" })
 
+		vim.keymap.set("n", "<leader>ta", function()
+			neotest.run.target(vim.fn.expand("%"))
+		end, { desc = "[T]est set t[A]rget" })
+
+		vim.keymap.set("n", "<leader>tq", function()
+			neotest.run.clear_target()
+		end, { desc = "[T]est clear target ([Q]uit)" })
+
 		vim.keymap.set("n", "<leader><BS>", function()
 			if vim.bo.buftype == "" then
 				vim.cmd("w")
