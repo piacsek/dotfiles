@@ -30,10 +30,10 @@ return {
 		---@diagnostic disable-next-line: missing-fields
 		neotest.setup({
 			adapters = adapters,
-			consumers = {
-				---@diagnostic disable-next-line: assign-type-mismatch
-				overseer = require("neotest.consumers.overseer"),
-			},
+			-- consumers = {
+			-- 	---@diagnostic disable-next-line: assign-type-mismatch
+			-- 	overseer = require("neotest.consumers.overseer"),
+			-- },
 			---@diagnostic disable-next-line: missing-fields
 			summary = {
 				-- open = "topleft vsplit | vertical resize 50",
@@ -43,7 +43,7 @@ return {
 			output = {
 				open_on_run = false,
 			},
-			default_strategy = "overseer",
+			-- default_strategy = "overseer",
 		})
 
 		vim.keymap.set("n", "<leader>tt", function()
