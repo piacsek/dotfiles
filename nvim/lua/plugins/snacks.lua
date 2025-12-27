@@ -51,6 +51,13 @@ return {
 			desc = "GitHub Pull Requests (open)",
 		},
 		{
+			"<leader>gw",
+			function()
+				Snacks.gitbrowse()
+			end,
+			desc = "Open current file on GitHub",
+		},
+		{
 			"<leader>gg",
 			function()
 				Snacks.lazygit()
