@@ -7,6 +7,6 @@ return {
 	},
 	config = function()
 		vim.g["test#strategy"] = "neovim_sticky"
-		vim.g["test#neovim#term_position"] = "vert botright"
+		vim.g["test#neovim#term_position"] = "topleft vsplit"
 	end,
 }
