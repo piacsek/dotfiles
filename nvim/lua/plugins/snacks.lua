@@ -78,11 +78,11 @@ return {
 			desc = "Git history for current file",
 		},
 		{
-			"<leader>gD",
+			"<leader>gd",
 			function()
-				Snacks.picker.git_diff({ base = "origin/main" })
+				Snacks.picker.git_log_file({ base = "origin/main" })
 			end,
-			desc = "Git diff against origin/main",
+			desc = "Git history for file vs origin/main",
 		},
 		{
 			"<leader>gg",
