@@ -86,7 +86,6 @@ vim.api.nvim_create_user_command("BufferStats", function()
 	vim.notify(msg, vim.log.levels.INFO)
 end, { desc = "Show buffer statistics" })
 
--- Auto-cleanup hidden buffers that haven't been used in a while
 local function clean_hidden_buffers(silent)
 	local current = vim.api.nvim_get_current_buf()
 	local deleted = 0
@@ -115,13 +114,3 @@ end
 vim.api.nvim_create_user_command("CleanHiddenBuffers", function()
 	clean_hidden_buffers(false)
 end, { desc = "Delete all unmodified hidden buffers" })
-
--- Automatic cleanup every 3 minutes (silent)
-local cleanup_timer = vim.uv.new_timer()
-cleanup_timer:start(
-	180000, -- Start after 3 minutes
-	180000, -- Repeat every 3 minutes
-	vim.schedule_wrap(function()
-		clean_hidden_buffers(true)
-	end)
-)
