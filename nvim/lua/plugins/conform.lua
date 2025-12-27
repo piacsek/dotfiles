@@ -17,7 +17,6 @@ return {
 			local disable_filetypes = { c = true, cpp = true, yaml = true, yml = true }
 			return {
 				timeout_ms = 3000,
-				async = true,
 				lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
 			}
 		end,
