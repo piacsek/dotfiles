@@ -80,9 +80,16 @@ return {
 		{
 			"<leader>gd",
 			function()
-				Snacks.picker.git_diff({ base = "origin/main" })
+				local file = vim.fn.expand("%")
+				Snacks.terminal.open("git diff origin/main -- " .. vim.fn.shellescape(file), {
+					win = {
+						style = "float",
+						width = 0.9,
+						height = 0.9,
+					},
+				})
 			end,
-			desc = "Git diff vs origin/main",
+			desc = "Diff current file vs origin/main",
 		},
 		{
 			"<leader>gg",
