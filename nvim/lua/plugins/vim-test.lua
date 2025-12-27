@@ -1,28 +1,8 @@
 return {
 	"vim-test/vim-test",
 	keys = {
+		{ "<leader>tt", "<cmd>TestNearest<cr>", desc = "Test nearest" },
 		{ "<leader>tf", "<cmd>TestFile<cr>", desc = "Test file" },
-		{
-			"<leader><tt>",
-			function()
-				if vim.bo.filetype == "oil" then
-					local oil = require("oil")
-					local entry = oil.get_cursor_entry()
-
-					if not entry then
-						vim.notify("No file under cursor", vim.log.levels.WARN)
-						return
-					end
-
-					local dir = oil.get_current_dir()
-					local filepath = dir .. entry.name
-					vim.cmd("TestFile " .. filepath)
-				else
-					vim.cmd("TestNearest")
-				end
-			end,
-			desc = "Save and run last test",
-		},
 		{
 			"<leader><BS>",
 			function()
