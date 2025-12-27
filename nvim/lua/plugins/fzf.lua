@@ -46,7 +46,15 @@ local function setup_keymaps()
 
 	-- Live grep
 	vim.keymap.set("n", "<leader>fg", function()
-		fzf.live_grep()
+		fzf.live_grep({
+			winopts = {
+				height = 0.9,
+				width = 0.9,
+				preview = {
+					hidden = "nohidden",
+				},
+			},
+		})
 	end, { desc = "[F]ind by [G]rep" })
 
 	-- Resume
