@@ -1,6 +1,8 @@
 return {
 	"folke/snacks.nvim",
-	opts = {},
+	opts = {
+		indent = { enabled = false },
+	},
 	keys = {
 		{
 			"<leader>gp",
