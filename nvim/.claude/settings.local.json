@@ -24,7 +24,8 @@
       "Bash(do echo \"$ft:\")",
       "Bash(wc:*)",
       "Bash(ls:*)",
-      "Bash(cut:*)"
+      "Bash(cut:*)",
+      "WebFetch(domain:nvim-mini.org)"
     ],
     "deny": [],
     "ask": []
