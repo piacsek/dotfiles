@@ -113,7 +113,7 @@ local function setup_keymaps()
 	-- Visual mode grep
 	vim.keymap.set("v", "<leader>fg", function()
 		local text = vim.getVisualSelectionEscaped()
-		fzf.live_grep({ search = text })
+		fzf.live_grep({ search = text, winopts = grep_winopts })
 	end, { desc = "[G]rep selected" })
 
 	-- Visual mode buffer search
@@ -125,7 +125,7 @@ local function setup_keymaps()
 	-- Visual mode grep config
 	vim.keymap.set("v", "<leader>fc", function()
 		local text = vim.getVisualSelectionEscaped()
-		fzf.live_grep({ cwd = vim.fn.stdpath("config"), search = text })
+		fzf.live_grep({ cwd = vim.fn.stdpath("config"), search = text, winopts = grep_winopts })
 	end, { desc = "[G]rep selected [C]onfig" })
 end
 
