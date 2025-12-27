@@ -135,7 +135,8 @@ return {
 	config = function()
 		local fzf = require("fzf-lua")
 
-		fzf.setup({
+		-- Default configuration
+		local config = {
 			winopts = {
 				height = 0.4,
 				width = 0.5,
@@ -150,7 +151,20 @@ return {
 					["ctrl-q"] = "select-all+accept",
 				},
 			},
-		})
+		}
+
+		-- Check for local piacsek/fzf.lua override
+		local cwd = vim.fn.getcwd()
+		local local_config_path = cwd .. "/piacsek/fzf.lua"
+
+		if vim.fn.filereadable(local_config_path) == 1 then
+			local ok, local_config = pcall(dofile, local_config_path)
+			if ok and local_config then
+				config = vim.tbl_deep_extend("force", config, local_config)
+			end
+		end
+
+		fzf.setup(config)
 
 		-- Use fzf-lua for vim.ui.select
 		fzf.register_ui_select()
