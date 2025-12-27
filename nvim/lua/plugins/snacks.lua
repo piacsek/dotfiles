@@ -71,6 +71,20 @@ return {
 			desc = "Copy GitHub URL to clipboard",
 		},
 		{
+			"<leader>gh",
+			function()
+				Snacks.picker.git_log_file()
+			end,
+			desc = "Git history for current file",
+		},
+		{
+			"<leader>gD",
+			function()
+				Snacks.picker.git_diff({ base = "origin/main" })
+			end,
+			desc = "Git diff against origin/main",
+		},
+		{
 			"<leader>gg",
 			function()
 				Snacks.lazygit()
