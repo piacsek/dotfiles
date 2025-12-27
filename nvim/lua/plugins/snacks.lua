@@ -7,6 +7,7 @@ return {
 			keys = {
 				["<leader>tt"] = {
 					action = function(item)
+						vim.notify(item.path)
 						vim.cmd("TestSuite " .. item.path)
 					end,
 					desc = "Run test file",
