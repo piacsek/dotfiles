@@ -8,6 +8,7 @@ return {
 				explorer = {
 					actions = {
 						run_test_file = function(picker)
+							local item = picker:current()
 							vim.notify(item.file)
 							vim.cmd("TestSuite " .. vim.fn.fnameescape(item.file))
 						end,
