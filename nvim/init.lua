@@ -24,5 +24,9 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("plugins")
 
+-- Load colorscheme
+vim.cmd.colorscheme("high-contrast")
+vim.cmd.hi("Comment gui=none")
+
 require("core.lsp")
 
