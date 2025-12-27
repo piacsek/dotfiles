@@ -8,5 +8,6 @@ return {
 	config = function()
 		vim.g["test#strategy"] = "neovim"
 		vim.g["test#neovim#term_position"] = "topleft vsplit"
+		vim.g["test#neovim#start_normal"] = 1
 	end,
 }
