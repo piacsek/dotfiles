@@ -17,6 +17,7 @@ return {
 					local dir = oil.get_current_dir()
 					local filepath = dir .. entry.name
 
+					require("vim-test")
 					vim.cmd("TestFile " .. filepath)
 				end,
 				desc = "Run test file under cursor",
