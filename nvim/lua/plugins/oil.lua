@@ -19,9 +19,7 @@ return {
 
 					require("lazy").load({ plugins = { "vim-test" } })
 
-					vim.schedule(function()
-						vim.cmd("TestSuite " .. filepath)
-					end)
+					vim.cmd("TestSuite " .. filepath)
 				end,
 				desc = "Run test file under cursor",
 			},
