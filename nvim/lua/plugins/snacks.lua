@@ -9,6 +9,11 @@ return {
 					actions = {
 						run_test_file = function(picker)
 							local item = picker:current()
+							if not item or not item.file then
+								vim.notify("Nothing selected", vim.log.levels.WARN)
+								return
+							end
+
 							vim.notify(item.file)
 							vim.cmd("TestSuite " .. vim.fn.fnameescape(item.file))
 						end,
