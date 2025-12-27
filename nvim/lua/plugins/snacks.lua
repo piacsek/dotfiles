@@ -60,11 +60,12 @@ return {
 		{
 			"<leader>gy",
 			function()
-				local url = Snacks.gitbrowse.get_url()
-				if url then
-					vim.fn.setreg("+", url)
-					vim.notify("URL copied to clipboard: " .. url, vim.log.levels.INFO)
-				end
+				Snacks.gitbrowse({
+					open = function(url)
+						vim.fn.setreg("+", url)
+						vim.notify("URL copied to clipboard: " .. url, vim.log.levels.INFO)
+					end,
+				})
 			end,
 			desc = "Copy GitHub URL to clipboard",
 		},
