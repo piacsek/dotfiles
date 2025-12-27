@@ -80,18 +80,6 @@ vim.keymap.set(
 
 vim.keymap.set(
 	"n",
-	"<leader>lg",
-	singleton_term.make({
-		key = "shell",
-		open = function()
-			vim.cmd("terminal lazygit")
-		end,
-	}),
-	{ desc = "[J]ump to [S]hell (singleton)" }
-)
-
-vim.keymap.set(
-	"n",
 	"<leader>jc",
 	singleton_term.make({
 		key = "claude",
