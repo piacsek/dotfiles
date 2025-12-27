@@ -5,6 +5,13 @@ return {
 	},
 	keys = {
 		{
+			"<leader>jp",
+			function()
+				Snacks.explorer()
+			end,
+			desc = "Filetree",
+		},
+		{
 			"<leader>gp",
 			function()
 				Snacks.picker.gh_pr()
