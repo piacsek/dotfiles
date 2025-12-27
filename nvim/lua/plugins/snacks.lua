@@ -11,5 +11,12 @@ return {
 			end,
 			desc = "GitHub Pull Requests (open)",
 		},
+		{
+			"<leader>g1",
+			function()
+				Snacks.git.blame_line()
+			end,
+			desc = "Git blame_line",
+		},
 	},
 }
