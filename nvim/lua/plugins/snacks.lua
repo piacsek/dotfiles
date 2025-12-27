@@ -61,6 +61,7 @@ return {
 			"<leader>gy",
 			function()
 				Snacks.gitbrowse({
+					notify = false,
 					open = function(url)
 						vim.fn.setreg("+", url)
 						vim.notify("URL copied to clipboard: " .. url, vim.log.levels.INFO)
