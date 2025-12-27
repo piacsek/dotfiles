@@ -3,14 +3,27 @@ return {
 	opts = {
 		indent = { enabled = false },
 		notifier = {},
-		explorer = {
-			keys = {
-				["<leader>tt"] = {
-					action = function(item)
-						vim.notify(item.path)
-						vim.cmd("TestSuite " .. item.path)
-					end,
-					desc = "Run test file",
+		picker = {
+			sources = {
+				explorer = {
+					actions = {
+						run_test_file = function(picker)
+							local item = picker:current()
+							if not item or not item.file then
+								return
+							end
+
+							vim.notify(item.file)
+							vim.cmd("TestSuite " .. vim.fn.fnameescape(item.file))
+						end,
+					},
+					win = {
+						list = {
+							keys = {
+								["tt"] = "run_test_file",
+							},
+						},
+					},
 				},
 			},
 		},
