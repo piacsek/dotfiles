@@ -206,3 +206,6 @@ hi("DiffAdd", { bg = "#400f" })
 hi("DiffChange", { bg = "#99" })
 hi("DiffDelete", { bg = "#4d2e08" })
 hi("DiffText", { bg = "#661300" })
+
+-- Snacks
+hi("SnacksTerminalBorder", { fg = colors.cyan })
