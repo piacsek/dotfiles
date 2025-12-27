@@ -106,18 +106,7 @@ local function setup_keymaps()
 	-- Visual mode grep
 	vim.keymap.set("v", "<leader>fg", function()
 		local text = vim.getVisualSelectionEscaped()
-		fzf.live_grep({
-			search = text,
-			winopts = {
-				height = 0.85,
-				width = 0.80,
-				preview = {
-					hidden = "hidden",
-					layout = "vertical",
-					vertical = "down:45%",
-				},
-			},
-		})
+		fzf.live_grep({ search = text })
 	end, { desc = "[G]rep selected" })
 
 	-- Visual mode buffer search
