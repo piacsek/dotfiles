@@ -6,7 +6,7 @@ return {
 		{ "<leader>tl", "<cmd>TestLast<cr>", desc = "Test last" },
 	},
 	config = function()
-		vim.g["test#strategy"] = "neovim_sticky"
+		vim.g["test#strategy"] = "neovim"
 		vim.g["test#neovim#term_position"] = "topleft vsplit"
 	end,
 }
