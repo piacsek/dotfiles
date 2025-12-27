@@ -3,7 +3,16 @@ return {
 	keys = {
 		{ "<leader>tt", "<cmd>TestNearest<cr>", desc = "Test nearest" },
 		{ "<leader>tf", "<cmd>TestFile<cr>", desc = "Test file" },
-		{ "<leader>tl", "<cmd>TestLast<cr>", desc = "Test last" },
+		{
+			"<leader><BS>",
+			function()
+				if vim.bo.buftype == "" then
+					vim.cmd("w")
+				end
+				vim.cmd("TestLast")
+			end,
+			desc = "Save and run last test",
+		},
 	},
 	config = function()
 		vim.g["test#strategy"] = "neovim_sticky"
