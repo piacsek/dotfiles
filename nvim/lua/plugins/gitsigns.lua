@@ -30,12 +30,6 @@ return {
 			)
 			vim.keymap.set(
 				"n",
-				"<leader>gl",
-				"<cmd>Telescope git_bcommits<CR>",
-				{ desc = "[G]it [L]og for current file", buffer = bufnr }
-			)
-			vim.keymap.set(
-				"n",
 				"{",
 				"<cmd>Gitsigns nav_hunk prev<CR>",
 				{ desc = "Go to previous git hunk", buffer = bufnr }
