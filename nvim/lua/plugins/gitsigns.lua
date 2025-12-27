@@ -40,13 +40,6 @@ return {
 				"<cmd>Gitsigns nav_hunk next<CR>",
 				{ desc = "Go to next git hunk", buffer = bufnr }
 			)
-			vim.keymap.set("n", "<leader>gd", "<cmd>Gitsigns diffthis<CR>", { desc = "Shows diff", buffer = bufnr })
-			vim.keymap.set(
-				"n",
-				"<leader>gD",
-				"<cmd>Gitsigns diffthis origin/main<CR>",
-				{ desc = "Shows diff against main", buffer = bufnr }
-			)
 		end,
 	},
 }
