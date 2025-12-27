@@ -80,9 +80,9 @@ return {
 		{
 			"<leader>gd",
 			function()
-				Snacks.picker.git_log_file({ base = "origin/main" })
+				Snacks.picker.git_diff({ base = "origin/main" })
 			end,
-			desc = "Git history for file vs origin/main",
+			desc = "Git diff vs origin/main",
 		},
 		{
 			"<leader>gg",
