@@ -2,6 +2,7 @@ return {
 	"folke/snacks.nvim",
 	opts = {
 		indent = { enabled = false },
+		notifier = {},
 	},
 	keys = {
 		{
