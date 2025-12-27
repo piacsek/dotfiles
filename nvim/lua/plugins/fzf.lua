@@ -1,4 +1,11 @@
 local function setup_keymaps()
+	local grep_winopts = {
+		height = 0.9,
+		width = 0.9,
+		preview = {
+			hidden = "nohidden",
+		},
+	}
 	function vim.getVisualSelection()
 		vim.cmd('noau normal! "vy"')
 		local text = vim.fn.getreg("v")
@@ -46,15 +53,7 @@ local function setup_keymaps()
 
 	-- Live grep
 	vim.keymap.set("n", "<leader>fg", function()
-		fzf.live_grep({
-			winopts = {
-				height = 0.9,
-				width = 0.9,
-				preview = {
-					hidden = "nohidden",
-				},
-			},
-		})
+		fzf.live_grep({ winopts = grep_winopts })
 	end, { desc = "[F]ind by [G]rep" })
 
 	-- Resume
@@ -98,7 +97,7 @@ local function setup_keymaps()
 
 	-- Grep in dotfiles
 	vim.keymap.set("n", "<leader>fc", function()
-		fzf.live_grep({ cwd = "~/dotfiles" })
+		fzf.live_grep({ cwd = "~/dotfiles", winopts = grep_winopts })
 	end, { desc = "Grep config files" })
 
 	-- Find modified git files
