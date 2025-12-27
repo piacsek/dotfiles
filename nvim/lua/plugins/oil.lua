@@ -18,6 +18,8 @@ return {
 					local filepath = dir .. entry.name
 
 					require("lazy").load({ plugins = { "vim-test" } })
+
+					vim.notify("TestFile " .. filepath, vim.log.levels.INFO)
 					vim.cmd("TestFile " .. filepath)
 				end,
 				desc = "Run test file under cursor",
