@@ -12,11 +12,11 @@ return {
 			desc = "GitHub Pull Requests (open)",
 		},
 		{
-			"<leader>g1",
+			"<leader>gg",
 			function()
-				Snacks.git.blame_line()
+				Snacks.lazygit()
 			end,
-			desc = "Git blame_line",
+			desc = "Lazygit",
 		},
 	},
 }
