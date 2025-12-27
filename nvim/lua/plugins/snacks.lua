@@ -14,14 +14,13 @@ return {
 								return
 							end
 
-							vim.notify(item.file)
 							vim.cmd("TestSuite " .. vim.fn.fnameescape(item.file))
 						end,
 					},
 					win = {
 						list = {
 							keys = {
-								["tt"] = "run_test_file",
+								["<leader>tt"] = "run_test_file",
 							},
 						},
 					},
