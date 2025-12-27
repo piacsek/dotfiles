@@ -80,11 +80,10 @@ return function(overseer)
 	})
 
 	overseer.register_template({
-		name = "killall esbuild",
+		name = "killall esbuild silently",
 		builder = function()
 			return {
-				cmd = { "killall" },
-				args = { "esbuild" },
+				cmd = { "/Users/piacsek/killesbuild" },
 			}
 		end,
 	})
@@ -99,7 +98,7 @@ return function(overseer)
 				components = {
 					{
 						"dependencies",
-						task_names = { "killall esbuild" },
+						task_names = { "killall esbuild silently" },
 						sequential = true,
 					},
 					"default",
