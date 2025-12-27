@@ -23,7 +23,8 @@
       "Bash(done)",
       "Bash(do echo \"$ft:\")",
       "Bash(wc:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(cut:*)"
     ],
     "deny": [],
     "ask": []
