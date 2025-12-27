@@ -3,6 +3,16 @@ return {
 	opts = {
 		indent = { enabled = false },
 		notifier = {},
+		explorer = {
+			keys = {
+				["<leader>tt"] = {
+					action = function(item)
+						vim.cmd("TestSuite " .. item.path)
+					end,
+					desc = "Run test file",
+				},
+			},
+		},
 	},
 	keys = {
 		{
