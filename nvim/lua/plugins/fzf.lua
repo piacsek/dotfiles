@@ -106,7 +106,18 @@ local function setup_keymaps()
 	-- Visual mode grep
 	vim.keymap.set("v", "<leader>fg", function()
 		local text = vim.getVisualSelectionEscaped()
-		fzf.live_grep({ search = text })
+		fzf.live_grep({
+			search = text,
+			winopts = {
+				height = 0.85,
+				width = 0.80,
+				preview = {
+					hidden = "hidden",
+					layout = "vertical",
+					vertical = "down:45%",
+				},
+			},
+		})
 	end, { desc = "[G]rep selected" })
 
 	-- Visual mode buffer search
@@ -128,15 +139,6 @@ return {
 		local fzf = require("fzf-lua")
 
 		fzf.setup({
-			winopts = {
-				height = 0.85,
-				width = 0.80,
-				preview = {
-					hidden = "hidden",
-					layout = "vertical",
-					vertical = "down:45%",
-				},
-			},
 			keymap = {
 				fzf = {
 					["ctrl-q"] = "select-all+accept",
