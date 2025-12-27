@@ -13,6 +13,13 @@ return {
 			desc = "Filetree",
 		},
 		{
+			"<leader>jn",
+			function()
+				Snacks.notifier.show_history()
+			end,
+			desc = "Jump to notifications",
+		},
+		{
 			"<leader>gp",
 			function()
 				Snacks.picker.gh_pr()
