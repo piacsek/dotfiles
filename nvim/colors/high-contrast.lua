@@ -135,7 +135,7 @@ hi("GitSignsDelete", { fg = colors.git_delete })
 -- Diagnostics
 hi("DiagnosticError", { fg = colors.error })
 hi("DiagnosticWarn", { fg = colors.warning })
-hi("DiagnosticInfo", { fg = colors.info })
+hi("DiagnosticInfo", { fg = colors.green1 })
 hi("DiagnosticHint", { fg = colors.hint })
 
 -- LSP
