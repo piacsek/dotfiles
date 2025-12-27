@@ -3,7 +3,6 @@ return {
 	event = "VeryLazy",
 	dependencies = {
 		{ "ibhagwan/fzf-lua" },
-		{ "nvim-telescope/telescope.nvim" },
 	},
 	config = function()
 		require("scratch").setup({
