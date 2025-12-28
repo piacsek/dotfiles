@@ -40,7 +40,10 @@ return {
 					win = {
 						list = {
 							keys = {
-								["<leader>tt"] = "run_test_file",
+								["<leader>tt"] = {
+									action = "run_test_file",
+									mode = { "n", "v" },
+								},
 							},
 						},
 					},
