@@ -4,6 +4,14 @@ return {
 		{ "<leader>tt", "<cmd>TestNearest<cr>", desc = "Test nearest" },
 		{ "<leader>tf", "<cmd>TestFile<cr>", desc = "Test file" },
 		{
+			"<leader>td",
+			function()
+				local dir = vim.fn.expand("%:p:h")
+				vim.cmd("TestSuite " .. vim.fn.fnameescape(dir))
+			end,
+			desc = "Test suite in current directory",
+		},
+		{
 			"<leader><BS>",
 			function()
 				if vim.bo.buftype == "" then
