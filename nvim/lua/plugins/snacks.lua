@@ -3,7 +3,6 @@ return {
 	opts = {
 		notifier = {},
 		picker = {
-			ui_select = true,
 			sources = {
 				explorer = {
 					actions = {
@@ -34,7 +33,7 @@ return {
 		dim = { enabled = false },
 		git = { enabled = false },
 		indent = { enabled = false },
-		input = {},
+		input = { enabled = false },
 		profiler = { enabled = false },
 		quickfile = { enabled = false },
 		rename = { enabled = false },
