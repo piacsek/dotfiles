@@ -102,10 +102,6 @@ return {
 						style = "float",
 						width = 0.9,
 						height = 0.9,
-						border = "rounded",
-						wo = {
-							winhighlight = "FloatBorder:SnacksTerminalBorder",
-						},
 					},
 				})
 			end,
