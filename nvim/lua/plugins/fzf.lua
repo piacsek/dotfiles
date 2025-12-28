@@ -17,12 +17,6 @@ local function setup_keymaps()
 		return #text > 0 and text or ""
 	end
 
-	function vim.getVisualSelectionEscaped()
-		local text = vim.getVisualSelection()
-		-- text = vim.fn.escape(text, "()[]{}.*+?^$|\\")
-		return text
-	end
-
 	local fzf = require("fzf-lua")
 
 	vim.keymap.set("n", "<leader>ff", function()
@@ -92,17 +86,17 @@ local function setup_keymaps()
 	end, { noremap = true, silent = true, desc = "[F]ind [M]odified git files with selection" })
 
 	vim.keymap.set("v", "<leader>fg", function()
-		local text = vim.getVisualSelectionEscaped()
+		local text = vim.getVisualSelection()
 		fzf.live_grep({ search = text, winopts = grep_winopts })
 	end, { desc = "[G]rep selected" })
 
 	vim.keymap.set("v", "<leader>/", function()
-		local text = vim.getVisualSelectionEscaped()
+		local text = vim.getVisualSelection()
 		fzf.lgrep_curbuf({ search = text })
 	end, { desc = "[/] Fuzzily search in current buffer" })
 
 	vim.keymap.set("v", "<leader>fc", function()
-		local text = vim.getVisualSelectionEscaped()
+		local text = vim.getVisualSelection()
 		fzf.live_grep({ cwd = vim.fn.stdpath("config"), search = text, winopts = grep_winopts })
 	end, { desc = "[G]rep selected [C]onfig" })
 end
