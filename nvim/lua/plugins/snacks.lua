@@ -1,7 +1,6 @@
 return {
 	"folke/snacks.nvim",
 	opts = {
-		indent = { enabled = false },
 		notifier = {},
 		picker = {
 			sources = {
@@ -27,6 +26,23 @@ return {
 				},
 			},
 		},
+		bigfile = { enabled = false },
+		bufdelete = { enabled = false },
+		dashboard = { enabled = false },
+		debug = { enabled = false },
+		dim = { enabled = false },
+		git = { enabled = false },
+		indent = { enabled = false },
+		input = { enabled = false },
+		profiler = { enabled = false },
+		quickfile = { enabled = false },
+		rename = { enabled = false },
+		scope = { enabled = false },
+		scroll = { enabled = false },
+		statuscolumn = { enabled = false },
+		toggle = { enabled = false },
+		words = { enabled = false },
+		zen = { enabled = false },
 	},
 	keys = {
 		{
