@@ -7,13 +7,34 @@ return {
 				explorer = {
 					actions = {
 						run_test_file = function(picker)
-							local item = picker:current()
-							if not item or not item.file then
+							-- Get all selected items, or current item if none selected
+							local items = picker:selected()
+							if not items or #items == 0 then
+								local current = picker:current()
+								if current then
+									items = { current }
+								end
+							end
+
+							if not items or #items == 0 then
 								vim.notify("Nothing selected", vim.log.levels.WARN)
 								return
 							end
 
-							vim.cmd("TestSuite " .. vim.fn.fnameescape(item.file))
+							-- Collect all file paths
+							local files = {}
+							for _, item in ipairs(items) do
+								if item.file then
+									table.insert(files, vim.fn.fnameescape(item.file))
+								end
+							end
+
+							if #files == 0 then
+								vim.notify("No files selected", vim.log.levels.WARN)
+								return
+							end
+
+							vim.cmd("TestSuite " .. table.concat(files, " "))
 						end,
 					},
 					win = {
