@@ -84,14 +84,19 @@ vim.keymap.set(
 	singleton_term.make({
 		key = "claude",
 		open = function()
-			vim.ui.select({ "Current directory", "Nvim config" }, {
-				prompt = "Claude working directory:",
-			}, function(choice)
-				if not choice then
-					return
+			vim.ui.input({ prompt = "CWD (1=current dir[default], 2=nvim): " }, function(input)
+				local dir = ""
+				if input == "1" or input == "" then
+					dir = "$PWD"
+				elseif input == "2" then
+					dir = "$HOME/dotfiles/nvim/"
 				end
-				local dir = choice == "Current directory" and "$PWD" or "$HOME/dotfiles/nvim/"
-				vim.cmd("terminal cd " .. dir .. " && claude")
+
+				if dir == "" then
+					vim.notify("Claude: invalid selection " .. input)
+				else
+					vim.cmd("terminal cd " .. dir .. " && claude")
+				end
 			end)
 		end,
 	}),
