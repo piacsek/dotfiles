@@ -102,7 +102,7 @@ brew install \
   bat
 ```
 
-### 7. Install asdf plugins
+### 8. Install asdf plugins
 
 Install common language plugins:
 
