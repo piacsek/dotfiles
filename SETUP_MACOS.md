@@ -182,10 +182,10 @@ open -a Docker
 sleep 5
 osascript -e 'quit app "Docker"'
 
-# Create symlink to your Docker settings from dotfiles
-ln -sf "$HOME/dotfiles/docker-settings.json" "$HOME/Library/Group Containers/group.com.docker/settings.json"
+# Copy your Docker settings from dotfiles
+cp "$HOME/dotfiles/docker-settings.json" "$HOME/Library/Group Containers/group.com.docker/settings.json"
 
-echo "Docker settings linked. Launch Docker to apply."
+echo "Docker settings configured. Launch Docker to apply."
 ```
 
 #### Dock Settings
