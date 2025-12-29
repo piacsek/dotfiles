@@ -64,11 +64,9 @@ Clone the dotfiles repository and set up symlinks:
 cd $HOME
 git clone https://github.com/piacsek/dotfiles.git
 
-# Create symlink for neovim config
 ln -sf $HOME/dotfiles/nvim $HOME/.config/nvim
-
-# If you have IntelliJ IDEA, link .ideavimrc
 ln -sf $HOME/dotfiles/.ideavimrc $HOME/.ideavimrc
+ln -sf $HOME/dotfiles/.zshrc $HOME/.zshrc
 ```
 
 ### 4. Install Common CLI Tools
