@@ -139,4 +139,4 @@ vim.keymap.set("i", "<C-p>", function()
 end, { desc = "[P]aste in insert mode" })
 
 vim.keymap.set("n", "g<Enter>", "gF", { desc = "Go to file with line number support" })
-vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to file with line number support" })
+vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
