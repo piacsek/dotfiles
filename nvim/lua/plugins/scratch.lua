@@ -17,7 +17,7 @@ return {
 			"<leader>fs",
 			":ScratchOpen<CR>",
 			mode = "n",
-			desc = "[F]ump to [S]cratch",
+			desc = "[J]ump to [S]cratch",
 		},
 	},
 }
