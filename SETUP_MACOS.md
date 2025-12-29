@@ -68,10 +68,8 @@ ln -sf $HOME/dotfiles/.ghosttyrc $HOME/.config/ghostty/config
 Install fswatch and set up the auto-sync service to automatically commit and push dotfile changes:
 
 ```bash
-# Install fswatch for monitoring file changes
 brew install fswatch
-
-# Create symlink for LaunchAgent
+mkdir -p $HOME/Library/LaunchAgents
 ln -sf $HOME/dotfiles/com.dotfiles.sync.plist $HOME/Library/LaunchAgents/com.dotfiles.sync.plist
 
 # Load and start the service
