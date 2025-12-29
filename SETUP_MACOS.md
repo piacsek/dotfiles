@@ -88,6 +88,7 @@ launchctl list | grep dotfiles
 ```bash
 brew install \
   neovim \
+  direnv \
   fzf \
   ripgrep \
   fd \
