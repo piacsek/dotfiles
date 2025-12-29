@@ -13,11 +13,7 @@ return {
 		})
 	end,
 	keys = {
-		{
-			"<leader>fs",
-			":ScratchOpen<CR>",
-			mode = "n",
-			desc = "[J]ump to [S]cratch",
-		},
+		{ "<leader>fs", ":ScratchOpen<CR>", mode = "n", desc = "[J]ump to [S]cratch" },
+		{ "<leader>n", ":Scratch<CR>", mode = "n", desc = "[N]ew scrach" },
 	},
 }
