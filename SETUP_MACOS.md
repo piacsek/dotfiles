@@ -95,6 +95,13 @@ asdf plugin add vault
 asdf plugin add gcloud
 asdf plugin add rebar
 asdf plugin add teleport-community
+
+# Install Node.js and set as global
+asdf install nodejs 24.12.0
+asdf global nodejs 24.12.0
+
+# Install Claude CLI globally
+npm install -g @anthropic-ai/claude-code
 ```
 
 ---
