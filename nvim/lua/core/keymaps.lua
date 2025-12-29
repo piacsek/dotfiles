@@ -134,7 +134,9 @@ vim.keymap.set(
 
 vim.keymap.set("n", "<leader><Del>", ":BufOnly<CR>", { desc = "[T]est [S]ummary" })
 vim.keymap.set("n", "<leader>i", ":Inspect<CR>", { desc = "[I]nspect" })
-vim.keymap.set("i", "<C-p>", vim.cmd.normal("p"), { desc = "[P]aste in insert mode" })
+vim.keymap.set("i", "<C-p>", function()
+	vim.cmd.normal("p")
+end, { desc = "[P]aste in insert mode" })
 
 vim.keymap.set("n", "g<Enter>", "gF", { desc = "Go to file with line number support" })
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to file with line number support" })
