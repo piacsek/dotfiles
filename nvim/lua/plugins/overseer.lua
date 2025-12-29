@@ -46,29 +46,25 @@ return {
 		-- Load project templates first, tracking their names
 		local project_templates = vim.fn.getcwd() .. "/piacsek/overseer/templates.lua"
 		if vim.fn.filereadable(project_templates) == 1 then
-			overseer.register_template = function(opts)
+			local function project_register(opts)
 				project_template_names[opts.name] = true
 				original_register(opts)
 			end
-
+			overseer.register_template = project_register
 			dofile(project_templates)(overseer)
-
-			-- Restore original register function
 			overseer.register_template = original_register
 		end
 
 		-- Then load global templates, skipping any that were overridden by project templates
 		local global_templates = vim.fn.stdpath("config") .. "/lua/overseer/templates.lua"
 		if vim.fn.filereadable(global_templates) == 1 then
-			overseer.register_template = function(opts)
+			local function global_register(opts)
 				if not project_template_names[opts.name] then
 					original_register(opts)
 				end
 			end
-
+			overseer.register_template = global_register
 			dofile(global_templates)(overseer)
-
-			-- Restore original register function
 			overseer.register_template = original_register
 		end
 	end,
