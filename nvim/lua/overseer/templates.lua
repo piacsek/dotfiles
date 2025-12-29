@@ -20,16 +20,6 @@ return function(overseer)
 	})
 
 	overseer.register_template({
-		name = "dotfiles sync",
-		builder = function()
-			return {
-				cmd = { "/Users/piacsek/dotfiles/sync_dotfiles.sh" },
-				args = { "sync" },
-			}
-		end,
-	})
-
-	overseer.register_template({
 		name = "mix docs",
 		builder = function()
 			return {
