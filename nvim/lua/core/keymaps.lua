@@ -81,6 +81,10 @@ vim.keymap.set(
 		key = "claude",
 		open = function()
 			vim.ui.input({ prompt = "CWD (1=current dir[default], 2=nvim): " }, function(input)
+				if input == nil then
+					return
+				end
+
 				local dir = ""
 				if input == "1" or input == "" then
 					dir = "$PWD"
