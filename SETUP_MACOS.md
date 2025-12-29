@@ -70,9 +70,9 @@ Install fswatch and set up the auto-sync service to automatically commit and pus
 ```bash
 brew install fswatch
 mkdir -p $HOME/Library/LaunchAgents
+
 ln -sf $HOME/dotfiles/com.dotfiles.sync.plist $HOME/Library/LaunchAgents/com.dotfiles.sync.plist
 
-# Load and start the service
 launchctl load $HOME/Library/LaunchAgents/com.dotfiles.sync.plist
 launchctl start com.dotfiles.sync
 ```
