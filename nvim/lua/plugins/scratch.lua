@@ -12,4 +12,12 @@ return {
 			filetypes = { "ex", "lua", "js", "sh", "ts", "json", "heex", "html", "sql", "md" },
 		})
 	end,
+	keys = {
+		{
+			"<leader>fs",
+			":ScratchOpen<CR>",
+			mode = "n",
+			desc = "[F]ump to [S]cratch",
+		},
+	},
 }
