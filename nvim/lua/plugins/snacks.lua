@@ -110,7 +110,16 @@ return {
 		{
 			"<leader>gg",
 			function()
-				Snacks.lazygit()
+				-- Get current file's directory, fallback to CWD if no file
+				local file_dir = vim.fn.expand("%:p:h")
+				if file_dir == "" then
+					file_dir = vim.fn.getcwd()
+				end
+
+				-- Find git root from current file's directory
+				local git_root = vim.fs.root(file_dir, ".git")
+
+				Snacks.lazygit({ cwd = git_root })
 			end,
 			desc = "Lazygit",
 		},
