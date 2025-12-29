@@ -55,7 +55,7 @@ read "git_email?Enter your git email: "
 git config --global user.email "$git_email"
 ```
 
-### 4. Clone and Link Dotfiles
+### 5. Clone and Link Dotfiles
 Clone the dotfiles repository and set up symlinks:
 
 ```bash
