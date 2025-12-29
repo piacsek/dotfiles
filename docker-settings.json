@@ -52,7 +52,7 @@
   "latestBannerKey": "",
   "licenseTermsVersion": 2,
   "lifecycleTimeoutSeconds": 600,
-  "memoryMiB": 3072,
+  "memoryMiB": 2048,
   "networkType": "gvisor",
   "noWindowsContainers": false,
   "onlyMarketplaceExtensions": false,
