@@ -62,10 +62,6 @@ end, { desc = "[S]ubstitute with escaped chars" })
 
 vim.keymap.set("t", "<C-o>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
-vim.keymap.set("n", "<leader>o", function()
-	require("oil").open()
-end, { desc = "[J]ump to [O]il" })
-
 vim.keymap.set(
 	"n",
 	"<leader>js",
