@@ -114,9 +114,9 @@ vim.keymap.set(
 				end
 
 				if env == "" then
-					vim.notify("K9s: invalid selection " .. input)
+					vim.notify("K9s: invalid selection " .. input, vim.log.levels.WARN)
 				elseif input == nil then
-					vim.notify("No env selected. Enter 1 for staging or 2 for production")
+					vim.notify("No env selected. Enter 1 for staging or 2 for production", vim.log.levels.WARN)
 				else
 					vim.cmd("terminal tsh kube login " .. env .. "-gke-cluster-1 && k9s -n nova")
 				end
