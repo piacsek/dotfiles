@@ -115,7 +115,7 @@ vim.keymap.set(
 				return env
 			end)
 			if env == "" then
-				vim.notify("K9s: invalid selection " .. input)
+				vim.notify("K9s: invalid selection")
 			else
 				vim.cmd("terminal tsh kube login " .. env .. "-gke-cluster-1 && k9s -n nova")
 			end
