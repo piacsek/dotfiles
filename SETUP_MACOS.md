@@ -63,7 +63,29 @@ ln -sf $HOME/dotfiles/.zshrc $HOME/.zshrc
 ln -sf $HOME/dotfiles/.ghosttyrc $HOME/.config/ghostty/config
 ```
 
-### 4. Install Common CLI Tools
+### 5. Set Up Dotfiles Auto-Sync
+
+Install fswatch and set up the auto-sync service to automatically commit and push dotfile changes:
+
+```bash
+# Install fswatch for monitoring file changes
+brew install fswatch
+
+# Create symlink for LaunchAgent
+ln -sf $HOME/dotfiles/com.dotfiles.sync.plist $HOME/Library/LaunchAgents/com.dotfiles.sync.plist
+
+# Load and start the service
+launchctl load $HOME/Library/LaunchAgents/com.dotfiles.sync.plist
+launchctl start com.dotfiles.sync
+```
+
+Verify the service is running:
+
+```bash
+launchctl list | grep dotfiles
+```
+
+### 6. Install Common CLI Tools
 
 ```bash
 brew install \
@@ -74,7 +96,7 @@ brew install \
   bat
 ```
 
-### 5. Install asdf
+### 7. Install asdf
 
 Install asdf and common language plugins:
 
