@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Dotfiles Auto-Sync Script!
+# Dotfiles Auto-Sync Script
 # Monitors changes in config files and automatically commits/pushes to the dotfiles git repo
 
 DOTFILES_DIR="/Users/piacsek/dotfiles"
