@@ -172,38 +172,20 @@ brew install --cask \
 
 ### macOS System Preferences
 
-#### Docker Resource Limits
+#### Docker Settings
 
-Configure Docker resource limits (3GB RAM, 1 CPU, no swap):
+Configure Docker with your saved settings (3GB RAM, 1 CPU, no swap):
 
 ```bash
-# Wait for Docker to be installed and create its settings file first
-# Open Docker once to initialize, then quit it
+# Open Docker once to initialize the directory structure, then quit it
 open -a Docker
 sleep 5
 osascript -e 'quit app "Docker"'
 
-# Configure resource limits
-DOCKER_SETTINGS="$HOME/Library/Group Containers/group.com.docker/settings.json"
-if [ -f "$DOCKER_SETTINGS" ]; then
-  # Backup original settings
-  cp "$DOCKER_SETTINGS" "$DOCKER_SETTINGS.backup"
+# Create symlink to your Docker settings from dotfiles
+ln -sf "$HOME/dotfiles/docker-settings.json" "$HOME/Library/Group Containers/group.com.docker/settings.json"
 
-  # Update settings using jq or manual editing
-  # Set memoryMiB: 3072 (3GB), cpus: 1, swapMiB: 0
-  cat "$DOCKER_SETTINGS" | python3 -c "
-import sys, json
-settings = json.load(sys.stdin)
-settings['memoryMiB'] = 3072
-settings['cpus'] = 1
-settings['swapMiB'] = 0
-print(json.dumps(settings, indent=2))
-" > "$DOCKER_SETTINGS.tmp" && mv "$DOCKER_SETTINGS.tmp" "$DOCKER_SETTINGS"
-
-  echo "Docker resource limits configured"
-else
-  echo "Docker settings file not found. Launch Docker first."
-fi
+echo "Docker settings linked. Launch Docker to apply."
 ```
 
 #### Dock Settings
