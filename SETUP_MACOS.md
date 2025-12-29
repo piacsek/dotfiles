@@ -80,6 +80,36 @@ brew install \
   fd \
   bat \
   eza
+```
+
+### 5. Install asdf (Version Manager)
+
+Install asdf and common language plugins:
+
+```bash
+# Install asdf
+brew install asdf
+
+
+# Reload shell
+source ~/.zshrc
+
+# Install plugins
+asdf plugin add elixir
+asdf plugin add erlang
+asdf plugin add nodejs
+asdf plugin add python
+asdf plugin add ruby
+asdf plugin add postgres
+asdf plugin add yarn
+asdf plugin add lua
+asdf plugin add java
+asdf plugin add k9s
+asdf plugin add vault
+asdf plugin add gcloud
+asdf plugin add rebar
+asdf plugin add teleport-community
+```
 
 ---
 
