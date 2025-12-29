@@ -53,7 +53,7 @@ return {
 				end
 				if project_template_names[opts.name] == true then
 					vim.notify(
-						opts.name .. " has already been defined in this project. Skipping duplicate definition...",
+						opts.name .. " has already been defined in this project. Skipping duplicate...",
 						vim.log.levels.WARN
 					)
 					return
