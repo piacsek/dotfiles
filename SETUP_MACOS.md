@@ -121,6 +121,17 @@ Fast app switching tool.
 brew install --cask rcmd
 ```
 
+**Remember to import your rcmd.json settings after installation.**
+
+### Rectangle
+Window management tool.
+
+```bash
+brew install --cask rectangle
+```
+
+**Remember to import your RectangleConfig.json settings after installation.**
+
 ### Chrome
 Web browser.
 
