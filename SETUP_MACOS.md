@@ -158,22 +158,11 @@ brew install --cask \
 
 ## Communication & Media
 
-### Slack
-
 ```bash
-brew install --cask slack
-```
-
-### Spotify
-
-```bash
-brew install --cask spotify
-```
-
-### WhatsApp
-
-```bash
-brew install --cask whatsapp
+brew install --cask \
+  slack \
+  spotify \
+  whatsapp
 ```
 
 ---
