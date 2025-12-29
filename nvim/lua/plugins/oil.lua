@@ -24,6 +24,10 @@ return {
 			},
 		},
 	},
+	keys = {
+		{ "<leader>fs", ":ScratchOpen<CR>", mode = "n", desc = "[J]ump to [S]cratch" },
+		{ "<leader>n", ":Scratch<CR>", mode = "n", desc = "[N]ew scratch" },
+	},
 	dependencies = { { "echasnovski/mini.icons", opts = {} } },
 	-- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
 	lazy = false,
