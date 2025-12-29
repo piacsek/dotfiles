@@ -107,7 +107,6 @@ vim.keymap.set(
 		open = function()
 			vim.ui.input({ prompt = "Environment (1=staging[default], 2=production): " }, function(input)
 				if input == nil then
-					vim.notify("No env selected. Enter 1 for staging or 2 for production", vim.log.levels.WARN)
 					return
 				end
 
