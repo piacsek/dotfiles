@@ -89,7 +89,7 @@ Verify the service is running:
 launchctl list | grep dotfiles
 ```
 
-### 6. Install Common CLI Tools
+### 7. Install Common CLI Tools
 
 ```bash
 brew install \
