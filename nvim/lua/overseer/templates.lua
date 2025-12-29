@@ -38,6 +38,7 @@ return function(overseer)
 			}
 		end,
 	})
+
 	overseer.register_template({
 		name = "mix credo",
 		builder = function()
