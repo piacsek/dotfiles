@@ -41,7 +41,13 @@ brew install --cask ghostty
 chsh -s $(which zsh)
 ```
 
-### 3. Configure Git
+### 3. Install Oh My Zsh
+
+```bash
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+### 4. Configure Git
 
 ```bash
 git config --global user.name "Felipe Moraes Piacsek"
