@@ -105,20 +105,20 @@ vim.keymap.set(
 	singleton_term.make({
 		key = "k9s",
 		open = function()
-			local env = vim.ui.input({ prompt = "Environment (1=staging[default], 2=production): " }, function(input)
+			vim.ui.input({ prompt = "Environment (1=staging[default], 2=production): " }, function(input)
 				local env = ""
 				if input == "1" or input == "" then
 					env = "staging"
 				elseif input == "2" then
 					env = "production"
 				end
-				return env
+
+				if env == "" then
+					vim.notify("K9s: invalid selection " .. input)
+				else
+					vim.cmd("terminal tsh kube login " .. env .. "-gke-cluster-1 && k9s -n nova")
+				end
 			end)
-			if env == "" then
-				vim.notify("K9s: invalid selection")
-			else
-				vim.cmd("terminal tsh kube login " .. env .. "-gke-cluster-1 && k9s -n nova")
-			end
 		end,
 	}),
 	{ desc = "[J]ump to [K]9s (singleton)" }
