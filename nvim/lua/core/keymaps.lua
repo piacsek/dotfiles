@@ -106,7 +106,7 @@ vim.keymap.set(
 		key = "k9s",
 		open = function()
 			vim.ui.input({ prompt = "Environment (1=staging[default], 2=production): " }, function(input)
-				local env = ""
+				local env = nil
 				if input == "1" or input == "" then
 					env = "staging"
 				elseif input == "2" then
