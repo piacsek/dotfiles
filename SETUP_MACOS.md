@@ -191,7 +191,6 @@ Configure these settings manually:
 
 ```bash
 # Open apps to complete setup
-open -a Ghostty
 open -a rcmd
 open -a Stats
 open -a Pasty
