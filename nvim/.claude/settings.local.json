@@ -27,7 +27,8 @@
       "Bash(cut:*)",
       "WebFetch(domain:nvim-mini.org)",
       "Bash(npm config:*)",
-      "Bash(brew search:*)"
+      "Bash(brew search:*)",
+      "Bash(brew info:*)"
     ],
     "deny": [],
     "ask": []
