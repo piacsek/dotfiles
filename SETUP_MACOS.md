@@ -54,6 +54,7 @@ Clone the dotfiles repository and set up symlinks:
 
 ```bash
 cd $HOME
+mkdir -p $HOME/.config/ghostty $HOME/.config/nvim
 git clone https://github.com/piacsek/dotfiles.git
 
 ln -sf $HOME/dotfiles/nvim $HOME/.config/nvim
