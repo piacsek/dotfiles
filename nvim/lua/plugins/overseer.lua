@@ -47,6 +47,9 @@ return {
 		local project_templates = vim.fn.getcwd() .. "/piacsek/overseer/templates.lua"
 		if vim.fn.filereadable(project_templates) == 1 then
 			local function project_register(opts)
+				if opts.name == nil then
+					vim.notify("Invalid overseer project template: must define a unique name")
+				end
 				project_template_names[opts.name] = true
 				original_register(opts)
 			end
