@@ -130,62 +130,29 @@ npm install -g @anthropic-ai/claude-code
 
 ## Essential Apps
 
-### 1Password
-Password manager.
+### Install via Homebrew
 
 ```bash
-brew install --cask 1password
+brew install --cask \
+  1password \
+  rcmd \
+  rectangle \
+  google-chrome \
+  stats \
+  cleanshot \
+  docker
 ```
 
-### rcmd
+### Manual Installations
 
-```bash
-# Visit: https://lowtechguys.com/rcmd/
-# Download and install manually, or:
-brew install --cask rcmd
-```
+**Pasty** - Clipboard manager
+- Visit: https://getpasty.app/
+- Download from website or Mac App Store
 
-**Remember to import your rcmd.json settings after installation.**
+### Post-Installation Configuration
 
-### Rectangle
-
-```bash
-brew install --cask rectangle
-```
-
-**Remember to import your RectangleConfig.json settings after installation.**
-
-### Chrome
-Web browser.
-
-```bash
-brew install --cask google-chrome
-```
-
-### Pasty
-
-```bash
-# Visit: https://getpasty.app/
-# Download from website or Mac App Store
-```
-
-### Stats
-
-```bash
-brew install --cask stats
-```
-
-### Cleanshot
-
-```bash
-brew install --cask cleanshot
-```
-
-### Docker
-
-```bash
-brew install --cask docker
-```
+- **rcmd**: Import your `rcmd.json` settings
+- **Rectangle**: Import your `RectangleConfig.json` settings
 
 ---
 
