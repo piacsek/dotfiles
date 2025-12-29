@@ -40,7 +40,6 @@ Modern terminal emulator.
 ```bash
 brew install --cask ghostty
 ```
-
 ### 2. Configure Zsh
 macOS comes with zsh by default. Set it as your shell if not already:
 
@@ -67,6 +66,7 @@ git clone https://github.com/piacsek/dotfiles.git
 ln -sf $HOME/dotfiles/nvim $HOME/.config/nvim
 ln -sf $HOME/dotfiles/.ideavimrc $HOME/.ideavimrc
 ln -sf $HOME/dotfiles/.zshrc $HOME/.zshrc
+ln -sf $HOME/dotfiles/.ghosttyrc $HOME/.config/ghostty/config
 ```
 
 ### 4. Install Common CLI Tools
