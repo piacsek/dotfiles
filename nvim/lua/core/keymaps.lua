@@ -139,7 +139,3 @@ end, { desc = "[P]aste in insert mode" })
 
 vim.keymap.set("n", "g<Enter>", "gF", { desc = "Go to file with line number support" })
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to file with line number support" })
-
--- Git
-vim.keymap.set("n", "<leader>ga", "<cmd>Gitsigns attach<CR>", { desc = "[G]itsigns [A]ttach" })
-vim.keymap.set("n", "<leader>gq", "<cmd>Gitsigns detach_all<CR>", { desc = "[G]itsigns detach all" })
