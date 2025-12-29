@@ -26,7 +26,9 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 # Init ASDF
-. /opt/homebrew/opt/asdf/libexec/asdf.sh
+if [ -f /opt/homebrew/opt/asdf/libexec/asdf.sh ]; then
+	. /opt/homebrew/opt/asdf/libexec/asdf.sh
+fi
 
 # Init direnv
 eval "$(direnv hook zsh)"
