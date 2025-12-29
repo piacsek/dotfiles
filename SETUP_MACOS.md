@@ -130,6 +130,13 @@ npm install -g @anthropic-ai/claude-code
 
 ## Essential Apps
 
+### 1Password
+Password manager.
+
+```bash
+brew install --cask 1password
+```
+
 ### rcmd
 
 ```bash
