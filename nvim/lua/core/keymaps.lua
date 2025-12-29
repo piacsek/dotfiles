@@ -93,7 +93,7 @@ vim.keymap.set(
 				end
 
 				if dir == "" then
-					vim.notify("Claude: invalid selection " .. input)
+					vim.notify("Claude: invalid selection " .. input, vim.log.levels.WARN)
 				else
 					vim.cmd("terminal cd " .. dir .. " && claude")
 				end
