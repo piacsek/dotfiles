@@ -53,7 +53,6 @@ git config --global user.email "$git_email"
 Clone the dotfiles repository and set up symlinks:
 
 ```bash
-# Clone dotfiles repo
 cd $HOME
 git clone https://github.com/piacsek/dotfiles.git
 
