@@ -89,18 +89,19 @@ launchctl list | grep dotfiles
 brew install \
   neovim \
   direnv \
+  asdf \
   fzf \
   ripgrep \
   fd \
   bat
 ```
 
-### 7. Install asdf
+### 7. Install asdf plugins
 
-Install asdf and common language plugins:
+Install common language plugins:
 
 ```bash
-brew install asdf && source ~/.zshrc
+source ~/.zshrc
 
 asdf plugin add elixir
 asdf plugin add erlang
