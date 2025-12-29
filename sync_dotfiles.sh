@@ -6,9 +6,6 @@
 DOTFILES_DIR="/Users/piacsek/dotfiles"
 LOG_FILE="$DOTFILES_DIR/.sync.log"
 
-CONFIG_SOURCE="$DOTFILES_DIR/nvim"
-CONFIG_DEST="$HOME/.config/nvim"
-
 # Function to log messages
 log_message() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a "$LOG_FILE"
@@ -42,32 +39,9 @@ $diff_output"
     fi
 }
 
-# Function to sync config files to dotfiles repo
-sync_config_files() {
-    if [[ -d "$CONFIG_SOURCE" ]]; then
-        log_message "Syncing $CONFIG_SOURCE to $CONFIG_DEST"
-        
-        # Create dotfiles directory if it doesn't exist
-        mkdir -p "$CONFIG_DEST"
-        
-        # Use rsync to sync files, excluding common unwanted files
-        rsync -av --delete \
-            --exclude='.DS_Store' \
-            --exclude='*.tmp' \
-            --exclude='*.swp' \
-            --exclude='*.log' \
-            "$CONFIG_SOURCE/" "$CONFIG_DEST/"
-    else
-        log_message "Warning: Config directory $CONFIG_SOURCE does not exist"
-    fi
-}
-
 # Function to commit and push changes
 sync_changes() {
     cd "$DOTFILES_DIR" || exit 1
-    
-    # First sync config files to dotfiles repo
-    sync_config_files
     
     # Check if there are any changes
     if [[ -n $(git status --porcelain) ]]; then
@@ -87,7 +61,7 @@ sync_changes() {
             log_message "Committed: $COMMIT_MSG"
             
             # Push to remote
-            if git push origin master; then
+            if git push origin main; then
                 log_message "Successfully pushed to remote"
             else
                 log_message "ERROR: Failed to push to remote"
@@ -109,26 +83,27 @@ start_monitoring() {
         echo "fswatch is not installed. Install it with: brew install fswatch"
         exit 1
     fi
-    
-    # Check if config directory exists
-    if [[ ! -d "$CONFIG_SOURCE" ]]; then
-        log_message "Error: Config directory $CONFIG_SOURCE does not exist"
+
+    # Check if dotfiles directory exists
+    if [[ ! -d "$DOTFILES_DIR" ]]; then
+        log_message "Error: Dotfiles directory $DOTFILES_DIR does not exist"
         exit 1
     fi
-    
-    log_message "Monitoring config directory: $CONFIG_SOURCE"
-    
-    # Monitor the config directory for changes
-    # Exclude common temporary/unwanted files
+
+    log_message "Monitoring dotfiles directory: $DOTFILES_DIR"
+
+    # Monitor the dotfiles directory for changes
+    # Exclude common temporary/unwanted files and git directory
     fswatch -o \
         --exclude='\.DS_Store' \
         --exclude='\.tmp' \
         --exclude='\.swp' \
         --exclude='\.log' \
+        --exclude='\.git/' \
         --latency=2 \
-        "$CONFIG_SOURCE" | while read -r
+        "$DOTFILES_DIR" | while read -r
     do
-        log_message "File system event detected in config directories"
+        log_message "File system event detected in dotfiles directory"
         # Add a small delay to avoid multiple rapid commits
         sleep 1
         sync_changes
