@@ -1,0 +1,210 @@
+# macOS Setup Guide
+
+Executable documentation for setting up a fresh macOS system. Follow sections in order for optimal setup experience.
+
+## Table of Contents
+- [Prerequisites](#prerequisites)
+- [Terminal Environment](#terminal-environment)
+- [Essential Apps](#essential-apps)
+- [Communication & Media](#communication--media)
+- [Final Steps](#final-steps)
+
+---
+
+## Prerequisites
+
+### Install Xcode Command Line Tools & accept terms
+Required for most development tools.
+
+```bash
+xcode-select --install && sudo xcodebuild -license accept
+```
+
+### Install Homebrew
+Package manager for macOS.
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew update && brew upgrade
+```
+
+After installation, follow the instructions to add Homebrew to your PATH (typically adding to `~/.zprofile`).
+
+---
+
+## Terminal Environment
+
+### 1. Install Ghostty
+Modern terminal emulator.
+
+```bash
+brew install --cask ghostty
+```
+
+### 2. Configure Zsh
+macOS comes with zsh by default. Set it as your shell if not already:
+
+```bash
+chsh -s $(which zsh)
+```
+
+### 3. Configure Git
+
+```bash
+git config --global user.name "Felipe Moraes Piacsek"
+read "git_email?Enter your git email: "
+git config --global user.email "$git_email"
+```
+
+### 4. Clone and Link Dotfiles
+Clone the dotfiles repository and set up symlinks:
+
+```bash
+# Clone dotfiles repo
+cd $HOME
+git clone https://github.com/piacsek/dotfiles.git
+
+# Create symlink for neovim config
+ln -sf $HOME/dotfiles/nvim $HOME/.config/nvim
+
+# If you have IntelliJ IDEA, link .ideavimrc
+ln -sf $HOME/dotfiles/.ideavimrc $HOME/.ideavimrc
+```
+
+### 4. Install Common CLI Tools
+
+```bash
+brew install \
+  fzf \
+  ripgrep \
+  fd \
+  bat \
+  eza
+
+---
+
+## Essential Apps
+
+### rcmd
+Fast app switching tool.
+
+```bash
+# Visit: https://lowtechguys.com/rcmd/
+# Download and install manually, or:
+brew install --cask rcmd
+```
+
+### Chrome
+Web browser.
+
+```bash
+brew install --cask google-chrome
+```
+
+### Pasty
+Clipboard manager.
+
+```bash
+# Visit: https://getpasty.app/
+# Download from website or Mac App Store
+```
+
+### Stats
+System monitor for menu bar.
+
+```bash
+brew install --cask stats
+```
+
+### Cleanshot
+Screenshot and screen recording tool.
+
+```bash
+brew install --cask cleanshot
+```
+
+### Docker
+Container platform for development.
+
+```bash
+brew install --cask docker
+```
+
+---
+
+## Communication & Media
+
+### Slack
+Team communication.
+
+```bash
+brew install --cask slack
+```
+
+### Spotify
+Music streaming.
+
+```bash
+brew install --cask spotify
+```
+
+### WhatsApp
+Messaging app.
+
+```bash
+brew install --cask whatsapp
+```
+
+---
+
+## Final Steps
+
+### macOS System Preferences
+
+#### Dock Settings
+
+```bash
+# Enable auto-hide
+defaults write com.apple.dock autohide -bool true && killall Dock
+```
+
+#### Manual Settings
+Configure these settings manually:
+
+- **Login Items**: System Settings > General > Login Items
+  - Add Stats
+  - Add Cleanshot
+  - Add Docker
+
+### Launch and Configure Apps
+
+```bash
+# Open apps to complete setup
+open -a Ghostty
+open -a rcmd
+open -a Stats
+open -a Pasty
+```
+
+### Verify Installations
+
+```bash
+# Check Homebrew installations
+brew list --cask
+
+# Check CLI tools
+which git zsh fzf rg fd bat eza
+```
+
+---
+
+## Notes
+
+- Run `brew update && brew upgrade` regularly to keep packages updated
+- Some apps may require manual configuration on first launch
+- Add license keys for paid apps (rcmd, Cleanshot, Pasty)
+- Restart terminal after major changes to environment
+
+---
+
+**Last Updated**: 2025-12-28
