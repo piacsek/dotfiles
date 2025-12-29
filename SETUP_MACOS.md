@@ -74,19 +74,13 @@ brew install \
   bat
 ```
 
-### 5. Install asdf (Version Manager)
+### 5. Install asdf
 
 Install asdf and common language plugins:
 
 ```bash
-# Install asdf
-brew install asdf
+brew install asdf && source ~/.zshrc
 
-
-# Reload shell
-source ~/.zshrc
-
-# Install plugins
 asdf plugin add elixir
 asdf plugin add erlang
 asdf plugin add nodejs
@@ -108,7 +102,6 @@ asdf plugin add teleport-community
 ## Essential Apps
 
 ### rcmd
-Fast app switching tool.
 
 ```bash
 # Visit: https://lowtechguys.com/rcmd/
@@ -119,7 +112,6 @@ brew install --cask rcmd
 **Remember to import your rcmd.json settings after installation.**
 
 ### Rectangle
-Window management tool.
 
 ```bash
 brew install --cask rectangle
@@ -135,7 +127,6 @@ brew install --cask google-chrome
 ```
 
 ### Pasty
-Clipboard manager.
 
 ```bash
 # Visit: https://getpasty.app/
@@ -143,21 +134,18 @@ Clipboard manager.
 ```
 
 ### Stats
-System monitor for menu bar.
 
 ```bash
 brew install --cask stats
 ```
 
 ### Cleanshot
-Screenshot and screen recording tool.
 
 ```bash
 brew install --cask cleanshot
 ```
 
 ### Docker
-Container platform for development.
 
 ```bash
 brew install --cask docker
@@ -168,21 +156,18 @@ brew install --cask docker
 ## Communication & Media
 
 ### Slack
-Team communication.
 
 ```bash
 brew install --cask slack
 ```
 
 ### Spotify
-Music streaming.
 
 ```bash
 brew install --cask spotify
 ```
 
 ### WhatsApp
-Messaging app.
 
 ```bash
 brew install --cask whatsapp
