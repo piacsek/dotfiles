@@ -76,8 +76,7 @@ brew install \
   fzf \
   ripgrep \
   fd \
-  bat \
-  eza
+  bat 
 ```
 
 ### 5. Install asdf (Version Manager)
