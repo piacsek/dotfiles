@@ -105,7 +105,7 @@ vim.keymap.set(
 	singleton_term.make({
 		key = "k9s",
 		open = function()
-			env = vim.ui.input({ prompt = "Environment (1=staging[default], 2=production): " }, function(input)
+			local env = vim.ui.input({ prompt = "Environment (1=staging[default], 2=production): " }, function(input)
 				local env = ""
 				if input == "1" or input == "" then
 					env = "staging"
