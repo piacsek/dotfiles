@@ -51,6 +51,7 @@ return {
 					vim.notify("Invalid overseer project template: must define a unique name", vim.log.levels.ERROR)
 				end
 				if project_template_names[opts.name] == true then
+					vim.notify("Invalid overseer project template: must define a unique name", vim.log.levels.ERROR)
 				end
 				project_template_names[opts.name] = true
 				original_register(opts)
