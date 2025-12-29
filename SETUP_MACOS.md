@@ -162,7 +162,8 @@ brew install --cask \
 brew install --cask \
   slack \
   spotify \
-  whatsapp
+  whatsapp \
+  brainfm
 ```
 
 ---
