@@ -1,0 +1,108 @@
+{
+  "ignoredKeys": [],
+  "showAppSwitcher": false,
+  "showWindowSwitcher": true,
+  "appSort": "name",
+  "triggerKeys": [4],
+  "fnWindowSwitching": false,
+  "appKeyAssignments": [
+    {
+      "whenAlreadyFocusedAction": 2,
+      "app": {
+        "switchCount": 0,
+        "identifier": "com.spotify.client:73278",
+        "originalName": "Spotify (old)",
+        "path": "/Applications/Spotify (old).app",
+        "useCount": 12
+      },
+      "key": "m",
+      "index": 2
+    }
+  ],
+  "minimizeOnlyFocusedWindowOnMinus": true,
+  "enableHideOnFocusHotkey": false,
+  "ignoredApps": [
+    "com.googlecode.iterm2",
+    "com.jagex.launcher",
+    "com.apple.finder",
+    "com.apple.calculator",
+    "com.apple.TextEdit",
+    "com.apple.garageband10",
+    "com.apple.AppStore",
+    "com.apple.QuickTimePlayerX",
+    "pl.maketheweb.cleanshotx",
+    "com.apple.Preview"
+  ],
+  "windowSwitcherDimFocused": false,
+  "windowSwitchOSDDelay": 350,
+  "hideOnlyFocusedAppOnMinus": false,
+  "keyTapThreshold": 0.14,
+  "appSwitcherFeatures": 38,
+  "notificationsPermissionsGranted": false,
+  "alwaysHideOthers": false,
+  "enableAssignHotkey": true,
+  "minimizeKey": "minus",
+  "enableCycleHotkey": true,
+  "windowTriggerKeys": [5],
+  "windowKeyPatterns": [
+    {
+      "id": "com.sublimetext.4",
+      "pattern": ".* — [^\\w\\d]*(.)"
+    },
+    {
+      "id": "com.sublimetext.3",
+      "pattern": ".* — [^\\w\\d]*(.)"
+    },
+    {
+      "id": "com.sublimetext.2",
+      "pattern": ".* — [^\\w\\d]*(.)"
+    },
+    {
+      "id": "com.sublimetext.",
+      "pattern": ".* — [^\\w\\d]*(.)"
+    },
+    {
+      "id": "com.visualstudio.code.oss",
+      "pattern": ".* — [^\\w\\d]*(.)"
+    },
+    {
+      "id": "com.visualstudio.code",
+      "pattern": ".* — [^\\w\\d]*(.)"
+    },
+    {
+      "id": "com.microsoft.VSCodiumInsiders",
+      "pattern": ".* — [^\\w\\d]*(.)"
+    },
+    {
+      "id": "com.microsoft.VSCode",
+      "pattern": ".* — [^\\w\\d]*(.)"
+    },
+    {
+      "id": "com.microsoft.VSCodeInsiders",
+      "pattern": ".* — [^\\w\\d]*(.)"
+    },
+    {
+      "id": "com.microsoft.VSCod",
+      "pattern": ".* — [^\\w\\d]*(.)"
+    },
+    {
+      "id": "com.todesktop.",
+      "pattern": ".* — [^\\w\\d]*(.)"
+    }
+  ],
+  "appSortReverse": false,
+  "windowOnlySwitchOSDDelay": 0,
+  "specialKey": "equal",
+  "hideStaticSettings": false,
+  "whenAlreadyFocusedAction": 2,
+  "appSwitcherUseNumbersForWindows": false,
+  "activateAllWindows": true,
+  "windowKeyAssignments": [],
+  "enableStaticCycle": false,
+  "switcherScreenPlacement": 1,
+  "windowSwitcherAppearance": "comfortable",
+  "windowSwitcherFeatures": 57,
+  "allowWindowSwitcher": false,
+  "zeroAsLastFocusedWindow": false,
+  "focusOnKeyUp": false
+}
