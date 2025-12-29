@@ -48,7 +48,9 @@ return {
 		if vim.fn.filereadable(project_templates) == 1 then
 			local function project_register(opts)
 				if opts.name == nil then
-					vim.notify("Invalid overseer project template: must define a unique name")
+					vim.notify("Invalid overseer project template: must define a unique name", vim.log.levels.ERROR)
+				end
+				if project_template_names[opts.name] == true then
 				end
 				project_template_names[opts.name] = true
 				original_register(opts)
