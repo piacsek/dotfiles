@@ -14,34 +14,28 @@ Executable documentation for setting up a fresh macOS system. Follow sections in
 ## Prerequisites
 
 ### Install Xcode Command Line Tools & accept terms
-Required for most development tools.
 
 ```bash
 xcode-select --install && sudo xcodebuild -license accept
 ```
 
 ### Install Homebrew
-Package manager for macOS.
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 brew update && brew upgrade
 ```
 
-After installation, follow the instructions to add Homebrew to your PATH (typically adding to `~/.zprofile`).
-
 ---
 
 ## Terminal Environment
 
 ### 1. Install Ghostty
-Modern terminal emulator.
 
 ```bash
 brew install --cask ghostty
 ```
 ### 2. Configure Zsh
-macOS comes with zsh by default. Set it as your shell if not already:
 
 ```bash
 chsh -s $(which zsh)
@@ -73,10 +67,11 @@ ln -sf $HOME/dotfiles/.ghosttyrc $HOME/.config/ghostty/config
 
 ```bash
 brew install \
+  neovim \
   fzf \
   ripgrep \
   fd \
-  bat 
+  bat
 ```
 
 ### 5. Install asdf (Version Manager)
