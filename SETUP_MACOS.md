@@ -80,13 +80,13 @@ Generate SSH key and add to ssh-agent:
 ```bash
 ssh-keygen -t ed25519 -C "$git_email"
 eval "$(ssh-agent -s)"
-ssh-add --apple-use-keychain ~/.ssh/id_ed25519
-mkdir -p ~/.ssh
-echo "Host *" > ~/.ssh/config
-echo "  AddKeysToAgent yes" >> ~/.ssh/config
-echo "  UseKeychain yes" >> ~/.ssh/config
-echo "  IdentityFile ~/.ssh/id_ed25519" >> ~/.ssh/config
-cat ~/.ssh/id_ed25519.pub | pbcopy
+ssh-add --apple-use-keychain $HOME/.ssh/id_ed25519
+mkdir -p $HOME/.ssh
+echo "Host *" > $HOME/.ssh/config
+echo "  AddKeysToAgent yes" >> $HOME/.ssh/config
+echo "  UseKeychain yes" >> $HOME/.ssh/config
+echo "  IdentityFile $HOME/.ssh/id_ed25519" >> $HOME/.ssh/config
+cat $HOME/.ssh/id_ed25519.pub | pbcopy
 echo SSH public key copied to clipboard!
 echo Add it to GitHub: https://github.com/settings/keys
 ```
