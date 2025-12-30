@@ -98,7 +98,7 @@ return function(overseer)
 	})
 
 	overseer.register_template({
-		name = "git-push",
+		name = "lazygit-review",
 		builder = function()
 			return {
 				name = "git-push",
