@@ -92,7 +92,7 @@ return function(overseer)
 		builder = function()
 			return {
 				name = "auto-commit",
-				cmd = { vim.fn.expand("$HOME") .. "/dotfiles/review-commit-push.sh" },
+				cmd = { vim.fn.expand("$HOME") .. "/dotfiles/auto-commit.sh" },
 			}
 		end,
 	})
