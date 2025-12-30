@@ -121,8 +121,7 @@ return function(overseer)
 					"toggleterm",
 					direction = "float",
 					open_on_start = true,
-					quit_on_exit = "never",
-					close_on_exit = false,
+					close_on_exit = true,
 				},
 				components = {
 					{
