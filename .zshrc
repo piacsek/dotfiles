@@ -4,6 +4,7 @@ export PATH=/opt/homebrew/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/
 export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl/lib/pkgconfig"
 export LDFLAGS="-L/opt/homebrew/opt/openssl/lib"
 export ERL_AFLAGS="-kernel shell_history enabled"
+export RUBY_CONFIGURE_OPTS="--with-libyaml-dir=$(brew --prefix libyaml)"
 
 # ZSH customization
 # Enable prompt substitution
