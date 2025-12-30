@@ -96,15 +96,14 @@ function ToggletrmStrategy:start(task)
 		end,
 		on_exit = function(term, job, exit_code, name)
 			log.debug("Task %s exited with code %s", task.name, exit_code)
+			self._has_exited = true
 
-			-- Handle quit_on_exit option
 			if self.opts.quit_on_exit == "always" then
 				term:close()
 			elseif self.opts.quit_on_exit == "success" and exit_code == 0 then
 				term:close()
 			end
 
-			-- Notify the task that it has exited
 			if vim.v.exiting == vim.NIL then
 				---@diagnostic disable-next-line: invisible
 				task:on_exit(exit_code)
