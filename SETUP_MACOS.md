@@ -170,15 +170,10 @@ asdf plugin add rebar
 asdf plugin add teleport-community
 asdf plugin add zig
 
-export LDFLAGS="$LDFLAGS -L$(brew --prefix readline)/lib"
-export CPPFLAGS="$CPPFLAGS -I$(brew --prefix readline)/include"
-
 asdf install
 
 npm install -g @anthropic-ai/claude-code
 ```
-
-**Note:** The LDFLAGS/CPPFLAGS exports are needed for Lua to compile correctly with readline support.
 
 ---
 
