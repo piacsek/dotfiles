@@ -188,7 +188,6 @@ CASKS=(
   brainfm
 )
 
-# Install casks one by one to handle already-installed apps gracefully
 for cask in "${CASKS[@]}"; do
   brew install --cask $cask 2>/dev/null || echo "$cask already installed or failed, skipping..."
 done
