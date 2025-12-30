@@ -94,15 +94,18 @@ return function(overseer)
 				name = "review-commit-push",
 				cmd = { vim.fn.expand("$HOME") .. "/dotfiles/review-commit-push.sh" },
 				strategy = {
-					"terminal",
-					direction = "float",
-					open_on_start = true,
+					"jobstart",
+					use_terminal = true,
 				},
 				components = {
 					{
 						"dependencies",
 						task_names = { "pre-ci checks" },
 						sequential = true,
+					},
+					{
+						"on_output_quickfix",
+						open = true,
 					},
 					"default",
 				},
