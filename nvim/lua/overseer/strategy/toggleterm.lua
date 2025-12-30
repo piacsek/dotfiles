@@ -30,6 +30,7 @@ function ToggletrmStrategy.new(opts)
 		term = nil,
 		task = nil,
 		opts = opts,
+		_has_exited = false,
 	}
 	setmetatable(strategy, { __index = ToggletrmStrategy })
 	---@type overseer.ToggletrmStrategy
