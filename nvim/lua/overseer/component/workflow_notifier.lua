@@ -52,7 +52,7 @@ M.constructor = function(params)
 		update_notification = function(self, task)
 			local icons = {
 				running = "⏳",
-				success = "✓",
+				success = "✅",
 				error = "✗",
 				pending = "○",
 			}

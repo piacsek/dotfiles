@@ -143,7 +143,6 @@ return function(overseer)
 						task_names = { "pre-ci checks", "lazygit-review", "auto-commit", "git-push" },
 						sequential = true,
 					},
-					"fail_on_dependency_failure",
 					{
 						"workflow_notifier",
 						steps = { "Pre-CI checks", "Review changes", "Commit", "Push" },
