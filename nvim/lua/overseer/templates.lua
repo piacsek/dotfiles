@@ -92,6 +92,14 @@ return function(overseer)
 		builder = function()
 			return {
 				name = "review-commit-push",
+				cmd = { "lazygit" },
+				strategy = {
+					"toggleterm",
+					direction = "float",
+					open_on_start = true,
+					quit_on_exit = "never",
+					close_on_exit = true,
+				},
 				components = {
 					{
 						"dependencies",
@@ -99,18 +107,6 @@ return function(overseer)
 						sequential = true,
 					},
 					"default",
-					{
-						"on_complete",
-						callback = function()
-							local Terminal = require("toggleterm.terminal").Terminal
-							local term = Terminal:new({
-								cmd = "lazygit",
-								direction = "float",
-								close_on_exit = false,
-							})
-							term:toggle()
-						end,
-					},
 				},
 			}
 		end,
