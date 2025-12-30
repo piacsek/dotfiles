@@ -151,7 +151,7 @@ launchctl list | grep dotfiles
 Install common language plugins and their versions (from $HOME/.tool-versions):
 
 ```bash
-source ~/.zshrc
+source $HOME/.zshrc
 
 asdf plugin add elixir
 asdf plugin add erlang
