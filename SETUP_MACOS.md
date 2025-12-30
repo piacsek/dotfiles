@@ -177,7 +177,6 @@ npm install -g @anthropic-ai/claude-code
 ```bash
 brew install --cask \
   1password \
-  rcmd \
   rectangle \
   google-chrome \
   stats \
@@ -187,13 +186,17 @@ brew install --cask \
 
 ### Manual Installations
 
+**rcmd** - Fast app switching tool
+- Visit: https://lowtechguys.com/rcmd/
+- Download and install manually
+- Import your `rcmd.json` settings after installation
+
 **Pasty** - Clipboard manager
 - Visit: https://getpasty.app/
 - Download from website or Mac App Store
 
 ### Post-Installation Configuration
 
-- **rcmd**: Import your `rcmd.json` settings
 - **Rectangle**: Import your `RectangleConfig.json` settings
 
 ---
