@@ -60,13 +60,19 @@ M.constructor = function(params)
 				end
 			end
 
-			-- Count completed dependencies
+			-- Count completed/failed dependencies
 			local completed_count = 0
+			local failed_step = nil
 			if deps_component and deps_component.task_lookup then
-				for _, task_id in pairs(deps_component.task_lookup) do
+				for i, task_id in ipairs(deps_component.task_lookup) do
 					local dep_task = task_list.get(task_id)
-					if dep_task and dep_task.status == STATUS.SUCCESS then
-						completed_count = completed_count + 1
+					if dep_task then
+						if dep_task.status == STATUS.SUCCESS then
+							completed_count = completed_count + 1
+						elseif dep_task.status == STATUS.FAILURE or dep_task.status == STATUS.CANCELED then
+							failed_step = i
+							break
+						end
 					end
 				end
 			end
@@ -75,15 +81,20 @@ M.constructor = function(params)
 			local lines = {}
 			local current_step = completed_count + 1
 			local all_done = task.status == STATUS.SUCCESS or task.status == STATUS.FAILURE or task.status == STATUS.CANCELED
+			local has_failure = failed_step ~= nil or task.status == STATUS.FAILURE or task.status == STATUS.CANCELED
 
 			for i, step in ipairs(self.steps) do
 				local icon
-				if i < current_step or (all_done and task.status == STATUS.SUCCESS) then
+				if i < current_step and not failed_step then
 					icon = icons.success
-				elseif i == current_step and not all_done then
-					icon = icons.running
-				elseif i == current_step and task.status == STATUS.FAILURE then
+				elseif failed_step and i == failed_step then
 					icon = icons.error
+				elseif i < (failed_step or current_step) then
+					icon = icons.success
+				elseif all_done and task.status == STATUS.SUCCESS then
+					icon = icons.success
+				elseif i == current_step and not all_done and not failed_step then
+					icon = icons.running
 				else
 					icon = icons.pending
 				end
@@ -95,10 +106,10 @@ M.constructor = function(params)
 			local title_icon = icons.running
 			local timeout = false
 
-			if task.status == STATUS.SUCCESS then
+			if task.status == STATUS.SUCCESS or (all_done and not has_failure) then
 				title_icon = icons.success
 				timeout = 3000
-			elseif task.status == STATUS.FAILURE or task.status == STATUS.CANCELED then
+			elseif has_failure then
 				level = vim.log.levels.ERROR
 				title_icon = icons.error
 				timeout = 5000
