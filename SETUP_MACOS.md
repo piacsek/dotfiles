@@ -138,9 +138,9 @@ Verify the service is running:
 launchctl list | grep dotfiles
 ```
 
-### 9. Install asdf plugins
+### 9. Install asdf plugins and versions
 
-Install common language plugins:
+Install common language plugins and their versions (from ~/.tool-versions):
 
 ```bash
 source ~/.zshrc
@@ -159,10 +159,12 @@ asdf plugin add vault
 asdf plugin add gcloud
 asdf plugin add rebar
 asdf plugin add teleport-community
+asdf plugin add zig
 
-asdf install nodejs 24.12.0
-asdf global nodejs 24.12.0
+# Install all versions from .tool-versions
+asdf install
 
+# Install Claude CLI globally
 npm install -g @anthropic-ai/claude-code
 ```
 
