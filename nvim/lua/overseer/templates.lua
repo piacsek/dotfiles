@@ -95,17 +95,14 @@ return function(overseer)
 			return {
 				name = "review-commit-push",
 
-				-- Run lazygit (interactive TUI)
 				cmd = { "lazygit" },
 
-				-- Use toggleterm and pop it open
 				strategy = {
 					"toggleterm",
-					direction = "float", -- "float" | "tab" | "vertical" | "horizontal"
-					open_on_start = true, -- auto-open when the task starts
-					quit_on_exit = "never", -- don't auto-close the window
-					close_on_exit = false, -- don't delete the terminal buffer
-					-- size = 80,           -- used for vertical/horizontal (and sometimes float)
+					direction = "float",
+					open_on_start = true,
+					quit_on_exit = "never",
+					close_on_exit = true,
 				},
 
 				components = {
