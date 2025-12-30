@@ -109,14 +109,6 @@ return function(overseer)
 					open_on_start = true,
 					close_on_exit = true,
 				},
-				components = {
-					{
-						"dependencies",
-						task_names = { "pre-ci checks" },
-						sequential = true,
-					},
-					"default",
-				},
 			}
 		end,
 	})
