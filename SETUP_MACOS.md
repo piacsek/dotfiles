@@ -175,8 +175,22 @@ npm install -g @anthropic-ai/claude-code
 ### Install via Homebrew
 
 ```bash
+# Define casks to install
+CASKS=(
+  1password
+  rectangle
+  google-chrome
+  stats
+  cleanshot
+  docker
+  slack
+  spotify
+  whatsapp
+  brainfm
+)
+
 # Install casks one by one to handle already-installed apps gracefully
-for cask in 1password rectangle google-chrome stats cleanshot docker; do
+for cask in "${CASKS[@]}"; do
   brew install --cask $cask 2>/dev/null || echo "$cask already installed or failed, skipping..."
 done
 ```
@@ -195,18 +209,6 @@ done
 ### Post-Installation Configuration
 
 - **Rectangle**: Import your `RectangleConfig.json` settings
-
----
-
-## Communication & Media
-
-```bash
-brew install --cask \
-  slack \
-  spotify \
-  whatsapp \
-  brainfm
-```
 
 ---
 
