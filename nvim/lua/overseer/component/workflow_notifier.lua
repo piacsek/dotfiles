@@ -1,3 +1,7 @@
+local task_list = require("overseer.task_list")
+local constants = require("overseer.constants")
+local STATUS = constants.STATUS
+
 local M = {}
 
 ---@type overseer.ComponentFileDefinition
@@ -13,37 +17,33 @@ M.params = {
 
 M.constructor = function(params)
 	return {
-		current_step = 1,
 		steps = params.steps or {},
 		notif_id = nil,
-		completed_deps = {},
 		has_shown_final = false,
+		initialized = false,
 		on_init = function(self, task)
 			self.notif_id = "workflow_" .. task.name
-			self:update_notification(task, "running")
+			self.initialized = true
+			self:update_notification(task)
 		end,
-		on_pre_start = function(self, task)
-			self.current_step = 1
-			self.completed_deps = {}
-			self.has_shown_final = false
-			self:update_notification(task, "running")
+		on_start = function(self, task)
+			if not self.initialized then
+				self.notif_id = "workflow_" .. task.name
+				self.initialized = true
+			end
+			self:update_notification(task)
 		end,
 		on_status = function(self, task, status)
 			if self.has_shown_final then
 				return
 			end
 
-			if status == "SUCCESS" then
-				-- Mark all steps as complete
-				self.current_step = #self.steps + 1
-				self:update_notification(task, "success")
+			if status == "SUCCESS" or status == "FAILURE" or status == "CANCELED" then
 				self.has_shown_final = true
-			elseif status == "FAILURE" or status == "CANCELED" then
-				self:update_notification(task, "error")
-				self.has_shown_final = true
+				self:update_notification(task)
 			end
 		end,
-		update_notification = function(self, task, state)
+		update_notification = function(self, task)
 			local icons = {
 				running = "⏳",
 				success = "✓",
@@ -51,31 +51,57 @@ M.constructor = function(params)
 				pending = "○",
 			}
 
+			-- Find the dependencies component to track progress
+			local deps_component
+			for _, comp in ipairs(task.components) do
+				if comp.desc and comp.desc:match("dependencies") then
+					deps_component = comp
+					break
+				end
+			end
+
+			-- Count completed dependencies
+			local completed_count = 0
+			if deps_component and deps_component.task_lookup then
+				for _, task_id in pairs(deps_component.task_lookup) do
+					local dep_task = task_list.get(task_id)
+					if dep_task and dep_task.status == STATUS.SUCCESS then
+						completed_count = completed_count + 1
+					end
+				end
+			end
+
 			-- Build the step status display
 			local lines = {}
+			local current_step = completed_count + 1
+			local all_done = task.status == STATUS.SUCCESS or task.status == STATUS.FAILURE or task.status == STATUS.CANCELED
+
 			for i, step in ipairs(self.steps) do
 				local icon
-				if i < self.current_step then
+				if i < current_step or (all_done and task.status == STATUS.SUCCESS) then
 					icon = icons.success
-				elseif i == self.current_step then
-					icon = state == "error" and icons.error or icons.running
+				elseif i == current_step and not all_done then
+					icon = icons.running
+				elseif i == current_step and task.status == STATUS.FAILURE then
+					icon = icons.error
 				else
 					icon = icons.pending
 				end
 				table.insert(lines, string.format("%s %s", icon, step))
 			end
 
+			-- Determine notification level and timeout
 			local level = vim.log.levels.INFO
 			local title_icon = icons.running
-			local timeout = false -- Keep visible by default
+			local timeout = false
 
-			if state == "success" then
+			if task.status == STATUS.SUCCESS then
 				title_icon = icons.success
-				timeout = 3000 -- Auto-dismiss after 3 seconds
-			elseif state == "error" then
+				timeout = 3000
+			elseif task.status == STATUS.FAILURE or task.status == STATUS.CANCELED then
 				level = vim.log.levels.ERROR
 				title_icon = icons.error
-				timeout = 5000 -- Auto-dismiss errors after 5 seconds
+				timeout = 5000
 			end
 
 			vim.notify(table.concat(lines, "\n"), level, {
@@ -84,20 +110,8 @@ M.constructor = function(params)
 				timeout = timeout,
 			})
 		end,
-		on_output = function(self, task, data)
-			-- Check if output indicates a dependency completed
-			for _, line in ipairs(data) do
-				if line:match("^SUCCESS:") or line:match("^FAILURE:") then
-					local dep_name = line:match("^%w+:%s*(.+)")
-					if dep_name and not self.completed_deps[dep_name] then
-						self.completed_deps[dep_name] = true
-						if line:match("^SUCCESS:") and self.current_step <= #self.steps then
-							self.current_step = self.current_step + 1
-							self:update_notification(task, "running")
-						end
-					end
-				end
-			end
+		on_dependency_complete = function(self, task)
+			self:update_notification(task)
 		end,
 	}
 end
