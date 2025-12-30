@@ -120,7 +120,7 @@ ln -sf $HOME/dotfiles/.zshrc $HOME/.zshrc
 ln -sf $HOME/dotfiles/.ghosttyrc $HOME/.config/ghostty/config
 ```
 
-### 7. Set Up Dotfiles Auto-Sync
+### 8. Set Up Dotfiles Auto-Sync
 
 Install fswatch and set up the auto-sync service to automatically commit and push dotfile changes:
 
