@@ -59,12 +59,19 @@ sync_changes() {
         # Commit changes
         if git commit -m "$COMMIT_MSG"; then
             log_message "Committed: $COMMIT_MSG"
-            
-            # Push to remote
-            if git push origin main; then
-                log_message "Successfully pushed to remote"
+
+            # Pull latest changes before pushing
+            if git pull --rebase origin main; then
+                log_message "Pulled latest changes from remote"
+
+                # Push to remote
+                if git push origin main; then
+                    log_message "Successfully pushed to remote"
+                else
+                    log_message "ERROR: Failed to push to remote"
+                fi
             else
-                log_message "ERROR: Failed to push to remote"
+                log_message "ERROR: Failed to pull from remote"
             fi
         else
             log_message "ERROR: Failed to commit changes"
