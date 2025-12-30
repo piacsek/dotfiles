@@ -118,9 +118,11 @@ function ToggletrmStrategy:start(task)
 end
 
 function ToggletrmStrategy:stop()
-	if self.term then
+	if self.term and not self._has_exited then
 		self.term:shutdown()
 	end
+	self.term = nil
+	self.task = nil
 end
 
 function ToggletrmStrategy:dispose()
