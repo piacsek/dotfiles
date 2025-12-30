@@ -38,10 +38,16 @@ M.constructor = function(params)
 				return
 			end
 
-			if status == "SUCCESS" or status == "FAILURE" or status == "CANCELED" then
+			if status == STATUS.SUCCESS or status == STATUS.FAILURE or status == STATUS.CANCELED then
 				self.has_shown_final = true
 				self:update_notification(task)
 			end
+		end,
+		on_pre_start = function(self, task)
+			-- Called when waiting for dependencies - update to show current status
+			self:update_notification(task)
+			-- Return false to let dependencies run
+			return false
 		end,
 		update_notification = function(self, task)
 			local icons = {
