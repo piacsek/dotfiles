@@ -55,7 +55,38 @@ read "git_email?Enter your git email: "
 git config --global user.email "$git_email"
 ```
 
-### 5. Install Common CLI Tools
+### 5. Set Up SSH Key for GitHub
+
+Generate SSH key and add to ssh-agent:
+
+```bash
+# Generate SSH key (press Enter to accept default location)
+ssh-keygen -t ed25519 -C "$git_email"
+
+# Start ssh-agent and add key
+eval "$(ssh-agent -s)"
+
+# Create SSH config to automatically load keys
+mkdir -p ~/.ssh
+cat > ~/.ssh/config << 'EOF'
+Host *
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityFile ~/.ssh/id_ed25519
+EOF
+
+# Add SSH key to ssh-agent
+ssh-add --apple-use-keychain ~/.ssh/id_ed25519
+
+# Copy public key to clipboard
+cat ~/.ssh/id_ed25519.pub | pbcopy
+echo "SSH public key copied to clipboard!"
+echo "Add it to GitHub: https://github.com/settings/keys"
+```
+
+**Next:** Paste your SSH key into GitHub at https://github.com/settings/keys before continuing.
+
+### 6. Install Common CLI Tools
 
 ```bash
 brew install \
