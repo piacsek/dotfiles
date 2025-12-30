@@ -62,6 +62,7 @@ function ToggletrmStrategy:start(task)
 	end
 
 	self.task = task
+	self._has_exited = false
 
 	-- Build the command string
 	local cmd = task.cmd
