@@ -104,6 +104,7 @@ brew install \
   fzf \
   ripgrep \
   fd \
+  gpg \
   bat
 ```
 
