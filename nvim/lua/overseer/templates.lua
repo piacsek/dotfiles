@@ -113,4 +113,33 @@ return function(overseer)
 			}
 		end,
 	})
+
+	overseer.register_template({
+		name = "review-commit-push",
+		builder = function()
+			return {
+				name = "review-commit-push",
+				components = {
+					{
+						"dependencies",
+						task_names = { "pre-ci checks" },
+						sequential = true,
+					},
+					"default",
+					{
+						"on_complete",
+						callback = function()
+							local Terminal = require("toggleterm.terminal").Terminal
+							local term = Terminal:new({
+								cmd = "lazygit",
+								direction = "float",
+								close_on_exit = false,
+							})
+							term:toggle()
+						end,
+					},
+				},
+			}
+		end,
+	})
 end
