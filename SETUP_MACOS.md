@@ -175,7 +175,6 @@ npm install -g @anthropic-ai/claude-code
 ### Install via Homebrew
 
 ```bash
-# Define casks to install
 CASKS=(
   1password
   rectangle
