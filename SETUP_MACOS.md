@@ -140,7 +140,7 @@ Verify the service is running:
 launchctl list | grep dotfiles
 ```
 
-### 8. Install asdf plugins
+### 9. Install asdf plugins
 
 Install common language plugins:
 
