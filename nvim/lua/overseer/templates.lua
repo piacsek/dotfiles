@@ -92,12 +92,23 @@ return function(overseer)
 		builder = function()
 			return {
 				name = "review-commit-push",
-				cmd = { vim.fn.expand("$HOME") .. "/dotfiles/review-commit-push.sh" },
+				cmd = { "bash" },
+				args = { "-c", "echo 'Pre-CI checks completed. Opening terminal for review-commit-push...'" },
 				components = {
 					{
 						"dependencies",
 						task_names = { "pre-ci checks" },
 						sequential = true,
+					},
+					{
+						"on_complete_callback",
+						on_complete = function(task, status)
+							if status == "SUCCESS" then
+								vim.schedule(function()
+									vim.cmd("terminal " .. vim.fn.expand("$HOME") .. "/dotfiles/review-commit-push.sh")
+								end)
+							end
+						end,
 					},
 					"default",
 				},
