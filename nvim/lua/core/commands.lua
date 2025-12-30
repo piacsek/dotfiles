@@ -98,7 +98,7 @@ local function clean_hidden_buffers(silent)
 	return deleted
 end
 
-vim.api.nvim_create_user_command("CleanHiddenBuffers", function()
+vim.api.nvim_create_user_command("BuffersClearHidden", function()
 	clean_hidden_buffers(false)
 end, { desc = "Delete all unmodified hidden buffers" })
 
