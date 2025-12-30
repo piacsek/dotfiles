@@ -86,4 +86,22 @@ return function(overseer)
 			}
 		end,
 	})
+
+	overseer.register_template({
+		name = "review-commit-push",
+		builder = function()
+			return {
+				name = "review-commit-push",
+				cmd = { vim.fn.expand("$HOME") .. "/dotfiles/review-commit-push.sh" },
+				components = {
+					{
+						"dependencies",
+						task_names = { "pre-ci checks" },
+						sequential = true,
+					},
+					"default",
+				},
+			}
+		end,
+	})
 end
