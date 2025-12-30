@@ -38,7 +38,6 @@ eval "$(direnv hook zsh)"
 alias lab='cd $HOME/Projects/elixir_lab/ && nvim'
 alias bank='cd $HOME/Projects/ex_bank/ && nvim'
 alias dotfiles='cd $HOME/dotfiles/'
-alias cdnvimconfig='cd $HOME/.config/nvim/'
 alias lz='lazygit'
 
 
