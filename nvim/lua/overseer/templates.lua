@@ -101,11 +101,44 @@ return function(overseer)
 		name = "lazygit-review",
 		builder = function()
 			return {
-				name = "git-push",
-				cmd = { "bash" },
-				args = {
-					"-c",
-					'BRANCH=$(git rev-parse --abbrev-ref HEAD) && git pull origin "$BRANCH" --rebase && git push origin "$BRANCH"',
+				name = "review-commit-push",
+				cmd = { "lazygit" },
+				strategy = {
+					"toggleterm",
+					direction = "float",
+					open_on_start = true,
+					close_on_exit = true,
+				},
+				components = {
+					{
+						"dependencies",
+						task_names = { "pre-ci checks" },
+						sequential = true,
+					},
+					"default",
+				},
+			}
+		end,
+	})
+	overseer.register_template({
+		name = "review-commit-push",
+		builder = function()
+			return {
+				name = "review-commit-push",
+				cmd = { "lazygit" },
+				strategy = {
+					"toggleterm",
+					direction = "float",
+					open_on_start = true,
+					close_on_exit = true,
+				},
+				components = {
+					{
+						"dependencies",
+						task_names = { "pre-ci checks" },
+						sequential = true,
+					},
+					"default",
 				},
 			}
 		end,
