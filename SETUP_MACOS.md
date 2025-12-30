@@ -4,9 +4,27 @@ Executable documentation for setting up a fresh macOS system. Follow sections in
 
 ## Table of Contents
 - [Prerequisites](#prerequisites)
+  - [Install Xcode Command Line Tools & accept terms](#install-xcode-command-line-tools--accept-terms)
+  - [Install Homebrew](#install-homebrew)
 - [Terminal Environment](#terminal-environment)
+  - [1. Install Ghostty](#1-install-ghostty)
+  - [2. Configure Zsh](#2-configure-zsh)
+  - [3. Install Oh My Zsh](#3-install-oh-my-zsh)
+  - [4. Configure Git](#4-configure-git)
+  - [5. Set Up SSH Key for GitHub](#5-set-up-ssh-key-for-github)
+  - [6. Install Common CLI Tools](#6-install-common-cli-tools)
+  - [7. Clone and Link Dotfiles](#7-clone-and-link-dotfiles)
+  - [8. Set Up Dotfiles Auto-Sync](#8-set-up-dotfiles-auto-sync)
+  - [9. Install asdf plugins and versions](#9-install-asdf-plugins-and-versions)
 - [Essential Apps](#essential-apps)
+  - [Install via Homebrew](#install-via-homebrew)
+  - [Manual Installations](#manual-installations)
+  - [Post-Installation Configuration](#post-installation-configuration)
 - [Final Steps](#final-steps)
+  - [macOS System Preferences](#macos-system-preferences)
+  - [Launch and Configure Apps](#launch-and-configure-apps)
+  - [Verify Installations](#verify-installations)
+- [Notes](#notes)
 
 ---
 
