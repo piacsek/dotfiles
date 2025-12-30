@@ -101,7 +101,7 @@ return function(overseer)
 		name = "lazygit-review",
 		builder = function()
 			return {
-				name = "review-commit-push",
+				name = "lazygit-review",
 				cmd = { "lazygit" },
 				strategy = {
 					"toggleterm",
@@ -137,7 +137,7 @@ return function(overseer)
 				components = {
 					{
 						"dependencies",
-						task_names = { "pre-ci checks" },
+						task_names = { "pre-ci checks", "lazygit-review", "auto-commit", "git-push" },
 						sequential = true,
 					},
 					"default",
