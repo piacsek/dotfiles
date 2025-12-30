@@ -134,12 +134,6 @@ return function(overseer)
 				name = "review-commit-push",
 				cmd = { "echo" },
 				args = { "Pushed successfully!" },
-				strategy = {
-					"toggleterm",
-					direction = "float",
-					open_on_start = true,
-					close_on_exit = true,
-				},
 				components = {
 					{
 						"dependencies",
