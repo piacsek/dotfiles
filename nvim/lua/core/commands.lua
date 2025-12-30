@@ -104,7 +104,7 @@ end, { desc = "Delete all unmodified hidden buffers" })
 
 vim.api.nvim_create_user_command("NotificationsHistory", function()
 	require("snacks").notifier.show_history()
-end, { desc = "Clear all notifications" })
+end, { desc = "Notification history" })
 
 vim.api.nvim_create_user_command("NotificationsClear", function()
 	require("snacks").notifier.hide()
