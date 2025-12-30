@@ -72,10 +72,8 @@ Host *
   IdentityFile ~/.ssh/id_ed25519
 EOF
 
-# Add SSH key to ssh-agent
 ssh-add --apple-use-keychain ~/.ssh/id_ed25519
 
-# Copy public key to clipboard
 cat ~/.ssh/id_ed25519.pub | pbcopy
 echo "SSH public key copied to clipboard!"
 echo "Add it to GitHub: https://github.com/settings/keys"
