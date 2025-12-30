@@ -64,10 +64,13 @@ ssh-keygen -t ed25519 -C "$git_email"
 eval "$(ssh-agent -s)"
 ssh-add --apple-use-keychain ~/.ssh/id_ed25519
 mkdir -p ~/.ssh
-printf "Host *\n  AddKeysToAgent yes\n  UseKeychain yes\n  IdentityFile ~/.ssh/id_ed25519\n" > ~/.ssh/config
+echo "Host *" > ~/.ssh/config
+echo "  AddKeysToAgent yes" >> ~/.ssh/config
+echo "  UseKeychain yes" >> ~/.ssh/config
+echo "  IdentityFile ~/.ssh/id_ed25519" >> ~/.ssh/config
 cat ~/.ssh/id_ed25519.pub | pbcopy
-echo "SSH public key copied to clipboard!"
-echo "Add it to GitHub: https://github.com/settings/keys"
+echo SSH public key copied to clipboard!
+echo Add it to GitHub: https://github.com/settings/keys
 ```
 
 **Next:** Paste your SSH key into GitHub at https://github.com/settings/keys before continuing.
