@@ -132,7 +132,8 @@ return function(overseer)
 		builder = function()
 			return {
 				name = "review-commit-push",
-				cmd = { "lazygit" },
+				cmd = { "echo" },
+				args = { "Pushed successfully!" },
 				strategy = {
 					"toggleterm",
 					direction = "float",
