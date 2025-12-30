@@ -87,12 +87,27 @@ return function(overseer)
 		end,
 	})
 
+	local overseer = require("overseer")
+
 	overseer.register_template({
 		name = "review-commit-push",
 		builder = function()
 			return {
 				name = "review-commit-push",
-				strategy = "toggleterm",
+
+				-- Run lazygit (interactive TUI)
+				cmd = { "lazygit" },
+
+				-- Use toggleterm and pop it open
+				strategy = {
+					"toggleterm",
+					direction = "float", -- "float" | "tab" | "vertical" | "horizontal"
+					open_on_start = true, -- auto-open when the task starts
+					quit_on_exit = "never", -- don't auto-close the window
+					close_on_exit = false, -- don't delete the terminal buffer
+					-- size = 80,           -- used for vertical/horizontal (and sometimes float)
+				},
+
 				components = {
 					{
 						"dependencies",
