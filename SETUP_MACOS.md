@@ -60,13 +60,10 @@ git config --global user.email "$git_email"
 Generate SSH key and add to ssh-agent:
 
 ```bash
-# Generate SSH key (press Enter to accept default location)
 ssh-keygen -t ed25519 -C "$git_email"
 
-# Start ssh-agent and add key
 eval "$(ssh-agent -s)"
 
-# Create SSH config to automatically load keys
 mkdir -p ~/.ssh
 cat > ~/.ssh/config << 'EOF'
 Host *
