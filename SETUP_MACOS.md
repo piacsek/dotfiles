@@ -79,6 +79,7 @@ echo Add it to GitHub: https://github.com/settings/keys
 ```bash
 brew install \
   neovim \
+  lazygit \
   direnv \
   asdf \
   fzf \
