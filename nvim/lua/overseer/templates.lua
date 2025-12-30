@@ -90,12 +90,6 @@ return function(overseer)
 	overseer.register_template({
 		name = "review-commit-push",
 		builder = function()
-			local has_toggleterm, toggleterm = pcall(require, "toggleterm.terminal")
-			if not has_toggleterm then
-				vim.notify("toggleterm not found. Please install toggleterm.nvim", vim.log.levels.ERROR)
-				return nil
-			end
-
 			return {
 				name = "review-commit-push",
 				strategy = {
