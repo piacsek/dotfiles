@@ -144,7 +144,7 @@ return function(overseer)
 						"workflow_notifier",
 						steps = { "Pre-CI checks", "Review changes", "Commit", "Push" },
 					},
-					{ "on_complete_dispose", statuses = { "SUCCESS", "FAILURE", "CANCELED" } },
+					"default",
 				},
 			}
 		end,
