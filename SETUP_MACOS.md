@@ -93,7 +93,7 @@ Clone the dotfiles repository and set up symlinks:
 
 ```bash
 cd $HOME
-git clone https://github.com/piacsek/dotfiles.git
+git clone git@github.com:piacsek/dotfiles.git
 
 rm -rf $HOME/.config/nvim
 rm -rf $HOME/.config/ghostty
