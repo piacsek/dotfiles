@@ -105,6 +105,7 @@ brew install \
   ripgrep \
   fd \
   gpg \
+  libyaml \
   bat
 ```
 
