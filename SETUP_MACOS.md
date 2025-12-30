@@ -175,13 +175,10 @@ npm install -g @anthropic-ai/claude-code
 ### Install via Homebrew
 
 ```bash
-brew install --cask \
-  1password \
-  rectangle \
-  google-chrome \
-  stats \
-  cleanshot \
-  docker
+# Install casks one by one to handle already-installed apps gracefully
+for cask in 1password rectangle google-chrome stats cleanshot docker; do
+  brew install --cask $cask 2>/dev/null || echo "$cask already installed or failed, skipping..."
+done
 ```
 
 ### Manual Installations
