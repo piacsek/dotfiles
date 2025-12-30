@@ -151,10 +151,8 @@ asdf plugin add rebar
 asdf plugin add teleport-community
 asdf plugin add zig
 
-# Install all versions from .tool-versions
 asdf install
 
-# Install Claude CLI globally
 npm install -g @anthropic-ai/claude-code
 ```
 
@@ -209,7 +207,6 @@ done
 Configure Docker with your saved settings (3GB RAM, 1 CPU, no swap):
 
 ```bash
-# Open Docker once to initialize the directory structure, then quit it
 open -a Docker
 sleep 5
 osascript -e 'quit app "Docker"'
