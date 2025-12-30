@@ -238,7 +238,6 @@ Configure these settings manually:
 ### Launch and Configure Apps
 
 ```bash
-# Open apps to complete setup
 open -a rcmd
 open -a Stats
 open -a Pasty
@@ -247,10 +246,8 @@ open -a Pasty
 ### Verify Installations
 
 ```bash
-# Check Homebrew installations
 brew list --cask
 
-# Check CLI tools
 which git zsh fzf rg fd bat eza
 ```
 
