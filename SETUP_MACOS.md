@@ -163,7 +163,6 @@ asdf plugin add python
 asdf plugin add ruby
 asdf plugin add postgres
 asdf plugin add yarn
-asdf plugin add lua
 asdf plugin add java
 asdf plugin add k9s
 asdf plugin add vault
