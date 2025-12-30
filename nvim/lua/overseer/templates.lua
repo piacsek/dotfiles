@@ -88,6 +88,30 @@ return function(overseer)
 	})
 
 	overseer.register_template({
+		name = "auto-commit",
+		builder = function()
+			return {
+				name = "auto-commit",
+				cmd = { vim.fn.expand("$HOME") .. "/dotfiles/review-commit-push.sh" },
+			}
+		end,
+	})
+
+	overseer.register_template({
+		name = "git-push",
+		builder = function()
+			return {
+				name = "git-push",
+				cmd = { "bash" },
+				args = {
+					"-c",
+					'BRANCH=$(git rev-parse --abbrev-ref HEAD) && git pull origin "$BRANCH" --rebase && git push origin "$BRANCH"',
+				},
+			}
+		end,
+	})
+
+	overseer.register_template({
 		name = "review-commit-push",
 		builder = function()
 			return {
@@ -98,7 +122,7 @@ return function(overseer)
 					direction = "float",
 					open_on_start = true,
 					quit_on_exit = "never",
-					close_on_exit = true,
+					close_on_exit = false,
 				},
 				components = {
 					{
