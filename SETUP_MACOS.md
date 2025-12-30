@@ -52,6 +52,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 git config --global user.name "Felipe Moraes Piacsek"
 read "git_email?Enter your git email: "
 git config --global user.email "$git_email"
+git config --global pull.rebase false
 ```
 
 ### 5. Set Up SSH Key for GitHub
