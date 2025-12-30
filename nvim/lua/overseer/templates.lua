@@ -140,7 +140,11 @@ return function(overseer)
 						task_names = { "pre-ci checks", "lazygit-review", "auto-commit", "git-push" },
 						sequential = true,
 					},
-					"default",
+					{
+						"workflow_notifier",
+						steps = { "Pre-CI checks", "Review changes", "Commit", "Push" },
+					},
+					{ "on_complete_dispose", statuses = { "SUCCESS", "FAILURE", "CANCELED" } },
 				},
 			}
 		end,
