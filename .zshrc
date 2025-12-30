@@ -40,8 +40,6 @@ alias bank='cd $HOME/Projects/ex_bank/ && nvim'
 alias dotfiles='cd $HOME/dotfiles/'
 alias cdnvimconfig='cd $HOME/.config/nvim/'
 alias lz='lazygit'
-alias postgres_current_version="echo $(asdf current postgres | awk '{print $2}')"
-alias postgres_start='/$HOME/.asdf/installs/postgres/$(postgres_current_version)/bin/pg_ctl -D /$HOME/.asdf/installs/postgres/$(postgres_current_version)/data -l logfile start'
 
 
 if [ -f $HOME/.zshrc_work ]; then
