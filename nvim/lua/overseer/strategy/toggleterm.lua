@@ -4,6 +4,7 @@ local log = require("overseer.log")
 ---@field term nil|table The toggleterm Terminal instance
 ---@field task nil|overseer.Task
 ---@field opts overseer.ToggletrmStrategyOpts
+---@field _has_exited boolean Track if terminal job has exited to prevent double-shutdown
 local ToggletrmStrategy = {}
 
 ---@class (exact) overseer.ToggletrmStrategyOpts
