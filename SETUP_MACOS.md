@@ -61,19 +61,10 @@ Generate SSH key and add to ssh-agent:
 
 ```bash
 ssh-keygen -t ed25519 -C "$git_email"
-
 eval "$(ssh-agent -s)"
-
-mkdir -p ~/.ssh
-cat > ~/.ssh/config << 'EOF'
-Host *
-  AddKeysToAgent yes
-  UseKeychain yes
-  IdentityFile ~/.ssh/id_ed25519
-EOF
-
 ssh-add --apple-use-keychain ~/.ssh/id_ed25519
-
+mkdir -p ~/.ssh
+printf "Host *\n  AddKeysToAgent yes\n  UseKeychain yes\n  IdentityFile ~/.ssh/id_ed25519\n" > ~/.ssh/config
 cat ~/.ssh/id_ed25519.pub | pbcopy
 echo "SSH public key copied to clipboard!"
 echo "Add it to GitHub: https://github.com/settings/keys"
