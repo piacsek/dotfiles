@@ -9,7 +9,6 @@ local open_last_task_output = function(overseer)
 end
 return {
 	"stevearc/overseer.nvim",
-	dependencies = { "akinsho/toggleterm.nvim" },
 	opts = {
 		templates = { "builtin" },
 	},
