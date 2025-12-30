@@ -115,6 +115,7 @@ ln -sf $HOME/dotfiles/nvim $HOME/.config/nvim
 ln -sf $HOME/dotfiles/.ideavimrc $HOME/.ideavimrc
 ln -sf $HOME/dotfiles/.zshrc $HOME/.zshrc
 ln -sf $HOME/dotfiles/.ghosttyrc $HOME/.config/ghostty/config
+ln -sf $HOME/dotfiles/.tool-versions $HOME/.tool-versions
 ```
 
 ### 8. Set Up Dotfiles Auto-Sync
