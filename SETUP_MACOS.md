@@ -106,6 +106,7 @@ brew install \
   fd \
   gpg \
   libyaml \
+  readline \
   bat
 ```
 
