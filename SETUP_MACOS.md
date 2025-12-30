@@ -106,14 +106,11 @@ Clone the dotfiles repository and set up symlinks:
 cd $HOME
 git clone https://github.com/piacsek/dotfiles.git
 
-# Remove any auto-created directories that will conflict with symlinks
 rm -rf $HOME/.config/nvim
 rm -rf $HOME/.config/ghostty
 
-# Create necessary parent directories
 mkdir -p $HOME/.config/ghostty
 
-# Create symlinks
 ln -sf $HOME/dotfiles/nvim $HOME/.config/nvim
 ln -sf $HOME/dotfiles/.ideavimrc $HOME/.ideavimrc
 ln -sf $HOME/dotfiles/.zshrc $HOME/.zshrc
