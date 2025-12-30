@@ -16,7 +16,7 @@ Executable documentation for setting up a fresh macOS system. Follow sections in
 ### Install Xcode Command Line Tools & accept terms
 
 ```bash
-xcode-select --install && sudo xcodebuild -license accept
+xcode-select --install
 ```
 
 ### Install Homebrew
