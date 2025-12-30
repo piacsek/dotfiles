@@ -20,7 +20,7 @@ return {
 			component_aliases = {
 				silent = {
 					"on_exit_set_status",
-					"on_output_summarize",
+					{ "on_complete_dispose", require_view = { "SUCCESS", "FAILURE" } },
 				},
 			},
 			task_list = {
