@@ -93,6 +93,7 @@ return function(overseer)
 			return {
 				name = "auto-commit",
 				cmd = { vim.fn.expand("$HOME") .. "/dotfiles/auto-commit.sh" },
+				components = { "silent" },
 			}
 		end,
 	})
@@ -109,6 +110,7 @@ return function(overseer)
 					open_on_start = true,
 					close_on_exit = true,
 				},
+				components = { "silent" },
 			}
 		end,
 	})
@@ -123,6 +125,7 @@ return function(overseer)
 					"-c",
 					'BRANCH=$(git rev-parse --abbrev-ref HEAD) && git pull origin "$BRANCH" --rebase && git push origin "$BRANCH"',
 				},
+				components = { "silent" },
 			}
 		end,
 	})
