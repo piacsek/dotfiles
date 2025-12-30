@@ -112,6 +112,20 @@ return function(overseer)
 	})
 
 	overseer.register_template({
+		name = "git-push",
+		builder = function()
+			return {
+				name = "git-push",
+				cmd = { "bash" },
+				args = {
+					"-c",
+					'BRANCH=$(git rev-parse --abbrev-ref HEAD) && git pull origin "$BRANCH" --rebase && git push origin "$BRANCH"',
+				},
+			}
+		end,
+	})
+
+	overseer.register_template({
 		name = "review-commit-push",
 		builder = function()
 			return {
