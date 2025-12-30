@@ -17,6 +17,12 @@ return {
 
 		overseer.setup({
 			disable_template_modules = { "^overseer.template" },
+			component_aliases = {
+				silent = {
+					"on_exit_set_status",
+					"on_output_summarize",
+				},
+			},
 			task_list = {
 				min_height = 0.5,
 				keymaps = {
