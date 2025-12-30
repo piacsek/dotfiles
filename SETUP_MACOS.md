@@ -6,7 +6,6 @@ Executable documentation for setting up a fresh macOS system. Follow sections in
 - [Prerequisites](#prerequisites)
 - [Terminal Environment](#terminal-environment)
 - [Essential Apps](#essential-apps)
-- [Communication & Media](#communication--media)
 - [Final Steps](#final-steps)
 
 ---
