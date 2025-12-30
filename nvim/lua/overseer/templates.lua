@@ -112,29 +112,6 @@ return function(overseer)
 			}
 		end,
 	})
-	overseer.register_template({
-		name = "review-commit-push",
-		builder = function()
-			return {
-				name = "review-commit-push",
-				cmd = { "lazygit" },
-				strategy = {
-					"toggleterm",
-					direction = "float",
-					open_on_start = true,
-					close_on_exit = true,
-				},
-				components = {
-					{
-						"dependencies",
-						task_names = { "pre-ci checks" },
-						sequential = true,
-					},
-					"default",
-				},
-			}
-		end,
-	})
 
 	overseer.register_template({
 		name = "git-push",
