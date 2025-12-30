@@ -87,33 +87,6 @@ return function(overseer)
 		end,
 	})
 
-	local overseer = require("overseer")
-
-	overseer.register_template({
-		name = "review-commit-push",
-		builder = function()
-			return {
-				name = "review-commit-push",
-				cmd = { "lazygit" },
-				strategy = {
-					"toggleterm",
-					direction = "float",
-					open_on_start = true,
-					quit_on_exit = "never",
-					close_on_exit = true,
-				},
-				components = {
-					{
-						"dependencies",
-						task_names = { "pre-ci checks" },
-						sequential = true,
-					},
-					"default",
-				},
-			}
-		end,
-	})
-
 	overseer.register_template({
 		name = "review-commit-push",
 		builder = function()
