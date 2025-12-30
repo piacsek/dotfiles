@@ -90,13 +90,37 @@ return function(overseer)
 	overseer.register_template({
 		name = "review-commit-push",
 		builder = function()
+			local has_toggleterm, toggleterm = pcall(require, "toggleterm.terminal")
+			if not has_toggleterm then
+				vim.notify("toggleterm not found. Please install toggleterm.nvim", vim.log.levels.ERROR)
+				return nil
+			end
+
 			return {
 				name = "review-commit-push",
-				cmd = { vim.fn.expand("$HOME") .. "/dotfiles/review-commit-push.sh" },
 				strategy = {
-					"toggleterm",
-					direction = "float",
-					open_on_start = true,
+					"jobstart",
+					on_start = function()
+						local Terminal = toggleterm.Terminal
+						local term = Terminal:new({
+							cmd = vim.fn.expand("$HOME") .. "/dotfiles/review-commit-push.sh",
+							direction = "float",
+							close_on_exit = false,
+							on_exit = function(t, job, exit_code, name)
+								vim.schedule(function()
+									if exit_code == 0 then
+										vim.notify("Review-commit-push completed successfully!", vim.log.levels.INFO)
+									else
+										vim.notify(
+											"Review-commit-push failed with exit code: " .. exit_code,
+											vim.log.levels.ERROR
+										)
+									end
+								end)
+							end,
+						})
+						term:toggle()
+					end,
 				},
 				components = {
 					{
