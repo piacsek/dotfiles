@@ -94,9 +94,7 @@ return function(overseer)
 		builder = function()
 			return {
 				name = "review-commit-push",
-
 				cmd = { "lazygit" },
-
 				strategy = {
 					"toggleterm",
 					direction = "float",
@@ -104,7 +102,6 @@ return function(overseer)
 					quit_on_exit = "never",
 					close_on_exit = true,
 				},
-
 				components = {
 					{
 						"dependencies",
