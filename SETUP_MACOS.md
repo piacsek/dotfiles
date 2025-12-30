@@ -99,7 +99,7 @@ brew install \
   bat
 ```
 
-### 6. Clone and Link Dotfiles
+### 7. Clone and Link Dotfiles
 Clone the dotfiles repository and set up symlinks:
 
 ```bash
