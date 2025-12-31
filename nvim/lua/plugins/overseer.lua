@@ -20,6 +20,7 @@ return {
 			component_aliases = {
 				silent = {
 					"on_exit_set_status",
+					{ "on_complete_notify", statuses = { "FAILURE" } },
 					{ "on_complete_dispose", require_view = { "SUCCESS", "FAILURE" } },
 				},
 			},
