@@ -99,7 +99,6 @@ return function(overseer)
 			return {
 				name = "auto-commit",
 				cmd = { vim.fn.expand("$HOME") .. "/dotfiles/auto-commit.sh" },
-				components = { "silent" },
 			}
 		end,
 	})
