@@ -144,14 +144,6 @@ return function(overseer)
 						"git-push",
 					},
 				},
-				components = {
-					"orchestrator.on_broadcast_update_workflow_notifier",
-					{
-						"workflow_notifier",
-						steps = { "Pre-CI checks", "Review changes", "Commit", "Push" },
-					},
-					"default",
-				},
 			}
 		end,
 	})
