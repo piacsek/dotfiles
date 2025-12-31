@@ -157,6 +157,7 @@ return {
 			function()
 				local overseer = require("overseer")
 				overseer.run_task({ name = "review-commit-push" })
+				overseer.open()
 			end,
 			desc = "Review, commit and push",
 		},
