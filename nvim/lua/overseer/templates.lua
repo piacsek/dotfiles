@@ -35,6 +35,7 @@ return function(overseer)
 			return {
 				cmd = { "mix" },
 				args = { "compile", "--warnings-as-errors" },
+				components = { "silent" },
 			}
 		end,
 	})
@@ -45,6 +46,7 @@ return function(overseer)
 			return {
 				cmd = { "mix" },
 				args = { "credo" },
+				components = { "silent" },
 			}
 		end,
 	})
@@ -59,7 +61,11 @@ return function(overseer)
 	overseer.register_template({
 		name = "mix format",
 		builder = function()
-			return { cmd = { "mix" }, args = { "format" } }
+			return {
+				cmd = { "mix" },
+				args = { "format" },
+				components = { "silent" },
+			}
 		end,
 	})
 
