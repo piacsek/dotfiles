@@ -84,17 +84,17 @@ function ToggletrmStrategy:start(task)
 		hidden = self.opts.hidden,
 		dir = task.cwd,
 		env = task.env,
-		on_stdout = function(_, job, data)
+		on_stdout = function(_, _job, data)
 			if data then
 				task:dispatch("on_output", data)
 			end
 		end,
-		on_stderr = function(_, job, data)
+		on_stderr = function(_, _job, data)
 			if data then
 				task:dispatch("on_output", data)
 			end
 		end,
-		on_exit = function(term, job, exit_code, name)
+		on_exit = function(term, _job, exit_code, name)
 			log.debug("Task %s exited with code %s", task.name, exit_code)
 			self._has_exited = true
 
@@ -111,7 +111,6 @@ function ToggletrmStrategy:start(task)
 		end,
 	})
 
-	-- Open the terminal if requested
 	if self.opts.open_on_start then
 		self.term:open()
 	end
