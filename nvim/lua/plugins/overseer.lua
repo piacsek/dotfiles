@@ -26,8 +26,6 @@ return {
 			},
 			task_list = {
 				min_height = 0.5,
-				min_width = 0.5,
-				direction = "right",
 				keymaps = {
 					["<Esc>"] = { "<CMD>close<CR>", desc = "Close task list" },
 					["r"] = { "keymap.run_action", opts = { action = "restart" }, desc = "Restart task" },
