@@ -156,7 +156,7 @@ return {
 			"<leader>G",
 			function()
 				local overseer = require("overseer")
-				overseer.run_template({ name = "review-commit-push" })
+				overseer.run_task({ name = "review-commit-push" })
 			end,
 			desc = "Review, commit and push",
 		},
