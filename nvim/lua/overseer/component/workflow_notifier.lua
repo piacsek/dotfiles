@@ -125,64 +125,6 @@ M.constructor = function(params)
 				timeout = timeout,
 			})
 		end,
-		on_dependency_complete = function(self, task)
-			self:update_notification(task)
-
-			-- Check if all dependencies are complete
-			local deps_component
-			for _, comp in ipairs(task.components) do
-				if comp.desc and comp.desc:match("dependencies") then
-					deps_component = comp
-					break
-				end
-			end
-
-			if deps_component and deps_component.task_lookup then
-				local all_done = true
-				for _, task_id in ipairs(deps_component.task_lookup) do
-					local dep_task = task_list.get(task_id)
-					if not dep_task or (dep_task.status ~= STATUS.SUCCESS and dep_task.status ~= STATUS.FAILURE and dep_task.status ~= STATUS.CANCELED) then
-						all_done = false
-						break
-					end
-				end
-
-				-- If all dependencies are done, show final notification and mark task as complete
-				if all_done and not self.has_shown_final then
-					self.has_shown_final = true
-					-- Wait a moment then show final status
-					vim.defer_fn(function()
-						if task.status == STATUS.PENDING then
-							-- Check if any dependency failed
-							local has_failure = false
-							for _, task_id in ipairs(deps_component.task_lookup) do
-								local dep_task = task_list.get(task_id)
-								if dep_task and (dep_task.status == STATUS.FAILURE or dep_task.status == STATUS.CANCELED) then
-									has_failure = true
-									break
-								end
-							end
-
-							-- Set task status
-							if has_failure then
-								task:set_status(STATUS.FAILURE)
-							else
-								task:set_status(STATUS.SUCCESS)
-								-- Show success notification
-								local icons = { success = "✅" }
-								vim.notify(table.concat(vim.tbl_map(function(step)
-									return string.format("%s %s", icons.success, step)
-								end, self.steps), "\n"), vim.log.levels.INFO, {
-									id = self.notif_id,
-									title = icons.success .. " " .. task.name,
-									timeout = 3000,
-								})
-							end
-						end
-					end, 100)
-				end
-			end
-		end,
 	}
 end
 
