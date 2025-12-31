@@ -130,7 +130,6 @@ return function(overseer)
 					"-c",
 					'BRANCH=$(git rev-parse --abbrev-ref HEAD) && git pull origin "$BRANCH" --rebase && git push origin "$BRANCH"',
 				},
-				components = { "silent" },
 			}
 		end,
 	})
