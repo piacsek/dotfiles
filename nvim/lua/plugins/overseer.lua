@@ -152,5 +152,13 @@ return {
 			desc = "Pastes the current selection on the most recent task buffer",
 			mode = { "v" },
 		},
+		{
+			"<leader>G",
+			function()
+				local overseer = require("overseer")
+				overseer.run_template({ name = "review-commit-push" })
+			end,
+			desc = "Review, commit and push",
+		},
 	},
 }
