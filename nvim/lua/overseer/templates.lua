@@ -135,14 +135,16 @@ return function(overseer)
 		builder = function()
 			return {
 				name = "review-commit-push",
-				cmd = { "echo" },
-				args = { "Pushed successfully!" },
-				components = {
-					{
-						"dependencies",
-						task_names = { "pre-ci checks", "lazygit-review", "auto-commit", "git-push" },
-						sequential = true,
+				strategy = {
+					"orchestrator",
+					tasks = {
+						"pre-ci checks",
+						"lazygit-review",
+						"auto-commit",
+						"git-push",
 					},
+				},
+				components = {
 					{
 						"workflow_notifier",
 						steps = { "Pre-CI checks", "Review changes", "Commit", "Push" },
