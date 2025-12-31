@@ -43,11 +43,9 @@ M.constructor = function(params)
 				self:update_notification(task)
 			end
 		end,
-		on_pre_start = function(self, task)
-			-- Called when waiting for dependencies - update to show current status
+		-- Hook into orchestrator's broadcast system
+		on_orchestrator_update = function(self, task)
 			self:update_notification(task)
-			-- Return false to let dependencies run
-			return false
 		end,
 		update_notification = function(self, task)
 			local icons = {
@@ -57,28 +55,28 @@ M.constructor = function(params)
 				pending = "○",
 			}
 
-			-- Find the dependencies component to track progress
-			local deps_component
-			for _, comp in ipairs(task.components) do
-				if comp.desc and comp.desc:match("dependencies") then
-					deps_component = comp
-					break
-				end
-			end
-
-			-- Count completed/failed dependencies
+			-- Get task list from orchestrator strategy
 			local completed_count = 0
 			local failed_step = nil
-			if deps_component and deps_component.task_lookup then
-				for i, task_id in ipairs(deps_component.task_lookup) do
-					local dep_task = task_list.get(task_id)
-					if dep_task then
-						if dep_task.status == STATUS.SUCCESS then
-							completed_count = completed_count + 1
-						elseif dep_task.status == STATUS.FAILURE or dep_task.status == STATUS.CANCELED then
-							failed_step = i
-							break
+
+			if task.strategy and task.strategy.tasks then
+				-- Orchestrator stores tasks as 2D array (sections)
+				-- Flatten it to get sequential task IDs
+				for section_idx, section in ipairs(task.strategy.tasks) do
+					for _, task_id in ipairs(section) do
+						local subtask = task_list.get(task_id)
+						if subtask then
+							if subtask.status == STATUS.SUCCESS then
+								completed_count = completed_count + 1
+							elseif subtask.status == STATUS.FAILURE or subtask.status == STATUS.CANCELED then
+								-- Map section index to step number
+								failed_step = section_idx
+								break
+							end
 						end
+					end
+					if failed_step then
+						break
 					end
 				end
 			end
