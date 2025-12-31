@@ -129,6 +129,45 @@ M.constructor = function(params)
 		end,
 		on_dependency_complete = function(self, task)
 			self:update_notification(task)
+
+			-- Check if all dependencies are complete
+			local deps_component
+			for _, comp in ipairs(task.components) do
+				if comp.desc and comp.desc:match("dependencies") then
+					deps_component = comp
+					break
+				end
+			end
+
+			if deps_component and deps_component.task_lookup then
+				local all_done = true
+				for _, task_id in ipairs(deps_component.task_lookup) do
+					local dep_task = task_list.get(task_id)
+					if not dep_task or (dep_task.status ~= STATUS.SUCCESS and dep_task.status ~= STATUS.FAILURE and dep_task.status ~= STATUS.CANCELED) then
+						all_done = false
+						break
+					end
+				end
+
+				-- If all dependencies are done, show final notification
+				if all_done and not self.has_shown_final then
+					self.has_shown_final = true
+					-- Wait a moment then show final status
+					vim.defer_fn(function()
+						if task.status == STATUS.PENDING then
+							-- Force success status for notification
+							local icons = { success = "✅" }
+							vim.notify(table.concat(vim.tbl_map(function(step)
+								return string.format("%s %s", icons.success, step)
+							end, self.steps), "\n"), vim.log.levels.INFO, {
+								id = self.notif_id,
+								title = icons.success .. " " .. task.name,
+								timeout = 3000,
+							})
+						end
+					end, 100)
+				end
+			end
 		end,
 	}
 end
