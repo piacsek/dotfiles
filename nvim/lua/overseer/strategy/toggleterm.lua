@@ -84,17 +84,17 @@ function ToggletrmStrategy:start(task)
 		hidden = self.opts.hidden,
 		dir = task.cwd,
 		env = task.env,
-		on_stdout = function(_, _job, data)
+		on_stdout = function(_, _, data)
 			if data then
 				task:dispatch("on_output", data)
 			end
 		end,
-		on_stderr = function(_, _job, data)
+		on_stderr = function(_, _, data)
 			if data then
 				task:dispatch("on_output", data)
 			end
 		end,
-		on_exit = function(term, _job, exit_code, name)
+		on_exit = function(term, _, exit_code, _)
 			log.debug("Task %s exited with code %s", task.name, exit_code)
 			self._has_exited = true
 
