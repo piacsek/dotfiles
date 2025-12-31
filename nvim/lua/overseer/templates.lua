@@ -143,7 +143,8 @@ return function(overseer)
 				strategy = {
 					"orchestrator",
 					tasks = {
-						"pre-ci checks",
+						-- Do I wanna run this all the time?
+						-- "pre-ci checks",
 						"lazygit-review",
 						"auto-commit",
 						"git-push",
