@@ -2,16 +2,6 @@ vim.g.have_nerd_font = true
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- Cursor configuration
--- Always use block cursor, blink in insert mode only
-vim.opt.guicursor = {
-	"n-v-c:block", -- Normal, visual, command-line: block cursor
-	"i-ci-ve:block-blinkwait700-blinkoff400-blinkon250", -- Insert, command-line insert, visual-exclude: block cursor with blinking
-	"r-cr:hor20", -- Replace mode: horizontal bar cursor
-	"o:hor50", -- Operator-pending: horizontal bar cursor
-	"sm:block-blinkwait175-blinkoff150-blinkon175", -- Showmatch: block cursor with blinking
-}
-
 vim.opt.swapfile = false
 vim.opt.winborder = "rounded"
 vim.opt.autoread = true
