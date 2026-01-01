@@ -1,6 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "theme": "matrix",
+  "theme": "ayu",
   "permission": {
     "edit": "ask",
     "bash": "ask",
