@@ -6,7 +6,7 @@ return {
 	opts = {
 		confirm_edits = true,
 		provider = {
-			terminal = {
+			window = {
 				width = 0.5,
 			},
 		},
