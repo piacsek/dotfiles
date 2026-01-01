@@ -189,14 +189,6 @@ asdf install
 npm install -g @anthropic-ai/claude-code
 ```
 
-### 10. Install OpenCode
-
-Install OpenCode CLI for AI-assisted coding:
-
-```bash
-npm install -g @wonderschool/opencode
-```
-
 ---
 
 ## Essential Apps
