@@ -7,7 +7,6 @@ return {
 		confirm_edits = true,
 		contexts = {
 			["@harpoon"] = function(context)
-				-- Get harpoon list
 				local ok, harpoon = pcall(require, "harpoon")
 				if not ok then
 					return nil
