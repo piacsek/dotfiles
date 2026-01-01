@@ -5,6 +5,11 @@ return {
 	},
 	opts = {
 		confirm_edits = true,
+		terminal = {
+			win = {
+				width = 0.5,
+			},
+		},
 	},
 	config = function()
 		vim.keymap.set({ "n", "x", "v" }, "<leader>cc", function()
