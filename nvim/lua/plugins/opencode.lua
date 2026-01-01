@@ -5,6 +5,48 @@ return {
 	},
 	opts = {
 		confirm_edits = true,
+		prompts = {
+			add_harpoon_files = {
+				prompt = function()
+					-- Get harpoon list
+					local ok, harpoon = pcall(require, "harpoon")
+					if not ok then
+						vim.notify("Harpoon not available", vim.log.levels.ERROR)
+						return nil
+					end
+
+					local list = harpoon:list()
+					if not list or not list.items then
+						vim.notify("No harpoon list found", vim.log.levels.WARN)
+						return nil
+					end
+
+					local length = list:length()
+					if length == 0 then
+						vim.notify("No files in harpoon list", vim.log.levels.WARN)
+						return nil
+					end
+
+					-- Build file references for all harpoon files
+					local files = {}
+					for i = 1, length do
+						local item = list.items[i]
+						if item and item.value and item.value ~= "" then
+							table.insert(files, "@" .. item.value)
+						end
+					end
+
+					if #files == 0 then
+						vim.notify("No valid files in harpoon list", vim.log.levels.WARN)
+						return nil
+					end
+
+					local files_list = table.concat(files, " ")
+					return "These are relevant files for this session: " .. files_list
+				end,
+				submit = true,
+			},
+		},
 	},
 	config = function()
 		vim.keymap.set({ "n", "x", "v" }, "<leader>cc", function()
@@ -29,5 +71,10 @@ return {
 		vim.keymap.set("n", "<leader>ca", function()
 			return require("opencode").operator("@this ") .. "_"
 		end, { expr = true, desc = "Add line to opencode" })
+
+		-- Add harpoon files to opencode session
+		vim.keymap.set("n", "<leader>ch", function()
+			require("opencode").prompt("add_harpoon_files")
+		end, { desc = "Add harpoon files to opencode" })
 	end,
 }
