@@ -5,10 +5,8 @@ return {
 	},
 	opts = {
 		confirm_edits = true,
-		provider = {
-			window = {
-				width = 0.5,
-			},
+		window = {
+			width = 0.5,
 		},
 	},
 	config = function()
