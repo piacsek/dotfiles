@@ -23,7 +23,7 @@ return {
 			require("opencode").command("session.half.page.down")
 		end, { desc = "opencode half page down" })
 
-		vim.keymap.set({ "n", "x", "v" }, "<leader>car", function()
+		vim.keymap.set("v", "<leader>cal", function()
 			return require("opencode").operator("@this ")
 		end, { expr = true, desc = "Add range to opencode" })
 		vim.keymap.set("n", "<leader>cal", function()
