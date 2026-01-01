@@ -10,30 +10,34 @@ return {
 				-- Get harpoon list
 				local ok, harpoon = pcall(require, "harpoon")
 				if not ok then
-					vim.notify("Harpoon not available", vim.log.levels.WARN)
 					return nil
 				end
 
 				local list = harpoon:list()
-				local items = list.items
-
-				if #items == 0 then
+				if not list or not list.items then
 					return nil
 				end
 
-				-- Build file references for all harpoon files
-				local files = {}
-				for _, item in ipairs(items) do
-					if item.value and item.value ~= "" then
-						table.insert(files, "@" .. item.value)
+				local length = list:length()
+				if length == 0 then
+					return nil
+				end
+
+				-- Build file references for all harpoon files using Context.format
+				local Context = require("opencode.context")
+				local paths = {}
+				for i = 1, length do
+					local item = list.items[i]
+					if item and item.value and item.value ~= "" then
+						table.insert(paths, Context.format({ path = item.value }))
 					end
 				end
 
-				if #files == 0 then
+				if #paths == 0 then
 					return nil
 				end
 
-				return table.concat(files, " ")
+				return table.concat(paths, " ")
 			end,
 		},
 	},
