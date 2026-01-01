@@ -33,7 +33,6 @@ return {
 		dim = { enabled = false },
 		git = { enabled = false },
 		indent = { enabled = false },
-		input = { enabled = false },
 		profiler = { enabled = false },
 		quickfile = { enabled = false },
 		rename = { enabled = false },
