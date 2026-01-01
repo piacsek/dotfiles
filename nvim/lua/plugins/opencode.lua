@@ -6,9 +6,7 @@ return {
 	opts = {
 		confirm_edits = true,
 		terminal = {
-			win = {
-				width = 0.5,
-			},
+			width = 0.5,
 		},
 	},
 	config = function()
