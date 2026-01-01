@@ -1,7 +1,7 @@
 return {
 	"NickvanDyke/opencode.nvim",
 	dependencies = {
-		{ "folke/snacks.nvim", opts = { input = {}, picker = {}, terminal = { window = { width = 0.5 } } } },
+		{ "folke/snacks.nvim", opts = { input = {}, picker = {}, terminal = { win = { width = 0.5 } } } },
 	},
 	opts = {
 		confirm_edits = true,
