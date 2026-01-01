@@ -8,12 +8,7 @@ return {
 		prompts = {
 			add_harpoon_files = {
 				prompt = function()
-					-- Get harpoon list
-					local ok, harpoon = pcall(require, "harpoon")
-					if not ok then
-						vim.notify("Harpoon not available", vim.log.levels.ERROR)
-						return nil
-					end
+					local harpoon = require("harpoon")
 
 					local list = harpoon:list()
 					if not list or not list.items then
