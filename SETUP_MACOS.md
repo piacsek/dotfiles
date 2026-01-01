@@ -3,6 +3,7 @@
 Executable documentation for setting up a fresh macOS system. Follow sections in order for optimal setup experience.
 
 ## Table of Contents
+
 - [Prerequisites](#prerequisites)
   - [Install Xcode Command Line Tools & accept terms](#install-xcode-command-line-tools--accept-terms)
   - [Install Homebrew](#install-homebrew)
@@ -52,6 +53,7 @@ brew update && brew upgrade
 ```bash
 brew install --cask ghostty
 ```
+
 ### 2. Configure Zsh
 
 ```bash
@@ -112,6 +114,7 @@ brew install \
 ```
 
 ### 7. Clone and Link Dotfiles
+
 Clone the dotfiles repository and set up symlinks:
 
 ```bash
@@ -178,6 +181,14 @@ asdf install
 npm install -g @anthropic-ai/claude-code
 ```
 
+### 10. Install OpenCode
+
+Install OpenCode CLI for AI-assisted coding:
+
+```bash
+npm install -g @wonderschool/opencode
+```
+
 ---
 
 ## Essential Apps
@@ -206,11 +217,13 @@ done
 ### Manual Installations
 
 **rcmd** - Fast app switching tool
+
 - Visit: https://lowtechguys.com/rcmd/
 - Download and install manually
 - Import your `rcmd.json` settings after installation
 
 **Pasty** - Clipboard manager
+
 - Visit: https://getpasty.app/
 - Download from website or Mac App Store
 
@@ -247,6 +260,7 @@ defaults write com.apple.dock autohide -bool true && killall Dock
 ```
 
 #### Manual Settings
+
 Configure these settings manually:
 
 - **Login Items**: System Settings > General > Login Items
