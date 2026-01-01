@@ -1,13 +1,10 @@
 return {
 	"NickvanDyke/opencode.nvim",
 	dependencies = {
-		{ "folke/snacks.nvim", opts = { input = {}, picker = {}, terminal = {} } },
+		{ "folke/snacks.nvim", opts = { input = {}, picker = {}, terminal = { window = { width = 0.5 } } } },
 	},
 	opts = {
 		confirm_edits = true,
-		window = {
-			width = 0.5,
-		},
 	},
 	config = function()
 		vim.keymap.set({ "n", "x", "v" }, "<leader>cc", function()
