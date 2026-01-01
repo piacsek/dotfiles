@@ -21,6 +21,7 @@
   "nvim-treesitter": { "branch": "master", "commit": "42fc28ba918343ebfd5565147a42a26580579482" },
   "nvim-ts-autotag": { "branch": "main", "commit": "c4ca798ab95b316a768d51eaaaee48f64a4a46bc" },
   "oil.nvim": { "branch": "master", "commit": "756dec855b4811f2d27f067a3aca477f368d99f5" },
+  "opencode.nvim": { "branch": "main", "commit": "0b64c9c46a0f9323d8983f45dbc94b87d84340e1" },
   "overseer.nvim": { "branch": "master", "commit": "33dc4f7808b0bb705250362fac7947c7d7dfcf96" },
   "plenary.nvim": { "branch": "master", "commit": "b9fd5226c2f76c951fc8ed5923d85e4de065e509" },
   "scratch.nvim": { "branch": "main", "commit": "1e78854fd3140411b231d5b6f9b3559b1ba5de77" },
