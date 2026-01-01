@@ -142,7 +142,7 @@ ln -sf $HOME/dotfiles/.ghosttyrc $HOME/.config/ghostty/config
 ln -sf $HOME/dotfiles/.tool-versions $HOME/.tool-versions
 ```
 
-### 8. Set Up Dotfiles Auto-Sync
+### 9. Set Up Dotfiles Auto-Sync
 
 Install fswatch and set up the auto-sync service to automatically commit and push dotfile changes:
 
