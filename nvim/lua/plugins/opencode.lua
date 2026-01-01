@@ -7,7 +7,7 @@ return {
 		confirm_edits = true,
 		contexts = {
 			["@harpoon"] = function(context)
-				harpoon = require("harpoon")
+				local harpoon = require("harpoon")
 				local list = harpoon:list()
 				if not list or not list.items then
 					return nil
