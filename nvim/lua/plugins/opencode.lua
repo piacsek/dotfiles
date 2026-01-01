@@ -5,8 +5,10 @@ return {
 	},
 	opts = {
 		confirm_edits = true,
-		terminal = {
-			width = 0.5,
+		provider = {
+			terminal = {
+				width = 0.5,
+			},
 		},
 	},
 	config = function()
