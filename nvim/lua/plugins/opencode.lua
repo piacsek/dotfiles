@@ -30,7 +30,6 @@ return {
 			return require("opencode").operator("@this ") .. "_"
 		end, { expr = true, desc = "Add line to opencode" })
 
-		-- Add harpoon files to opencode session
 		vim.keymap.set("n", "<leader>ch", function()
 			local harpoon = require("harpoon")
 
