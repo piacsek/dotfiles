@@ -20,11 +20,11 @@ return {
 			require("opencode").toggle()
 		end, { desc = "Toggle opencode" })
 
-		vim.keymap.set({ "n", "x", "v" }, "go", function()
-			return require("opencode").operator("@this ")
-		end, { expr = true, desc = "Add range to opencode" })
-		vim.keymap.set("n", "goo", function()
-			return require("opencode").operator("@this ") .. "_"
-		end, { expr = true, desc = "Add line to opencode" })
+		-- vim.keymap.set({ "n", "x", "v" }, "go", function()
+		-- 	return require("opencode").operator("@this ")
+		-- end, { expr = true, desc = "Add range to opencode" })
+		-- vim.keymap.set("n", "goo", function()
+		-- 	return require("opencode").operator("@this ") .. "_"
+		-- end, { expr = true, desc = "Add line to opencode" })
 	end,
 }
