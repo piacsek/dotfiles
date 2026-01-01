@@ -4,12 +4,6 @@ return {
 		{ "folke/snacks.nvim" },
 	},
 	config = function()
-		---@type opencode.Opts
-		vim.g.opencode_opts = {
-			-- Your configuration, if any — see `lua/opencode/config.lua`, or "goto definition".
-		}
-
-		-- Recommended/example keymaps.
 		vim.keymap.set({ "n", "x", "v" }, "<leader>ca", function()
 			require("opencode").ask("@this: ", { submit = true })
 		end, { desc = "Ask opencode" })
