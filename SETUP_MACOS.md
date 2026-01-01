@@ -113,7 +113,15 @@ brew install \
   bat
 ```
 
-### 7. Clone and Link Dotfiles
+### 7. Install OpenCode
+
+Install OpenCode CLI for AI-assisted coding:
+
+```bash
+npm install -g @wonderschool/opencode
+```
+
+### 8. Clone and Link Dotfiles
 
 Clone the dotfiles repository and set up symlinks:
 
