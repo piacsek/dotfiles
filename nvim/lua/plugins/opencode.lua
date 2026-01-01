@@ -3,12 +3,10 @@ return {
 	dependencies = {
 		{ "folke/snacks.nvim", opts = { input = {}, picker = {}, terminal = {} } },
 	},
+	opts = {
+		confirm_edits = true,
+	},
 	config = function()
-		vim.g.opencode_opts = {
-			permission = {
-				edit = "ask",
-			},
-		}
 		vim.keymap.set({ "n", "x", "v" }, "<leader>ca", function()
 			require("opencode").ask("@this: ", { submit = true })
 		end, { desc = "Ask opencode" })
