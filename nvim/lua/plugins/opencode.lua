@@ -6,7 +6,7 @@ return {
 	opts = {
 		confirm_edits = true,
 		contexts = {
-			["@harpoon"] = function(_)
+			["@harpoon"] = function(context)
 				-- Get harpoon list
 				local ok, harpoon = pcall(require, "harpoon")
 				if not ok then
@@ -23,13 +23,11 @@ return {
 					return nil
 				end
 
-				-- Build file references for all harpoon files using Context.format
-				local Context = require("opencode.context")
 				local paths = {}
 				for i = 1, length do
 					local item = list.items[i]
 					if item and item.value and item.value ~= "" then
-						table.insert(paths, Context.format({ path = item.value }))
+						table.insert(paths, context.format({ path = item.value }))
 					end
 				end
 
