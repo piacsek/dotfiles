@@ -5,34 +5,6 @@ return {
 	},
 	opts = {
 		confirm_edits = true,
-		contexts = {
-			["@harpoon"] = function(context)
-				local harpoon = require("harpoon")
-				local list = harpoon:list()
-				if not list or not list.items then
-					return nil
-				end
-
-				local length = list:length()
-				if length == 0 then
-					return nil
-				end
-
-				local paths = {}
-				for i = 1, length do
-					local item = list.items[i]
-					if item and item.value and item.value ~= "" then
-						table.insert(paths, context.format({ path = item.value }))
-					end
-				end
-
-				if #paths == 0 then
-					return nil
-				end
-
-				return table.concat(paths, " ")
-			end,
-		},
 	},
 	config = function()
 		vim.keymap.set({ "n", "x", "v" }, "<leader>cc", function()
