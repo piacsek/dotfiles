@@ -61,7 +61,7 @@ return {
 			local files_list = table.concat(files, " ")
 			local prompt = "These are relevant files for this session: " .. files_list
 
-			require("opencode").prompt(prompt, { submit = true })
+			require("opencode").prompt(prompt, { submit = false })
 		end, { desc = "Add harpoon files to opencode" })
 	end,
 }
