@@ -119,7 +119,7 @@ brew install \
 Install OpenCode CLI for AI-assisted coding:
 
 ```bash
-npm install -g @wonderschool/opencode
+curl -fsSL https://opencode.ai/install | bash
 ```
 
 ### 8. Clone and Link Dotfiles
