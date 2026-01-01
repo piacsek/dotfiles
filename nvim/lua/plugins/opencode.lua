@@ -46,7 +46,6 @@ return {
 				return
 			end
 
-			-- Build file references for all harpoon files
 			local files = {}
 			for i = 1, length do
 				local item = list.items[i]
