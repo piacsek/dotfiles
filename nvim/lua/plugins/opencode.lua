@@ -4,6 +4,11 @@ return {
 		{ "folke/snacks.nvim", opts = { input = {}, picker = {}, terminal = {} } },
 	},
 	config = function()
+		vim.g.opencode_opts = {
+			permission = {
+				edit = "ask",
+			},
+		}
 		vim.keymap.set({ "n", "x", "v" }, "<leader>ca", function()
 			require("opencode").ask("@this: ", { submit = true })
 		end, { desc = "Ask opencode" })
