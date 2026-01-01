@@ -162,7 +162,7 @@ Verify the service is running:
 launchctl list | grep dotfiles
 ```
 
-### 9. Install asdf plugins and versions
+### 10. Install asdf plugins and versions
 
 Install common language plugins and their versions (from $HOME/.tool-versions):
 
