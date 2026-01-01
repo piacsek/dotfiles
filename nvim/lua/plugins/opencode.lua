@@ -7,11 +7,7 @@ return {
 		confirm_edits = true,
 		contexts = {
 			["@harpoon"] = function(context)
-				local ok, harpoon = pcall(require, "harpoon")
-				if not ok then
-					return nil
-				end
-
+				harpoon = require("harpoon")
 				local list = harpoon:list()
 				if not list or not list.items then
 					return nil
