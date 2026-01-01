@@ -32,12 +32,7 @@ return {
 
 		-- Add harpoon files to opencode session
 		vim.keymap.set("n", "<leader>ch", function()
-			-- Get harpoon list
-			local ok, harpoon = pcall(require, "harpoon")
-			if not ok then
-				vim.notify("Harpoon not available", vim.log.levels.ERROR)
-				return
-			end
+			local harpoon = require("harpoon")
 
 			local list = harpoon:list()
 			if not list or not list.items then
