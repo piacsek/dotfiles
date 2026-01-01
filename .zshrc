@@ -44,3 +44,6 @@ alias lz='lazygit'
 if [ -f $HOME/.zshrc_work ]; then
 	source $HOME/.zshrc_work
 fi
+
+# opencode
+export PATH=/Users/piacsek/.opencode/bin:$PATH
