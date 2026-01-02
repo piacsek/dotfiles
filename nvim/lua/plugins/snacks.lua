@@ -118,7 +118,7 @@ return {
 				-- Find git root from current file's directory
 				local git_root = vim.fs.root(file_dir, ".git")
 
-				Snacks.lazygit({ cwd = git_root })
+				Snacks.lazygit({ cwd = git_root, win = {width: 0.9, height: 0.9} })
 			end,
 			desc = "Lazygit",
 		},
