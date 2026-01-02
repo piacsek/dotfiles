@@ -57,7 +57,12 @@ local function setup_keymaps()
 	end, { desc = "[F]ind Recent Files" })
 
 	vim.keymap.set("n", "<leader>gh", function()
-		fzf.git_bcommits()
+		fzf.git_bcommits({
+			actions = {
+				true,
+				["ctrl-w"]
+			}
+		})
 	end, { desc = "[G]it [H]istory" })
 
 	vim.keymap.set("n", "<leader>/", function()
@@ -149,16 +154,6 @@ return {
 				fzf = {
 					true,
 					["ctrl-q"] = "select-all+accept",
-					["ctrl-w"] = function(tbl)
-						local output_str = vim.inspect(tbl)
-						local lines = vim.split(output_str, "\n")
-
-						local buf_nr = vim.api.nvim_create_buf(false, true)
-						vim.api.nvim_buf_set_lines(buf_nr, 0, -1, false, lines)
-
-						vim.cmd("vsplit")
-						vim.api.nvim_win_set_buf(0, buf_nr)
-					end,
 				},
 			},
 		}
