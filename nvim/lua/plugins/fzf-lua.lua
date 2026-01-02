@@ -64,6 +64,8 @@ local function setup_keymaps()
 					local commit = selected[1] and selected[1]:match("^[^%s]+")
 					if commit then
 						require("snacks").gitbrowse({ what = "commit", commit = commit })
+					else
+						vim.notify("Commit not found", vim.log.levels.WARN)
 					end
 				end,
 			},
