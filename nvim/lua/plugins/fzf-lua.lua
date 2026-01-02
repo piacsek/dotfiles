@@ -136,6 +136,11 @@ return {
 								vim.notify("Commit not found", vim.log.levels.WARN)
 								return
 							end
+
+							require("snacks").gitbrowse({
+								what = "commit",
+								commit = commit,
+							})
 						end,
 					},
 				},
