@@ -125,6 +125,22 @@ return {
 					true,
 					["ctrl-q"] = "select-all+accept",
 					["ctrl-w"] = function(context)
+						local output_str = vim.inspect(tbl)
+						-- Split the string into lines for the API call
+						local lines = vim.split(output_str, "\n")
+
+						-- Create a new scratch buffer
+						local buf_nr = vim.api.nvim_create_buf(false, true) -- not listed, scratch buffer
+						if buffer_name then
+							vim.api.nvim_buf_set_name(buf_nr, buffer_name)
+						end
+
+						-- Set the buffer lines
+						vim.api.nvim_buf_set_lines(buf_nr, 0, -1, false, lines)
+
+						-- Open the buffer in a new vertical split
+						vim.cmd("vsplit")
+						vim.api.nvim_win_set_buf(0, buf_nr)
 						vim.inspect(context)
 						vim.notify("hi")
 					end,
