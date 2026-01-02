@@ -59,7 +59,6 @@ local function setup_keymaps()
 	vim.keymap.set("n", "<leader>gh", function()
 		fzf.git_bcommits({
 			actions = {
-				true,
 				["ctrl-w"] = function(selected)
 					local commit = selected[1] and selected[1]:match("^[^%s]+")
 					if commit then
