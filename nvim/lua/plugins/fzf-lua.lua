@@ -124,6 +124,7 @@ return {
 				fzf = {
 					true,
 					["ctrl-q"] = "select-all+accept",
+					["ctrl-w"] = function() end,
 				},
 			},
 		}
