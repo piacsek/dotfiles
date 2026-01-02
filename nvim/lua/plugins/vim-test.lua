@@ -23,7 +23,8 @@ return {
 		},
 	},
 	config = function()
-		vim.g["test#strategy"] = "neovim_sticky"
+		-- vim.g["test#strategy"] = "neovim_sticky"
+		vim.g["test#strategy"] = "harpoon"
 		vim.g["test#preserve_screen"] = 0
 		vim.g["test#echo_command"] = 0
 		vim.g["test#neovim#term_position"] = "topleft vsplit"
