@@ -124,8 +124,8 @@ return {
 				fzf = {
 					true,
 					["ctrl-q"] = "select-all+accept",
-					["ctrl-w"] = function(var)
-						print(var)
+					["ctrl-w"] = function(context)
+						vim.inspect(context)
 						vim.notify("hi")
 					end,
 				},
