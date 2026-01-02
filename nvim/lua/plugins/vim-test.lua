@@ -24,7 +24,6 @@ return {
 		{
 			"<leader>8",
 			function()
-				-- Find the vim-test terminal buffer by looking for the buffer variable
 				local buffers = vim.fn.getbufinfo({ buflisted = 1 })
 				local test_buf = nil
 
@@ -36,7 +35,6 @@ return {
 				end
 
 				if test_buf then
-					-- Open the terminal buffer
 					vim.cmd("buffer " .. test_buf)
 				else
 					vim.notify("No vim-test terminal found", vim.log.levels.WARN)
