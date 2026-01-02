@@ -126,6 +126,22 @@ return {
 					["ctrl-q"] = "select-all+accept",
 				},
 			},
+			git = {
+				bcommits = {
+					actions = {
+						["ctrl-w"] = function(selected)
+							if not selected or #selected == 0 then
+								return
+							end
+							-- Extract commit hash (first word of the selected line)
+							local commit = selected[1]:match("^(%S+)")
+							if commit then
+								require("snacks").gitbrowse({ commit = commit })
+							end
+						end,
+					},
+				},
+			},
 		}
 
 		local cwd = vim.fn.getcwd()
