@@ -60,8 +60,13 @@ local function setup_keymaps()
 		fzf.git_bcommits({
 			actions = {
 				true,
-				["ctrl-w"]
-			}
+				["ctrl-w"] = function(selected)
+					local commit = selected[1] and selected[1]:match("^[^%s]+")
+					if commit then
+						require("snacks").gitbrowse({ what = "commit", commit = commit })
+					end
+				end,
+			},
 		})
 	end, { desc = "[G]it [H]istory" })
 
