@@ -28,6 +28,6 @@ return {
 		vim.g["test#echo_command"] = 0
 		vim.g["test#neovim#term_position"] = "topleft vsplit"
 		vim.g["test#neovim_sticky#kill_previous"] = 1
-		vim.g["test#neovim_sticky#reopen_window"] = 1
+		-- vim.g["test#neovim_sticky#reopen_window"] = 1
 	end,
 }
