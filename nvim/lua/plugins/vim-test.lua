@@ -24,6 +24,7 @@ return {
 	},
 	config = function()
 		-- vim.g["test#strategy"] = "neovim_sticky"
+		require("harpoon")
 		vim.g["test#strategy"] = "harpoon"
 		vim.g["test#preserve_screen"] = 0
 		vim.g["test#echo_command"] = 0
