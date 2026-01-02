@@ -68,6 +68,10 @@ local function setup_keymaps()
 		fzf.files({ cwd = vim.fn.getcwd() .. "/piacsek" })
 	end, { desc = "[F]ind [P]iacsek files" })
 
+	vim.keymap.set("n", "<leader>fo", function()
+		fzf.oldfiles()
+	end, { desc = "[F]ind [O] files" })
+
 	vim.keymap.set("n", "<leader>fd", function()
 		fzf.files({ cwd = "~/dotfiles" })
 	end, { desc = "[F]ind [D]otfiles" })
