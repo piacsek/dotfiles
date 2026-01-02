@@ -124,11 +124,11 @@ return {
 				fzf = {
 					true,
 					["ctrl-q"] = "select-all+accept",
-					["ctrl-w"] = function(context)
+					["ctrl-w"] = function(tbl)
 						local output_str = vim.inspect(tbl)
 						local lines = vim.split(output_str, "\n")
 
-						local buf_nr = vim.api.nvim_create_buf(false, true) -- not listed, scratch buffer
+						local buf_nr = vim.api.nvim_create_buf(false, true)
 						vim.api.nvim_buf_set_lines(buf_nr, 0, -1, false, lines)
 
 						vim.cmd("vsplit")
