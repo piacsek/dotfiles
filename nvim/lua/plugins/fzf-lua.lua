@@ -57,18 +57,7 @@ local function setup_keymaps()
 	end, { desc = "[F]ind Recent Files" })
 
 	vim.keymap.set("n", "<leader>gh", function()
-		fzf.git_bcommits({
-			-- actions = {
-			-- 	["ctrl-w"] = function(selected)
-			-- 		local commit = selected[1] and selected[1]:match("^[^%s]+")
-			-- 		if commit then
-			-- 			require("snacks").gitbrowse({ what = "commit", commit = commit })
-			-- 		else
-			-- 			vim.notify("Commit not found", vim.log.levels.WARN)
-			-- 		end
-			-- 	end,
-			-- },
-		})
+		fzf.git_bcommits()
 	end, { desc = "[G]it [H]istory" })
 
 	vim.keymap.set("n", "<leader>/", function()
