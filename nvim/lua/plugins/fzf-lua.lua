@@ -120,6 +120,26 @@ return {
 					hidden = "hidden",
 				},
 			},
+			git = {
+				bcommits = {
+					actions = {
+						true,
+						["ctrl-w"] = function(selected, _)
+							local line = selected[1]
+							if not line then
+								vim.notify("Line not selected", vim.log.levels.WARN)
+								return
+							end
+
+							local commit = line:match("^[^%s]+")
+							if not commit then
+								vim.notify("Commit not found", vim.log.levels.WARN)
+								return
+							end
+						end,
+					},
+				},
+			},
 			keymap = {
 				fzf = {
 					true,
