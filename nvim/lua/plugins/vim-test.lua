@@ -21,6 +21,29 @@ return {
 			end,
 			desc = "Save and run last test",
 		},
+		{
+			"<leader>8",
+			function()
+				-- Find the vim-test terminal buffer by looking for the buffer variable
+				local buffers = vim.fn.getbufinfo({ buflisted = 1 })
+				local test_buf = nil
+
+				for _, buf in ipairs(buffers) do
+					if buf.variables._test_vim_neovim_sticky == 1 then
+						test_buf = buf.bufnr
+						break
+					end
+				end
+
+				if test_buf then
+					-- Open the terminal buffer
+					vim.cmd("buffer " .. test_buf)
+				else
+					vim.notify("No vim-test terminal found", vim.log.levels.WARN)
+				end
+			end,
+			desc = "Open vim-test terminal",
+		},
 	},
 	config = function()
 		vim.g["test#strategy"] = "neovim_sticky"
