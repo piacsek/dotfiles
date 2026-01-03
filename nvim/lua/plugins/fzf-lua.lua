@@ -1,12 +1,13 @@
-local function open_commit_on_browser(selected) 
-if not selected or #selected == 0 then
-								return
-							end
-							-- Extract commit hash (first word of the selected line)
-							local commit = selected[1]:match("^(%S+)")
-							if commit then
-								require("snacks").gitbrowse({ commit = commit })
-							endend
+local function open_commit_on_browser(selected)
+	if not selected or #selected == 0 then
+		return
+	end
+	-- Extract commit hash (first word of the selected line)
+	local commit = selected[1]:match("^(%S+)")
+	if commit then
+		require("snacks").gitbrowse({ commit = commit })
+	end
+end
 local function setup_keymaps()
 	local grep_winopts = {
 		height = 0.9,
@@ -144,9 +145,7 @@ return {
 			git = {
 				bcommits = {
 					actions = {
-						["ctrl-w"] = function(selected)
-							
-						end,
+						["ctrl-w"] = function(selected) end,
 					},
 				},
 			},
