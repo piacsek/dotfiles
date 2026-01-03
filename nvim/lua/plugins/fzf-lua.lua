@@ -145,7 +145,7 @@ return {
 			git = {
 				bcommits = {
 					actions = {
-						["ctrl-w"] = function(selected) end,
+						["ctrl-w"] = open_commit_on_browser,
 					},
 				},
 			},
