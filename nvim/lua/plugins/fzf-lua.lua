@@ -143,11 +143,8 @@ return {
 				},
 			},
 			git = {
-				bcommits = {
-					actions = {
-						["ctrl-w"] = open_commit_on_browser,
-					},
-				},
+				bcommits = { actions = { ["ctrl-w"] = open_commit_on_browser } },
+				commits = { actions = { ["ctrl-w"] = open_commit_on_browser } },
 			},
 		}
 
