@@ -60,6 +60,10 @@ local function setup_keymaps()
 		fzf.git_bcommits()
 	end, { desc = "[G]it [H]istory" })
 
+	vim.keymap.set("n", "<leader>gsm", function()
+		fzf.git_commits({ cmd = "git log --color --pretty=format:'%C(yellow)%h%Creset %Cgreen(%><(12)%cr%><|(12))%Creset %s %C(blue)<%an>%Creset' main" })
+	end, { desc = "[G]it [S]earch [M]ain branch commits" })
+
 	vim.keymap.set("n", "<leader>/", function()
 		fzf.lgrep_curbuf()
 	end, { desc = "[/] Fuzzily search in current buffer" })
