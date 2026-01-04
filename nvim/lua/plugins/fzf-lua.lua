@@ -41,14 +41,8 @@ local function setup_keymaps()
 	vim.keymap.set("n", "<leader>ft", fzf.colorschemes, { desc = "[F]ind [T]heme" })
 	vim.keymap.set("n", "<leader>fk", fzf.keymaps, { desc = "[F]ind [K]eymaps" })
 	vim.keymap.set("n", "<leader>F", fzf.resume, { desc = "Resume last search" })
-
-	vim.keymap.set("n", "<leader><leader>", function()
-		fzf.buffers()
-	end, { desc = "Buffers" })
-
-	vim.keymap.set("n", "<leader>gh", function()
-		fzf.git_bcommits()
-	end, { desc = "[G]it [H]istory" })
+	vim.keymap.set("n", "<leader><leader>", fzf.buffers, { desc = "Buffers" })
+	vim.keymap.set("n", "<leader>gh", fzf.git_bcommits, { desc = "[G]it [H]istory" })
 
 	vim.keymap.set("n", "<leader>gsm", function()
 		fzf.git_commits({
