@@ -79,7 +79,6 @@ local function setup_keymaps(fzf)
 	end, { desc = "[/] Fuzzily search in current buffer" })
 
 	-- Git
-
 	vim.keymap.set("n", "<leader>gh", fzf.git_bcommits, { desc = "[G]it [H]istory" })
 	vim.keymap.set("n", "<leader>fm", fzf.git_status, { desc = "[F]ind [M]odified git files" })
 	vim.keymap.set("n", "<leader>gsm", function()
