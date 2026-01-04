@@ -116,7 +116,6 @@ local function setup_keymaps()
 	end, { desc = "[G]rep selected [C]onfig" })
 
 	-- Search
-	--
 	vim.keymap.set("v", "<leader>ss", function()
 		local text = vim.getVisualSelection()
 		fzf.live_grep({ search = text, winopts = grep_winopts })
