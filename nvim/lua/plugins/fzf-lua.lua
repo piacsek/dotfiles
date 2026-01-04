@@ -44,6 +44,7 @@ local function setup_keymaps()
 	vim.keymap.set("n", "<leader><leader>", fzf.buffers, { desc = "Buffers" })
 	vim.keymap.set("n", "<leader>gh", fzf.git_bcommits, { desc = "[G]it [H]istory" })
 	vim.keymap.set("n", "<leader>fo", fzf.oldfiles, { desc = "[F]ind [O] files" })
+	vim.keymap.set("n", "<leader>fm", fzf.git_status, { desc = "[F]ind [M]odified git files" })
 
 	vim.keymap.set("n", "<leader>gsm", function()
 		fzf.git_commits({
@@ -58,10 +59,6 @@ local function setup_keymaps()
 	vim.keymap.set("n", "<leader>fd", function()
 		fzf.files({ cwd = "~/dotfiles" })
 	end, { desc = "[F]ind [D]otfiles" })
-
-	vim.keymap.set("n", "<leader>fm", function()
-		fzf.git_status()
-	end, { desc = "[F]ind [M]odified git files" })
 
 	vim.keymap.set("v", "<leader>fm", function()
 		local text = vim.getVisualSelection()
