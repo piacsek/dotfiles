@@ -53,7 +53,6 @@ vim.keymap.set("n", ">", ":vertical resize +5<CR>", { desc = "Increase window ve
 vim.keymap.set("n", "<", ":vertical resize -5<CR>", { desc = "Decrease window vertical size" })
 
 vim.keymap.set("v", "<leader>s", function()
-	-- Yank the selected text to register s
 	vim.cmd('normal! "sy')
 	local selected = vim.fn.getreg("s")
 	local escaped = vim.fn.escape(selected, [[\/.*$^~[]])
