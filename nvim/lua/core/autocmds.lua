@@ -5,11 +5,3 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		vim.highlight.on_yank()
 	end,
 })
-
-vim.api.nvim_create_autocmd({ "BufWinEnter", "BufEnter" }, {
-	callback = function()
-		if vim.bo.buftype == "" then
-			vim.opt_local.scrolloff = 8
-		end
-	end,
-})
