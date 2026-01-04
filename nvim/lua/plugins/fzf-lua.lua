@@ -76,10 +76,6 @@ local function setup_keymaps()
 		})
 	end, { desc = "[G]it [S]earch [M]ain branch commits" })
 
-	vim.keymap.set("n", "<leader>/", function()
-		fzf.lgrep_curbuf()
-	end, { desc = "[/] Fuzzily search in current buffer" })
-
 	vim.keymap.set("n", "<leader>fp", function()
 		fzf.files({ cwd = vim.fn.getcwd() .. "/piacsek" })
 	end, { desc = "[F]ind [P]iacsek files" })
@@ -110,6 +106,10 @@ local function setup_keymaps()
 	vim.keymap.set("n", "<leader>sc", function()
 		fzf.live_grep({ cwd = "~/dotfiles", winopts = grep_winopts })
 	end, { desc = "Grep config files" })
+
+	vim.keymap.set("n", "<leader>/", function()
+		fzf.lgrep_curbuf()
+	end, { desc = "[/] Fuzzily search in current buffer" })
 
 	vim.keymap.set("v", "<leader>/", function()
 		local text = vim.getVisualSelection()
