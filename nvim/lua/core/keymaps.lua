@@ -140,3 +140,85 @@ end, { desc = "[P]aste in insert mode" })
 
 vim.keymap.set("n", "g<Enter>", "gF", { desc = "Go to file with line number support" })
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
+
+-- Lua code evaluation with persistent output buffer
+local lua_output_buf = nil
+
+local function eval_lua()
+	local code
+	local mode = vim.fn.mode()
+
+	if mode == "v" or mode == "V" or mode == "\22" then
+		-- Get visual selection
+		vim.cmd('noautocmd normal! "vy')
+		code = vim.fn.getreg("v")
+	else
+		-- Get current line
+		code = vim.fn.getline(".")
+	end
+
+	if code == "" then
+		vim.notify("No code to evaluate", vim.log.levels.WARN)
+		return
+	end
+
+	-- Try to evaluate as expression first, then as statement
+	local func, err = loadstring("return " .. code)
+	if not func then
+		func, err = loadstring(code)
+	end
+
+	if not func then
+		vim.notify("Lua eval error: " .. tostring(err), vim.log.levels.ERROR)
+		return
+	end
+
+	-- Execute and capture result
+	local success, result = pcall(func)
+	if not success then
+		vim.notify("Lua execution error: " .. tostring(result), vim.log.levels.ERROR)
+		return
+	end
+
+	-- Format output
+	local output
+	if result == nil then
+		output = "-- Code executed successfully (no return value)"
+	else
+		output = "-- Result:\n" .. vim.inspect(result)
+	end
+
+	-- Add the original code as a comment at the top
+	local code_lines = vim.split("-- Code:\n-- " .. code:gsub("\n", "\n-- ") .. "\n", "\n")
+	local output_lines = vim.split(output, "\n")
+	local all_lines = vim.list_extend(code_lines, output_lines)
+
+	-- Reuse or create buffer
+	local buf_valid = lua_output_buf and vim.api.nvim_buf_is_valid(lua_output_buf)
+
+	if not buf_valid then
+		-- Create new buffer
+		vim.cmd("vnew")
+		lua_output_buf = vim.api.nvim_get_current_buf()
+		vim.bo[lua_output_buf].buftype = "nofile"
+		vim.bo[lua_output_buf].bufhidden = "hide"
+		vim.bo[lua_output_buf].filetype = "lua"
+		vim.api.nvim_buf_set_name(lua_output_buf, "[Lua Output]")
+	else
+		-- Find window with the buffer or open it
+		local win = vim.fn.bufwinid(lua_output_buf)
+		if win == -1 then
+			vim.cmd("vsplit")
+			vim.api.nvim_set_current_buf(lua_output_buf)
+		else
+			vim.api.nvim_set_current_win(win)
+		end
+	end
+
+	-- Update buffer content
+	vim.bo[lua_output_buf].modifiable = true
+	vim.api.nvim_buf_set_lines(lua_output_buf, 0, -1, false, all_lines)
+	vim.bo[lua_output_buf].modifiable = false
+end
+
+vim.keymap.set({ "n", "v" }, "<M-r>", eval_lua, { desc = "[R]un Lua code under cursor" })
