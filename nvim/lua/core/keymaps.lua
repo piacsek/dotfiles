@@ -218,10 +218,20 @@ local function eval_lua()
 	local output_lines = vim.split(output, "\n")
 	local all_lines = vim.list_extend(code_lines, output_lines)
 
-	-- Open buffer and update content
+	-- Open buffer and append content
 	local buf = open_lua_output_buffer()
 	vim.bo[buf].modifiable = true
-	vim.api.nvim_buf_set_lines(buf, 0, -1, false, all_lines)
+
+	-- Get current line count and append
+	local line_count = vim.api.nvim_buf_line_count(buf)
+
+	-- Add separator if buffer already has content
+	if line_count > 0 and vim.api.nvim_buf_get_lines(buf, 0, 1, false)[1] ~= "" then
+		vim.api.nvim_buf_set_lines(buf, line_count, line_count, false, { "" })
+		line_count = line_count + 1
+	end
+
+	vim.api.nvim_buf_set_lines(buf, line_count, line_count, false, all_lines)
 	vim.bo[buf].modifiable = false
 end
 
