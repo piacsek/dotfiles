@@ -39,9 +39,7 @@ local function setup_keymaps()
 
 	vim.keymap.set("n", "<leader>fh", fzf.help_tags, { desc = "[F]ind [H]elp" })
 
-	vim.keymap.set("n", "<leader>ft", function()
-		fzf.colorschemes()
-	end, { desc = "[F]ind [T]heme" })
+	vim.keymap.set("n", "<leader>ft", fzf.colorschemes, { desc = "[F]ind [T]heme" })
 
 	vim.keymap.set("n", "<leader>fk", function()
 		fzf.keymaps()
