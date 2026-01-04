@@ -164,11 +164,9 @@ local function eval_lua()
 	local mode = vim.fn.mode()
 
 	if mode == "v" or mode == "V" or mode == "\22" then
-		-- Get visual selection
 		vim.cmd('noautocmd normal! "vy')
 		code = vim.fn.getreg("v")
 	else
-		-- Get current line
 		code = vim.fn.getline(".")
 	end
 
@@ -177,7 +175,6 @@ local function eval_lua()
 		return
 	end
 
-	-- Try to evaluate as expression first, then as statement
 	local func, err = loadstring("return " .. code)
 	if not func then
 		func, err = loadstring(code)
@@ -188,14 +185,12 @@ local function eval_lua()
 		return
 	end
 
-	-- Execute and capture result
 	local success, result = pcall(func)
 	if not success then
 		vim.notify("Lua execution error: " .. tostring(result), vim.log.levels.ERROR)
 		return
 	end
 
-	-- Format output
 	local output
 	if result == nil then
 		output = "-- Code executed successfully (no return value)"
@@ -203,19 +198,15 @@ local function eval_lua()
 		output = "-- Result:\n" .. vim.inspect(result)
 	end
 
-	-- Add the original code as a comment at the top
 	local code_lines = vim.split("-- Code:\n-- " .. code:gsub("\n", "\n-- ") .. "\n", "\n")
 	local output_lines = vim.split(output, "\n")
 	local all_lines = vim.list_extend(code_lines, output_lines)
 
-	-- Open buffer and append content
 	local buf = open_lua_output_buffer()
 	vim.bo[buf].modifiable = true
 
-	-- Get current line count and append
 	local line_count = vim.api.nvim_buf_line_count(buf)
 
-	-- Add separator if buffer already has content
 	if line_count > 0 and vim.api.nvim_buf_get_lines(buf, 0, 1, false)[1] ~= "" then
 		vim.api.nvim_buf_set_lines(buf, line_count, line_count, false, { "" })
 		line_count = line_count + 1
