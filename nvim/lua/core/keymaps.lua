@@ -52,13 +52,6 @@ vim.keymap.set("n", "<C-,>", ":horizontal resize -5<CR>", { desc = "Decrease win
 vim.keymap.set("n", ">", ":vertical resize +5<CR>", { desc = "Increase window vertical size" })
 vim.keymap.set("n", "<", ":vertical resize -5<CR>", { desc = "Decrease window vertical size" })
 
-vim.keymap.set("v", "<leader>s", function()
-	vim.cmd('normal! "sy')
-	local selected = vim.fn.getreg("s")
-	local escaped = vim.fn.escape(selected, [[\/.*$^~[]])
-	vim.api.nvim_feedkeys(":%s/" .. escaped .. "/", "n", false)
-end, { desc = "[S]ubstitute with escaped chars" })
-
 vim.keymap.set("t", "<C-o>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 vim.keymap.set(
