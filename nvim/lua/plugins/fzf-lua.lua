@@ -44,12 +44,6 @@ local function setup_keymaps()
 		fzf.files({ query = text })
 	end, { noremap = true, silent = true, desc = "[F]ind [F]files with selected text" })
 
-	vim.keymap.set("n", "<leader>gsm", function()
-		fzf.git_commits({
-			cmd = "git log --color --pretty=format:'%C(yellow)%h%Creset %Cgreen(%><(12)%cr%><|(12))%Creset %s %C(blue)<%an>%Creset' main",
-		})
-	end, { desc = "[G]it [S]earch [M]ain branch commits" })
-
 	vim.keymap.set("n", "<leader>fp", function()
 		fzf.files({ cwd = vim.fn.getcwd() .. "/piacsek" })
 	end, { desc = "[F]ind [P]iacsek files" })
@@ -89,6 +83,12 @@ local function setup_keymaps()
 	-- Git
 	vim.keymap.set("n", "<leader>gh", fzf.git_bcommits, { desc = "[G]it [H]istory" })
 	vim.keymap.set("n", "<leader>fm", fzf.git_status, { desc = "[F]ind [M]odified git files" })
+
+	vim.keymap.set("n", "<leader>gsm", function()
+		fzf.git_commits({
+			cmd = "git log --color --pretty=format:'%C(yellow)%h%Creset %Cgreen(%><(12)%cr%><|(12))%Creset %s %C(blue)<%an>%Creset' main",
+		})
+	end, { desc = "[G]it [S]earch [M]ain branch commits" })
 end
 
 return {
