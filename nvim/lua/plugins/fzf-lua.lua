@@ -50,21 +50,13 @@ local function setup_keymaps()
 		fzf.keymaps()
 	end, { desc = "[F]ind [K]eymaps" })
 
-	vim.keymap.set("n", "<leader>fg", function()
-		fzf.live_grep({ winopts = grep_winopts })
-	end, { desc = "[F]ind by [G]rep" })
-
-	vim.keymap.set("n", "<leader>fr", function()
-		fzf.resume()
-	end, { desc = "[F]ind [R]esume" })
-
 	vim.keymap.set("n", "<leader>F", function()
 		fzf.resume()
 	end, { desc = "Resume last search" })
 
 	vim.keymap.set("n", "<leader><leader>", function()
 		fzf.buffers()
-	end, { desc = "[F]ind Recent Files" })
+	end, { desc = "Buffers" })
 
 	vim.keymap.set("n", "<leader>gh", function()
 		fzf.git_bcommits()
@@ -102,6 +94,10 @@ local function setup_keymaps()
 		local text = vim.getVisualSelection()
 		fzf.live_grep({ search = text, winopts = grep_winopts })
 	end, { desc = "[G]rep selected" })
+
+	vim.keymap.set("n", "<leader>ss", function()
+		fzf.live_grep({ winopts = grep_winopts })
+	end, { desc = "[F]ind by [G]rep" })
 
 	vim.keymap.set("n", "<leader>sc", function()
 		fzf.live_grep({ cwd = "~/dotfiles", winopts = grep_winopts })
