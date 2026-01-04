@@ -30,9 +30,7 @@ end
 local function setup_keymaps()
 	local fzf = require("fzf-lua")
 
-	vim.keymap.set("n", "<leader>ff", function()
-		fzf.files()
-	end, { desc = "[F]ind [F]iles" })
+	vim.keymap.set("n", "<leader>ff", fzf.files, { desc = "[F]ind [F]iles" })
 
 	vim.keymap.set("v", "<leader>ff", function()
 		local text = vim.getVisualSelection()
