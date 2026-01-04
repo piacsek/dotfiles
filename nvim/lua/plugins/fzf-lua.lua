@@ -105,11 +105,6 @@ local function setup_keymaps()
 		fzf.git_status({ query = text })
 	end, { noremap = true, silent = true, desc = "[F]ind [M]odified git files with selection" })
 
-	vim.keymap.set("v", "<leader>/", function()
-		local text = vim.getVisualSelection()
-		fzf.lgrep_curbuf({ search = text })
-	end, { desc = "[/] Fuzzily search in current buffer" })
-
 	vim.keymap.set("v", "<leader>fc", function()
 		local text = vim.getVisualSelection()
 		fzf.live_grep({ cwd = vim.fn.stdpath("config"), search = text, winopts = grep_winopts })
@@ -120,6 +115,11 @@ local function setup_keymaps()
 		local text = vim.getVisualSelection()
 		fzf.live_grep({ search = text, winopts = grep_winopts })
 	end, { desc = "[G]rep selected" })
+
+	vim.keymap.set("v", "<leader>/", function()
+		local text = vim.getVisualSelection()
+		fzf.lgrep_curbuf({ search = text })
+	end, { desc = "[/] Fuzzily search in current buffer" })
 end
 
 return {
