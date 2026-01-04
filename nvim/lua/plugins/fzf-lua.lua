@@ -8,6 +8,7 @@ local function open_commit_on_browser(selected)
 		require("snacks").gitbrowse({ commit = commit })
 	end
 end
+
 local grep_winopts = {
 	height = 0.9,
 	width = 0.9,
@@ -25,6 +26,7 @@ function vim.getVisualSelection()
 
 	return #text > 0 and text or ""
 end
+
 local function setup_keymaps()
 	local fzf = require("fzf-lua")
 
