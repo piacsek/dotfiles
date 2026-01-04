@@ -5,19 +5,35 @@ return {
 	},
 	keys = {
 		{
-			"<leader>S",
+			"<leader>SS",
 			function()
 				require("spectre").toggle()
 			end,
 			desc = "Toggle Spectre",
 		},
 		{
-			"<leader>S",
+			"<leader>SS",
 			mode = "v",
 			function()
 				require("spectre").open_visual()
 			end,
-			desc = "Search current word",
+			desc = "Toggle Spectre w/ selection",
+		},
+		{
+			"<leader>SB",
+			mode = "v",
+			function()
+				require("spectre").open_visual()
+			end,
+			desc = "Toggle Spectre w/ selection",
+		},
+		{
+			"<leader>SB",
+			mode = "v",
+			function()
+				require("spectre").open_visual()
+			end,
+			desc = "Toggle Spectre w/ selection",
 		},
 	},
 	opts = {},
