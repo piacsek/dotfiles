@@ -25,7 +25,6 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup("plugins")
 
 vim.cmd.colorscheme("high-contrast")
-vim.cmd.hi("Comment gui=none")
 vim.notify = require("snacks").notifier.notify
 
 require("core.lsp")
