@@ -21,11 +21,11 @@ return {
 		},
 		{
 			"<leader>SB",
-			mode = "v",
+			mode = "n",
 			function()
-				require("spectre").open_visual()
+				require("spectre").toggle({ path = vim.fn.expand("%:p") })
 			end,
-			desc = "Toggle Spectre w/ selection",
+			desc = "Toggle Spectre for current buffer",
 		},
 		{
 			"<leader>SB",
