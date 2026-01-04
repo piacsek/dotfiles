@@ -66,7 +66,7 @@ local function setup_keymaps(fzf)
 	end, { desc = "[F]ind by [G]rep" })
 
 	vim.keymap.set("n", "<leader>sc", function()
-		fzf.live_grep({ cwd = "~/dotfiles", winopts = grep_winopts })
+		fzf.live_grep({ cwd = "$HOME/dotfiles", winopts = grep_winopts })
 	end, { desc = "Grep config files" })
 
 	vim.keymap.set("n", "<leader>/", function()
