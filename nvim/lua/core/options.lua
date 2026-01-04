@@ -3,7 +3,6 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 vim.opt_local.scrolloff = 8
-vim.opt.fillchars:append({ eob = " " })
 vim.opt.swapfile = false
 vim.opt.winborder = "rounded"
 vim.opt.autoread = true
