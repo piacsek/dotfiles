@@ -222,3 +222,18 @@ local function eval_lua()
 end
 
 vim.keymap.set({ "n", "v" }, "<M-r>", eval_lua, { desc = "[R]un Lua code under cursor" })
+
+vim.keymap.set("n", "<leader>jl", function()
+	if not lua_output_buf or not vim.api.nvim_buf_is_valid(lua_output_buf) then
+		vim.notify("No Lua output buffer exists yet. Run code with <M-r> first.", vim.log.levels.WARN)
+		return
+	end
+
+	local win = vim.fn.bufwinid(lua_output_buf)
+	if win == -1 then
+		vim.cmd("vsplit")
+		vim.api.nvim_set_current_buf(lua_output_buf)
+	else
+		vim.api.nvim_set_current_win(win)
+	end
+end, { desc = "[J]ump to [L]ua output buffer" })
