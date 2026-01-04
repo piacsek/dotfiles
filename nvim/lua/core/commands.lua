@@ -109,3 +109,8 @@ end, { desc = "Notification history" })
 vim.api.nvim_create_user_command("NotificationsClear", function()
 	require("snacks").notifier.hide()
 end, { desc = "Clear all notifications" })
+
+vim.api.nvim_create_user_command("ThemeRandom", function()
+	local random_colorscheme = vim.fn.getcompletion("", "color")
+	vim.cmd.colorscheme(random_colorscheme)
+end)
