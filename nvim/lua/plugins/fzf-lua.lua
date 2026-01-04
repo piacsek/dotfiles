@@ -38,16 +38,9 @@ local function setup_keymaps()
 	end, { noremap = true, silent = true, desc = "[F]ind [F]files with selected text" })
 
 	vim.keymap.set("n", "<leader>fh", fzf.help_tags, { desc = "[F]ind [H]elp" })
-
 	vim.keymap.set("n", "<leader>ft", fzf.colorschemes, { desc = "[F]ind [T]heme" })
-
-	vim.keymap.set("n", "<leader>fk", function()
-		fzf.keymaps()
-	end, { desc = "[F]ind [K]eymaps" })
-
-	vim.keymap.set("n", "<leader>F", function()
-		fzf.resume()
-	end, { desc = "Resume last search" })
+	vim.keymap.set("n", "<leader>fk", fzf.keymaps, { desc = "[F]ind [K]eymaps" })
+	vim.keymap.set("n", "<leader>F", fzf.resume, { desc = "Resume last search" })
 
 	vim.keymap.set("n", "<leader><leader>", function()
 		fzf.buffers()
