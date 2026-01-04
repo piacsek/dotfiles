@@ -31,12 +31,6 @@ local function setup_keymaps()
 	local fzf = require("fzf-lua")
 
 	vim.keymap.set("n", "<leader>ff", fzf.files, { desc = "[F]ind [F]iles" })
-
-	vim.keymap.set("v", "<leader>ff", function()
-		local text = vim.getVisualSelection()
-		fzf.files({ query = text })
-	end, { noremap = true, silent = true, desc = "[F]ind [F]files with selected text" })
-
 	vim.keymap.set("n", "<leader>fh", fzf.help_tags, { desc = "[F]ind [H]elp" })
 	vim.keymap.set("n", "<leader>ft", fzf.colorschemes, { desc = "[F]ind [T]heme" })
 	vim.keymap.set("n", "<leader>fk", fzf.keymaps, { desc = "[F]ind [K]eymaps" })
@@ -45,6 +39,11 @@ local function setup_keymaps()
 	vim.keymap.set("n", "<leader>gh", fzf.git_bcommits, { desc = "[G]it [H]istory" })
 	vim.keymap.set("n", "<leader>fo", fzf.oldfiles, { desc = "[F]ind [O] files" })
 	vim.keymap.set("n", "<leader>fm", fzf.git_status, { desc = "[F]ind [M]odified git files" })
+
+	vim.keymap.set("v", "<leader>ff", function()
+		local text = vim.getVisualSelection()
+		fzf.files({ query = text })
+	end, { noremap = true, silent = true, desc = "[F]ind [F]files with selected text" })
 
 	vim.keymap.set("n", "<leader>gsm", function()
 		fzf.git_commits({
