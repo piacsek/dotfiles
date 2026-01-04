@@ -12,3 +12,4 @@ teleport-community 16.1.0
 vault 1.20.4
 yarn 1.22.22
 zig 0.14.1
+lua 5.4.8
