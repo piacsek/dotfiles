@@ -44,12 +44,9 @@ return {
 		},
 	},
 	config = function()
-		vim.g["test#strategy"] = "neovim"
+		vim.g["test#strategy"] = "neovim_sticky"
 		vim.g["test#preserve_screen"] = 0
 		vim.g["test#echo_command"] = 0
-		vim.g["test#neovim#term_position"] = "topleft vsplit"
-		vim.g["test#neovim#start_normal"] = 1
 		vim.g["test#neovim_sticky#kill_previous"] = 1
-		-- vim.g["test#neovim_sticky#reopen_window"] = 1
 	end,
 }
