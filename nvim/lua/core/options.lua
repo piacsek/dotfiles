@@ -2,6 +2,7 @@ vim.g.have_nerd_font = true
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+vim.opt.fillchars:append({ eob = " " })
 vim.opt.swapfile = false
 vim.opt.winborder = "rounded"
 vim.opt.autoread = true
