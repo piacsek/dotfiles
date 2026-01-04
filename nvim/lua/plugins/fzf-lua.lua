@@ -27,9 +27,7 @@ function vim.getVisualSelection()
 	return #text > 0 and text or ""
 end
 
-local function setup_keymaps()
-	local fzf = require("fzf-lua")
-
+local function setup_keymaps(fzf)
 	-- Find files
 	vim.keymap.set("n", "<leader>ff", fzf.files, { desc = "[F]ind [F]iles" })
 	vim.keymap.set("n", "<leader>fh", fzf.help_tags, { desc = "[F]ind [H]elp" })
@@ -132,6 +130,6 @@ return {
 
 		fzf.register_ui_select()
 
-		setup_keymaps()
+		setup_keymaps(fzf)
 	end,
 }
