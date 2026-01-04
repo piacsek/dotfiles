@@ -144,6 +144,31 @@ vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
 -- Lua code evaluation with persistent output buffer
 local lua_output_buf = nil
 
+local function open_lua_output_buffer()
+	local buf_valid = lua_output_buf and vim.api.nvim_buf_is_valid(lua_output_buf)
+
+	if not buf_valid then
+		-- Create new buffer
+		vim.cmd("vnew")
+		lua_output_buf = vim.api.nvim_get_current_buf()
+		vim.bo[lua_output_buf].buftype = "nofile"
+		vim.bo[lua_output_buf].bufhidden = "hide"
+		vim.bo[lua_output_buf].filetype = "lua"
+		vim.api.nvim_buf_set_name(lua_output_buf, "[Lua Output]")
+	else
+		-- Find window with the buffer or open it
+		local win = vim.fn.bufwinid(lua_output_buf)
+		if win == -1 then
+			vim.cmd("vsplit")
+			vim.api.nvim_set_current_buf(lua_output_buf)
+		else
+			vim.api.nvim_set_current_win(win)
+		end
+	end
+
+	return lua_output_buf
+end
+
 local function eval_lua()
 	local code
 	local mode = vim.fn.mode()
@@ -193,47 +218,12 @@ local function eval_lua()
 	local output_lines = vim.split(output, "\n")
 	local all_lines = vim.list_extend(code_lines, output_lines)
 
-	-- Reuse or create buffer
-	local buf_valid = lua_output_buf and vim.api.nvim_buf_is_valid(lua_output_buf)
-
-	if not buf_valid then
-		-- Create new buffer
-		vim.cmd("vnew")
-		lua_output_buf = vim.api.nvim_get_current_buf()
-		vim.bo[lua_output_buf].buftype = "nofile"
-		vim.bo[lua_output_buf].bufhidden = "hide"
-		vim.bo[lua_output_buf].filetype = "lua"
-		vim.api.nvim_buf_set_name(lua_output_buf, "[Lua Output]")
-	else
-		-- Find window with the buffer or open it
-		local win = vim.fn.bufwinid(lua_output_buf)
-		if win == -1 then
-			vim.cmd("vsplit")
-			vim.api.nvim_set_current_buf(lua_output_buf)
-		else
-			vim.api.nvim_set_current_win(win)
-		end
-	end
-
-	-- Update buffer content
-	vim.bo[lua_output_buf].modifiable = true
-	vim.api.nvim_buf_set_lines(lua_output_buf, 0, -1, false, all_lines)
-	vim.bo[lua_output_buf].modifiable = false
+	-- Open buffer and update content
+	local buf = open_lua_output_buffer()
+	vim.bo[buf].modifiable = true
+	vim.api.nvim_buf_set_lines(buf, 0, -1, false, all_lines)
+	vim.bo[buf].modifiable = false
 end
 
 vim.keymap.set({ "n", "v" }, "<M-r>", eval_lua, { desc = "[R]un Lua code under cursor" })
-
-vim.keymap.set("n", "<leader>jl", function()
-	if not lua_output_buf or not vim.api.nvim_buf_is_valid(lua_output_buf) then
-		vim.notify("No Lua output buffer exists yet. Run code with <M-r> first.", vim.log.levels.WARN)
-		return
-	end
-
-	local win = vim.fn.bufwinid(lua_output_buf)
-	if win == -1 then
-		vim.cmd("vsplit")
-		vim.api.nvim_set_current_buf(lua_output_buf)
-	else
-		vim.api.nvim_set_current_win(win)
-	end
-end, { desc = "[J]ump to [L]ua output buffer" })
+vim.keymap.set("n", "<leader>jl", open_lua_output_buffer, { desc = "[J]ump to [L]ua output buffer" })
