@@ -92,10 +92,6 @@ local function setup_keymaps()
 		fzf.files({ cwd = "~/dotfiles" })
 	end, { desc = "[F]ind [D]otfiles" })
 
-	vim.keymap.set("n", "<leader>fc", function()
-		fzf.live_grep({ cwd = "~/dotfiles", winopts = grep_winopts })
-	end, { desc = "Grep config files" })
-
 	vim.keymap.set("n", "<leader>fm", function()
 		fzf.git_status()
 	end, { desc = "[F]ind [M]odified git files" })
@@ -105,16 +101,15 @@ local function setup_keymaps()
 		fzf.git_status({ query = text })
 	end, { noremap = true, silent = true, desc = "[F]ind [M]odified git files with selection" })
 
-	vim.keymap.set("v", "<leader>fc", function()
-		local text = vim.getVisualSelection()
-		fzf.live_grep({ cwd = vim.fn.stdpath("config"), search = text, winopts = grep_winopts })
-	end, { desc = "[G]rep selected [C]onfig" })
-
 	-- Search
 	vim.keymap.set("v", "<leader>ss", function()
 		local text = vim.getVisualSelection()
 		fzf.live_grep({ search = text, winopts = grep_winopts })
 	end, { desc = "[G]rep selected" })
+
+	vim.keymap.set("n", "<leader>sc", function()
+		fzf.live_grep({ cwd = "~/dotfiles", winopts = grep_winopts })
+	end, { desc = "Grep config files" })
 
 	vim.keymap.set("v", "<leader>/", function()
 		local text = vim.getVisualSelection()
