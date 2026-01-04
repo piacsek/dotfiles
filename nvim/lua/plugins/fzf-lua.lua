@@ -43,6 +43,7 @@ local function setup_keymaps()
 	vim.keymap.set("n", "<leader>F", fzf.resume, { desc = "Resume last search" })
 	vim.keymap.set("n", "<leader><leader>", fzf.buffers, { desc = "Buffers" })
 	vim.keymap.set("n", "<leader>gh", fzf.git_bcommits, { desc = "[G]it [H]istory" })
+	vim.keymap.set("n", "<leader>fo", fzf.oldfiles, { desc = "[F]ind [O] files" })
 
 	vim.keymap.set("n", "<leader>gsm", function()
 		fzf.git_commits({
@@ -53,10 +54,6 @@ local function setup_keymaps()
 	vim.keymap.set("n", "<leader>fp", function()
 		fzf.files({ cwd = vim.fn.getcwd() .. "/piacsek" })
 	end, { desc = "[F]ind [P]iacsek files" })
-
-	vim.keymap.set("n", "<leader>fo", function()
-		fzf.oldfiles()
-	end, { desc = "[F]ind [O] files" })
 
 	vim.keymap.set("n", "<leader>fd", function()
 		fzf.files({ cwd = "~/dotfiles" })
