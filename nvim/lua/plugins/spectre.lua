@@ -31,9 +31,9 @@ return {
 			"<leader>SB",
 			mode = "v",
 			function()
-				require("spectre").open_visual()
+				require("spectre").open_visual({ path = vim.fn.expand("%:p") })
 			end,
-			desc = "Toggle Spectre w/ selection",
+			desc = "Toggle Spectre w/ selection for current buffer",
 		},
 	},
 	opts = {},
