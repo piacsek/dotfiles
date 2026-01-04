@@ -30,6 +30,7 @@ end
 local function setup_keymaps()
 	local fzf = require("fzf-lua")
 
+	-- Find files
 	vim.keymap.set("n", "<leader>ff", fzf.files, { desc = "[F]ind [F]iles" })
 	vim.keymap.set("n", "<leader>fh", fzf.help_tags, { desc = "[F]ind [H]elp" })
 	vim.keymap.set("n", "<leader>ft", fzf.colorschemes, { desc = "[F]ind [T]heme" })
@@ -86,6 +87,8 @@ local function setup_keymaps()
 		local text = vim.getVisualSelection()
 		fzf.lgrep_curbuf({ search = text })
 	end, { desc = "[/] Fuzzily search in current buffer" })
+
+	-- Git
 end
 
 return {
