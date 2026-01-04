@@ -8,25 +8,24 @@ local function open_commit_on_browser(selected)
 		require("snacks").gitbrowse({ commit = commit })
 	end
 end
+local grep_winopts = {
+	height = 0.9,
+	width = 0.9,
+	preview = {
+		hidden = "nohidden",
+	},
+}
+function vim.getVisualSelection()
+	vim.cmd('noau normal! "vy"')
+	local text = vim.fn.getreg("v")
+
+	vim.fn.setreg("v", {})
+
+	text = string.gsub(text, "\n", "")
+
+	return #text > 0 and text or ""
+end
 local function setup_keymaps()
-	local grep_winopts = {
-		height = 0.9,
-		width = 0.9,
-		preview = {
-			hidden = "nohidden",
-		},
-	}
-	function vim.getVisualSelection()
-		vim.cmd('noau normal! "vy"')
-		local text = vim.fn.getreg("v")
-
-		vim.fn.setreg("v", {})
-
-		text = string.gsub(text, "\n", "")
-
-		return #text > 0 and text or ""
-	end
-
 	local fzf = require("fzf-lua")
 
 	vim.keymap.set("n", "<leader>ff", function()
