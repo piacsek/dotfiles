@@ -37,9 +37,7 @@ local function setup_keymaps()
 	vim.keymap.set("n", "<leader>fk", fzf.keymaps, { desc = "[F]ind [K]eymaps" })
 	vim.keymap.set("n", "<leader>F", fzf.resume, { desc = "Resume last search" })
 	vim.keymap.set("n", "<leader><leader>", fzf.buffers, { desc = "Buffers" })
-	vim.keymap.set("n", "<leader>gh", fzf.git_bcommits, { desc = "[G]it [H]istory" })
 	vim.keymap.set("n", "<leader>fo", fzf.oldfiles, { desc = "[F]ind [O] files" })
-	vim.keymap.set("n", "<leader>fm", fzf.git_status, { desc = "[F]ind [M]odified git files" })
 
 	vim.keymap.set("v", "<leader>ff", function()
 		local text = vim.getVisualSelection()
@@ -89,6 +87,8 @@ local function setup_keymaps()
 	end, { desc = "[/] Fuzzily search in current buffer" })
 
 	-- Git
+	vim.keymap.set("n", "<leader>gh", fzf.git_bcommits, { desc = "[G]it [H]istory" })
+	vim.keymap.set("n", "<leader>fm", fzf.git_status, { desc = "[F]ind [M]odified git files" })
 end
 
 return {
