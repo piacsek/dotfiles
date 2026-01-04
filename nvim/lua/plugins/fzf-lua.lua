@@ -37,9 +37,7 @@ local function setup_keymaps()
 		fzf.files({ query = text })
 	end, { noremap = true, silent = true, desc = "[F]ind [F]files with selected text" })
 
-	vim.keymap.set("n", "<leader>fh", function()
-		fzf.help_tags()
-	end, { desc = "[F]ind [H]elp" })
+	vim.keymap.set("n", "<leader>fh", fzf.help_tags, { desc = "[F]ind [H]elp" })
 
 	vim.keymap.set("n", "<leader>ft", function()
 		fzf.colorschemes()
