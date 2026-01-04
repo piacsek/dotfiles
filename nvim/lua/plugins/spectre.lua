@@ -23,7 +23,7 @@ return {
 			"<leader>SB",
 			mode = "n",
 			function()
-				require("spectre").toggle({ path = vim.fn.fnamemodify(vim.fn.expand("%:p"), ":~:.")) })
+				require("spectre").toggle({ path = vim.fn.fnamemodify(vim.fn.expand("%:p"), ":~:.") })
 			end,
 			desc = "Toggle Spectre for current buffer",
 		},
