@@ -15,7 +15,7 @@ return {
 			"<leader><BS>",
 			function()
 				if vim.bo.buftype == "" then
-					vim.cmd("wall")
+					vim.cmd("w")
 				end
 				vim.cmd("TestLast")
 			end,
