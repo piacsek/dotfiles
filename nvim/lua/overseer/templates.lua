@@ -128,7 +128,7 @@ return function(overseer)
 				cmd = { "bash" },
 				args = {
 					"-c",
-					'BRANCH=$(git rev-parse --abbrev-ref HEAD) && git pull origin "$BRANCH" --rebase && git push origin "$BRANCH"',
+					'BRANCH=$(git rev-parse --abbrev-ref HEAD) && git push origin "$BRANCH"',
 				},
 				components = { "silent" },
 			}
