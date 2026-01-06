@@ -32,7 +32,7 @@ return {
 					["s"] = { "keymap.run_action", opts = { action = "stop" }, desc = "Stop task" },
 					["w"] = { "keymap.run_action", opts = { action = "watch" }, desc = "Watch task" },
 					["W"] = { "keymap.run_action", opts = { action = "unwatch" }, desc = "Unwatch task" },
-					["CA"] = {
+					["C"] = {
 						function()
 							local overseer = require("overseer")
 							local tasks = overseer.list_tasks()
