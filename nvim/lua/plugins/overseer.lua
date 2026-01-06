@@ -32,6 +32,18 @@ return {
 					["s"] = { "keymap.run_action", opts = { action = "stop" }, desc = "Stop task" },
 					["w"] = { "keymap.run_action", opts = { action = "watch" }, desc = "Watch task" },
 					["W"] = { "keymap.run_action", opts = { action = "unwatch" }, desc = "Unwatch task" },
+					["CA"] = {
+						function()
+							local overseer = require("overseer")
+							local tasks = overseer.list_tasks()
+							for _, task in ipairs(tasks) do
+								if task.status ~= "RUNNING" then
+									task:dispose()
+								end
+							end
+						end,
+						desc = "Clear all tasks except in progress",
+					},
 				},
 			},
 			log = {
