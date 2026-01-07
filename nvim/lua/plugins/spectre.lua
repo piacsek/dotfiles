@@ -36,5 +36,18 @@ return {
 			desc = "Toggle Spectre w/ selection for current buffer",
 		},
 	},
-	opts = {},
+	opts = {
+		open_cmd = function()
+			vim.cmd("noautocmd new")
+			vim.api.nvim_win_set_config(0, {
+				relative = "editor",
+				width = math.floor(vim.o.columns * 0.8),
+				height = math.floor(vim.o.lines * 0.8),
+				row = math.floor(vim.o.lines * 0.1),
+				col = math.floor(vim.o.columns * 0.1),
+				style = "minimal",
+				border = "rounded",
+			})
+		end,
+	},
 }
