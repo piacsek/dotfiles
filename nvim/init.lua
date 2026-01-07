@@ -24,7 +24,6 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("plugins")
 
--- vim.g._default_theme = "high-contrast"
 vim.g._default_theme = "moonfly"
 vim.cmd.colorscheme(vim.g._default_theme)
 
