@@ -30,8 +30,8 @@ $DIFF
 
 Please respond with ONLY the commit message in the format 'WORD: summary', nothing else."
 
-# Call Claude CLI to generate commit message
-COMMIT_MSG=$(echo "$PROMPT" | claude 2>/dev/null | tr -d '\n\r' | sed 's/[[:space:]]\+/ /g' | xargs)
+# Call Claude CLI to generate commit message (ephemeral mode to avoid cluttering history)
+COMMIT_MSG=$(echo "$PROMPT" | claude --ephemeral 2>/dev/null | tr -d '\n\r' | sed 's/[[:space:]]\+/ /g' | xargs)
 
 # Fallback if Claude fails or returns empty
 if [[ -z "$COMMIT_MSG" || "$COMMIT_MSG" == *"error"* ]]; then
