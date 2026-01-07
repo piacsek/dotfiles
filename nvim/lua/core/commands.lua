@@ -83,6 +83,7 @@ end, { desc = "Clear all notifications" })
 
 -- Themes I kinda like:
 --- evening
+--- ron
 vim.api.nvim_create_user_command("ThemeRandom", function()
 	local colorschemes = vim.fn.getcompletion("", "color")
 	local random_colorscheme = colorschemes[math.random(0, #colorschemes - 1)]
