@@ -81,9 +81,6 @@ vim.api.nvim_create_user_command("NotificationsClear", function()
 	require("snacks").notifier.hide()
 end, { desc = "Clear all notifications" })
 
--- Themes I kinda like:
---- evening
---- ron
 vim.api.nvim_create_user_command("ThemeRandom", function()
 	-- local all_colorschemes = vim.fn.getcompletion("", "color")
 	local colorschemes = { "evening", "ron", "moonfly", "cyberdream" }
