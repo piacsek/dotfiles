@@ -29,6 +29,12 @@ return {
 				if vim.bo.buftype == "" then
 					vim.cmd("w")
 				end
+
+				local test_buf = get_test_bufnr()
+				if test_buf then
+					vim.api.nvim_buf_set_lines(test_buf, 0, -1, false, {})
+				end
+
 				vim.cmd("TestLast")
 			end,
 			desc = "Save and run last test",
