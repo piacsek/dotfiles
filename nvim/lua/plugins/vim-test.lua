@@ -7,6 +7,7 @@ local function get_test_bufnr()
 			return buf.bufnr
 		end
 	end
+
 	return nil
 end
 return {
