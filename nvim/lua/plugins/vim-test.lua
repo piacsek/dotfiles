@@ -4,10 +4,10 @@ local function get_test_bufnr()
 
 	for _, buf in ipairs(buffers) do
 		if buf.variables._test_vim_neovim_sticky == 1 then
-			test_buf = buf.bufnr
-			break
+			return buf.bufnr
 		end
 	end
+	return nil
 end
 return {
 	"vim-test/vim-test",
