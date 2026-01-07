@@ -90,6 +90,6 @@ vim.api.nvim_create_user_command("ThemeRandom", function()
 end, { desc = "Assigns a random colorscheme" })
 
 vim.api.nvim_create_user_command("ThemeDefault", function()
-	print("high-contrast")
-	vim.cmd.colorscheme("high-contrast")
+	print(vim.g._default_theme)
+	vim.cmd.colorscheme(vim.g._default_theme)
 end, { desc = "Assigns the default colorscheme" })
