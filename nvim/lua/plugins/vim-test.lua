@@ -36,6 +36,8 @@ return {
 		{
 			"<leader>8",
 			function()
+				local test_buf = get_test_bufnr()
+
 				if test_buf then
 					vim.cmd("buffer " .. test_buf)
 				else
