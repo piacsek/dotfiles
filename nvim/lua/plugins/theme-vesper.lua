@@ -1,1 +1,5 @@
-return { 'datsfilipe/vesper.nvim' },
+return {
+	"datsfilipe/vesper.nvim",
+	lazy = false,
+	priority = 1000,
+}
