@@ -85,11 +85,11 @@ vim.api.nvim_create_user_command("ThemeRandom", function()
 	-- local all_colorschemes = vim.fn.getcompletion("", "color")
 	local colorschemes = { "evening", "moonfly", "cyberdream", "nordic" }
 	local random_colorscheme = colorschemes[math.random(#colorschemes)]
-	print(random_colorscheme)
 	vim.cmd.colorscheme(random_colorscheme)
+	vim.notify(random_colorscheme)
 end, { desc = "Assigns a random colorscheme" })
 
 vim.api.nvim_create_user_command("ThemeDefault", function()
-	print(vim.g._default_theme)
 	vim.cmd.colorscheme(vim.g._default_theme)
+	vim.notify(vim.g._default_theme)
 end, { desc = "Assigns the default colorscheme" })
