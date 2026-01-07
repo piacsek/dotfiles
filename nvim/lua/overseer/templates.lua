@@ -99,6 +99,7 @@ return function(overseer)
 			return {
 				name = "auto-commit",
 				cmd = { vim.fn.expand("$HOME") .. "/dotfiles/auto-commit.sh" },
+				components = { "silent" },
 			}
 		end,
 	})
@@ -143,8 +144,6 @@ return function(overseer)
 				strategy = {
 					"orchestrator",
 					tasks = {
-						-- Do I wanna run this all the time?
-						-- "pre-ci checks",
 						"lazygit-review",
 						"auto-commit",
 						"git-push",
