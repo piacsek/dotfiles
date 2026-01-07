@@ -26,7 +26,8 @@ require("lazy").setup("plugins")
 
 -- vim.cmd.colorscheme("high-contrast")
 -- vim.cmd.colorscheme("moonfly")
-vim.cmd.colorscheme("cyberdream")
+-- vim.cmd.colorscheme("cyberdream")
+vim.cmd.colorscheme("vesper")
 vim.notify = require("snacks").notifier.notify
 
 require("core.lsp")
