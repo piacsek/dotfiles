@@ -29,6 +29,9 @@ return {
 					vim.cmd("w")
 				end
 
+				local lazyredraw = vim.o.lazyredraw
+				vim.o.lazyredraw = true
+
 				local test_buf = get_test_bufnr()
 				if test_buf then
 					vim.bo[test_buf].modifiable = true
@@ -37,6 +40,7 @@ return {
 				end
 
 				vim.cmd("TestLast")
+				vim.o.lazyredraw = lazyredraw
 			end,
 			desc = "Save and run last test",
 		},
