@@ -1,6 +1,5 @@
 return {
-	"bluz71/vim-moonfly-colors",
-	name = "moonfly",
+	"scottmckendry/cyberdream.nvim",
 	lazy = false,
 	priority = 1000,
 }
