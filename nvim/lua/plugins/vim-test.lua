@@ -1,6 +1,5 @@
 local function get_test_bufnr()
 	local buffers = vim.fn.getbufinfo({ buflisted = 1 })
-	local test_buf = nil
 
 	for _, buf in ipairs(buffers) do
 		if buf.variables._test_vim_neovim_sticky == 1 then
