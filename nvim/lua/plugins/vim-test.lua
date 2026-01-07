@@ -29,7 +29,7 @@ return {
 					vim.cmd("w")
 				end
 
-				local test_buf = get_test_bufnr()
+				-- local test_buf = get_test_bufnr()
 				-- if test_buf then
 				-- 	vim.bo[test_buf].modifiable = true
 				-- 	vim.api.nvim_buf_set_lines(test_buf, 0, -1, false, {})
