@@ -73,35 +73,6 @@ vim.api.nvim_create_user_command("BufferStats", function()
 	vim.notify(msg, vim.log.levels.INFO)
 end, { desc = "Show buffer statistics" })
 
-local function clean_hidden_buffers(silent)
-	local current = vim.api.nvim_get_current_buf()
-	local deleted = 0
-
-	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-		if buf ~= current and vim.api.nvim_buf_is_loaded(buf) then
-			local buftype = vim.api.nvim_get_option_value("buftype", { buf = buf })
-			local modified = vim.api.nvim_get_option_value("modified", { buf = buf })
-			local wins = vim.fn.win_findbuf(buf)
-
-			-- Only delete if: not special buffer, not modified, and hidden
-			if buftype == "" and not modified and #wins == 0 then
-				pcall(vim.api.nvim_buf_delete, buf, { force = false })
-				deleted = deleted + 1
-			end
-		end
-	end
-
-	if not silent then
-		vim.notify(string.format("Cleaned %d hidden buffers", deleted), vim.log.levels.INFO)
-	end
-
-	return deleted
-end
-
-vim.api.nvim_create_user_command("BuffersClearHidden", function()
-	clean_hidden_buffers(false)
-end, { desc = "Delete all unmodified hidden buffers" })
-
 vim.api.nvim_create_user_command("NotificationsHistory", function()
 	require("snacks").notifier.show_history()
 end, { desc = "Notification history" })
