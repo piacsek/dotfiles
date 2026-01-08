@@ -47,7 +47,7 @@ return {
 		{
 			"<leader>jp",
 			function()
-				Snacks.explorer()
+				Snacks.explorer({ position = "right" })
 			end,
 			desc = "Filetree",
 		},
