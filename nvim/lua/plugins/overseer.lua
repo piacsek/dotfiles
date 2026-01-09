@@ -1,4 +1,10 @@
-local clear_non_in_progress_tasks(overseer)
+local clear_non_in_progress_tasks = function(overseer)
+	local tasks = overseer.list_tasks()
+	for _, task in ipairs(tasks) do
+		if task.status ~= "RUNNING" then
+			task:dispose()
+		end
+	end
 end
 local open_last_task_output = function(overseer)
 	local tasks = overseer.list_tasks({ recent_first = true, include_ephemeral = true })
@@ -36,12 +42,7 @@ return {
 					["W"] = { "keymap.run_action", opts = { action = "unwatch" }, desc = "Unwatch task" },
 					["C"] = {
 						function()
-							local tasks = overseer.list_tasks()
-							for _, task in ipairs(tasks) do
-								if task.status ~= "RUNNING" then
-									task:dispose()
-								end
-							end
+							clear_non_in_progress_tasks(overseer)
 						end,
 						desc = "Clear all tasks except in progress",
 					},
