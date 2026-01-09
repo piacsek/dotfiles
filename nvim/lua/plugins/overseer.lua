@@ -111,7 +111,19 @@ return {
 				end
 			end,
 			desc = "[R]un [L]ast",
-		},
+		},{
+			"<leader>rl",
+			function()
+				local overseer = require("overseer")
+				local tasks = overseer.list_tasks({ recent_first = true, include_ephemeral = true })
+				if #tasks == 0 then
+					vim.notify("No tasks found")
+					return
+				else
+					overseer.run_action(tasks[1], "restart")
+				end
+			end,
+			desc = "[R]un [L]ast",
 		{
 			"<leader>4",
 			function()
