@@ -113,18 +113,12 @@ return {
 			desc = "[R]un [L]ast",
 		},
 		{
-			"<leader>rl",
+			"<leader>rq",
 			function()
 				local overseer = require("overseer")
-				local tasks = overseer.list_tasks({ recent_first = true, include_ephemeral = true })
-				if #tasks == 0 then
-					vim.notify("No tasks found")
-					return
-				else
-					overseer.run_action(tasks[1], "restart")
-				end
+				clear_non_in_progress_tasks(overseer)
 			end,
-			desc = "[R]un [L]ast",
+			desc = "Clear non in progress tasks",
 		{
 			"<leader>4",
 			function()
