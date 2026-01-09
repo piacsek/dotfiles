@@ -119,6 +119,7 @@ return {
 				clear_non_in_progress_tasks(overseer)
 			end,
 			desc = "Clear non in progress tasks",
+		},
 		{
 			"<leader>4",
 			function()
