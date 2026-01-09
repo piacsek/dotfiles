@@ -111,7 +111,8 @@ return {
 				end
 			end,
 			desc = "[R]un [L]ast",
-		},{
+		},
+		{
 			"<leader>rl",
 			function()
 				local overseer = require("overseer")
