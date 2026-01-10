@@ -128,8 +128,6 @@ return {
 				if #tasks == 0 then
 					vim.notify("No tasks found")
 					return
-				elseif #tasks == 1 then
-					tasks[1]:open_output()
 				else
 					vim.ui.select(tasks, {
 						prompt = "Select task:",
