@@ -70,12 +70,12 @@ local function setup_keymaps(fzf)
 	end, { desc = "Grep config files" })
 
 	vim.keymap.set("n", "<leader>/", function()
-		fzf.lgrep_curbuf()
+		fzf.blines()
 	end, { desc = "[/] Fuzzily search in current buffer" })
 
 	vim.keymap.set("v", "<leader>/", function()
 		local text = vim.getVisualSelection()
-		fzf.lgrep_curbuf({ search = text })
+		fzf.blines({ query = text })
 	end, { desc = "[/] Fuzzily search in current buffer" })
 
 	-- Git
