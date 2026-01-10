@@ -35,7 +35,13 @@ return {
 		},
 	},
 	keys = {
-		{ "<leader>4", '<cmd>TermExec cmd="echo "keymap deprecated!" && sl"<CR>', desc = ":p deprecated!" },
+		{
+			"<leader>4",
+			function()
+				keymap_deprecated_funsies("<leader>4")
+			end,
+			desc = ":p deprecated!",
+		},
 		{ "<leader>8", "<cmd>TermExec cmd='echo 'keymap deprecated!' && sl'<CR>", desc = ":p deprecated!" },
 		{ "<leader>9", "<cmd>TermExec cmd='echo 'keymap deprecated!' && sl'<CR>", desc = ":p deprecated!" },
 	},
