@@ -44,6 +44,8 @@ return {
 			desc = "Save and run last test",
 		},
 		{ "<leader>8", go_to_test_buffer, desc = "Open vim-test terminal" },
+		{ "<C-8>", go_to_test_buffer, desc = "Open vim-test terminal" },
+		{ "<M-8>", go_to_test_buffer, desc = "Open vim-test terminal" },
 	},
 	config = function()
 		vim.g["test#strategy"] = "neovim_sticky"
