@@ -152,27 +152,6 @@ return {
 			desc = "Open the current task's output",
 		},
 		{
-			"<leader>R",
-			function()
-				local overseer = require("overseer")
-				vim.cmd.normal("yy")
-				open_last_task_output(overseer)
-				vim.cmd.normal("p")
-			end,
-			desc = "Pastes the current line on the most recent task buffer",
-		},
-		{
-			"<leader>R",
-			function()
-				local overseer = require("overseer")
-				vim.cmd.normal('"vy"')
-				open_last_task_output(overseer)
-				vim.cmd.normal('"vp')
-			end,
-			desc = "Pastes the current selection on the most recent task buffer",
-			mode = { "v" },
-		},
-		{
 			"<leader>G",
 			function()
 				local overseer = require("overseer")
