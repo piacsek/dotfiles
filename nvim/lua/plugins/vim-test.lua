@@ -9,6 +9,17 @@ local function get_test_bufnr()
 
 	return nil
 end
+
+local function go_to_test_buffer()
+	local test_buf = get_test_bufnr()
+
+				if test_buf then
+					vim.cmd("buffer " .. test_buf)
+				else
+					vim.notify("No vim-test terminal found", vim.log.levels.WARN)
+				end
+
+end
 return {
 	"vim-test/vim-test",
 	keys = {
@@ -41,16 +52,7 @@ return {
 			desc = "Save and run last test",
 		},
 		{
-			{ "<leader>8", "M-8", "<C-8>" },
-			function()
-				local test_buf = get_test_bufnr()
-
-				if test_buf then
-					vim.cmd("buffer " .. test_buf)
-				else
-					vim.notify("No vim-test terminal found", vim.log.levels.WARN)
-				end
-			end,
+			 "<leader>8",go_to_test_buffer
 			desc = "Open vim-test terminal",
 		},
 	},
