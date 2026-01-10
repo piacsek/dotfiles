@@ -1,3 +1,6 @@
+local function keymap_deprecated_funsies(keymap)
+	vim.notify("Keymap " .. keymap .. " deprecated!", vim.log.levels.WARN)
+end
 return {
 	"akinsho/toggleterm.nvim",
 	version = "*",
