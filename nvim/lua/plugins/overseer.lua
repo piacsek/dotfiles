@@ -121,7 +121,7 @@ return {
 			desc = "Clear non in progress tasks",
 		},
 		{
-			"<leader>jj",
+			"<leader>ll",
 			function()
 				local overseer = require("overseer")
 				local tasks = overseer.list_tasks({ recent_first = true, include_ephemeral = true })
@@ -146,7 +146,7 @@ return {
 			desc = "Pick task and open its output",
 		},
 		{
-			"<leader>9",
+			"<leader>jj",
 			function()
 				local overseer = require("overseer")
 				open_last_task_output(overseer)
