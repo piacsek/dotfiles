@@ -40,6 +40,18 @@ return {
 			function()
 				keymap_deprecated_funsies("<leader>4")
 			end,
+		},
+		{
+			"<leader>8",
+			function()
+				keymap_deprecated_funsies("<leader>8")
+			end,
+		},
+		{
+			"<leader>9",
+			function()
+				keymap_deprecated_funsies("<leader>4")
+			end,
 			desc = ":p deprecated!",
 		},
 		{ "<leader>8", "<cmd>TermExec cmd='echo 'keymap deprecated!' && sl'<CR>", desc = ":p deprecated!" },
