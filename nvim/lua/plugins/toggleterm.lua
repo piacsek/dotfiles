@@ -30,4 +30,7 @@ return {
 			end,
 		},
 	},
+	keys = {
+		{ "<leader>9", "<cmd>TermExec cmd='echo 'keymap deprecated!' && sl'<CR>", desc = ":p deprecated!" },
+	},
 }
