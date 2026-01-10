@@ -13,12 +13,11 @@ end
 local function go_to_test_buffer()
 	local test_buf = get_test_bufnr()
 
-				if test_buf then
-					vim.cmd("buffer " .. test_buf)
-				else
-					vim.notify("No vim-test terminal found", vim.log.levels.WARN)
-				end
-
+	if test_buf then
+		vim.cmd("buffer " .. test_buf)
+	else
+		vim.notify("No vim-test terminal found", vim.log.levels.WARN)
+	end
 end
 return {
 	"vim-test/vim-test",
@@ -51,10 +50,7 @@ return {
 			end,
 			desc = "Save and run last test",
 		},
-		{
-			 "<leader>8",go_to_test_buffer
-			desc = "Open vim-test terminal",
-		},
+		{ "<leader>8", go_to_test_buffer, desc = "Open vim-test terminal" },
 	},
 	config = function()
 		vim.g["test#strategy"] = "neovim_sticky"
