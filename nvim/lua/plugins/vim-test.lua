@@ -41,7 +41,7 @@ return {
 			desc = "Save and run last test",
 		},
 		{
-			"<leader>8",
+			{ "<leader>8", "M-8", "<C-8>" },
 			function()
 				local test_buf = get_test_bufnr()
 
