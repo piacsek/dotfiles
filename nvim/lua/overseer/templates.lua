@@ -149,6 +149,9 @@ return function(overseer)
 						"git-push",
 					},
 				},
+				components = {
+					{ "on_complete_dispose", statuses = { "SUCCESS" } },
+				},
 			}
 		end,
 	})
