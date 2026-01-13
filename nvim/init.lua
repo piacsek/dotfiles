@@ -30,3 +30,4 @@ vim.cmd.colorscheme(vim.g._default_colorscheme)
 vim.notify = require("snacks").notifier.notify
 
 require("core.lsp")
+require("piacsek")
