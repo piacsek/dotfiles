@@ -32,6 +32,5 @@ vim.notify = require("snacks").notifier.notify
 require("core.lsp")
 local local_init = vim.fn.getcwd() .. "/piacsek/init.lua"
 if vim.fn.filereadable(local_init) == 1 then
-	print(local_init)
 	dofile(local_init)
 end
