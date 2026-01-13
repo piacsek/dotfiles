@@ -56,6 +56,7 @@ return {
 
 		-- Track project template names during loading
 		local project_template_names = {}
+		vim.g._global_overseer_templates = {}
 		local original_register = overseer.register_template
 
 		-- Load project templates first, tracking their names
@@ -74,6 +75,7 @@ return {
 					return
 				end
 				project_template_names[opts.name] = true
+				vim.g._global_overseer_templates[opts.name] = true
 				original_register(opts)
 			end
 			overseer.register_template = project_register
