@@ -30,4 +30,25 @@ vim.cmd.colorscheme(vim.g._default_colorscheme)
 vim.notify = require("snacks").notifier.notify
 
 require("core.lsp")
+local project_templates = vim.fn.getcwd() .. "/piacsek/init.lua"
+if vim.fn.filereadable(project_templates) == 1 then
+	local function project_register(opts)
+		if opts.name == nil then
+			vim.notify("Invalid overseer project template: must define a unique name", vim.log.levels.WARN)
+			return
+		end
+		if project_template_names[opts.name] == true then
+			vim.notify(
+				opts.name .. " has already been defined in this project. Skipping duplicate...",
+				vim.log.levels.WARN
+			)
+			return
+		end
+		project_template_names[opts.name] = true
+		original_register(opts)
+	end
+	overseer.register_template = project_register
+	dofile(project_templates)(overseer)
+	overseer.register_template = original_register
+end
 require("piacsek")
