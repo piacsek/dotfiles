@@ -7,7 +7,7 @@ return {
 
 		fm.setup({
 			glow = true,
-			theme = "retrowave",
+			theme = "delta",
 			-- transparent = true,
 		})
 	end,
