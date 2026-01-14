@@ -25,7 +25,6 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup("plugins")
 
 vim.g._default_colorscheme = "moonfly"
-vim.g._default_colorscheme = "fluoromachine"
 vim.cmd.colorscheme(vim.g._default_colorscheme)
 
 vim.notify = require("snacks").notifier.notify
