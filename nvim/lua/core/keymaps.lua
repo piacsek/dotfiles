@@ -28,11 +28,6 @@ vim.keymap.set("n", "V", "v$", { desc = "[V]isually select till the end of the l
 
 vim.keymap.set("n", "Q", "<nop>", { desc = "Avoiding Q" })
 
--- Test Ctrl-Space keybind
-vim.keymap.set("n", "<C-Space>", function()
-	vim.notify("Ctrl-Space pressed!", vim.log.levels.INFO)
-end, { desc = "Test Ctrl-Space" })
-
 -- Quickfix
 vim.keymap.set("n", "<leader>jq", ":copen<CR>", { desc = "[J]ump to the quickfix list" })
 vim.keymap.set("n", "<M-n>", ":cnext<CR>", { desc = "Go to the [n]ext item in the quickfix list" })
