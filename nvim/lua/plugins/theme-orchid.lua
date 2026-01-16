@@ -1,8 +1,8 @@
 return {
-	"AlexvZyl/nordic.nvim",
-	lazy = false,
+	"dark-orchid/neovim",
 	priority = 1000,
+	lazy = false,
 	config = function()
-		require("nordic").load()
+		require("dark-orchid").setup()
 	end,
 }
