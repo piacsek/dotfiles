@@ -19,7 +19,5 @@ return {
 				},
 			},
 		})
-		-- Remove the separator line
-		vim.cmd([[highlight WinSeparator guibg=NONE guifg=NONE]])
 	end,
 }
