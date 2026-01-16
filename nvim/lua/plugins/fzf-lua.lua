@@ -69,6 +69,11 @@ local function setup_keymaps(fzf)
 		fzf.live_grep({ cwd = "~/dotfiles", winopts = grep_winopts })
 	end, { desc = "Grep config files" })
 
+	vim.keymap.set("v", "<leader>sc", function()
+		local text = vim.getVisualSelection()
+		fzf.live_grep({ cwd = "~/dotfiles", search = text, winopts = grep_winopts })
+	end, { desc = "[G]rep selected" })
+
 	vim.keymap.set("n", "<leader>/", function()
 		fzf.blines()
 	end, { desc = "[/] Fuzzily search in current buffer" })
