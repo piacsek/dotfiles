@@ -11,7 +11,15 @@ return {
 				right = {
 					enabled = false,
 				},
+				wo = {
+					fillchars = "eob: ",
+				},
+				bo = {
+					filetype = "no-neck-pain",
+				},
 			},
 		})
+		-- Remove the separator line
+		vim.cmd([[highlight WinSeparator guibg=NONE guifg=NONE]])
 	end,
 }
