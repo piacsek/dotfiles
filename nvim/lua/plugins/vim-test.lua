@@ -44,11 +44,8 @@ return {
 			desc = "Save and run last test",
 		},
 		{ "<leader>jj", go_to_test_buffer, desc = "Open vim-test terminal" },
+		{ "<C-Space>", go_to_test_buffer, desc = "Open vim-test terminal" },
 	},
-	init = function()
-		-- Map Ctrl-Space early (terminal sends it as <C-@>)
-		vim.keymap.set("n", "<C-@>", go_to_test_buffer, { desc = "Open vim-test terminal" })
-	end,
 	config = function()
 		vim.g["test#strategy"] = "neovim_sticky"
 		vim.g["test#preserve_screen"] = 0
