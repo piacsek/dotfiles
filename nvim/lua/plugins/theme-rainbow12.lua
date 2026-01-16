@@ -1,8 +1,6 @@
 return {
-	"AlexvZyl/nordic.nvim",
-	lazy = false,
-	priority = 1000,
-	config = function()
-		require("nordic").load()
-	end,
-}
+    "0Risotto/rainbow12",
+    lazy = false,
+    priority = 1000,
+    config = function() vim.cmd "colorscheme rainbow12" end,
+  },
