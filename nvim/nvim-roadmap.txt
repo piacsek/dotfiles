@@ -1,5 +1,13 @@
 nvim roadmap:
 
+- snacks:
+  - assess scratches;
+  - assess terminal;
+
+- https://github.com/piacsek/buddy.nvim!
+   - manage claude buffers;
+	 - send text to the current conversation;
+	 - check if claude code exposes any events like opencode does;
 
 - add a plugin to connect to Postgres;
 
