@@ -30,7 +30,8 @@
       "Bash(brew search:*)",
       "Bash(brew info:*)",
       "Bash(asdf current:*)",
-      "Bash(defaults read:*)"
+      "Bash(defaults read:*)",
+      "Bash(defaults write:*)"
     ],
     "deny": [],
     "ask": []
