@@ -144,7 +144,7 @@ return {
 			desc = "Pick task and open its output",
 		},
 		{
-			"<leader>jr",
+			"<leader>jj",
 			function()
 				local overseer = require("overseer")
 				open_last_task_output(overseer)
