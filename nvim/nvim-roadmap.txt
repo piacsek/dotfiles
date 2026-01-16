@@ -1,30 +1,6 @@
 nvim roadmap:
 
-- upgrade overseer;
-- review neotest setup;
-
-- Harponify!!
-  - <C-h> on telescope finder to:
-	 	- clear harpoon files;
-		- find related files - test, impl, html.heex;
-		- add related files to harpoon;
-		- initiate claude with my "let's do a task" prompt - include harpooned files;
-		- open the test file buffer;
-		- run tests in the file;
-
-- learn how to use quickfix list properly:
-	- How do I apply macros to results? 
-	- How do I copy only the matched content, without the file info?
-
-- explore & customize telescope:
-	-- compare FzfLua & Telescope;
 
 - add a plugin to connect to Postgres;
 
-- figure out find/replace within buffer:
-	- for simple cases, <C-g> is now doing the job;
-	- multicursor?
 
-
-- optimize configs to avoid freezing:
-	- (Claude) Saved the performance analysis to /Users/piacsek/.config/nvim/PERFORMANCE_ANALYSIS.md
