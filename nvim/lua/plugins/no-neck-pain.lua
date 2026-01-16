@@ -18,6 +18,11 @@ return {
 					filetype = "no-neck-pain",
 				},
 			},
+			integrations = {
+				fzf = {
+					enable = true,
+				},
+			},
 		})
 	end,
 }
