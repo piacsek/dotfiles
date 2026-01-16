@@ -44,6 +44,7 @@ return {
 			desc = "Save and run last test",
 		},
 		{ "<leader>jj", go_to_test_buffer, desc = "Open vim-test terminal" },
+		{ "<C-@>", go_to_test_buffer, desc = "Open vim-test terminal" },
 	},
 	config = function()
 		vim.g["test#strategy"] = "neovim_sticky"
@@ -51,8 +52,5 @@ return {
 		vim.g["test#echo_command"] = 0
 		vim.g["test#neovim#term_position"] = "topleft vsplit"
 		vim.g["test#neovim_sticky#kill_previous"] = 1
-
-		-- Map Ctrl-Space (sent as null byte by terminal)
-		vim.keymap.set("n", "<C-@>", go_to_test_buffer, { desc = "Open vim-test terminal" })
 	end,
 }
