@@ -28,7 +28,6 @@ vim.opt.tabstop = 2
 vim.opt.timeoutlen = 300
 vim.opt.updatetime = 500
 vim.opt.undofile = true
-vim.opt.foldcolumn = "10"
 
 vim.diagnostic.config({
 	virtual_text = {
