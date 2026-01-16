@@ -29,7 +29,8 @@
       "Bash(npm config:*)",
       "Bash(brew search:*)",
       "Bash(brew info:*)",
-      "Bash(asdf current:*)"
+      "Bash(asdf current:*)",
+      "Bash(defaults read:*)"
     ],
     "deny": [],
     "ask": []
