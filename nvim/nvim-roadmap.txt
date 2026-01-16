@@ -4,6 +4,8 @@ nvim roadmap:
   - assess scratches;
   - assess terminal;
 
+- fix singleton terminal;
+
 - https://github.com/piacsek/buddy.nvim!
    - manage claude buffers;
 	 - send text to the current conversation;
