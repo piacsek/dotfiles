@@ -124,7 +124,6 @@ vim.keymap.set(
 	{ desc = "[J]ump to [K]9s (singleton)" }
 )
 
-vim.keymap.set("n", "<leader><Del>", ":BufOnly<CR>", { desc = "[T]est [S]ummary" })
 vim.keymap.set("n", "<leader>i", ":Inspect<CR>", { desc = "[I]nspect" })
 vim.keymap.set("i", "<C-p>", function()
 	vim.cmd.normal("p")
