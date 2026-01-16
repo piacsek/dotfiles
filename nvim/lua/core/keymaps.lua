@@ -29,7 +29,7 @@ vim.keymap.set("n", "V", "v$", { desc = "[V]isually select till the end of the l
 vim.keymap.set("n", "Q", "<nop>", { desc = "Avoiding Q" })
 
 -- Test Ctrl-Space keybind
-vim.keymap.set("n", "<C-@>", function()
+vim.keymap.set("n", "<C-Space>", function()
 	vim.notify("Ctrl-Space pressed!", vim.log.levels.INFO)
 end, { desc = "Test Ctrl-Space" })
 
