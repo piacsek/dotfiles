@@ -1,5 +1,5 @@
 return {
-	"0Risotto/rainbow12",
+	"piacsek/high-contrast.nvim",
 	lazy = false,
 	priority = 1000,
 }
