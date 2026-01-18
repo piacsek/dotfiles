@@ -20,7 +20,6 @@ vim.lsp.config["elixir_ls"] = {
 			return
 		end
 
-		vim.notify("⚠️ elixir root not defined in piacsek/lsp.lua. Fallback search starting", vim.log.levels.WARN)
 		local fname = vim.api.nvim_buf_get_name(bufnr)
 
 		if elixir_root_cache[fname] then
