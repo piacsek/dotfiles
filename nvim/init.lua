@@ -24,7 +24,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("plugins")
 
-if os.date("%H") < 13 then
+if tonumber(os.date("%H")) < 13 then
 	vim.g._default_colorscheme = "cyberdream-light"
 else
 	vim.g._default_colorscheme = "moonfly"
