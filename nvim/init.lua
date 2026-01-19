@@ -24,8 +24,11 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("plugins")
 
--- vim.g._default_colorscheme = "moonfly"
-vim.g._default_colorscheme = "cyberdream-light"
+if os.date("%H") < 13 then
+	vim.g._default_colorscheme = "cyberdream-light"
+else
+	vim.g._default_colorscheme = "moonfly"
+end
 vim.cmd.colorscheme(vim.g._default_colorscheme)
 
 vim.notify = require("snacks").notifier.notify
