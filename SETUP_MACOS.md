@@ -90,8 +90,8 @@ echo "  AddKeysToAgent yes" >> $HOME/.ssh/config
 echo "  UseKeychain yes" >> $HOME/.ssh/config
 echo "  IdentityFile $HOME/.ssh/id_ed25519" >> $HOME/.ssh/config
 cat $HOME/.ssh/id_ed25519.pub | pbcopy
-echo SSH public key copied to clipboard!
-echo Add it to GitHub: https://github.com/settings/keys
+echo "SSH public key copied to clipboard!"
+echo "Add it to GitHub: https://github.com/settings/keys"
 ```
 
 **Next:** Paste your SSH key into GitHub at https://github.com/settings/keys before continuing.
