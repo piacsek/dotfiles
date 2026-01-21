@@ -101,6 +101,7 @@ echo "Add it to GitHub: https://github.com/settings/keys"
 ```bash
 brew install \
   btop \
+  1password-cli \
   neovim \
   lazygit \
   direnv \
