@@ -100,6 +100,7 @@ echo Add it to GitHub: https://github.com/settings/keys
 
 ```bash
 brew install \
+  btop \
   neovim \
   lazygit \
   direnv \
