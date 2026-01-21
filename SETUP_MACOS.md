@@ -110,6 +110,7 @@ brew install \
   gpg \
   libyaml \
   lua \
+  luarocks \
   dua-cli \
   bat
 ```
