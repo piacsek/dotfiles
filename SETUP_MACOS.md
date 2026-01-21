@@ -211,6 +211,7 @@ CASKS=(
   spotify
   whatsapp
   brainfm
+  zoom
 )
 
 for cask in "${CASKS[@]}"; do
