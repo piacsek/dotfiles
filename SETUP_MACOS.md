@@ -212,6 +212,7 @@ CASKS=(
   whatsapp
   brainfm
   zoom
+  loom
 )
 
 for cask in "${CASKS[@]}"; do
