@@ -15,6 +15,7 @@ local function go_to_test_buffer()
 
 	if test_buf then
 		vim.cmd("buffer " .. test_buf)
+		vim.cmd("G")
 	else
 		vim.notify("No vim-test terminal found", vim.log.levels.WARN)
 	end
