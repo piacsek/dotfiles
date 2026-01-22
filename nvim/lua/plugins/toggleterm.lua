@@ -1,6 +1,6 @@
 local function keymap_deprecated_funsies(keymap)
 	vim.notify("Keymap " .. keymap .. " deprecated!", vim.log.levels.WARN)
-	vim.cmd("TermExec cmd='sl'")
+	vim.cmd("TermExec cmd='sl && exit'")
 end
 return {
 	"akinsho/toggleterm.nvim",
