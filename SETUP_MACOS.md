@@ -116,6 +116,7 @@ brew install \
   lua \
   luarocks \
   dua-cli \
+  sl \
   bat
 ```
 
