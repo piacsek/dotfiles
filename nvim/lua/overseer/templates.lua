@@ -152,7 +152,7 @@ return function(overseer)
 				components = {
 					"on_exit_set_status",
 					"on_complete_notify",
-					{ "on_complete_dispose", timeout = 1, statuses = { "SUCCESS" } },
+					-- { "on_complete_dispose", timeout = 1, statuses = { "SUCCESS" } },
 				},
 			}
 		end,
