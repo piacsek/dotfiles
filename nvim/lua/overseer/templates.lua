@@ -146,7 +146,7 @@ return function(overseer)
 					tasks = {
 						"lazygit-review",
 						"auto-commit",
-						"git-push",
+						-- "git-push",
 					},
 				},
 				components = {
