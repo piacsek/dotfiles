@@ -35,6 +35,7 @@ Please respond with ONLY the commit message in the format 'WORD: summary', nothi
 
 
 COMMIT_MSG=$(echo "$PROMPT" | claude --print --no-session-persistence | tr -d '\n\r' | sed 's/[[:space:]]\+/ /g' | xargs)
+
 # Fallback if Claude fails or returns empty
 if [[ -z "$COMMIT_MSG" || "$COMMIT_MSG" == *"error"* ]]; then
     echo "Claude failed to generate commit message, using fallback"
