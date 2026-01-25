@@ -37,9 +37,7 @@ return {
 				"eex",
 				"json",
 			},
-			callback = function()
-				vim.treesitter.start()
-			end,
+			callback = vim.treesitter.start,
 		})
 	end,
 }
