@@ -33,7 +33,8 @@
       "Bash(defaults read:*)",
       "Bash(defaults write:*)",
       "Bash(cc:*)",
-      "Bash(tree-sitter build:*)"
+      "Bash(tree-sitter build:*)",
+      "Bash(brew --prefix:*)"
     ],
     "deny": [],
     "ask": []
