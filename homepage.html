@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookmarks</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #1a1a1a;
+            color: #e0e0e0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .subtitle {
+            color: #888;
+            margin-bottom: 40px;
+            font-size: 14px;
+        }
+
+        .search-box {
+            margin-bottom: 30px;
+        }
+
+        #search {
+            width: 100%;
+            max-width: 600px;
+            padding: 12px 20px;
+            font-size: 16px;
+            background: #2d2d2d;
+            border: 1px solid #404040;
+            border-radius: 8px;
+            color: #fff;
+            outline: none;
+        }
+
+        #search:focus {
+            border-color: #666;
+        }
+
+        .folder {
+            margin-bottom: 50px;
+        }
+
+        .folder-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #fff;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #333;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .card {
+            background: #252525;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            text-decoration: none;
+            color: #e0e0e0;
+            transition: all 0.2s ease;
+            display: block;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            border-color: #555;
+            background: #2d2d2d;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #fff;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .card-url {
+            font-size: 13px;
+            color: #888;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .card-folder {
+            font-size: 11px;
+            color: #666;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid #333;
+        }
+
+        .no-results {
+            text-align: center;
+            color: #666;
+            padding: 40px;
+            font-size: 18px;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 Bookmarks</h1>
+        <div class="subtitle">Generated from Chrome bookmarks • 30 total bookmarks</div>
+
+        <div class="search-box">
+            <input type="text" id="search" placeholder="Search bookmarks... (or press / to focus)">
+        </div>
+
+        <div id="bookmarks-container">
+            <div class="folder" data-folder="Bookmarks Bar">
+                <h2 class="folder-title">Bookmarks Bar</h2>
+                <div class="grid">
+                    <a href="https://ratatui.rs/showcase/apps/" class="card" data-title="app showcase | ratatui" data-url="https://ratatui.rs/showcase/apps/">
+                        <div class="card-title">App Showcase | Ratatui</div>
+                        <div class="card-url">ratatui.rs</div>
+                    </a>
+                    <a href="https://calendar.google.com/calendar/u/0/r/week" class="card" data-title="calendar" data-url="https://calendar.google.com/calendar/u/0/r/week">
+                        <div class="card-title">calendar</div>
+                        <div class="card-url">calendar.google.com</div>
+                    </a>
+                    <a href="https://github.com/wonderschool/ws-common/pull/3325" class="card" data-title="dd" data-url="https://github.com/wonderschool/ws-common/pull/3325">
+                        <div class="card-title">dd</div>
+                        <div class="card-url">github.com</div>
+                    </a>
+                    <a href="https://github.com/wonderschool/ws-common/pull/3594" class="card" data-title="ddd" data-url="https://github.com/wonderschool/ws-common/pull/3594">
+                        <div class="card-title">ddd</div>
+                        <div class="card-url">github.com</div>
+                    </a>
+                    <a href="https://miro.com/app/board/uXjVGdTYi3o=/" class="card" data-title="ececd licensing flows - dec/2025 - miro" data-url="https://miro.com/app/board/uxjvgdtyi3o=/">
+                        <div class="card-title">ECECD licensing flows - Dec/2025 - Miro</div>
+                        <div class="card-url">miro.com</div>
+                    </a>
+                    <a href="https://github.com/erlef/setup-beam" class="card" data-title="erlef/setup-beam: set up your beam-based github actions workflow (erlang, elixir, gleam, ...)" data-url="https://github.com/erlef/setup-beam">
+                        <div class="card-title">erlef/setup-beam: Set up your BEAM-based GitHub Actions workflow (Erlang, Elixir, Gleam, ...)</div>
+                        <div class="card-url">github.com</div>
+                    </a>
+                    <a href="https://github.com/wonderschool/ws-common/pull/3002/files#diff-19a41fd1d590c3d2f1c835e405746d3445007fcefb900b0be6a3af045300bcd8R91-R95" class="card" data-title="feat: [signup flow] schemas and changesets by bijanbwb · pull request #3002 · wonderschool/ws-common" data-url="https://github.com/wonderschool/ws-common/pull/3002/files#diff-19a41fd1d590c3d2f1c835e405746d3445007fcefb900b0be6a3af045300bcd8r91-r95">
+                        <div class="card-title">feat: [Signup Flow] Schemas and Changesets by bijanbwb · Pull Request #3002 · wonderschool/ws-common</div>
+                        <div class="card-url">github.com</div>
+                    </a>
+                    <a href="https://github.com/wonderschool/ws-common/pull/3174/" class="card" data-title="fix(nova): canonical url by piacsek · pull request #3174 · wonderschool/ws-common" data-url="https://github.com/wonderschool/ws-common/pull/3174/">
+                        <div class="card-title">fix(Nova): canonical URL by piacsek · Pull Request #3174 · wonderschool/ws-common</div>
+                        <div class="card-url">github.com</div>
+                    </a>
+                    <a href="https://linear.app/wonderschool/project/mvp-new-mexico-providers-licensing-5d5461897fba/issues" class="card" data-title="licensing linear" data-url="https://linear.app/wonderschool/project/mvp-new-mexico-providers-licensing-5d5461897fba/issues">
+                        <div class="card-title">licensing linear</div>
+                        <div class="card-url">linear.app</div>
+                    </a>
+                    <a href="http://localhost:4000/search" class="card" data-title="localhost search" data-url="http://localhost:4000/search">
+                        <div class="card-title">localhost search</div>
+                        <div class="card-url">localhost:4000</div>
+                    </a>
+                    <a href="https://one.newrelic.com/logger?account=4110908&duration=1800000&state=f4c70970-1f35-9ddb-b30e-820c68daa844" class="card" data-title="logs < new relic" data-url="https://one.newrelic.com/logger?account=4110908&duration=1800000&state=f4c70970-1f35-9ddb-b30e-820c68daa844">
+                        <div class="card-title">Logs < New Relic</div>
+                        <div class="card-url">one.newrelic.com</div>
+                    </a>
+                    <a href="https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md" class="card" data-title="lsps" data-url="https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md">
+                        <div class="card-title">LSPs</div>
+                        <div class="card-url">github.com</div>
+                    </a>
+                    <a href="https://linear.app/wonderschool/issue/MP-4100/require-notarization-for-amendments" class="card" data-title="mp-4100 require notarization for amendments" data-url="https://linear.app/wonderschool/issue/mp-4100/require-notarization-for-amendments">
+                        <div class="card-title">MP-4100 Require notarization for amendments</div>
+                        <div class="card-url">linear.app</div>
+                    </a>
+                    <a href="https://linear.app/wonderschool/view/mpearly-day-active-combined-868121387225?filter=eyJhbmQiOlt7ImFzc2lnbmVlIjp7Im9yIjpbeyJpZCI6eyJpbiI6WyIyZGYyNzAwOS00N2ExLTQ4MDItYmEwMi0zOTlhMjlkZjJjNzUiXX19XX19XX0&layout=board&ordering=priority&grouping=workflowState&subGrouping=assignee&showCompletedIssues=all&showSubIssues=true&showTriageIssues=true" class="card" data-title="my linear issues" data-url="https://linear.app/wonderschool/view/mpearly-day-active-combined-868121387225?filter=eyjhbmqiolt7imfzc2lnbmvlijp7im9yijpbeyjpzci6eyjpbii6wyiyzgyynzawos00n2exltq4mditymewmi0zotlhmjlkzjjjnzuixx19xx19xx0&layout=board&ordering=priority&grouping=workflowstate&subgrouping=assignee&showcompletedissues=all&showsubissues=true&showtriageissues=true">
+                        <div class="card-title">my linear issues</div>
+                        <div class="card-url">linear.app</div>
+                    </a>
+                    <a href="https://github.com/pulls/assigned" class="card" data-title="my prs - pull requests - assigned" data-url="https://github.com/pulls/assigned">
+                        <div class="card-title">my prs - pull requests - Assigned</div>
+                        <div class="card-url">github.com</div>
+                    </a>
+                    <a href="http://nm.localhost:4000/director/license/center/step/written-statement" class="card" data-title="new mexico child care finder | find child care schools near me" data-url="http://nm.localhost:4000/director/license/center/step/written-statement">
+                        <div class="card-title">New Mexico Child Care Finder | Find Child Care Schools Near Me</div>
+                        <div class="card-url">nm.localhost:4000</div>
+                    </a>
+                    <a href="https://one.newrelic.com/dashboards/detail/NDExMDkwOHxWSVp8REFTSEJPQVJEfGRhOjExNDQwMjU4?account=4110908&state=c374fba1-3d8b-f45f-9568-241e4948dbab" class="card" data-title="nova - production < new relic" data-url="https://one.newrelic.com/dashboards/detail/ndexmdkwohxwsvp8reftsejpqvjefgrhojexndqwmju4?account=4110908&state=c374fba1-3d8b-f45f-9568-241e4948dbab">
+                        <div class="card-title">nova - production < New Relic</div>
+                        <div class="card-url">one.newrelic.com</div>
+                    </a>
+                    <a href="https://github.com/piacsek/dotfiles/blob/master/nvim/nvim-roadmap.txt" class="card" data-title="nvim-roadmap.txt" data-url="https://github.com/piacsek/dotfiles/blob/master/nvim/nvim-roadmap.txt">
+                        <div class="card-title">nvim-roadmap.txt</div>
+                        <div class="card-url">github.com</div>
+                    </a>
+                    <a href="https://www.wonderschool.com/oban/jobs?state=retryable" class="card" data-title="oban" data-url="https://www.wonderschool.com/oban/jobs?state=retryable">
+                        <div class="card-title">oban</div>
+                        <div class="card-url">www.wonderschool.com</div>
+                    </a>
+                    <a href="https://github.com/stevearc/overseer.nvim/blob/master/doc/guides.md" class="card" data-title="overseer.nvim/doc/guides.md at master · stevearc/overseer.nvim" data-url="https://github.com/stevearc/overseer.nvim/blob/master/doc/guides.md">
+                        <div class="card-title">overseer.nvim/doc/guides.md at master · stevearc/overseer.nvim</div>
+                        <div class="card-url">github.com</div>
+                    </a>
+                    <a href="https://console.cloud.google.com/sql/instances/ws-prod-cloudsql/insights;duration=PT1H;sort_by=TOTAL_EXEC_TIME/executed?project=ws-production-0" class="card" data-title="postgres performance" data-url="https://console.cloud.google.com/sql/instances/ws-prod-cloudsql/insights;duration=pt1h;sort_by=total_exec_time/executed?project=ws-production-0">
+                        <div class="card-title">postgres performance</div>
+                        <div class="card-url">console.cloud.google.com</div>
+                    </a>
+                    <a href="https://console.cloud.google.com/sql/instances/ws-prod-cloudsql/overview?project=ws-production-0" class="card" data-title="postgres resources" data-url="https://console.cloud.google.com/sql/instances/ws-prod-cloudsql/overview?project=ws-production-0">
+                        <div class="card-title">postgres resources</div>
+                        <div class="card-url">console.cloud.google.com</div>
+                    </a>
+                    <a href="https://www.wonderschool.com/search" class="card" data-title="prod search" data-url="https://www.wonderschool.com/search">
+                        <div class="card-title">prod search</div>
+                        <div class="card-url">www.wonderschool.com</div>
+                    </a>
+                    <a href="https://github.com/wonderschool/ws-common/queue/main" class="card" data-title="queuewscommon" data-url="https://github.com/wonderschool/ws-common/queue/main">
+                        <div class="card-title">queuewscommon</div>
+                        <div class="card-url">github.com</div>
+                    </a>
+                    <a href="chrome://newtab/" class="card" data-title="ri" data-url="chrome://newtab/">
+                        <div class="card-title">ri</div>
+                        <div class="card-url">newtab</div>
+                    </a>
+                    <a href="https://github.com/folke/snacks.nvim/blob/main/docs/notifier.md" class="card" data-title="snacks.nvim/docs/notifier.md at main · folke/snacks.nvim" data-url="https://github.com/folke/snacks.nvim/blob/main/docs/notifier.md">
+                        <div class="card-title">snacks.nvim/docs/notifier.md at main · folke/snacks.nvim</div>
+                        <div class="card-url">github.com</div>
+                    </a>
+                    <a href="https://ge.globo.com/futebol/brasileirao-serie-a/" class="card" data-title="tabela e jogos do brasileirão série a 2025 | ge | brasileirão série a | ge" data-url="https://ge.globo.com/futebol/brasileirao-serie-a/">
+                        <div class="card-title">Tabela e Jogos do Brasileirão Série A 2025 | ge | brasileirão série a | ge</div>
+                        <div class="card-url">ge.globo.com</div>
+                    </a>
+                    <a href="https://github.com/vim-test/vim-test" class="card" data-title="vim-test" data-url="https://github.com/vim-test/vim-test">
+                        <div class="card-title">Vim-test</div>
+                        <div class="card-url">github.com</div>
+                    </a>
+                    <a href="https://metabase.earlyday.com/public/question/15b60fc5-4bb4-4fae-a2d1-cd09b39ae806" class="card" data-title="ws mrr" data-url="https://metabase.earlyday.com/public/question/15b60fc5-4bb4-4fae-a2d1-cd09b39ae806">
+                        <div class="card-title">WS MRR</div>
+                        <div class="card-url">metabase.earlyday.com</div>
+                    </a>
+                    <a href="https://github.com/wonderschool/ws-common/" class="card" data-title="wscommon" data-url="https://github.com/wonderschool/ws-common/">
+                        <div class="card-title">wscommon</div>
+                        <div class="card-url">github.com</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="no-results" class="no-results" style="display: none;">
+            No bookmarks found matching your search.
+        </div>
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('search');
+        const bookmarksContainer = document.getElementById('bookmarks-container');
+        const noResults = document.getElementById('no-results');
+
+        // Focus search with "/" key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === '/' && document.activeElement !== searchInput) {
+                e.preventDefault();
+                searchInput.focus();
+            }
+        });
+
+        // Search functionality
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+
+            if (!searchTerm) {
+                // Show all
+                document.querySelectorAll('.folder').forEach(folder => {
+                    folder.style.display = 'block';
+                });
+                document.querySelectorAll('.card').forEach(card => {
+                    card.style.display = 'block';
+                });
+                noResults.style.display = 'none';
+                bookmarksContainer.style.display = 'block';
+                return;
+            }
+
+            let hasResults = false;
+
+            document.querySelectorAll('.folder').forEach(folder => {
+                let visibleCards = 0;
+
+                folder.querySelectorAll('.card').forEach(card => {
+                    const title = card.dataset.title;
+                    const url = card.dataset.url;
+
+                    if (title.includes(searchTerm) || url.includes(searchTerm)) {
+                        card.style.display = 'block';
+                        visibleCards++;
+                        hasResults = true;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                folder.style.display = visibleCards > 0 ? 'block' : 'none';
+            });
+
+            if (!hasResults) {
+                bookmarksContainer.style.display = 'none';
+                noResults.style.display = 'block';
+            } else {
+                bookmarksContainer.style.display = 'block';
+                noResults.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
