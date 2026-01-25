@@ -30,8 +30,6 @@ return {
 		auto_install = true,
 	},
 	config = function(_, opts)
-		require("nvim-treesitter.configs").setup(opts)
-
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = filetypes,
 			callback = function(args)
