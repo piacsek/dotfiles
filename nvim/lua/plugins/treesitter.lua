@@ -1,8 +1,9 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
 	build = ":TSUpdate",
-	opts = {
-		ensure_installed = {
+	config = function()
+		-- Install parsers
+		require("nvim-treesitter").install({
 			"bash",
 			"diff",
 			"html",
@@ -19,7 +20,26 @@ return {
 			"heex",
 			"eex",
 			"json",
-		},
-		highlight = { enable = true },
-	},
+		})
+
+		-- Enable highlighting
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = {
+				"bash",
+				"html",
+				"lua",
+				"javascript",
+				"typescript",
+				"markdown",
+				"vim",
+				"elixir",
+				"heex",
+				"eex",
+				"json",
+			},
+			callback = function()
+				vim.treesitter.start()
+			end,
+		})
+	end,
 }
