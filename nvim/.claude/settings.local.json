@@ -32,7 +32,8 @@
       "Bash(asdf current:*)",
       "Bash(defaults read:*)",
       "Bash(defaults write:*)",
-      "Bash(cc:*)"
+      "Bash(cc:*)",
+      "Bash(tree-sitter build:*)"
     ],
     "deny": [],
     "ask": []
