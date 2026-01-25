@@ -125,7 +125,9 @@ def generate_html(bookmarks, output_path):
             text-decoration: none;
             color: #e0e0e0;
             transition: all 0.2s ease;
-            display: block;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
         }
 
         .card:hover {
@@ -133,6 +135,29 @@ def generate_html(bookmarks, output_path):
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
             border-color: #555;
             background: #2d2d2d;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            flex-shrink: 0;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .card-icon img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+
+        .card-content {
+            flex: 1;
+            min-width: 0;
         }
 
         .card-title {
