@@ -1,27 +1,28 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
-	lazy = "false",
-	build = ":TSUpdate",
+	lazy = false,
 	config = function()
-		-- Install parsers
-		require("nvim-treesitter").install({
-			"bash",
-			"diff",
-			"html",
-			"lua",
-			"luadoc",
-			"javascript",
-			"typescript",
-			"tsx",
-			"markdown",
-			"markdown_inline",
-			"vim",
-			"vimdoc",
-			"elixir",
-			"heex",
-			"eex",
-			"json",
-		})
+		-- Create command to install parsers
+		vim.api.nvim_create_user_command("TSInstallParsers", function()
+			require("nvim-treesitter").install({
+				"bash",
+				"diff",
+				"html",
+				"lua",
+				"luadoc",
+				"javascript",
+				"typescript",
+				"tsx",
+				"markdown",
+				"markdown_inline",
+				"vim",
+				"vimdoc",
+				"elixir",
+				"heex",
+				"eex",
+				"json",
+			})
+		end, {})
 
 		-- Enable highlighting
 		vim.api.nvim_create_autocmd("FileType", {
