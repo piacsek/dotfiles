@@ -5,8 +5,6 @@ local filetypes = {
 	"lua",
 	"javascript",
 	"typescript",
-	"typescriptreact",
-	"javascriptreact",
 	"markdown",
 	"vim",
 	"elixir",
