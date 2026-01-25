@@ -22,7 +22,11 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup("plugins")
+require("lazy").setup("plugins", {
+	dev = {
+		path = "~/projects/nvim-plugins",
+	},
+})
 
 if tonumber(os.date("%H")) <= 13 then
 	vim.g._default_colorscheme = "cyberdream-light"
