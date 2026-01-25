@@ -24,10 +24,8 @@ return {
 	branch = "main",
 	build = ":TSUpdate",
 	config = function()
-		-- Install parsers
 		require("nvim-treesitter").install(languages)
 
-		-- Enable highlighting for configured filetypes
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = filetypes,
 			callback = function(args)
