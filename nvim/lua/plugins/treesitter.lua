@@ -21,13 +21,33 @@ return {
 			"json",
 		},
 		auto_install = true,
-		highlight = {
-			enable = true,
-			disable = { "oil", "notify" },
-		},
-		indent = {
-			enable = true,
-			disable = { "oil", "notify" },
-		},
 	},
+	config = function(_, opts)
+		require("nvim-treesitter.configs").setup(opts)
+
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = {
+				"bash",
+				"html",
+				"lua",
+				"javascript",
+				"typescript",
+				"typescriptreact",
+				"javascriptreact",
+				"markdown",
+				"vim",
+				"elixir",
+				"heex",
+				"eex",
+				"json",
+			},
+			callback = function(args)
+				local bufnr = args.buf
+				local filetype = vim.bo[bufnr].filetype
+				if filetype ~= "oil" and filetype ~= "notify" then
+					vim.treesitter.start(bufnr)
+				end
+			end,
+		})
+	end,
 }
