@@ -205,10 +205,6 @@ def generate_html(bookmarks, output_path):
         <h1>📚 Bookmarks</h1>
         <div class="subtitle">Generated from Chrome bookmarks • """ + str(len(bookmarks)) + """ total bookmarks</div>
 
-        <div class="search-box">
-            <input type="text" id="search" placeholder="Search bookmarks... (or press / to focus)">
-        </div>
-
         <div id="bookmarks-container">
 """
 
