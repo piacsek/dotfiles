@@ -116,7 +116,7 @@ brew install \
   lua \
   luarocks \
   dua-cli \
-  tree-sitter \
+  tree-sitter-cli \
   sl \
   bat
 ```
