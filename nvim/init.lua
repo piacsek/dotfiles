@@ -24,8 +24,6 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("plugins")
 
-require("config.treesitter")
-
 if tonumber(os.date("%H")) <= 13 then
 	vim.g._default_colorscheme = "cyberdream-light"
 else
