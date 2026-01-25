@@ -23,7 +23,6 @@ return {
 			})
 		end, {})
 
-		-- Enable highlighting
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = {
 				"bash",
