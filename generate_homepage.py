@@ -223,16 +223,27 @@ def generate_html(bookmarks, output_path):
             title = bookmark['title'].replace('"', '&quot;')
             url = bookmark['url'].replace('"', '&quot;')
 
-            # Extract domain for display
+            # Extract domain for display and favicon
             try:
                 from urllib.parse import urlparse
                 domain = urlparse(url).netloc
+                # Remove www. prefix for cleaner display
+                display_domain = domain.replace('www.', '') if domain else url
             except:
                 domain = url
+                display_domain = url
+
+            # Use Google's favicon service
+            favicon_url = f"https://www.google.com/s2/favicons?domain={domain}&sz=64"
 
             html += f'''                    <a href="{url}" class="card" data-title="{title.lower()}" data-url="{url.lower()}">
-                        <div class="card-title">{title}</div>
-                        <div class="card-url">{domain}</div>
+                        <div class="card-icon">
+                            <img src="{favicon_url}" alt="{title}" loading="lazy">
+                        </div>
+                        <div class="card-content">
+                            <div class="card-title">{title}</div>
+                            <div class="card-url">{display_domain}</div>
+                        </div>
                     </a>
 '''
 
