@@ -2,7 +2,6 @@ return {
 	"nvim-treesitter/nvim-treesitter",
 	lazy = false,
 	config = function()
-		-- Create command to install parsers
 		vim.api.nvim_create_user_command("TSInstallParsers", function()
 			require("nvim-treesitter").install({
 				"bash",
