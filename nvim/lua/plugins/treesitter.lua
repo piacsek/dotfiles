@@ -1,21 +1,3 @@
-local languages = {
-	"bash",
-	"diff",
-	"html",
-	"lua",
-	"javascript",
-	"typescript",
-	"tsx",
-	"luadoc",
-	"markdown",
-	"vim",
-	"vimdoc",
-	"elixir",
-	"heex",
-	"eex",
-	"json",
-}
-
 local filetypes = {
 	"bash",
 	"diff",
@@ -32,6 +14,12 @@ local filetypes = {
 	"eex",
 	"json",
 }
+
+local languages = vim.list_extend(vim.deepcopy(filetypes), {
+	"tsx",      -- parser for typescriptreact/javascriptreact
+	"luadoc",   -- parser for lua documentation
+	"vimdoc",   -- parser for vim documentation
+})
 
 return {
 	"nvim-treesitter/nvim-treesitter",
