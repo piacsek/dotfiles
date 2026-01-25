@@ -16,9 +16,9 @@ local filetypes = {
 }
 
 local languages = vim.list_extend(vim.deepcopy(filetypes), {
-	"tsx",      -- parser for typescriptreact/javascriptreact
-	"luadoc",   -- parser for lua documentation
-	"vimdoc",   -- parser for vim documentation
+	"tsx",
+	"luadoc",
+	"vimdoc",
 })
 
 return {
