@@ -141,7 +141,7 @@ rm -rf $HOME/.config/nvim
 rm -rf $HOME/.config/ghostty
 
 mkdir -p $HOME/.config/ghostty
-mkdir -p $HOME/scratch.nvim
+mkdir $HOME/scratch.nvim
 
 ln -sf $HOME/dotfiles/nvim $HOME/.config/nvim
 ln -sf $HOME/dotfiles/.ideavimrc $HOME/.ideavimrc
