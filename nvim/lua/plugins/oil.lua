@@ -21,7 +21,8 @@ return {
 					vim.cmd("TestSuite " .. filepath)
 				end,
 				desc = "Run test file under cursor",
-			}
+			},
+		},
 	},
 	keys = {
 		{ "<leader>o", ":Oil<CR>", mode = "n", desc = "Open Oil" },
