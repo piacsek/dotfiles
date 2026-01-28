@@ -22,6 +22,23 @@ return {
 				end,
 				desc = "Run test file under cursor",
 			},
+			["<leader>a"] = {
+				callback = function()
+					local oil = require("oil")
+					local entry = oil.get_cursor_entry()
+
+					if not entry then
+						vim.notify("No file under cursor", vim.log.levels.WARN)
+						return
+					end
+
+					local dir = oil.get_current_dir()
+					local filepath = dir .. entry.name
+
+					vim.cmd("TestSuite " .. filepath)
+				end,
+				desc = "Run test file under cursor",
+			},
 		},
 	},
 	keys = {
