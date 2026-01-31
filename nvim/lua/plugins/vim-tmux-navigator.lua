@@ -1,4 +1,4 @@
 return {
-	"buddy.nvim",
-	dev = true,
+	"christoomey/vim-tmux-navigator",
+	lazy = false,
 }
