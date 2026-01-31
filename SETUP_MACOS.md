@@ -103,6 +103,7 @@ echo "Add it to GitHub: https://github.com/settings/keys"
 ```bash
 brew install \
   btop \
+  tmux \
   1password-cli \
   neovim \
   lazygit \
