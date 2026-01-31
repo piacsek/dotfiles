@@ -146,7 +146,7 @@ mkdir $HOME/scratch.nvim
 
 ln -sf $HOME/dotfiles/nvim $HOME/.config/nvim
 ln -sf $HOME/dotfiles/.ideavimrc $HOME/.ideavimrc
-ln -sf $HOME/dotfiles/tmux.conf $HOME/tmux.conf
+ln -sf $HOME/dotfiles/.tmux.conf $HOME/.tmux.conf
 ln -sf $HOME/dotfiles/opencode.json $HOME/opencode.json
 ln -sf $HOME/dotfiles/.zshrc $HOME/.zshrc
 ln -sf $HOME/dotfiles/.ghosttyrc $HOME/.config/ghostty/config
