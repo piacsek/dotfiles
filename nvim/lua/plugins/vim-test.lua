@@ -44,7 +44,6 @@ return {
 			end,
 			desc = "Save and run last test",
 		},
-		{ "<C-Space>", go_to_test_buffer, desc = "Open vim-test terminal" },
 	},
 	config = function()
 		vim.g["test#strategy"] = "neovim_sticky"
