@@ -13,7 +13,7 @@ local function setup_keymaps(harpoon)
 	end)
 
 	for file_index, key in ipairs({ "j", "k", "l", "h" }) do
-		vim.keymap.set("n", ("<C-%s>"):format(key), function()
+		vim.keymap.set("n", ("<M-%s>"):format(key), function()
 			harpoon:list():select(file_index)
 		end)
 	end
