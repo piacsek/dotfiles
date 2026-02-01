@@ -136,7 +136,9 @@ Clone the dotfiles repository and set up symlinks:
 
 ```bash
 cd $HOME
+
 git clone git@github.com:piacsek/dotfiles.git
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 rm -rf $HOME/.config/nvim
 rm -rf $HOME/.config/ghostty
