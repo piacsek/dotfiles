@@ -1,8 +1,13 @@
 return {
 	"christoomey/vim-tmux-navigator",
 	lazy = false,
-	-- emptying the keys so they don't mess w/ my harpoon keybindinds
-	keys = { {} },
+	keys = {
+		-- { "<M-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
+		-- { "<M-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
+		-- { "<M-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
+		-- { "<M-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
+		-- { "<M-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+	},
 	config = function()
 		vim.keymap.set("n", "<M-h>", ":TmuxNavigateLeft<CR>")
 		vim.keymap.set("n", "<M-j>", ":TmuxNavigateDown<CR>")
