@@ -25,8 +25,8 @@ return {
 				desc = "Run test file under cursor",
 			},
 		},
+		use_default_keymaps = false,
 	},
-	use_default_keymaps = false,
 	keys = {
 		{ "<leader>o", ":Oil<CR>", mode = "n", desc = "Open Oil" },
 	},
