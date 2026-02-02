@@ -28,10 +28,30 @@ return {
 		{
 			"<leader>td",
 			function()
-				local dir = vim.fn.expand("%:p:h")
-				vim.cmd("TestSuite " .. vim.fn.fnameescape(dir))
+				local test_root = vim.g._root_test_dir or "test"
+				local test_dirs = vim.fn.globpath(test_root, "*", false, true)
+				local dirs = {}
+
+				for _, path in ipairs(test_dirs) do
+					if vim.fn.isdirectory(path) == 1 then
+						table.insert(dirs, path)
+					end
+				end
+
+				if #dirs == 0 then
+					vim.notify("No directories found under " .. test_root .. "/", vim.log.levels.WARN)
+					return
+				end
+
+				vim.ui.select(dirs, {
+					prompt = "Select test directory:",
+				}, function(choice)
+					if choice then
+						vim.cmd("TestSuite " .. vim.fn.fnameescape(choice))
+					end
+				end)
 			end,
-			desc = "Test suite in current directory",
+			desc = "Test suite in directory",
 		},
 		{
 			"<leader><BS>",
