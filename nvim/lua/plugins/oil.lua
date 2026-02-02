@@ -5,6 +5,7 @@ return {
 	opts = {
 		view_options = { show_hidden = true },
 		keymaps = {
+			["<CR>"] = { "actions.select" },
 			["-"] = { "actions.parent", mode = "n" },
 			["_"] = { "actions.open_cwd", mode = "n" },
 			["<leader>tt"] = {
