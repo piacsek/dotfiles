@@ -5,10 +5,8 @@ return {
 	opts = {
 		view_options = { show_hidden = true },
 		keymaps = {
-			["C-h"] = false,
-			["C-j"] = false,
-			["C-k"] = false,
-			["C-l"] = false,
+			["-"] = { "actions.parent", mode = "n" },
+			["_"] = { "actions.open_cwd", mode = "n" },
 			["<leader>tt"] = {
 				callback = function()
 					local oil = require("oil")
