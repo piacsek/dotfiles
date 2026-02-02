@@ -15,11 +15,46 @@ return {
 
 							vim.cmd("TestSuite " .. vim.fn.fnameescape(item.file))
 						end,
+						search_in_dir = function(picker)
+							local item = picker:current()
+							if not item then
+								vim.notify("Nothing selected", vim.log.levels.WARN)
+								return
+							end
+
+							-- Get directory path: use item.file if directory, otherwise parent dir
+							local dir_path
+							if item.file then
+								if vim.fn.isdirectory(item.file) == 1 then
+									dir_path = item.file
+								else
+									dir_path = vim.fn.fnamemodify(item.file, ":h")
+								end
+							else
+								dir_path = vim.fn.getcwd()
+							end
+
+							-- Close the explorer picker
+							picker:close()
+
+							-- Open fzf-lua live_grep in the directory
+							require("fzf-lua").live_grep({
+								cwd = dir_path,
+								winopts = {
+									height = 0.9,
+									width = 0.9,
+									preview = {
+										hidden = "nohidden",
+									},
+								},
+							})
+						end,
 					},
 					win = {
 						list = {
 							keys = {
 								["<leader>tt"] = "run_test_file",
+								["<leader>ss"] = "search_in_dir",
 							},
 						},
 					},
