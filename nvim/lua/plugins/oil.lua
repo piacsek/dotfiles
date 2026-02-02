@@ -5,6 +5,7 @@ return {
 	opts = {
 		view_options = { show_hidden = true },
 		keymaps = {
+			["C-s"] = {},
 			["<leader>tt"] = {
 				callback = function()
 					local oil = require("oil")
