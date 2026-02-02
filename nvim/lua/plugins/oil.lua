@@ -26,6 +26,7 @@ return {
 			},
 		},
 	},
+	use_default_keymaps = false,
 	keys = {
 		{ "<leader>o", ":Oil<CR>", mode = "n", desc = "Open Oil" },
 	},
