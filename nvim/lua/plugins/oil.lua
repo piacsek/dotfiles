@@ -5,7 +5,10 @@ return {
 	opts = {
 		view_options = { show_hidden = true },
 		keymaps = {
-			["C-s"] = {},
+			["C-h"] = false,
+			["C-j"] = false,
+			["C-k"] = false,
+			["C-l"] = false,
 			["<leader>tt"] = {
 				callback = function()
 					local oil = require("oil")
