@@ -12,7 +12,7 @@ local function setup_keymaps(harpoon)
 		harpoon:list():add()
 	end)
 
-	for file_index in { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 } do
+	for file_index = 1, 10 do
 		vim.keymap.set("n", ("<C-%s>"):format(file_index), function()
 			harpoon:list():select(file_index)
 		end)
