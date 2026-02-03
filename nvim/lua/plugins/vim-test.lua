@@ -71,7 +71,7 @@ return {
 					},
 				})
 			end,
-			desc = "Test suite in directory (Snacks)",
+			desc = "Test directories",
 		},
 		{
 			"<leader><BS>",
