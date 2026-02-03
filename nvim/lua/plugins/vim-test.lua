@@ -28,6 +28,7 @@ return {
 		{
 			"<leader>td",
 			function()
+				local snacks = require("snacks")
 				local test_root = vim.g._root_test_dir or "test"
 				local test_dirs = vim.fn.globpath(test_root, "*", false, true)
 				local items = {}
@@ -44,7 +45,7 @@ return {
 					return
 				end
 
-				Snacks.picker({
+				snacks.picker({
 					source = "test_dirs",
 					items = items,
 					layout = "select",
