@@ -52,7 +52,6 @@ return {
 					actions = {
 						confirm = function(picker, item)
 							picker:close()
-							vim.notify(table.concat(item, ", "))
 							-- Get all manually selected items (via Tab/Ctrl-a)
 							local sel = picker:get_selected()
 							local paths = {}
