@@ -30,28 +30,48 @@ return {
 			function()
 				local test_root = vim.g._root_test_dir or "test"
 				local test_dirs = vim.fn.globpath(test_root, "*", false, true)
-				local dirs = {}
+				local items = {}
 
 				for _, path in ipairs(test_dirs) do
 					if vim.fn.isdirectory(path) == 1 then
-						table.insert(dirs, path)
+						-- Snacks.picker expects items in a specific format
+						table.insert(items, { text = path, file = path })
 					end
 				end
 
-				if #dirs == 0 then
+				if #items == 0 then
 					vim.notify("No directories found under " .. test_root .. "/", vim.log.levels.WARN)
 					return
 				end
 
-				vim.ui.select(dirs, {
-					prompt = "Select test directory:",
-				}, function(choice)
-					if choice then
-						vim.cmd("TestSuite " .. vim.fn.fnameescape(choice))
-					end
-				end)
+				Snacks.picker({
+					source = "test_dirs",
+					items = items,
+					layout = "select",
+					actions = {
+						confirm = function(picker, item)
+							picker:close()
+							-- Get all manually selected items (via Tab/Ctrl-a)
+							local sel = picker:get_selected()
+							local paths = {}
+
+							if #sel > 0 then
+								for _, s in ipairs(sel) do
+									table.insert(paths, vim.fn.fnameescape(s.text))
+								end
+							elseif item then
+								-- Fallback: if nothing is "selected", use the one under the cursor
+								table.insert(paths, vim.fn.fnameescape(item.text))
+							end
+
+							if #paths > 0 then
+								vim.cmd("TestSuite " .. table.concat(paths, " "))
+							end
+						end,
+					},
+				})
 			end,
-			desc = "Test suite in directory",
+			desc = "Test suite in directory (Snacks)",
 		},
 		{
 			"<leader><BS>",
