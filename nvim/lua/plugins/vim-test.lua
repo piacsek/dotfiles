@@ -53,7 +53,7 @@ return {
 						confirm = function(picker, item)
 							picker:close()
 							-- Get all manually selected items (via Tab/Ctrl-a)
-							local sel = picker:get_selected()
+							local sel = picker:selected()
 							local paths = {}
 
 							if #sel > 0 then
@@ -66,6 +66,8 @@ return {
 
 							if #paths > 0 then
 								vim.cmd("TestSuite " .. table.concat(paths, " "))
+							else
+								vim.notify("No items selected", vim.log.levels.WARN)
 							end
 						end,
 					},
