@@ -60,7 +60,6 @@ return {
 									table.insert(paths, vim.fn.fnameescape(s.text))
 								end
 							elseif item then
-								-- Fallback: if nothing is "selected", use the one under the cursor
 								table.insert(paths, vim.fn.fnameescape(item.text))
 							end
 
