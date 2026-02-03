@@ -20,7 +20,7 @@ end, { desc = "Yank current file path" })
 vim.keymap.set("n", "<C-g>", "#*viw", { desc = "Multiple cursor replacement" })
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Remove search results highlights" })
 
-vim.keymap.set("n", "<leader><Esc>", "<cmd>hide<CR>", { desc = "Hide buffer" })
+vim.keymap.set("n", "<C-Esc>", "<cmd>hide<CR>", { desc = "Hide buffer" })
 vim.keymap.set("n", "<leader>bc", "<cmd>CleanHiddenBuffers<CR>", { desc = "[B]uffer [C]lean hidden" })
 vim.keymap.set("n", "<leader>bs", "<cmd>BufferStats<CR>", { desc = "[B]uffer [S]tats" })
 vim.keymap.set("n", "Y", "y$", { desc = "[Y]ank till the end of the line" })
