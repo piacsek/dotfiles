@@ -76,7 +76,7 @@ return {
 			desc = "Test directories",
 		},
 		{
-			"<leader><BS>",
+			"<leader>q",
 			function()
 				if vim.bo.buftype == "" then
 					vim.cmd("w")
