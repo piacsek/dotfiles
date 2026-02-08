@@ -1,8 +1,4 @@
 return {
-	"AlexvZyl/nordic.nvim",
+	"yassinebridi/vim-purpura",
 	lazy = false,
-	priority = 1000,
-	config = function()
-		require("nordic").load()
-	end,
 }
