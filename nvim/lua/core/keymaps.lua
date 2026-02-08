@@ -1,5 +1,3 @@
-local singleton_term = require("core.singleton_term")
-
 local arrow_disabling_opts = { noremap = true, silent = true }
 vim.keymap.set({ "n", "i", "v", "c" }, "<Up>", "<Nop>", arrow_disabling_opts)
 vim.keymap.set({ "n", "i", "v", "c" }, "<Down>", "<Nop>", arrow_disabling_opts)
