@@ -5,3 +5,10 @@ macos-option-as-alt = true
 keybind = alt+d=scroll_page_down
 keybind = alt+u=scroll_page_up
 keybind = ctrl+space=unbind
+
+# Unbind Ctrl-Alt-number keys to pass through to tmux
+keybind = ctrl+alt+one=unbind
+keybind = ctrl+alt+two=unbind
+keybind = ctrl+alt+three=unbind
+keybind = ctrl+alt+four=unbind
+keybind = ctrl+alt+five=unbind
