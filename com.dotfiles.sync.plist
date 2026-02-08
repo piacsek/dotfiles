@@ -7,7 +7,7 @@
 
     <key>ProgramArguments</key>
     <array>
-			  <string>/Users/piacsek/dotfiles/scripts/sync_dotfiles.sh</string>
+        <string>/Users/piacsek/dotfiles/scripts/sync_dotfiles.sh</string>
         <string>monitor</string>
     </array>
 
