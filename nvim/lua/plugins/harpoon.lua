@@ -27,12 +27,6 @@ local function setup_keymaps(harpoon)
 	vim.keymap.set("n", "<M-h>", function()
 		harpoon:list():select(4)
 	end)
-
-	for file_index = 1, 10 do
-		vim.keymap.set("n", ("<leader>h%s"):format(file_index), function()
-			harpoon:list():select(file_index)
-		end)
-	end
 end
 
 return {
