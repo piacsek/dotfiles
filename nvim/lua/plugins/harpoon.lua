@@ -12,6 +12,10 @@ local function setup_keymaps(harpoon)
 		harpoon:list():add()
 	end)
 
+	vim.keymap.set("n", ("<leader>h%s"):format(file_index), function()
+		harpoon:list():select(file_index)
+	end)
+
 	for file_index = 1, 10 do
 		vim.keymap.set("n", ("<leader>h%s"):format(file_index), function()
 			harpoon:list():select(file_index)
