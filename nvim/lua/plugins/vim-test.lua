@@ -1,25 +1,3 @@
-local function get_test_bufnr()
-	local buffers = vim.fn.getbufinfo({ buflisted = 1 })
-
-	for _, buf in ipairs(buffers) do
-		if buf.variables._test_vim_neovim_sticky == 1 then
-			return buf.bufnr
-		end
-	end
-
-	return nil
-end
-
-local function go_to_test_buffer()
-	local test_buf = get_test_bufnr()
-
-	if test_buf then
-		vim.cmd("buffer " .. test_buf)
-		vim.cmd("normal! G")
-	else
-		vim.notify("No vim-test terminal found", vim.log.levels.WARN)
-	end
-end
 return {
 	"vim-test/vim-test",
 	keys = {
