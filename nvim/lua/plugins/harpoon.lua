@@ -13,7 +13,19 @@ local function setup_keymaps(harpoon)
 	end)
 
 	vim.keymap.set("n", "<M-j>", function()
-		harpoon:list():select(0)
+		harpoon:list():select(1)
+	end)
+
+	vim.keymap.set("n", "<M-k>", function()
+		harpoon:list():select(2)
+	end)
+
+	vim.keymap.set("n", "<M-l>", function()
+		harpoon:list():select(4)
+	end)
+
+	vim.keymap.set("n", "<M-h>", function()
+		harpoon:list():select(4)
 	end)
 
 	for file_index = 1, 10 do
