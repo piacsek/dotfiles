@@ -26,7 +26,7 @@
     <key>EnvironmentVariables</key>
     <dict>
         <key>PATH</key>
-        <string>/Users/piacsek/.asdf/shims:/Users/piacsek/.asdf/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin</string>
+        <string>/Users/piacsek/.local/bin:/Users/piacsek/.asdf/shims:/Users/piacsek/.asdf/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin</string>
         <key>HOME</key>
         <string>/Users/piacsek</string>
     </dict>
