@@ -304,10 +304,10 @@ which git zsh fzf rg fd bat eza
 
 ## Notes
 
-- Run `brew update && brew upgrade` regularly to keep packages updated;
-- Some apps may require manual configuration on first launch;
-- Add license keys for paid apps (rcmd, Cleanshot, Pasty);
-- Restart terminal after major changes to environment;
+- Run `brew update && brew upgrade` regularly to keep packages updated
+- Some apps may require manual configuration on first launch
+- Add license keys for paid apps (rcmd, Cleanshot, Pasty)
+- Restart terminal after major changes to environment
 
 ---
 
