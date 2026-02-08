@@ -1,5 +1,5 @@
 local function setup_keymaps(harpoon)
-	vim.keymap.set("n", "<leader>e", function()
+	vim.keymap.set("n", "<M-h>", function()
 		harpoon.ui:toggle_quick_menu(require("harpoon"):list())
 	end)
 
