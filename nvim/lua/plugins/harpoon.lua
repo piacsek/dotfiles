@@ -5,7 +5,7 @@ return {
 	config = function()
 		local harpoon = require("harpoon")
 		harpoon:setup()
-		vim.keymap.set("n", "<M-h>", function()
+		vim.keymap.set("n", "<M-e>", function()
 			harpoon.ui:toggle_quick_menu(require("harpoon"):list())
 		end)
 
