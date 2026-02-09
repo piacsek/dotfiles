@@ -1,8 +1,6 @@
 return {
-	"AlexvZyl/nordic.nvim",
+	"yashranjan1/purple-rain.nvim",
 	lazy = false,
 	priority = 1000,
-	config = function()
-		require("nordic").load()
-	end,
+	opts = {},
 }
