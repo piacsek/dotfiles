@@ -27,6 +27,7 @@
   "oil.nvim": { "branch": "master", "commit": "f55b25e493a7df76371cfadd0ded5004cb9cd48a" },
   "overseer.nvim": { "branch": "master", "commit": "5828bdbd86677497613033c142f0a8624489216f" },
   "plenary.nvim": { "branch": "master", "commit": "b9fd5226c2f76c951fc8ed5923d85e4de065e509" },
+  "purple-rain.nvim": { "branch": "main", "commit": "ec9033511948c7bc7ad0e18a607dc090cf87f9dd" },
   "rainbow12": { "branch": "master", "commit": "51ad878f8da7cc7ba795bd73fe28dcbfbe55dddd" },
   "scratch.nvim": { "branch": "main", "commit": "1e78854fd3140411b231d5b6f9b3559b1ba5de77" },
   "snacks.nvim": { "branch": "main", "commit": "fe7cfe9800a182274d0f868a74b7263b8c0c020b" },
