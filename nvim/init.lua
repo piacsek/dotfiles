@@ -31,9 +31,8 @@ require("lazy").setup("plugins", {
 -- if tonumber(os.date("%H")) <= 13 then
 -- vim.g._default_colorscheme = "cyberdream-light"
 -- else
--- vim.g._default_colorscheme = "moonfly"
+vim.g._default_colorscheme = "moonfly"
 -- vim.g._default_colorscheme = "high-contrast"
-vim.g._default_colorscheme = "purple-rain"
 -- end
 vim.cmd.colorscheme(vim.g._default_colorscheme)
 
