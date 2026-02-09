@@ -6,6 +6,10 @@ return {
 		require("purple-rain").setup({
 			transparent = false,
 			terminal_colors = true,
+			on_highlights = function(hl, c)
+				hl.NormalFloat = { bg = c.bg }
+				hl.FloatBorder = { bg = c.bg, fg = c.border }
+			end,
 		})
 	end,
 }
