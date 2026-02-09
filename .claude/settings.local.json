@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(tmux list-windows:*)"
+      "Bash(tmux list-windows:*)",
+      "WebFetch(domain:github.com)"
     ]
   }
 }
