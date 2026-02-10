@@ -15,7 +15,7 @@ if [ "$backend_state" != "Running" ]; then
 fi
 
 # Check for active exit node
-exit_node=$(tailscale exit-node list 2>/dev/null | grep "selected" | awk '{print $2}' | cut -d'.' -f1)
+exit_node=$(tailscale status 2>/dev/null | grep "active; exit node" | awk '{print $2}' | cut -d'.' -f1)
 
 if [ -n "$exit_node" ]; then
     echo "T:ON|EXIT:$exit_node"
