@@ -8,11 +8,11 @@ return {
 			pattern = "moonfly",
 			callback = function()
 				-- Customize Elixir module colors to cyan
-				local cyan = "#37cccc" -- moonfly's cyan color
-
-				vim.api.nvim_set_hl(0, "@module.elixir", { fg = cyan })
-				vim.api.nvim_set_hl(0, "@lsp.type.namespace.elixir", { fg = cyan })
-				vim.api.nvim_set_hl(0, "@type.elixir", { fg = cyan })
+				-- local cyan = "#37cccc" -- moonfly's cyan color
+				--
+				-- vim.api.nvim_set_hl(0, "@module.elixir", { fg = cyan })
+				-- vim.api.nvim_set_hl(0, "@lsp.type.namespace.elixir", { fg = cyan })
+				-- vim.api.nvim_set_hl(0, "@type.elixir", { fg = cyan })
 			end,
 		})
 	end,
