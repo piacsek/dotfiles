@@ -2,7 +2,7 @@
 
 # Check if tsh is available
 if ! command -v tsh &>/dev/null; then
-    echo "K:N/A"
+    echo "K8s:N/A"
     exit 0
 fi
 
@@ -10,10 +10,10 @@ fi
 selected_cluster=$(tsh kube ls 2>/dev/null | grep '\*' | awk '{print $1}')
 
 if [ -z "$selected_cluster" ]; then
-    echo "K:NONE"
+    echo "K8s:NONE"
 else
     # Extract environment from cluster name (e.g., "production" from "production-gke-cluster-1")
     # Try to get the first part before dash or use full name if short
     short_name=$(echo "$selected_cluster" | cut -d'-' -f1)
-    echo "K:$short_name"
+    echo "K8s:$short_name"
 fi
