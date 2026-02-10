@@ -7,7 +7,7 @@ if ! tailscale status &>/dev/null; then
 fi
 
 # Check backend state
-backend_state=$(tailscale status --json 2>/dev/null | grep -o '"BackendState":"[^"]*"' | cut -d'"' -f4)
+backend_state=$(tailscale status --json 2>/dev/null | grep -o '"BackendState": "[^"]*"' | cut -d'"' -f4)
 
 if [ "$backend_state" != "Running" ]; then
     echo "T:OFF"
