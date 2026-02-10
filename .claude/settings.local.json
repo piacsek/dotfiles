@@ -3,7 +3,8 @@
     "allow": [
       "Bash(tmux list-windows:*)",
       "WebFetch(domain:github.com)",
-      "Bash(tailscale status:*)"
+      "Bash(tailscale status:*)",
+      "Bash(/Users/piacsek/dotfiles/scripts/tmux-tailscale-status:*)"
     ]
   }
 }
