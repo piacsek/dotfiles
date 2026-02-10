@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# Check if Tailscale is running
+if ! tailscale status &>/dev/null; then
+    echo "T:OFF"
+    exit 0
+fi
+
+# Check backend state
+backend_state=$(tailscale status --json 2>/dev/null | grep -o '"BackendState":"[^"]*"' | cut -d'"' -f4)
+
+if [ "$backend_state" != "Running" ]; then
+    echo "T:OFF"
+    exit 0
+fi
+
+# Check for active exit node
+exit_node=$(tailscale exit-node list 2>/dev/null | grep "selected" | awk '{print $2}' | cut -d'.' -f1)
+
+if [ -n "$exit_node" ]; then
+    echo "T:ON|EXIT:$exit_node"
+else
+    echo "T:ON"
+fi
