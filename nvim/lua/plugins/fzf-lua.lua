@@ -98,7 +98,9 @@ local function run_script_picker(fzf)
 				if not selected or #selected == 0 then
 					return
 				end
+
 				local script_name = selected[1]
+
 				local cmd =
 					string.format("tmux split-window -v -p 50 '%s; read -p \"Press enter to close...\"'", script_name)
 				vim.fn.system(cmd)
