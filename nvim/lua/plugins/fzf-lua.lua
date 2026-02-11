@@ -29,8 +29,8 @@ end
 
 local function run_script_picker(fzf)
 	local script_dirs = {
-		vim.fn.expand("~/scripts"),
-		vim.fn.expand("~/dotfiles/scripts"),
+		vim.fn.expand("$HOME/scripts"),
+		vim.fn.expand("$HOME/dotfiles/scripts"),
 	}
 
 	local scripts = {}
