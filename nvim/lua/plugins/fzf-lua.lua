@@ -72,11 +72,9 @@ local function run_script_picker(fzf)
 			end,
 			["ctrl-w"] = function(selected)
 				if not selected or #selected == 0 then
-					return
-				local cmd = string.format("tmux new-window '%s';", selected[1])
+					local cmd = string.format("tmux new-window '%s';", selected[1])
+					vim.fn.system(cmd)
 				end
-
-				vim.fn.system(cmd)
 			end,
 			["ctrl-s"] = function(selected)
 				if not selected or #selected == 0 then
