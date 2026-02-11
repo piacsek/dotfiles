@@ -77,12 +77,10 @@ local function run_script_picker(fzf)
 				end
 			end,
 			["ctrl-s"] = function(selected)
-				if not selected or #selected == 0 then
-					return
+				if selected and #selected == 1 then
+					local cmd = string.format("tmux split-window -v -p 50 '%s';", selected[1])
+					vim.fn.system(cmd)
 				end
-				local cmd = string.format("tmux split-window -v -p 50 '%s';", selected[1])
-
-				vim.fn.system(cmd)
 			end,
 			["ctrl-v"] = function(selected)
 				if not selected or #selected == 0 then
