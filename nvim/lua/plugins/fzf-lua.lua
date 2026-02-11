@@ -99,15 +99,6 @@ local function run_script_picker(fzf)
 					return
 				end
 				local script_name = selected[1]
-				local full_path = nil
-				for _, entry in ipairs(entries) do
-					if entry.display == script_name then
-						full_path = entry.path
-						break
-					end
-				end
-				if full_path then
-				end
 				local cmd =
 					string.format("tmux split-window -v -p 50 '%s; read -p \"Press enter to close...\"'", script_name)
 				vim.fn.system(cmd)
