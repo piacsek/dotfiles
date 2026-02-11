@@ -30,9 +30,6 @@ vim.opt.timeoutlen = 300
 vim.opt.updatetime = 500
 vim.opt.undofile = true
 
--- Enable bold fonts
-vim.opt.bold = true
-
 vim.diagnostic.config({
 	virtual_text = {
 		prefix = "●",
