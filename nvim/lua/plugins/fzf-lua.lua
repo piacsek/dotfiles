@@ -74,7 +74,6 @@ local function run_script_picker(fzf)
 				if not selected or #selected == 0 then
 					return
 				end
-				-- Find the full path
 				local script_name = selected[1]
 				local full_path = nil
 				for _, entry in ipairs(entries) do
@@ -84,7 +83,6 @@ local function run_script_picker(fzf)
 					end
 				end
 				if full_path then
-					-- Execute without tmux wrapping
 					vim.cmd("!" .. vim.fn.shellescape(full_path))
 				end
 			end,
@@ -101,7 +99,6 @@ local function run_script_picker(fzf)
 					end
 				end
 				if full_path then
-					-- Execute in new tmux window
 					local cmd = string.format("tmux new-window '%s; read -p \"Press enter to close...\"'", full_path)
 					vim.fn.system(cmd)
 				end
@@ -119,11 +116,8 @@ local function run_script_picker(fzf)
 					end
 				end
 				if full_path then
-					-- Execute in horizontal split (50%)
-					local cmd = string.format(
-						"tmux split-window -v -p 50 '%s; read -p \"Press enter to close...\"'",
-						full_path
-					)
+					local cmd =
+						string.format("tmux split-window -v -p 50 '%s; read -p \"Press enter to close...\"'", full_path)
 					vim.fn.system(cmd)
 				end
 			end,
@@ -140,11 +134,8 @@ local function run_script_picker(fzf)
 					end
 				end
 				if full_path then
-					-- Execute in vertical split (50%)
-					local cmd = string.format(
-						"tmux split-window -h -p 50 '%s; read -p \"Press enter to close...\"'",
-						full_path
-					)
+					local cmd =
+						string.format("tmux split-window -h -p 50 '%s; read -p \"Press enter to close...\"'", full_path)
 					vim.fn.system(cmd)
 				end
 			end,
