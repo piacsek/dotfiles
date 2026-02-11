@@ -27,7 +27,137 @@ function vim.getVisualSelection()
 	return #text > 0 and text or ""
 end
 
+local function run_script_picker(fzf)
+	local script_dirs = {
+		vim.fn.expand("~/scripts"),
+		vim.fn.expand("~/dotfiles/scripts"),
+	}
+
+	-- Collect all executable scripts
+	local scripts = {}
+	for _, dir in ipairs(script_dirs) do
+		if vim.fn.isdirectory(dir) == 1 then
+			local files = vim.fn.glob(dir .. "/*", false, true)
+			for _, file in ipairs(files) do
+				if vim.fn.executable(file) == 1 then
+					table.insert(scripts, file)
+				end
+			end
+		end
+	end
+
+	if #scripts == 0 then
+		vim.notify("No executable scripts found", vim.log.levels.WARN)
+		return
+	end
+
+	-- Create display entries (just the filename)
+	local entries = {}
+	for _, script in ipairs(scripts) do
+		local display = vim.fn.fnamemodify(script, ":t")
+		table.insert(entries, { display = display, path = script })
+	end
+
+	fzf.fzf_exec(function(fzf_cb)
+		for _, entry in ipairs(entries) do
+			fzf_cb(entry.display)
+		end
+		fzf_cb()
+	end, {
+		prompt = "Scripts> ",
+		winopts = {
+			height = 0.4,
+			width = 0.5,
+		},
+		actions = {
+			["default"] = function(selected)
+				if not selected or #selected == 0 then
+					return
+				end
+				-- Find the full path
+				local script_name = selected[1]
+				local full_path = nil
+				for _, entry in ipairs(entries) do
+					if entry.display == script_name then
+						full_path = entry.path
+						break
+					end
+				end
+				if full_path then
+					-- Execute without tmux wrapping
+					vim.cmd("!" .. vim.fn.shellescape(full_path))
+				end
+			end,
+			["ctrl-w"] = function(selected)
+				if not selected or #selected == 0 then
+					return
+				end
+				local script_name = selected[1]
+				local full_path = nil
+				for _, entry in ipairs(entries) do
+					if entry.display == script_name then
+						full_path = entry.path
+						break
+					end
+				end
+				if full_path then
+					-- Execute in new tmux window
+					local cmd = string.format("tmux new-window '%s; read -p \"Press enter to close...\"'", full_path)
+					vim.fn.system(cmd)
+				end
+			end,
+			["ctrl-s"] = function(selected)
+				if not selected or #selected == 0 then
+					return
+				end
+				local script_name = selected[1]
+				local full_path = nil
+				for _, entry in ipairs(entries) do
+					if entry.display == script_name then
+						full_path = entry.path
+						break
+					end
+				end
+				if full_path then
+					-- Execute in horizontal split (50%)
+					local cmd = string.format(
+						"tmux split-window -v -p 50 '%s; read -p \"Press enter to close...\"'",
+						full_path
+					)
+					vim.fn.system(cmd)
+				end
+			end,
+			["ctrl-v"] = function(selected)
+				if not selected or #selected == 0 then
+					return
+				end
+				local script_name = selected[1]
+				local full_path = nil
+				for _, entry in ipairs(entries) do
+					if entry.display == script_name then
+						full_path = entry.path
+						break
+					end
+				end
+				if full_path then
+					-- Execute in vertical split (50%)
+					local cmd = string.format(
+						"tmux split-window -h -p 50 '%s; read -p \"Press enter to close...\"'",
+						full_path
+					)
+					vim.fn.system(cmd)
+				end
+			end,
+		},
+	})
+end
+
 local function setup_keymaps(fzf)
+	-- Script runner
+	vim.keymap.set("n", "<leader>r", function()
+		run_script_picker(fzf)
+	end, { desc = "[R]un script" })
+
 	-- Find files
 	vim.keymap.set("n", "<leader>ff", fzf.files, { desc = "[F]ind [F]iles" })
 	vim.keymap.set("n", "<leader>fh", fzf.help_tags, { desc = "[F]ind [H]elp" })
