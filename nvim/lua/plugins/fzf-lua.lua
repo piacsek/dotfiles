@@ -33,7 +33,6 @@ local function run_script_picker(fzf)
 		vim.fn.expand("~/dotfiles/scripts"),
 	}
 
-	-- Collect all executable scripts
 	local scripts = {}
 	for _, dir in ipairs(script_dirs) do
 		if vim.fn.isdirectory(dir) == 1 then
@@ -51,7 +50,6 @@ local function run_script_picker(fzf)
 		return
 	end
 
-	-- Create display entries (just the filename)
 	local entries = {}
 	for _, script in ipairs(scripts) do
 		local display = vim.fn.fnamemodify(script, ":t")
