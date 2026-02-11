@@ -109,7 +109,7 @@ local function run_script_picker(fzf)
 				if full_path then
 				end
 				local cmd =
-					string.format("tmux split-window -v -p 50 '%s; read -p \"Press enter to close...\"'", full_path)
+					string.format("tmux split-window -v -p 50 '%s; read -p \"Press enter to close...\"'", script_name)
 				vim.fn.system(cmd)
 			end,
 			["ctrl-v"] = function(selected)
