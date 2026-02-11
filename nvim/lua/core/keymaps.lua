@@ -54,29 +54,3 @@ end, { desc = "[P]aste in insert mode" })
 
 vim.keymap.set("n", "g<Enter>", "gF", { desc = "Go to file with line number support" })
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
-
--- Lua code evaluation with persistent output buffer
-local lua_output_buf = nil
-
-local function open_lua_output_buffer()
-	local buf_valid = lua_output_buf and vim.api.nvim_buf_is_valid(lua_output_buf)
-
-	if not buf_valid then
-		vim.cmd("vnew")
-		lua_output_buf = vim.api.nvim_get_current_buf()
-		vim.bo[lua_output_buf].buftype = "nofile"
-		vim.bo[lua_output_buf].bufhidden = "hide"
-		vim.bo[lua_output_buf].filetype = "lua"
-		vim.api.nvim_buf_set_name(lua_output_buf, "[Lua Output]")
-	else
-		local win = vim.fn.bufwinid(lua_output_buf)
-		if win == -1 then
-			vim.cmd("vsplit")
-			vim.api.nvim_set_current_buf(lua_output_buf)
-		else
-			vim.api.nvim_set_current_win(win)
-		end
-	end
-
-	return lua_output_buf
-end
