@@ -63,10 +63,7 @@ local function run_script_picker(fzf)
 		fzf_cb()
 	end, {
 		prompt = "Scripts> ",
-		winopts = {
-			height = 0.4,
-			width = 0.5,
-		},
+		winopts = { height = 0.4, width = 0.5 },
 		actions = {
 			["default"] = function(selected)
 				if not selected or #selected == 0 then
