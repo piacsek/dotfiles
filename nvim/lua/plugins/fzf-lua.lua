@@ -82,9 +82,7 @@ local function run_script_picker(fzf)
 						break
 					end
 				end
-				if full_path then
-					vim.cmd("!" .. vim.fn.shellescape(full_path))
-				end
+				vim.fn.system(script_name)
 			end,
 			["ctrl-w"] = function(selected)
 				if not selected or #selected == 0 then
