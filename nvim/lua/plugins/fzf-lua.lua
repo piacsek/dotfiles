@@ -125,10 +125,11 @@ local function run_script_picker(fzf)
 					end
 				end
 				if full_path then
-					local cmd =
-						string.format("tmux split-window -h -p 50 '%s; read -p \"Press enter to close...\"'", full_path)
 					vim.fn.system(cmd)
 				end
+
+				local cmd =
+					string.format("tmux split-window -h -p 50 '%s; read -p \"Press enter to close...\"'", full_path)
 			end,
 		},
 	})
