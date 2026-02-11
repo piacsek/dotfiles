@@ -66,11 +66,9 @@ local function run_script_picker(fzf)
 		winopts = { height = 0.4, width = 0.5 },
 		actions = {
 			["default"] = function(selected)
-				if not selected or #selected == 0 then
-					return
+				if selected and #selected == 1 then
+					vim.fn.system(selected[1])
 				end
-				local script_name = selected[1]
-				vim.fn.system(script_name)
 			end,
 			["ctrl-w"] = function(selected)
 				if not selected or #selected == 0 then
