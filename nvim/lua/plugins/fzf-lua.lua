@@ -90,9 +90,9 @@ local function run_script_picker(fzf)
 					end
 				end
 				if full_path then
-					local cmd = string.format("tmux new-window '%s; read -p \"Press enter to close...\"'", full_path)
-					vim.fn.system(cmd)
 				end
+				local cmd = string.format("tmux new-window '%s; read -p \"Press enter to close...\"'", full_path)
+				vim.fn.system(cmd)
 			end,
 			["ctrl-s"] = function(selected)
 				if not selected or #selected == 0 then
