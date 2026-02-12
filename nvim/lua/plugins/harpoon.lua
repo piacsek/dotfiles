@@ -15,23 +15,24 @@ return {
 			harpoon:list():add()
 		end)
 
-		vim.keymap.set("n", "<M-z>", function()
+		vim.keymap.set("n", "<M-j>", function()
 			harpoon:list():select(1)
 		end)
 
-		vim.keymap.set("n", "<M-x>", function()
+		vim.keymap.set("n", "<M-k>", function()
 			harpoon:list():select(2)
 		end)
 
-		vim.keymap.set("n", "<M-c>", function()
+		vim.keymap.set("n", "<M-l>", function()
 			harpoon:list():select(3)
 		end)
 
-		vim.keymap.set("n", "<M-v>", function()
+		vim.keymap.set("n", "<M-;>", function()
 			harpoon:list():select(4)
 		end)
-		vim.keymap.set("n", "<M-b>", function()
-			harpoon:list():select(4)
+
+		vim.keymap.set("n", "<M-'>", function()
+			harpoon:list():select(5)
 		end)
 
 		vim.keymap.set("n", "<M-e>", function()
