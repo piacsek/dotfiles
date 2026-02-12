@@ -28,15 +28,15 @@ function vim.getVisualSelection()
 end
 
 local function run_script_picker(fzf)
-	-- local entries = vim.g._available_scripts
-	local entries = {
-		"nova_pre_ci_checks",
-		"nova_rcp",
-		"nova_deps",
-		"moxit_and_auth_api",
-		"k9s_staging",
-		"k9s_production",
-	}
+	local entries = vim.g._available_scripts
+	-- local entries = {
+	-- 	"nova_pre_ci_checks",
+	-- 	"nova_rcp",
+	-- 	"nova_deps",
+	-- 	"moxit_and_auth_api",
+	-- 	"k9s_staging",
+	-- 	"k9s_production",
+	-- }
 	fzf.fzf_exec(function(fzf_cb)
 		for _, entry in ipairs(entries) do
 			fzf_cb(entry)
