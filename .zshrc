@@ -40,6 +40,7 @@ alias bank='cd $HOME/Projects/ex_bank/ && nvim'
 alias dotfiles='cd $HOME/dotfiles/'
 alias lz='lazygit'
 
+bindkey -r '\ed'
 
 if [ -f $HOME/.zshrc_work ]; then
 	source $HOME/.zshrc_work
