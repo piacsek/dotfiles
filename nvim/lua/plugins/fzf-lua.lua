@@ -66,8 +66,8 @@ local function run_script_picker(fzf)
 		end
 	end
 	fzf.fzf_exec(function(fzf_cb)
-		for _, entry in ipairs(entries) do
-			fzf_cb(entry.display)
+		for entry in entries do
+			fzf_cb(entry)
 		end
 		fzf_cb()
 	end, {
