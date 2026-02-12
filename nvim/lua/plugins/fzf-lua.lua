@@ -50,12 +50,13 @@ local function run_script_picker(fzf)
 		return
 	end
 
-	local entries = {}
-	for _, script in ipairs(scripts) do
-		local display = vim.fn.fnamemodify(script, ":t")
-		table.insert(entries, { display = display, path = script })
+	local entries = vim.g._available_scripts
+	if not entries then
+		for _, script in ipairs(scripts) do
+			local display = vim.fn.fnamemodify(script, ":t")
+			table.insert(entries, { display = display, path = script })
+		end
 	end
-
 	fzf.fzf_exec(function(fzf_cb)
 		for _, entry in ipairs(entries) do
 			fzf_cb(entry.display)
