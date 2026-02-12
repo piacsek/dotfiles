@@ -59,12 +59,6 @@ local function run_script_picker(fzf)
 		"k9s_staging",
 		"k9s_production",
 	}
-	if not entries then
-		for _, script in ipairs(scripts) do
-			local display = vim.fn.fnamemodify(script, ":t")
-			table.insert(entries, { display = display, path = script })
-		end
-	end
 	fzf.fzf_exec(function(fzf_cb)
 		for entry in entries do
 			fzf_cb(entry)
