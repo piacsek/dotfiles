@@ -39,7 +39,7 @@ vim.cmd.colorscheme(vim.g._default_colorscheme)
 vim.notify = require("snacks").notifier.notify
 
 require("core.lsp")
-local home_init = "$HOME/init.lua"
+local home_init = vim.fn.expand("$HOME/init.lua")
 if vim.fn.filereadable(home_init) == 1 then
 	dofile(home_init)
 end
