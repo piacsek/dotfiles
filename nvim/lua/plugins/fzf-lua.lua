@@ -190,13 +190,15 @@ return {
 			},
 		}
 
-		local cwd = vim.fn.getcwd()
-		local local_config_path = cwd .. "/piacsek/fzf.lua"
+		if not vim.g._available_scripts then
+			local cwd = vim.fn.getcwd()
+			local local_config_path = cwd .. "/piacsek/fzf.lua"
 
-		if vim.fn.filereadable(local_config_path) == 1 then
-			local ok, local_config = pcall(dofile, local_config_path)
-			if ok and local_config then
-				config = vim.tbl_deep_extend("force", config, local_config)
+			if vim.fn.filereadable(local_config_path) == 1 then
+				local ok, local_config = pcall(dofile, local_config_path)
+				if ok and local_config then
+					config = vim.tbl_deep_extend("force", config, local_config)
+				end
 			end
 		end
 
