@@ -50,7 +50,15 @@ local function run_script_picker(fzf)
 		return
 	end
 
-	local entries = vim.g._available_scripts
+	-- local entries = vim.g._available_scripts
+	local entries = {
+		"nova_pre_ci_checks",
+		"nova_rcp",
+		"nova_deps",
+		"moxit_and_auth_api",
+		"k9s_staging",
+		"k9s_production",
+	}
 	if not entries then
 		for _, script in ipairs(scripts) do
 			local display = vim.fn.fnamemodify(script, ":t")
