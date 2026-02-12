@@ -39,6 +39,11 @@ vim.cmd.colorscheme(vim.g._default_colorscheme)
 vim.notify = require("snacks").notifier.notify
 
 require("core.lsp")
+local home_init = "$HOME/init.lua"
+if vim.fn.filereadable(home_init) == 1 then
+	dofile(home_init)
+end
+
 local local_init = vim.fn.getcwd() .. "/piacsek/init.lua"
 if vim.fn.filereadable(local_init) == 1 then
 	dofile(local_init)
