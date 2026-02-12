@@ -31,6 +31,7 @@ local function run_script_picker(fzf)
 	local entries = vim.g._available_scripts
 	if entries == nil then
 		vim.notify("No available scripts configured. Please set vim.g._available_scripts", vim.log.levels.ERROR)
+		return
 	end
 
 	fzf.fzf_exec(function(fzf_cb)
