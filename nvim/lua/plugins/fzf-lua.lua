@@ -33,23 +33,6 @@ local function run_script_picker(fzf)
 		vim.fn.expand("$HOME/dotfiles/scripts"),
 	}
 
-	local scripts = {}
-	for _, dir in ipairs(script_dirs) do
-		if vim.fn.isdirectory(dir) == 1 then
-			local files = vim.fn.glob(dir .. "/*", false, true)
-			for _, file in ipairs(files) do
-				if vim.fn.executable(file) == 1 then
-					table.insert(scripts, file)
-				end
-			end
-		end
-	end
-
-	if #scripts == 0 then
-		vim.notify("No executable scripts found", vim.log.levels.WARN)
-		return
-	end
-
 	-- local entries = vim.g._available_scripts
 	local entries = {
 		"nova_pre_ci_checks",
