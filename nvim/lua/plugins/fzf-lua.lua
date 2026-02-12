@@ -38,7 +38,10 @@ local function run_script_picker(fzf)
 		"k9s_production",
 	}
 	fzf.fzf_exec(function(fzf_cb)
-		fzf_cb(entries)
+		for _, entry in ipairs(entries) do
+			fzf_cb(entry)
+		end
+		fzf_cb()
 	end, {
 		prompt = "Scripts> ",
 		winopts = { height = 0.4, width = 0.5 },
