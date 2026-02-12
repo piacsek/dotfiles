@@ -30,6 +30,9 @@ return {
 		vim.keymap.set("n", "<M-v>", function()
 			harpoon:list():select(4)
 		end)
+		vim.keymap.set("n", "<M-b>", function()
+			harpoon:list():select(4)
+		end)
 
 		vim.keymap.set("n", "<M-e>", function()
 			harpoon.ui:toggle_quick_menu(require("harpoon"):list())
