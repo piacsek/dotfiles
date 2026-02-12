@@ -28,11 +28,6 @@ function vim.getVisualSelection()
 end
 
 local function run_script_picker(fzf)
-	local script_dirs = {
-		vim.fn.expand("$HOME/scripts"),
-		vim.fn.expand("$HOME/dotfiles/scripts"),
-	}
-
 	-- local entries = vim.g._available_scripts
 	local entries = {
 		"nova_pre_ci_checks",
