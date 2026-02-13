@@ -45,7 +45,7 @@ map <leader>n <Action>(NewScratchFile)
 map <leader>` <Action>(NextProjectWindow)
 map <leader><Enter> <Action>(HideAllWindows)
 map <Tab> <Action>(NextSplitter)
-map <leader><Esc> <Action>(CloseContent)
+map <C-Esc> <Action>(CloseContent)
 map <leader><Del> <Action>(UnsplitAll)
 
 """ Mappings - VCS
