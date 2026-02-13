@@ -47,7 +47,7 @@ map <leader><Enter> <Action>(HideAllWindows)
 map <Tab> <Action>(NextSplitter)
 map <C-Esc> <Action>(CloseContent)
 map <leader><Del> <Action>(UnsplitAll)
-map <C-y> <Action>(EditorChooseLookupItemReplace)
+imap <C-y> <Action>(EditorChooseLookupItemReplace)
 
 """ Mappings - VCS
 """ map <leader>l <Action>(TUILauncher.lazygitlego)
