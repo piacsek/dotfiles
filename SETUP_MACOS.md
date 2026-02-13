@@ -308,6 +308,7 @@ which git zsh fzf rg fd bat eza
 - Some apps may require manual configuration on first launch
 - Add license keys for paid apps (rcmd, Cleanshot, Pasty)
 - Restart terminal after major changes to environment
+- If the keyboard doesn't connect via bluetooth, check [this](https://docs.moergo.com/glove80-user-guide/troubleshooting/)
 
 ---
 
