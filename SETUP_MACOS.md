@@ -268,11 +268,12 @@ cp "$HOME/dotfiles/docker-settings.json" "$HOME/Library/Group Containers/group.c
 echo "Docker settings configured. Launch Docker to apply."
 ```
 
-#### Dock Settings
+#### MacOS Settings
 
 ```bash
 # Enable auto-hide
 defaults write com.apple.dock autohide -bool true && killall Dock
+defaults write -g ApplePressAndHoldEnabled -bool false
 ```
 
 #### Manual Settings
