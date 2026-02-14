@@ -25,6 +25,25 @@ return {
 				end,
 				desc = "Run test file under cursor",
 			},
+			["<leader>x"] = {
+				callback = function()
+					local oil = require("oil")
+					local entry = oil.get_cursor_entry()
+
+					if not entry then
+						vim.notify("No file under cursor", vim.log.levels.WARN)
+						return
+					end
+
+					local dir = oil.get_current_dir()
+					local filepath = dir .. entry.name
+
+					vim.fn.system("chmod +x " .. vim.fn.shellescape(filepath))
+					vim.notify("Made executable: " .. entry.name, vim.log.levels.INFO)
+					oil.refresh()
+				end,
+				desc = "Make file executable (chmod +x)",
+			},
 		},
 		use_default_keymaps = false,
 	},
