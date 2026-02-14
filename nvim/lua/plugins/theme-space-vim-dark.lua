@@ -1,5 +1,5 @@
 return {
-	"oxidescheme/oxide.nvim",
+	"liuchengxu/space-vim-dark",
 	lazy = false,
 	priority = 1000,
 }
