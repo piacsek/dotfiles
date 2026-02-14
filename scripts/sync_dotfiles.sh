@@ -28,7 +28,7 @@ generate_commit_message() {
 $diff_output"
     
     local commit_msg
-    commit_msg=$(echo "$claude_prompt" | claude 2>/dev/null | tr -d '\n\r' | sed 's/[[:space:]]\+/ /g' | xargs)
+    commit_msg=$(echo "$claude_prompt" | claude --print --no-session-persistence 2>/dev/null | tr -d '\n\r' | sed 's/[[:space:]]\+/ /g' | xargs)
     
     # Fallback if Claude fails or returns empty
     if [[ -z "$commit_msg" || "$commit_msg" == *"error"* ]]; then
