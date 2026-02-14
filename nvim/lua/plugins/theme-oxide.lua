@@ -1,5 +1,5 @@
 return {
-	"piacsek/high-contrast.nvim",
+	"oxidescheme/oxide.nvim",
 	lazy = false,
 	priority = 1000,
 }
