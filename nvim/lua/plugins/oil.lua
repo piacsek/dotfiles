@@ -35,8 +35,7 @@ return {
 						return
 					end
 
-					local dir = oil.get_current_dir()
-					local filepath = dir .. entry.name
+					local filepath = oil.get_current_dir() .. entry.name
 
 					vim.fn.system("chmod +x " .. vim.fn.shellescape(filepath))
 					vim.notify("Made executable: " .. entry.name, vim.log.levels.INFO)
