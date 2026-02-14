@@ -7,7 +7,6 @@
   "conform.nvim": { "branch": "master", "commit": "c2526f1cde528a66e086ab1668e996d162c75f4f" },
   "cyberdream.nvim": { "branch": "main", "commit": "a68ffa6af98bf1fc88f33a071c51a188ec85c725" },
   "fzf-lua": { "branch": "main", "commit": "36d60dd59cd9bc0442352119fc0e45e1c9011e03" },
-  "ghostty-theme-sync.nvim": { "branch": "main", "commit": "94b4fcd3c09d695d252a7ec14d1550d08f5a1fe5" },
   "gitsigns.nvim": { "branch": "main", "commit": "1ce96a464fdbc24208e24c117e2021794259005d" },
   "harpoon": { "branch": "harpoon2", "commit": "87b1a3506211538f460786c23f98ec63ad9af4e5" },
   "high-contrast.nvim": { "branch": "main", "commit": "50da55c4c74db1d8c17f70a4571ec9207e6335a2" },
