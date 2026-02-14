@@ -1,5 +1,5 @@
 return {
-	"AlexvZyl/nordic.nvim",
+	"miikanissi/modus-themes.nvim",
 	lazy = false,
 	priority = 1000,
 	config = function()
