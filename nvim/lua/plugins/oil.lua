@@ -40,7 +40,6 @@ return {
 
 					vim.fn.system("chmod +x " .. vim.fn.shellescape(filepath))
 					vim.notify("Made executable: " .. entry.name, vim.log.levels.INFO)
-					oil.refresh()
 				end,
 				desc = "Make file executable (chmod +x)",
 			},
