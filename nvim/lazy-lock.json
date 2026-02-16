@@ -30,7 +30,6 @@
   "rainbow12": { "branch": "master", "commit": "51ad878f8da7cc7ba795bd73fe28dcbfbe55dddd" },
   "scratch.nvim": { "branch": "main", "commit": "1e78854fd3140411b231d5b6f9b3559b1ba5de77" },
   "snacks.nvim": { "branch": "main", "commit": "fe7cfe9800a182274d0f868a74b7263b8c0c020b" },
-  "space-vim-dark": { "branch": "master", "commit": "0ab698bd2a3959e3bed7691ac55ba4d8abefd143" },
   "toggleterm.nvim": { "branch": "main", "commit": "50ea089fc548917cc3cc16b46a8211833b9e3c7c" },
   "url-open": { "branch": "mini", "commit": "7727e6146afea2254de08d0e65fd2cf904be338d" },
   "vim-test": { "branch": "master", "commit": "c174652ef8e4959628a52e3134f102923b7a6f0d" },
