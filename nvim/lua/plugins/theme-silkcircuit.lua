@@ -1,5 +1,5 @@
 return {
-	"hyperb1iss/silkcircuit-nvim",
+	"aisk/kukishinobu.vim",
 	lazy = false,
 	priority = 1000,
 }
