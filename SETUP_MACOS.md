@@ -70,7 +70,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 ### 4. Configure Git
 
 ```bash
-echo "piacsek" > $HOME/.gitignore
+echo "piacsek/" > $HOME/.gitignore
 git config --global core.excludesfile $HOME/.gitignore
 git config --global user.name "Felipe Moraes Piacsek"
 read "git_email?Enter your git email: "
