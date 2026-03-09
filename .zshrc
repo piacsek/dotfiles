@@ -48,3 +48,7 @@ fi
 
 # opencode
 export PATH=/Users/piacsek/.opencode/bin:$PATH
+
+# Fzf
+
+source <(fzf --zsh)
