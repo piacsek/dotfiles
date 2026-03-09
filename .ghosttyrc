@@ -6,10 +6,3 @@ macos-titlebar-style = hidden
 keybind = alt+d=scroll_page_down
 keybind = alt+u=scroll_page_up
 keybind = ctrl+space=unbind
-
-# Pass through Ctrl-Alt-number keys to tmux with proper escape sequences
-keybind = ctrl+alt+one=text:\x1b[49;5u
-keybind = ctrl+alt+two=text:\x1b[50;5u
-keybind = ctrl+alt+three=text:\x1b[51;5u
-keybind = ctrl+alt+four=text:\x1b[52;5u
-keybind = ctrl+alt+five=text:\x1b[53;5u
