@@ -35,7 +35,15 @@ git pull origin main
 
 # Create and checkout new branch
 echo "Creating branch: $branch_name"
-git checkout -b "$branch_name"
+if git show-ref --verify --quiet "refs/heads/$branch_name"; then
+  echo "Branch exists locally, checking out..."
+  git checkout "$branch_name"
+elif git show-ref --verify --quiet "refs/remotes/origin/$branch_name"; then
+  echo "Branch exists on remote, checking out and tracking..."
+  git checkout -b "$branch_name" "origin/$branch_name"
+else
+  git checkout -b "$branch_name"
+fi
 
 # Create empty commit and push
 git commit --allow-empty -m "chore: kickoff $branch_name"
