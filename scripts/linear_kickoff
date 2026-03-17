@@ -53,8 +53,9 @@ fi
 # Push branch
 git push -u origin "$branch_name"
 
-# Create draft PR if one doesn't exist
-if ! gh pr view "$branch_name" &> /dev/null; then
+# Create draft PR if no open/draft PR exists
+pr_state=$(gh pr view "$branch_name" --json state --jq '.state' 2>/dev/null || echo "")
+if [[ "$pr_state" != "OPEN" && "$pr_state" != "DRAFT" ]]; then
   echo "Creating draft PR..."
   gh pr create --draft --title "$branch_name" --body "" --assignee @me
 else
