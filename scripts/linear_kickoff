@@ -66,8 +66,15 @@ fi
 # Generate deterministic session ID from branch name
 session_id=$(python3 -c "import uuid; print(uuid.uuid5(uuid.NAMESPACE_DNS, '$branch_name'))")
 
-# Create session if it doesn't exist (using print mode to avoid interactive)
-claude -p --session-id "$session_id" "Starting work on $branch_name" > /dev/null 2>&1 || true
+# Get claude project path for current directory
+project_path="$HOME/.claude/projects/-$(pwd | tr '/' '-')"
+session_file="$project_path/$session_id.jsonl"
+
+# Create session file if it doesn't exist
+if [[ ! -f "$session_file" ]]; then
+  mkdir -p "$project_path"
+  echo '{"type":"session","sessionId":"'"$session_id"'"}' > "$session_file"
+fi
 
 # Start or resume Claude Code session in tmux window 3
 echo "Starting Claude Code session: $branch_name"
