@@ -45,12 +45,18 @@ else
   git checkout -b "$branch_name"
 fi
 
-# Create empty commit and push
-git commit --allow-empty -m "chore: kickoff $branch_name"
-git push -u origin "$branch_name"
+# Push branch if not already on remote
+if ! git show-ref --verify --quiet "refs/remotes/origin/$branch_name"; then
+  git commit --allow-empty -m "chore: kickoff $branch_name"
+  git push -u origin "$branch_name"
+fi
 
-# Create draft PR assigned to current user
-echo "Creating draft PR..."
-gh pr create --draft --title "$branch_name" --body "" --assignee @me
+# Create draft PR if one doesn't exist
+if ! gh pr view "$branch_name" &> /dev/null; then
+  echo "Creating draft PR..."
+  gh pr create --draft --title "$branch_name" --body "" --assignee @me
+else
+  echo "PR already exists"
+fi
 
 echo "Ready to work on $branch_name"
