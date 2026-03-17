@@ -45,11 +45,13 @@ else
   git checkout -b "$branch_name"
 fi
 
-# Push branch if not already on remote
-if ! git show-ref --verify --quiet "refs/remotes/origin/$branch_name"; then
+# Ensure branch has at least one commit ahead of main
+if [[ $(git rev-list --count main.."$branch_name") -eq 0 ]]; then
   git commit --allow-empty -m "chore: kickoff $branch_name"
-  git push -u origin "$branch_name"
 fi
+
+# Push branch
+git push -u origin "$branch_name"
 
 # Create draft PR if one doesn't exist
 if ! gh pr view "$branch_name" &> /dev/null; then
