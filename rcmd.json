@@ -1,108 +1,198 @@
 {
-  "ignoredKeys": [],
-  "showAppSwitcher": false,
-  "showWindowSwitcher": true,
-  "appSort": "name",
-  "triggerKeys": [4],
-  "fnWindowSwitching": false,
-  "appKeyAssignments": [
-    {
-      "whenAlreadyFocusedAction": 2,
-      "app": {
-        "switchCount": 0,
-        "identifier": "com.spotify.client:73278",
-        "originalName": "Spotify (old)",
-        "path": "/Applications/Spotify (old).app",
-        "useCount": 12
-      },
-      "key": "m",
-      "index": 2
-    }
-  ],
-  "minimizeOnlyFocusedWindowOnMinus": true,
-  "enableHideOnFocusHotkey": false,
-  "ignoredApps": [
-    "com.googlecode.iterm2",
-    "com.jagex.launcher",
-    "com.apple.finder",
-    "com.apple.calculator",
-    "com.apple.TextEdit",
-    "com.apple.garageband10",
-    "com.apple.AppStore",
-    "com.apple.QuickTimePlayerX",
-    "pl.maketheweb.cleanshotx",
-    "com.apple.Preview"
-  ],
-  "windowSwitcherDimFocused": false,
-  "windowSwitchOSDDelay": 350,
-  "hideOnlyFocusedAppOnMinus": false,
-  "keyTapThreshold": 0.14,
-  "appSwitcherFeatures": 38,
-  "notificationsPermissionsGranted": false,
-  "alwaysHideOthers": false,
-  "enableAssignHotkey": true,
-  "minimizeKey": "minus",
-  "enableCycleHotkey": true,
-  "windowTriggerKeys": [5],
-  "windowKeyPatterns": [
-    {
-      "id": "com.sublimetext.4",
-      "pattern": ".* — [^\\w\\d]*(.)"
-    },
-    {
-      "id": "com.sublimetext.3",
-      "pattern": ".* — [^\\w\\d]*(.)"
-    },
-    {
-      "id": "com.sublimetext.2",
-      "pattern": ".* — [^\\w\\d]*(.)"
-    },
-    {
-      "id": "com.sublimetext.",
-      "pattern": ".* — [^\\w\\d]*(.)"
-    },
-    {
-      "id": "com.visualstudio.code.oss",
-      "pattern": ".* — [^\\w\\d]*(.)"
-    },
-    {
-      "id": "com.visualstudio.code",
-      "pattern": ".* — [^\\w\\d]*(.)"
-    },
-    {
-      "id": "com.microsoft.VSCodiumInsiders",
-      "pattern": ".* — [^\\w\\d]*(.)"
-    },
-    {
-      "id": "com.microsoft.VSCode",
-      "pattern": ".* — [^\\w\\d]*(.)"
-    },
-    {
-      "id": "com.microsoft.VSCodeInsiders",
-      "pattern": ".* — [^\\w\\d]*(.)"
-    },
-    {
-      "id": "com.microsoft.VSCod",
-      "pattern": ".* — [^\\w\\d]*(.)"
-    },
-    {
-      "id": "com.todesktop.",
-      "pattern": ".* — [^\\w\\d]*(.)"
-    }
-  ],
-  "appSortReverse": false,
-  "windowOnlySwitchOSDDelay": 0,
-  "specialKey": "equal",
-  "hideStaticSettings": false,
-  "whenAlreadyFocusedAction": 2,
-  "appSwitcherUseNumbersForWindows": false,
-  "activateAllWindows": true,
-  "windowKeyAssignments": [],
-  "enableStaticCycle": false,
-  "switcherScreenPlacement": 1,
-  "windowSwitcherAppearance": "comfortable",
-  "windowSwitcherFeatures": 57,
-  "allowWindowSwitcher": false,
-  "zeroAsLastFocusedWindow": false,
-  "focusOnKeyUp": false
+	"enableStaticCycle": false,
+	"specialKey": "equal",
+	"appSwitcherFeatures": 38,
+	"minimizeKey": "minus",
+	"alwaysHideOthers": false,
+	"enableHideOnFocusHotkey": false,
+	"hideOnlyFocusedAppOnMinus": false,
+	"ignoredApps": [
+		"com.apple.Terminal",
+		"com.spotify.client",
+		"com.apple.Preview",
+		"com.apple.calculator",
+		"pl.maketheweb.cleanshotx",
+		"com.jagex.launcher",
+		"com.apple.garageband10",
+		"com.apple.QuickTimePlayerX",
+		"com.apple.TextEdit",
+		"com.googlecode.iterm2",
+		"com.apple.AppStore",
+		"com.apple.finder"
+	],
+	"focusOnKeyUp": false,
+	"minimizeOnlyFocusedWindowOnMinus": true,
+	"ignoredKeys": [],
+	"windowSwitcherAppearance": "comfortable",
+	"hideStaticSettings": false,
+	"fnWindowSwitching": false,
+	"notificationsPermissionsGranted": false,
+	"switcherScreenPlacement": 1,
+	"keyTapThreshold": 0.14,
+	"windowSwitcherFeatures": 57,
+	"showAppSwitcher": false,
+	"enableAssignHotkey": true,
+	"appKeyAssignments": [
+		{
+			"whenAlreadyFocusedAction": 2,
+			"app": {
+				"path": "/Applications/Ghostty.app",
+				"switchCount": 0,
+				"useCount": 256,
+				"identifier": "com.mitchellh.ghostty:2838",
+				"originalName": "Ghostty"
+			},
+			"index": 0,
+			"key": "g"
+		},
+		{
+			"whenAlreadyFocusedAction": 2,
+			"app": {
+				"originalName": "Chrome",
+				"switchCount": 0,
+				"path": "/Applications/Google Chrome.app",
+				"useCount": 275,
+				"identifier": "com.google.Chrome:12502"
+			},
+			"index": 0,
+			"key": "c"
+		},
+		{
+			"whenAlreadyFocusedAction": 2,
+			"app": {
+				"identifier": "com.1password.1password:12287",
+				"switchCount": 0,
+				"originalName": "1Password",
+				"path": "/Applications/1Password.app",
+				"useCount": 53
+			},
+			"index": 0,
+			"key": "1"
+		},
+		{
+			"whenAlreadyFocusedAction": 2,
+			"app": {
+				"originalName": "Brain.fm",
+				"useCount": 5,
+				"identifier": "com.electron.brain.fm:46657",
+				"path": "/Applications/Brain.fm.app",
+				"switchCount": 0
+			},
+			"index": 0,
+			"key": "b"
+		},
+		{
+			"whenAlreadyFocusedAction": 2,
+			"app": {
+				"originalName": "Slack",
+				"switchCount": 0,
+				"identifier": "com.tinyspeck.slackmacgap:12803",
+				"path": "/Applications/Slack.app",
+				"useCount": 201
+			},
+			"index": 0,
+			"key": "s"
+		},
+		{
+			"whenAlreadyFocusedAction": 2,
+			"app": {
+				"path": "/Applications/WhatsApp.app",
+				"useCount": 5,
+				"identifier": "net.whatsapp.WhatsApp:44696",
+				"switchCount": 0,
+				"originalName": "WhatsApp"
+			},
+			"index": 0,
+			"key": "w"
+		},
+		{
+			"whenAlreadyFocusedAction": 2,
+			"app": {
+				"useCount": 40,
+				"path": "/Applications/zoom.us.app",
+				"identifier": "us.zoom.xos:42676",
+				"originalName": "zoom.us",
+				"switchCount": 0
+			},
+			"index": 0,
+			"key": "z"
+		},
+		{
+			"whenAlreadyFocusedAction": 2,
+			"app": {
+				"switchCount": 0,
+				"originalName": "Loom",
+				"path": "/Applications/Loom.app",
+				"identifier": "com.loom.desktop:44041",
+				"useCount": 4
+			},
+			"index": 0,
+			"key": "l"
+		}
+	],
+	"appSortReverse": false,
+	"allowWindowSwitcher": false,
+	"windowSwitcherDimFocused": false,
+	"showWindowSwitcher": true,
+	"appSwitcherUseNumbersForWindows": false,
+	"windowOnlySwitchOSDDelay": 0,
+	"windowKeyAssignments": [],
+	"windowSwitchOSDDelay": 350,
+	"zeroAsLastFocusedWindow": false,
+	"appSort": "name",
+	"enableCycleHotkey": true,
+	"windowTriggerKeys": [
+		5
+	],
+	"windowKeyPatterns": [
+		{
+			"id": "com.sublimetext.4",
+			"pattern": ".* — [^\\w\\d]*(.)"
+		},
+		{
+			"id": "com.sublimetext.3",
+			"pattern": ".* — [^\\w\\d]*(.)"
+		},
+		{
+			"id": "com.sublimetext.2",
+			"pattern": ".* — [^\\w\\d]*(.)"
+		},
+		{
+			"id": "com.sublimetext.",
+			"pattern": ".* — [^\\w\\d]*(.)"
+		},
+		{
+			"id": "com.visualstudio.code.oss",
+			"pattern": ".* — [^\\w\\d]*(.)"
+		},
+		{
+			"id": "com.visualstudio.code",
+			"pattern": ".* — [^\\w\\d]*(.)"
+		},
+		{
+			"id": "com.microsoft.VSCodiumInsiders",
+			"pattern": ".* — [^\\w\\d]*(.)"
+		},
+		{
+			"id": "com.microsoft.VSCode",
+			"pattern": ".* — [^\\w\\d]*(.)"
+		},
+		{
+			"id": "com.microsoft.VSCodeInsiders",
+			"pattern": ".* — [^\\w\\d]*(.)"
+		},
+		{
+			"id": "com.microsoft.VSCod",
+			"pattern": ".* — [^\\w\\d]*(.)"
+		},
+		{
+			"id": "com.todesktop.",
+			"pattern": ".* — [^\\w\\d]*(.)"
+		}
+	],
+	"activateAllWindows": true,
+	"triggerKeys": [
+		4
+	],
+	"whenAlreadyFocusedAction": 2
 }
