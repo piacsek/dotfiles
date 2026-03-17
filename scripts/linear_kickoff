@@ -57,7 +57,8 @@ git push -u origin "$branch_name"
 pr_state=$(gh pr view "$branch_name" --json state --jq '.state' 2>/dev/null || echo "")
 if [[ "$pr_state" != "OPEN" && "$pr_state" != "DRAFT" ]]; then
   echo "Creating draft PR..."
-  gh pr create --draft --title "$branch_name" --assignee @me --template pull_request_template.md
+  repo_root=$(git rev-parse --show-toplevel)
+  gh pr create --draft --title "$branch_name" --assignee @me --body-file "$repo_root/.github/pull_request_template.md"
 else
   echo "PR already exists"
 fi
