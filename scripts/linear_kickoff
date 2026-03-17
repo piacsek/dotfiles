@@ -57,7 +57,7 @@ git push -u origin "$branch_name"
 pr_state=$(gh pr view "$branch_name" --json state --jq '.state' 2>/dev/null || echo "")
 if [[ "$pr_state" != "OPEN" && "$pr_state" != "DRAFT" ]]; then
   echo "Creating draft PR..."
-  gh pr create --draft --title "$branch_name" --body "" --assignee @me
+  gh pr create --draft --title "$branch_name" --assignee @me
 else
   echo "PR already exists"
 fi
