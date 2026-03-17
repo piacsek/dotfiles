@@ -65,11 +65,7 @@ fi
 
 # Start or resume Claude Code session in tmux window 3
 echo "Starting Claude Code session: $branch_name"
-current_cmd=$(tmux list-panes -t :3 -F '#{pane_current_command}')
-if [[ "$current_cmd" == "claude" ]]; then
-  tmux send-keys -t :3 C-c
-  tmux send-keys -t :3 C-c
-fi
-tmux send-keys -t :3 "claude --resume \"$branch_name\"" C-m
+tmux kill-window -t :3 2>/dev/null || true
+tmux new-window -t :3 -n claude "claude --resume \"$branch_name\""
 
 echo "Ready to work on $branch_name"
