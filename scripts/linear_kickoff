@@ -79,7 +79,7 @@ fi
 # Start or resume Claude Code session in tmux window 3
 echo "Starting Claude Code session: $branch_name"
 current_window=$(tmux display-message -p '#I')
-tmux respawn-window -t :3 -k "claude --resume $session_id"
+tmux respawn-window -t :3 -k "bash -c 'claude --resume $session_id; exec bash'"
 tmux select-window -t ":$current_window"
 tmux rename-window -t :3 claude
 
