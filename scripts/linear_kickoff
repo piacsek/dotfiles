@@ -1,2 +1,35 @@
 #!/bin/bash
 
+set -e
+
+if [[ -z "$1" ]]; then
+  echo "Usage: linear_kickoff <linear-url>"
+  exit 1
+fi
+
+# Extract branch name from Linear URL (issue-id/slug)
+branch_name=$(echo "$1" | sed -E 's|.*/issue/([^/]+/[^/]+).*|\1|')
+
+if [[ -z "$branch_name" || "$branch_name" == "$1" ]]; then
+  echo "Error: Could not parse Linear URL"
+  exit 1
+fi
+
+echo "Starting kickoff for: $branch_name"
+
+# Stash any uncommitted changes
+if ! git diff --quiet || ! git diff --cached --quiet; then
+  echo "Stashing uncommitted changes..."
+  git stash push -m "linear_kickoff: auto-stash before $branch_name"
+fi
+
+# Checkout main and update from origin
+echo "Checking out main and pulling latest..."
+git checkout main
+git pull origin main
+
+# Create and checkout new branch
+echo "Creating branch: $branch_name"
+git checkout -b "$branch_name"
+
+echo "Ready to work on $branch_name"
