@@ -31,7 +31,6 @@
   "rainbow12": { "branch": "master", "commit": "51ad878f8da7cc7ba795bd73fe28dcbfbe55dddd" },
   "scratch.nvim": { "branch": "main", "commit": "1e78854fd3140411b231d5b6f9b3559b1ba5de77" },
   "snacks.nvim": { "branch": "main", "commit": "9912042fc8bca2209105526ac7534e9a0c2071b2" },
-  "toggleterm.nvim": { "branch": "main", "commit": "50ea089fc548917cc3cc16b46a8211833b9e3c7c" },
   "underwater-vim-theme": { "branch": "master", "commit": "cf1b86dcfaa98423fcef7b682798e3649df497f1" },
   "url-open": { "branch": "mini", "commit": "7727e6146afea2254de08d0e65fd2cf904be338d" },
   "vim-test": { "branch": "master", "commit": "9b063a510635c052af087c470039d80843ab9929" },
