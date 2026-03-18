@@ -150,7 +150,7 @@ ln -sf $HOME/dotfiles/opencode.json $HOME/.config/opencode/
 ln -sf $HOME/dotfiles/.tool-versions $HOME/.tool-versions
 ```
 
-### 9. Set Up Dotfiles Auto-Sync
+### 8. Set Up Dotfiles Auto-Sync
 
 Install fswatch and set up the auto-sync service to automatically commit and push dotfile changes:
 
@@ -170,7 +170,7 @@ Verify the service is running:
 launchctl list | grep dotfiles
 ```
 
-### 10. Install asdf plugins and versions
+### 9. Install asdf plugins and versions
 
 Install common language plugins and their versions (from $HOME/.tool-versions):
 
