@@ -140,7 +140,7 @@ mkdir -p $HOME/.config/ghostty
 mkdir $HOME/scratch.nvim
 
 ln -sf $HOME/dotfiles/nvim $HOME/.config/nvim
-ln -sf $HOME/dotfiles/.claude $HOME/.claude
+ln -sf $HOME/dotfiles/.claude/commands $HOME/.claude/commands
 ln -sf $HOME/dotfiles/.ideavimrc $HOME/.ideavimrc
 ln -sf $HOME/dotfiles/.tmux.conf $HOME/.tmux.conf
 ln -sf $HOME/dotfiles/opencode.json $HOME/opencode.json
