@@ -102,6 +102,7 @@ echo "Add it to GitHub: https://github.com/settings/keys"
 
 ```bash
 brew install \
+  claude \
   btop \
   tmux \
   1password-cli \
@@ -200,8 +201,6 @@ asdf plugin add teleport-community
 asdf plugin add zig
 
 asdf install
-
-npm install -g @anthropic-ai/claude-code
 ```
 
 ---
