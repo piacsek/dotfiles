@@ -123,15 +123,7 @@ brew install \
   bat
 ```
 
-### 7. Install OpenCode
-
-Install OpenCode CLI for AI-assisted coding:
-
-```bash
-curl -fsSL https://opencode.ai/install | bash
-```
-
-### 8. Clone and Link Dotfiles
+### 7. Clone and Link Dotfiles
 
 Clone the dotfiles repository and set up symlinks:
 
