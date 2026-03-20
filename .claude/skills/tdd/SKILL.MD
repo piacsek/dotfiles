@@ -26,15 +26,15 @@ For each change, follow this cycle exactly:
 ## Rules
 
 - Never write production code without a failing test first
+- Never commit - that is the user's responsibility
 - Write only one test at a time
 - Make the smallest possible change to pass each test
 - Run tests after every change
 - If a test fails unexpectedly, stop and fix it before continuing
-- Commit after each complete Red-Green-Refactor cycle when appropriate
 
 ## Working in Small Steps
 
 - Break features into the smallest testable behaviors
 - Each test should verify one thing
-- Prefer multiple small commits over large changes
 - If stuck, make the step smaller
+- Upon ambiguity, ask the user for clarification
