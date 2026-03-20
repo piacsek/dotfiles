@@ -67,7 +67,7 @@ fi
 session_id=$(python3 -c "import uuid; print(uuid.uuid5(uuid.NAMESPACE_DNS, '$branch_name'))")
 
 # Get claude project path for current directory
-project_path="$HOME/.claude/projects/-$(pwd | tr '/' '-')"
+project_path="$HOME/.claude/projects/$(pwd | tr '/' '-')"
 session_file="$project_path/$session_id.jsonl"
 
 # Create minimal session file if it doesn't exist
