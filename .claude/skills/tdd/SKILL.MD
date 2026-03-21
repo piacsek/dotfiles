@@ -27,6 +27,7 @@ For each change, follow this cycle exactly:
 
 - Never write production code without a failing test first
 - Never commit - that is the user's responsibility
+- Never write code comments
 - Write only one test at a time
 - Make the smallest possible change to pass each test
 - Run tests after every change
