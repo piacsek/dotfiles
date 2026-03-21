@@ -5,7 +5,8 @@
       "WebFetch(domain:github.com)",
       "Bash(tailscale status:*)",
       "Bash(/Users/piacsek/dotfiles/scripts/tmux-tailscale-status:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(claude mcp --help:*)"
     ]
   }
 }
