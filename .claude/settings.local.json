@@ -6,7 +6,8 @@
       "Bash(tailscale status:*)",
       "Bash(/Users/piacsek/dotfiles/scripts/tmux-tailscale-status:*)",
       "Bash(grep:*)",
-      "Bash(claude mcp --help:*)"
+      "Bash(claude mcp --help:*)",
+      "Bash(gh pr view:*)"
     ]
   }
 }
