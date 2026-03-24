@@ -32,6 +32,7 @@ For each change, follow this cycle exactly:
 - Make the smallest possible change to pass each test
 - Run tests after every change
 - If a test fails unexpectedly, stop and fix it before continuing
+- When confirming that a test is not flaky, look for framework-idiomatic options. For instance: Elixir's ExUnit allows you to pass in a flag called --repeat-until-failure=NUM, where NUM is an integer representing the max amount of runs
 
 ## Working in Small Steps
 
