@@ -76,7 +76,7 @@ if [[ ! -f "$session_file" ]]; then
   msg_uuid=$(uuidgen | tr '[:upper:]' '[:lower:]')
   timestamp=$(date -u +"%Y-%m-%dT%H:%M:%S.000Z")
   cat > "$session_file" << EOF
-{"type":"user","parentUuid":null,"uuid":"$msg_uuid","sessionId":"$session_id","cwd":"$(pwd)","gitBranch":"$branch_name","timestamp":"$timestamp","message":{"role":"user","content":"Please run the /linear-context skill to grab context for this task"}}
+{"type":"user","parentUuid":null,"uuid":"$msg_uuid","sessionId":"$session_id","cwd":"$(pwd)","gitBranch":"$branch_name","timestamp":"$timestamp","message":{"role":"user","content":"Please run the /linear-context skill to grab context for the current task"}}
 EOF
 fi
 
