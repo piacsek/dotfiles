@@ -109,6 +109,7 @@ return {
 		},
 		{
 			"<leader>gy",
+			mode = { "n", "v" },
 			function()
 				Snacks.gitbrowse({
 					notify = false,
