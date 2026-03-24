@@ -108,18 +108,33 @@ return {
 			desc = "Open current file on GitHub",
 		},
 		{
-			"<leader>gy",
+			"<leader>gyy",
+			mode = { "n", "v" },
+			function()
+				Snacks.gitbrowse({
+					notify = false,
+					branch = "main",
+					open = function(url)
+						vim.fn.setreg("+", url)
+						vim.notify("GitHub URL copied (main)", vim.log.levels.INFO)
+					end,
+				})
+			end,
+			desc = "Copy GitHub URL to clipboard (main branch)",
+		},
+		{
+			"<leader>gyc",
 			mode = { "n", "v" },
 			function()
 				Snacks.gitbrowse({
 					notify = false,
 					open = function(url)
 						vim.fn.setreg("+", url)
-						vim.notify("URL copied to clipboard: " .. url, vim.log.levels.INFO)
+						vim.notify("GitHub URL copied (current branch)", vim.log.levels.INFO)
 					end,
 				})
 			end,
-			desc = "Copy GitHub URL to clipboard",
+			desc = "Copy GitHub URL to clipboard (current branch)",
 		},
 		{
 			"<leader>gh",
