@@ -1,5 +1,7 @@
 return {
 	"sotte/presenting.nvim",
-	opts = { -- see :help Presenting.config },
+	opts = {
+		-- see :help Presenting.config
+	},
 	cmd = { "Presenting" },
 }
