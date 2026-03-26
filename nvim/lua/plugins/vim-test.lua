@@ -65,9 +65,16 @@ return {
 					return
 				end
 
+				local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+				local cwd = vim.fn.getcwd()
+				local prefix = cwd:sub(#git_root + 2) -- e.g. "apps/nova"
+
 				local paths = {}
 				for _, file in ipairs(output) do
-					table.insert(paths, vim.fn.fnameescape(file))
+					local rel = prefix ~= "" and file:gsub("^" .. vim.pesc(prefix) .. "/", "") or file
+					if vim.fn.filereadable(rel) == 1 then
+						table.insert(paths, vim.fn.fnameescape(rel))
+					end
 				end
 
 				vim.cmd("TestSuite " .. table.concat(paths, " "))
