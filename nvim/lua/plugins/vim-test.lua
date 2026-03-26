@@ -73,6 +73,7 @@ return {
 				for _, file in ipairs(output) do
 					local rel = file:gsub("^" .. vim.pesc(prefix), "")
 					vim.notify(rel)
+					vim.notify(vim.fn.fnameescape(rel))
 					table.insert(paths, vim.fn.fnameescape(rel))
 				end
 
