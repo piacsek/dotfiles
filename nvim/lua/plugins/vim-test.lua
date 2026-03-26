@@ -79,7 +79,7 @@ return {
 					return
 				end
 
-				vim.cmd("TestSuite " .. table.concat(paths, " "))
+				vim.fn.VimuxRunCommand("mix test " .. table.concat(paths, " "))
 			end,
 			desc = "[T]est [M]odified (vs main)",
 		},
