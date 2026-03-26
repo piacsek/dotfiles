@@ -58,6 +58,7 @@ return {
 			"<leader>tm",
 			function()
 				local test_root = vim.g._root_test_dir or "test"
+				vim.notify(test_root)
 				local output = vim.fn.systemlist("git diff --name-only main -- " .. test_root)
 
 				if vim.v.shell_error ~= 0 or #output == 0 then
