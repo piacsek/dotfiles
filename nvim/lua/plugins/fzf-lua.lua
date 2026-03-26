@@ -146,6 +146,23 @@ return {
 	config = function()
 		local fzf = require("fzf-lua")
 
+		local function add_buffer_to_harpoon(selected)
+			if not selected or #selected == 0 then
+				return
+			end
+			local bufnr = tonumber(selected[1]:match("%[(%d+)%]"))
+			if not bufnr then
+				return
+			end
+			local bufname = vim.api.nvim_buf_get_name(bufnr)
+			if bufname == "" then
+				return
+			end
+			local harpoon = require("harpoon")
+			local item = harpoon:list():create_list_item(bufname)
+			harpoon:list():add(item)
+		end
+
 		local config = {
 			winopts = {
 				height = 0.4,
@@ -160,6 +177,11 @@ return {
 				fzf = {
 					true,
 					["ctrl-q"] = "select-all+accept",
+				},
+			},
+			buffers = {
+				actions = {
+					["ctrl-a"] = { fn = add_buffer_to_harpoon, resume = true },
 				},
 			},
 			git = {
