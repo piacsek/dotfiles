@@ -154,13 +154,10 @@ return {
 			if not bufnr then
 				return
 			end
-			local bufname = vim.api.nvim_buf_get_name(bufnr)
-			if bufname == "" then
-				return
-			end
-			local harpoon = require("harpoon")
-			local item = harpoon:list():create_list_item(bufname)
-			harpoon:list():add(item)
+			local cur = vim.api.nvim_get_current_buf()
+			vim.api.nvim_set_current_buf(bufnr)
+			require("harpoon"):list():add()
+			vim.api.nvim_set_current_buf(cur)
 		end
 
 		local config = {
