@@ -65,21 +65,12 @@ return {
 					return
 				end
 
-				local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
 				local paths = {}
 				for _, file in ipairs(output) do
-					local abs = git_root .. "/" .. file
-					if vim.fn.filereadable(abs) == 1 then
-						table.insert(paths, vim.fn.fnameescape(abs))
-					end
+					table.insert(paths, vim.fn.fnameescape(file))
 				end
 
-				if #paths == 0 then
-					vim.notify("No modified test files found vs main", vim.log.levels.WARN)
-					return
-				end
-
-				vim.fn.VimuxRunCommand("mix test " .. table.concat(paths, " "))
+				vim.cmd("TestSuite " .. table.concat(paths, " "))
 			end,
 			desc = "[T]est [M]odified (vs main)",
 		},
