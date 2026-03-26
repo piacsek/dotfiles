@@ -58,23 +58,16 @@ return {
 			"<leader>tm",
 			function()
 				local test_root = vim.g._root_test_dir or "test"
-				vim.notify(test_root)
-				local output = vim.fn.systemlist("git diff --name-only main -- " .. test_root)
+				local output = vim.fn.systemlist("git diff --relative --name-only main -- " .. test_root)
 
 				if vim.v.shell_error ~= 0 or #output == 0 then
 					vim.notify("No modified test files found vs main", vim.log.levels.WARN)
 					return
 				end
 
-				-- test_root is git-root-relative (e.g. "apps/nova/test")
-				-- strip everything before "test" to get cwd-relative paths
-				local prefix = test_root:match("^(.+/)test$") or ""
-
 				local paths = {}
 				for _, file in ipairs(output) do
-					local rel = file:gsub("^" .. vim.pesc(prefix), "")
-					vim.notify(rel)
-					table.insert(paths, vim.fn.fnameescape(rel))
+					table.insert(paths, vim.fn.fnameescape(file))
 				end
 
 				vim.cmd("TestSuite " .. table.concat(paths, " "))
