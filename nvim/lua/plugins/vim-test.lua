@@ -57,7 +57,8 @@ return {
 		{
 			"<leader>tm",
 			function()
-				local output = vim.fn.systemlist("git diff --name-only main")
+				local test_root = vim.g._root_test_dir or "test"
+				local output = vim.fn.systemlist("git diff --name-only main -- " .. test_root)
 
 				if vim.v.shell_error ~= 0 or #output == 0 then
 					vim.notify("No modified test files found vs main", vim.log.levels.WARN)
