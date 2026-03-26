@@ -65,10 +65,12 @@ return {
 					return
 				end
 
+				local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
 				local paths = {}
 				for _, file in ipairs(output) do
-					if vim.fn.filereadable(file) == 1 then
-						table.insert(paths, vim.fn.fnameescape(file))
+					local abs = git_root .. "/" .. file
+					if vim.fn.filereadable(abs) == 1 then
+						table.insert(paths, vim.fn.fnameescape(abs))
 					end
 				end
 
