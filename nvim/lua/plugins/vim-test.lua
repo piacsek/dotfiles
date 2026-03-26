@@ -55,6 +55,33 @@ return {
 			desc = "Test directories",
 		},
 		{
+			"<leader>tm",
+			function()
+				local test_root = vim.g._root_test_dir or "test"
+				local output = vim.fn.systemlist("git diff --name-only main -- " .. test_root)
+
+				if vim.v.shell_error ~= 0 or #output == 0 then
+					vim.notify("No modified test files found vs main", vim.log.levels.WARN)
+					return
+				end
+
+				local paths = {}
+				for _, file in ipairs(output) do
+					if vim.fn.filereadable(file) == 1 then
+						table.insert(paths, vim.fn.fnameescape(file))
+					end
+				end
+
+				if #paths == 0 then
+					vim.notify("No modified test files found vs main", vim.log.levels.WARN)
+					return
+				end
+
+				vim.cmd("TestSuite " .. table.concat(paths, " "))
+			end,
+			desc = "[T]est [M]odified (vs main)",
+		},
+		{
 			"<leader><BS>",
 			function()
 				if vim.bo.buftype == "" then
