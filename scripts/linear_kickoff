@@ -72,16 +72,15 @@ session_file="$project_path/$session_id.jsonl"
 
 # Create minimal session file if it doesn't exist
 if [ -z $LINEAR_KICKOFF_INITIAL_MESSAGE ]; then
-LINEAR_KICKOFF_INITIAL_MESSAGE="Please run the /linear-context skill to grab context for the current task"
+	LINEAR_KICKOFF_INITIAL_MESSAGE="Please run the /linear-context skill to grab context for the current task"
 fi
 
-LINEAR_KICKOFF_INITIAL_MESSAGE
 if [[ ! -f "$session_file" ]]; then
   mkdir -p "$project_path"
   msg_uuid=$(uuidgen | tr '[:upper:]' '[:lower:]')
   timestamp=$(date -u +"%Y-%m-%dT%H:%M:%S.000Z")
   cat > "$session_file" << EOF
-{"type":"user","parentUuid":null,"uuid":"$msg_uuid","sessionId":"$session_id","cwd":"$(pwd)","gitBranch":"$branch_name","timestamp":"$timestamp","message":{"role":"user","content":"Please run the /linear-context skill to grab context for the current task"}}
+{"type":"user","parentUuid":null,"uuid":"$msg_uuid","sessionId":"$session_id","cwd":"$(pwd)","gitBranch":"$branch_name","timestamp":"$timestamp","message":{"role":"user","content":"$LINEAR_KICKOFF_INITIAL_MESSAGE"}}
 EOF
 fi
 
