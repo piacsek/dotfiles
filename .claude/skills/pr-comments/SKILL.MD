@@ -16,6 +16,7 @@ Fetch all comments on the GitHub pull request associated with the current branch
      - Reviewer name
      - Review state (approved, changes requested, commented)
      - Review body if present
+   - Ignore resolved comments — only show unresolved ones
    - General PR comments (from `comments`), each showing:
      - Author
      - Timestamp
