@@ -71,7 +71,7 @@ project_path="$HOME/.claude/projects/$(pwd | tr '/' '-')"
 session_file="$project_path/$session_id.jsonl"
 
 # Create minimal session file if it doesn't exist
-if [ -z $LINEAR_KICKOFF_INITIAL_MESSAGE ]; then
+if [ -z "$LINEAR_KICKOFF_INITIAL_MESSAGE" ]; then
 	LINEAR_KICKOFF_INITIAL_MESSAGE="Please run the /linear-context skill to grab context for the current task"
 fi
 
