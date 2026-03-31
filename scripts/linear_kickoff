@@ -80,19 +80,19 @@ if [[ ! -f "$session_file" ]]; then
   msg_uuid=$(uuidgen | tr '[:upper:]' '[:lower:]')
   timestamp=$(date -u +"%Y-%m-%dT%H:%M:%S.000Z")
   cat > "$session_file" << EOF
-{
-  "type": "user",
-  "parentUuid": null,
-  "uuid": "$msg_uuid",
-  "sessionId": "$session_id",
-  "cwd": "$(pwd)",
-  "gitBranch": "$branch_name",
-  "timestamp": "$timestamp",
-  "message": {
-    "role": "user",
-    "content": "$LINEAR_KICKOFF_INITIAL_MESSAGE"
-  }
-}
+		{
+			"type": "user",
+			"parentUuid": null,
+			"uuid": "$msg_uuid",
+			"sessionId": "$session_id",
+			"cwd": "$(pwd)",
+			"gitBranch": "$branch_name",
+			"timestamp": "$timestamp",
+			"message": {
+				"role": "user",
+				"content": "$LINEAR_KICKOFF_INITIAL_MESSAGE"
+			}
+		}
 EOF
 fi
 
