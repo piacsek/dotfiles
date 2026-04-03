@@ -74,11 +74,11 @@ fi
 # Start or resume Claude Code session in tmux window 3
 echo "Starting Claude Code session: $branch_name"
 current_window=$(tmux display-message -p '#I')
-claude_cmd="claude --session-id $session_id \"$LINEAR_KICKOFF_INITIAL_MESSAGE\" || claude --resume $session_id"
+tmux_cmd="source ~/.zshrc; claude --session-id $session_id '$LINEAR_KICKOFF_INITIAL_MESSAGE' || claude --resume $session_id; exec zsh -l"
 if tmux list-windows -F '#I' | grep -q '^3$' 2>/dev/null; then
-  tmux respawn-window -t :3 -k "zsh -ic '$claude_cmd; exec zsh -l'"
+  tmux respawn-window -t :3 -k "zsh -c \"$tmux_cmd\""
 else
-  tmux new-window -t :3 -n claude "zsh -ic '$claude_cmd; exec zsh -l'"
+  tmux new-window -t :3 -n claude "zsh -c \"$tmux_cmd\""
 fi
 tmux select-window -t ":$current_window"
 
