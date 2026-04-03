@@ -67,7 +67,7 @@ fi
 session_id=$(python3 -c "import uuid; print(uuid.uuid5(uuid.NAMESPACE_DNS, '$branch_name'))")
 
 if [ -z "$LINEAR_KICKOFF_INITIAL_MESSAGE" ]; then
-	LINEAR_KICKOFF_INITIAL_MESSAGE="Please run the /linear-context skill to grab context for the current task"
+	LINEAR_KICKOFF_INITIAL_MESSAGE="Please run the /linear-context skill to grab context for the current task."
 fi
 
 # Try --session-id first (new session), fall back to --resume (existing session)
