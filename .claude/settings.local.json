@@ -8,7 +8,8 @@
       "Bash(grep:*)",
       "Bash(claude mcp --help:*)",
       "Bash(gh pr view:*)",
-      "Bash(ls /Users/piacsek/.claude/settings*)"
+      "Bash(ls /Users/piacsek/.claude/settings*)",
+      "Bash(ls -t /Users/piacsek/.claude/projects/-Users-piacsek-projects-wonderschool-ws-common-apps-nova/*.jsonl)"
     ]
   }
 }
