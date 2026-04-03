@@ -79,7 +79,7 @@ if tmux list-windows -F '#I' | grep -q '^3$' 2>/dev/null; then
 else
   tmux new-window -t :3 -n claude "zsh -l"
 fi
-sleep 0.5
+
 tmux send-keys -t :3 "claude --session-id $session_id \"$LINEAR_KICKOFF_INITIAL_MESSAGE\" 2>/dev/null || claude --resume $session_id" Enter
 tmux select-window -t ":$current_window"
 
