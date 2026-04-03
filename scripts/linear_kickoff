@@ -78,9 +78,8 @@ claude_cmd="claude --session-id $session_id \"$LINEAR_KICKOFF_INITIAL_MESSAGE\" 
 if tmux list-windows -F '#I' | grep -q '^3$'; then
   tmux respawn-window -t :3 -k "zsh -ic '$claude_cmd; exec zsh -l'"
 else
-  tmux new-window -t :3 "zsh -ic '$claude_cmd; exec zsh -l'"
+  tmux new-window -t :3 -n claude "zsh -ic '$claude_cmd; exec zsh -l'"
 fi
 tmux select-window -t ":$current_window"
-tmux rename-window -t :3 claude
 
 echo "Ready to work on $branch_name"
