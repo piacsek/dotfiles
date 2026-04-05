@@ -152,7 +152,6 @@ vim.api.nvim_create_user_command("ThemeDefault", function()
 end, { desc = "Assigns the default colorscheme" })
 
 -- </COMMANDS>
-require("core.keymaps")
 require("core.autocmds")
 
 local gh = function(x)
