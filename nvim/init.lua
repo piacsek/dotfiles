@@ -44,6 +44,15 @@ require("url-open").setup({
 })
 require("presenting").setup({})
 require("jtt").setup()
+require("mason").setup({
+	ui = {
+		icons = {
+			package_installed = "✓",
+			package_pending = "➜",
+			package_uninstalled = "✗",
+		},
+	},
+})
 
 -- vim.g._default_colorscheme = "moonfly"
 vim.g._default_colorscheme = "high-contrast"
