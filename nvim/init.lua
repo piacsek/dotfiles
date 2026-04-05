@@ -19,6 +19,7 @@ vim.pack.add({
 	{ src = gh("sontungexpt/url-open"), version = "mini" },
 	gh("sotte/presenting.nvim"),
 	gh("herisetiawan00/jtt.nvim"),
+	gh("christoomey/vim-tmux-navigator"),
 })
 
 require("nvim-autopairs").setup({})
