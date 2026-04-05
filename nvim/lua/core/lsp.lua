@@ -65,8 +65,9 @@ vim.lsp.enable("emmet_ls")
 vim.lsp.enable("jsonls")
 vim.lsp.enable("yamlls")
 vim.lsp.enable("elixir_ls")
+
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "html", "css", "scss", "javascriptreact", "typescriptreact", "svelte", "vue", "heex" },
+	pattern = tailwind_filetypes,
 	callback = function(ev)
 		if not project_tailwind_root then
 			return
