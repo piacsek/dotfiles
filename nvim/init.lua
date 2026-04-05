@@ -12,6 +12,7 @@ end
 
 vim.pack.add({
 	gh("numToStr/Comment.nvim"),
+	gh("windwp/nvim-autopairs"),
 })
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
