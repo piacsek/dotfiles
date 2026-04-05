@@ -9,7 +9,9 @@
       "Bash(claude mcp --help:*)",
       "Bash(gh pr view:*)",
       "Bash(ls /Users/piacsek/.claude/settings*)",
-      "Bash(ls -t /Users/piacsek/.claude/projects/-Users-piacsek-projects-wonderschool-ws-common-apps-nova/*.jsonl)"
+      "Bash(ls -t /Users/piacsek/.claude/projects/-Users-piacsek-projects-wonderschool-ws-common-apps-nova/*.jsonl)",
+      "Bash(nvim --headless -c 'help vim.pack.add' -c 'w! /tmp/pack_add_help.txt' -c 'qa')",
+      "Read(//tmp/**)"
     ]
   }
 }
