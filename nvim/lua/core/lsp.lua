@@ -19,18 +19,18 @@ local tailwind_filetypes = {
 	"vue",
 	"heex",
 }
-vim.lsp.config("tailwindcss", {
-	filetypes = tailwind_filetypes,
-	root_dir = function(_, on_dir)
-		if project_tailwind_root then
-			local path = vim.fn.expand(project_tailwind_root)
-			path = vim.uv.fs_realpath(path) or path
-			on_dir(path)
-		else
-			vim.notify("tailwindlsp unavailable: Please define tailwind_root.", vim.log.levels.ERROR)
-		end
-	end,
-})
+-- vim.lsp.config("tailwindcss", {
+-- 	filetypes = tailwind_filetypes,
+-- 	root_dir = function(_, on_dir)
+-- 		if project_tailwind_root then
+-- 			local path = vim.fn.expand(project_tailwind_root)
+-- 			path = vim.uv.fs_realpath(path) or path
+-- 			on_dir(path)
+-- 		else
+-- 			vim.notify("tailwindlsp unavailable: Please define tailwind_root.", vim.log.levels.ERROR)
+-- 		end
+-- 	end,
+-- })
 
 vim.lsp.config["elixir_ls"] = {
 	cmd = { "elixir-ls" },
