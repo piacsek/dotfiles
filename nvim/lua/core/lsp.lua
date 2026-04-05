@@ -66,10 +66,14 @@ vim.lsp.enable("yamlls")
 vim.lsp.enable("elixir_ls")
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = { "html", "css", "scss", "javascriptreact", "typescriptreact", "svelte", "vue", "heex" },
-	once = true,
-	callback = function()
-		vim.defer_fn(function()
-			vim.lsp.enable("tailwindcss")
-		end, 1000)
+	callback = function(ev)
+		if not project_tailwind_root then return end
+		local path = vim.fn.expand(project_tailwind_root)
+		path = vim.uv.fs_realpath(path) or path
+		vim.lsp.start({
+			name = "tailwindcss",
+			cmd = { "tailwindcss-language-server", "--stdio" },
+			root_dir = path,
+		}, { bufnr = ev.buf })
 	end,
 })
