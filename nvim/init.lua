@@ -297,9 +297,6 @@ require("spectre").setup({
 	end,
 })
 
--- Scratch
--- scratch.nvim's plugin/ file calls setup() with defaults, overwriting our config.
--- Setting this guard prevents that file from running, so our config below takes effect.
 vim.keymap.set("n", "<leader>fs", ":ScratchOpen<CR>", { desc = "[J]ump to [S]cratch" })
 vim.keymap.set("n", "<leader>n", ":Scratch<CR>", { desc = "[N]ew scratch" })
 require("scratch").setup({
