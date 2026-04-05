@@ -1,5 +1,8 @@
 -- Enable bytecode cache for faster Lua module loading
 vim.loader.enable()
+vim.g._default_colorscheme = "high-contrast"
+-- vim.g._default_colorscheme = "oxide"
+vim.cmd.colorscheme(vim.g._default_colorscheme)
 
 -- --------------------------------------------------- <OPTIONS> ---------------------------------------------------
 vim.g.have_nerd_font = true
@@ -900,10 +903,6 @@ end, { desc = "[G]it [S]earch [M]ain branch commits" })
 
 -- Colorscheme
 -- vim.g._default_colorscheme = "moonfly"
-vim.g._default_colorscheme = "high-contrast"
--- vim.g._default_colorscheme = "oxide"
-vim.cmd.colorscheme(vim.g._default_colorscheme)
-
 vim.notify = require("snacks").notifier.notify
 
 -- ------------------------------------------------- <PLUGINS> ------------------------------------------------------
