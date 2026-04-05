@@ -142,13 +142,6 @@ vim.api.nvim_create_user_command("NotificationsClear", function()
 	require("snacks").notifier.hide()
 end, { desc = "Clear all notifications" })
 
-vim.api.nvim_create_user_command("ThemeRandom", function()
-	local colorschemes = { "high-contrast", "evening", "moonfly", "cyberdream-light", "nordic", "rainbow12" }
-	local random_colorscheme = colorschemes[math.random(#colorschemes)]
-	vim.cmd.colorscheme(random_colorscheme)
-	vim.notify(random_colorscheme)
-end, { desc = "Assigns a random colorscheme" })
-
 vim.api.nvim_create_user_command("ThemeDefault", function()
 	vim.cmd.colorscheme(vim.g._default_colorscheme)
 	vim.notify(vim.g._default_colorscheme)
