@@ -63,7 +63,7 @@ vim.pack.add({
 
 	-- UI
 	gh("folke/snacks.nvim"),
-})
+}, { load = true })
 
 -- Dev plugins
 -- vim.opt.rtp:prepend(vim.fn.expand("~/projects/nvim-plugins/buddy.nvim"))
