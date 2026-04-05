@@ -901,8 +901,6 @@ vim.keymap.set("n", "<leader>gsm", function()
 	})
 end, { desc = "[G]it [S]earch [M]ain branch commits" })
 
--- Colorscheme
--- vim.g._default_colorscheme = "moonfly"
 vim.notify = require("snacks").notifier.notify
 
 -- ------------------------------------------------- <PLUGINS> ------------------------------------------------------
