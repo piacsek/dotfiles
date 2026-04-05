@@ -14,43 +14,43 @@ end
 vim.lsp.config["elixir_ls"] = {
 	cmd = { "elixir-ls" },
 	filetypes = { "elixir", "eelixir", "heex", "surface" },
-	-- root_dir = function(bufnr, on_dir)
-	-- 	if project_elixir_root then
-	-- 		on_dir(project_elixir_root)
-	-- 		return
-	-- 	end
-	--
-	-- 	local fname = vim.api.nvim_buf_get_name(bufnr)
-	--
-	-- 	if elixir_root_cache[fname] then
-	-- 		on_dir(elixir_root_cache[fname])
-	-- 		return
-	-- 	end
-	--
-	-- 	local parent_dir = vim.fn.fnamemodify(fname, ":h")
-	-- 	if elixir_root_cache[parent_dir] then
-	-- 		elixir_root_cache[fname] = elixir_root_cache[parent_dir]
-	-- 		on_dir(elixir_root_cache[parent_dir])
-	-- 		return
-	-- 	end
-	--
-	-- 	local matches = vim.fs.find({ "mix.exs" }, {
-	-- 		upward = true,
-	-- 		limit = 2,
-	-- 		path = fname,
-	-- 		stop = vim.env.HOME,
-	-- 	})
-	--
-	-- 	local child_or_root_path, maybe_umbrella_path = unpack(matches)
-	-- 	local root_dir = vim.fs.dirname(maybe_umbrella_path or child_or_root_path)
-	--
-	-- 	if root_dir then
-	-- 		elixir_root_cache[fname] = root_dir
-	-- 		elixir_root_cache[parent_dir] = root_dir
-	-- 	end
-	--
-	-- 	on_dir(root_dir)
-	-- end,
+	root_dir = function(bufnr, on_dir)
+		if project_elixir_root then
+			on_dir(project_elixir_root)
+			return
+		end
+
+		local fname = vim.api.nvim_buf_get_name(bufnr)
+
+		if elixir_root_cache[fname] then
+			on_dir(elixir_root_cache[fname])
+			return
+		end
+
+		local parent_dir = vim.fn.fnamemodify(fname, ":h")
+		if elixir_root_cache[parent_dir] then
+			elixir_root_cache[fname] = elixir_root_cache[parent_dir]
+			on_dir(elixir_root_cache[parent_dir])
+			return
+		end
+
+		local matches = vim.fs.find({ "mix.exs" }, {
+			upward = true,
+			limit = 2,
+			path = fname,
+			stop = vim.env.HOME,
+		})
+
+		local child_or_root_path, maybe_umbrella_path = unpack(matches)
+		local root_dir = vim.fs.dirname(maybe_umbrella_path or child_or_root_path)
+
+		if root_dir then
+			elixir_root_cache[fname] = root_dir
+			elixir_root_cache[parent_dir] = root_dir
+		end
+
+		on_dir(root_dir)
+	end,
 	settings = {
 		elixirLS = {
 			dialyzerEnabled = false,
