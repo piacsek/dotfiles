@@ -974,7 +974,7 @@ vim.keymap.set("n", "<leader>jw", "<esc>:URLOpenUnderCursor<cr>", { desc = "[J]u
 vim.keymap.set("n", "<leader>jt", "<cmd>JumpTest<CR>", { desc = "[J]ump to [T]est" })
 
 -- </KEYMAPS>
--- <LSP>
+-- ----------------------------------------------------- <LSP> -----------------------------------------------------
 
 -- Cache for elixir-ls root directory lookups to avoid expensive filesystem searches
 local elixir_root_cache = {}
