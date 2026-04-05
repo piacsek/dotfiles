@@ -267,6 +267,8 @@ require("spectre").setup({
 })
 
 -- Scratch
+vim.keymap.set("n", "<leader>fs", ":ScratchOpen<CR>", { desc = "[J]ump to [S]cratch" })
+vim.keymap.set("n", "<leader>n", ":Scratch<CR>", { desc = "[N]ew scratch" })
 require("scratch").setup({
 	scratch_file_dir = "~/scratch.nvim",
 	window_cmd = "edit",
