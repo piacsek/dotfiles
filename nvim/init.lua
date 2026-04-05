@@ -44,6 +44,11 @@ require("url-open").setup({
 require("presenting").setup({})
 require("jtt").setup()
 
+-- vim.g._default_colorscheme = "moonfly"
+vim.g._default_colorscheme = "high-contrast"
+-- vim.g._default_colorscheme = "oxide"
+vim.cmd.colorscheme(vim.g._default_colorscheme)
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
