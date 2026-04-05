@@ -4,9 +4,21 @@
       "rev": "e30b7f2008e52442154b66f7c519bfd2f1e32acb",
       "src": "https://github.com/numToStr/Comment.nvim"
     },
+    "cyberdream.nvim": {
+      "rev": "a68ffa6af98bf1fc88f33a071c51a188ec85c725",
+      "src": "https://github.com/scottmckendry/cyberdream.nvim"
+    },
+    "high-contrast.nvim": {
+      "rev": "50da55c4c74db1d8c17f70a4571ec9207e6335a2",
+      "src": "https://github.com/piacsek/high-contrast.nvim"
+    },
     "jtt.nvim": {
       "rev": "6c5cce5f0e64188b09edb16aea13225fcf7ebc2d",
       "src": "https://github.com/herisetiawan00/jtt.nvim"
+    },
+    "kukishinobu.vim": {
+      "rev": "864ebbb654744540786c27d4956858a46b39e06b",
+      "src": "https://github.com/aisk/kukishinobu.vim"
     },
     "mini.ai": {
       "rev": "43eb2074843950a3a25aae56a5f41362ec043bfa",
@@ -16,6 +28,10 @@
       "rev": "7fdae2443a0e2910015ca39ad74b50524ee682d3",
       "src": "https://github.com/echasnovski/mini.icons"
     },
+    "nordic.nvim": {
+      "rev": "4ce6bad95fde832f9bd10b991de846047a144628",
+      "src": "https://github.com/AlexvZyl/nordic.nvim"
+    },
     "nvim-autopairs": {
       "rev": "59bce2eef357189c3305e25bc6dd2d138c1683f5",
       "src": "https://github.com/windwp/nvim-autopairs"
@@ -24,14 +40,30 @@
       "rev": "8e1c0a389f20bf7f5b0dd0e00306c1247bda2595",
       "src": "https://github.com/windwp/nvim-ts-autotag"
     },
+    "oxide.nvim": {
+      "rev": "ff52c9afcf4a541b4d94f71cb0b00067ca3c6a9d",
+      "src": "https://github.com/oxidescheme/oxide.nvim"
+    },
     "presenting.nvim": {
       "rev": "e78245995a09233e243bf48169b2f00dc76341f7",
       "src": "https://github.com/sotte/presenting.nvim"
+    },
+    "rainbow12": {
+      "rev": "51ad878f8da7cc7ba795bd73fe28dcbfbe55dddd",
+      "src": "https://github.com/0Risotto/rainbow12"
+    },
+    "underwater-vim-theme": {
+      "rev": "cf1b86dcfaa98423fcef7b682798e3649df497f1",
+      "src": "https://github.com/dmkc/underwater-vim-theme"
     },
     "url-open": {
       "rev": "7727e6146afea2254de08d0e65fd2cf904be338d",
       "src": "https://github.com/sontungexpt/url-open",
       "version": "'mini'"
+    },
+    "vim-moonfly-colors": {
+      "rev": "43d8eb9dd2a1154dd8259ee3ce37cbbdb28c405c",
+      "src": "https://github.com/bluz71/vim-moonfly-colors"
     },
     "vim-tmux-navigator": {
       "rev": "e41c431a0c7b7388ae7ba341f01a0d217eb3a432",
