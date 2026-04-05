@@ -70,7 +70,7 @@ vim.api.nvim_create_autocmd("FileType", {
 	pattern = tailwind_filetypes,
 	callback = function(ev)
 		if not project_tailwind_root then
-			vim.notify("")
+			vim.notify("tailwindlsp unavailable: Please define tailwind_root.", vim.log.levels.ERROR)
 			return
 		end
 		local path = vim.fn.expand(project_tailwind_root)
