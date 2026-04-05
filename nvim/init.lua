@@ -6,7 +6,7 @@ require("core.plugins")
 require("core.commands")
 require("core.auto_commands")
 require("core.keymaps")
-require("core.lsp")
+-- require("core.lsp")
 
 -- Config overrides
 local home_init = vim.fn.expand("$HOME/init.lua")
