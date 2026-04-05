@@ -1,10 +1,159 @@
 -- Enable bytecode cache for faster Lua module loading
 vim.loader.enable()
 
-require("core.options")
+-- <OPTIONS>
+vim.g.have_nerd_font = true
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
+vim.opt.termguicolors = true
+vim.opt.swapfile = false
+vim.opt.winborder = "rounded"
+vim.opt.autoread = true
+vim.opt.breakindent = true
+vim.opt.clipboard = "unnamedplus"
+vim.opt.cursorline = true
+vim.opt.hlsearch = true
+vim.opt.ignorecase = false
+vim.opt.inccommand = "split"
+vim.opt.list = true
+vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+vim.opt.mouse = "a"
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.scrolloff = 999
+vim.opt.sidescrolloff = 999
+vim.opt.shiftwidth = 2
+vim.opt.showmode = false
+vim.opt.signcolumn = "yes"
+vim.opt.smartcase = false
+vim.opt.splitright = true
+vim.opt.splitbelow = true
+vim.opt.tabstop = 2
+vim.opt.timeoutlen = 300
+vim.opt.updatetime = 500
+vim.opt.undofile = true
+
+vim.diagnostic.config({
+	virtual_text = {
+		prefix = "●",
+		spacing = 4,
+		severity = { min = vim.diagnostic.severity.WARN },
+	},
+	float = {
+		focusable = false,
+		style = "minimal",
+		border = "rounded",
+		source = "always",
+		header = "",
+		prefix = "",
+	},
+	severity_sort = true,
+	update_in_insert = false,
+})
+
+-- </OPTIONS>
+
+-- <COMMANDS>
+vim.api.nvim_create_user_command("ClearOldfiles", function()
+	vim.v.oldfiles = {}
+	vim.cmd("wshada!")
+	vim.notify("Oldfiles list cleared", vim.log.levels.INFO)
+end, { desc = "Clear the oldfiles list" })
+
+vim.api.nvim_create_user_command("LineNumbers", function()
+	vim.opt.relativenumber = true
+	vim.opt.number = true
+end, { desc = "Force line numbers to appear" })
+
+vim.api.nvim_create_user_command("VerboseModeEnable", function()
+	vim.opt.verbose = 12
+	vim.opt.verbosefile = "/tmp/nvim-verbose.log"
+end, { desc = "Enable verbose mode and log to /tmp/nvim-verbose.log" })
+
+vim.api.nvim_create_user_command("VerboseModeDisable", function()
+	vim.opt.verbose = 0
+	vim.opt.verbosefile = ""
+end, { desc = "Disable verbose mode" })
+
+vim.api.nvim_create_user_command("VerboseModeOpenFile", function()
+	vim.cmd("e /tmp/nvim-verbose.log")
+end, { desc = "Opens verbose mode log file" })
+
+vim.api.nvim_create_user_command("VerboseModeDeleteFile", function()
+	vim.cmd("!rm /tmp/nvim-verbose.log")
+end, { desc = "Deletes verbose mode log file" })
+
+vim.api.nvim_create_user_command("BufferStats", function()
+	local buffers = vim.api.nvim_list_bufs()
+	local loaded = 0
+	local hidden = 0
+	local modified = 0
+	local with_lsp = 0
+	local total_diagnostics = 0
+
+	for _, buf in ipairs(buffers) do
+		if vim.api.nvim_buf_is_loaded(buf) then
+			loaded = loaded + 1
+
+			-- Check if hidden
+			local wins = vim.fn.win_findbuf(buf)
+			if #wins == 0 then
+				hidden = hidden + 1
+			end
+
+			-- Check if modified
+			if vim.api.nvim_get_option_value("modified", { buf = buf }) then
+				modified = modified + 1
+			end
+
+			-- Check LSP attachment
+			local clients = vim.lsp.get_clients({ bufnr = buf })
+			if #clients > 0 then
+				with_lsp = with_lsp + 1
+			end
+
+			-- Count diagnostics
+			local diag = vim.diagnostic.get(buf)
+			total_diagnostics = total_diagnostics + #diag
+		end
+	end
+
+	local msg = string.format(
+		"Buffers:\n  Total loaded: %d\n  Hidden: %d\n  Modified: %d\n  With LSP: %d\n  Total diagnostics: %d",
+		loaded,
+		hidden,
+		modified,
+		with_lsp,
+		total_diagnostics
+	)
+	vim.notify(msg, vim.log.levels.INFO)
+end, { desc = "Show buffer statistics" })
+
+vim.api.nvim_create_user_command("NotificationsHistory", function()
+	require("snacks").notifier.show_history()
+end, { desc = "Notification history" })
+
+vim.api.nvim_create_user_command("NotificationsClear", function()
+	require("snacks").notifier.hide()
+end, { desc = "Clear all notifications" })
+
+vim.api.nvim_create_user_command("ThemeRandom", function()
+	-- local all_colorschemes = vim.fn.getcompletion("", "color")
+	local colorschemes = { "high-contrast", "evening", "moonfly", "cyberdream-light", "nordic", "rainbow12" }
+	local random_colorscheme = colorschemes[math.random(#colorschemes)]
+	vim.cmd.colorscheme(random_colorscheme)
+	vim.notify(random_colorscheme)
+end, { desc = "Assigns a random colorscheme" })
+
+vim.api.nvim_create_user_command("ThemeDefault", function()
+	vim.cmd.colorscheme(vim.g._default_colorscheme)
+	vim.notify(vim.g._default_colorscheme)
+end, { desc = "Assigns the default colorscheme" })
+
+-- </COMMANDS>
 require("core.keymaps")
 require("core.autocmds")
-require("core.commands")
 
 local gh = function(x)
 	return "https://github.com/" .. x
