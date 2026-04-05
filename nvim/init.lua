@@ -883,15 +883,6 @@ vim.keymap.set("v", "<leader>/", function()
 	fzf.blines({ query = text })
 end, { desc = "[/] Fuzzily search in current buffer" })
 
--- Git
-vim.keymap.set("n", "<leader>gh", fzf.git_bcommits, { desc = "[G]it [H]istory" })
-vim.keymap.set("n", "<leader>fm", fzf.git_status, { desc = "[F]ind [M]odified git files" })
-vim.keymap.set("n", "<leader>gsm", function()
-	fzf.git_commits({
-		cmd = "git log --color --pretty=format:'%C(yellow)%h%Creset %Cgreen(%><(12)%cr%><|(12))%Creset %s %C(blue)<%an>%Creset' main",
-	})
-end, { desc = "[G]it [S]earch [M]ain branch commits" })
-
 vim.notify = require("snacks").notifier.notify
 
 -- ------------------------------------------------- <PLUGINS> ------------------------------------------------------
@@ -965,6 +956,13 @@ vim.keymap.set("n", "<leader>jt", "<cmd>JumpTest<CR>", { desc = "[J]ump to [T]es
 vim.keymap.set("", "<C-f>", function()
 	require("conform").format({ async = true, lsp_fallback = true })
 end, { desc = "[F]ormat buffer" })
+vim.keymap.set("n", "<leader>gh", fzf.git_bcommits, { desc = "[G]it [H]istory" })
+vim.keymap.set("n", "<leader>fm", fzf.git_status, { desc = "[F]ind [M]odified git files" })
+vim.keymap.set("n", "<leader>gsm", function()
+	fzf.git_commits({
+		cmd = "git log --color --pretty=format:'%C(yellow)%h%Creset %Cgreen(%><(12)%cr%><|(12))%Creset %s %C(blue)<%an>%Creset' main",
+	})
+end, { desc = "[G]it [S]earch [M]ain branch commits" })
 
 -- -------------------------------------------------- </KEYMAPS> ---------------------------------------------------
 -- ----------------------------------------------------- <LSP> -----------------------------------------------------
