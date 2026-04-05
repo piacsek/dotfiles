@@ -20,6 +20,10 @@
       "rev": "864ebbb654744540786c27d4956858a46b39e06b",
       "src": "https://github.com/aisk/kukishinobu.vim"
     },
+    "mason.nvim": {
+      "rev": "44d1e90e1f66e077268191e3ee9d2ac97cc18e65",
+      "src": "https://github.com/mason-org/mason.nvim"
+    },
     "mini.ai": {
       "rev": "43eb2074843950a3a25aae56a5f41362ec043bfa",
       "src": "https://github.com/echasnovski/mini.ai"
