@@ -13,6 +13,7 @@ local function run_script_picker()
 		return
 	end
 
+	local fzf = require("fzf-lua")
 	fzf.fzf_exec(function(fzf_cb)
 		for _, entry in ipairs(entries) do
 			fzf_cb(entry)
