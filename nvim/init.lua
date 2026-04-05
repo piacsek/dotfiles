@@ -159,6 +159,7 @@ local gh = function(x)
 	return "https://github.com/" .. x
 end
 
+-- PLUGINS
 vim.pack.add({
 	-- Simple plugins
 	gh("numToStr/Comment.nvim"),
