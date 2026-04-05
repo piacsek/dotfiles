@@ -6,7 +6,9 @@ require("core.keymaps")
 require("core.autocmds")
 require("core.commands")
 
-local gh = function(x) return "https://github.com/" .. x end
+local gh = function(x)
+	return "https://github.com/" .. x
+end
 
 vim.pack.add({
 	gh("numToStr/Comment.nvim"),
