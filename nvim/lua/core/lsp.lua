@@ -27,7 +27,7 @@ vim.lsp.config("tailwindcss", {
 			path = vim.uv.fs_realpath(path) or path
 			on_dir(path)
 		else
-			vim.notify("tailwindls unavailable: Please define tailwind_root.")
+			vim.notify("tailwindlsp unavailable: Please define tailwind_root.")
 		end
 	end,
 })
@@ -70,6 +70,7 @@ vim.api.nvim_create_autocmd("FileType", {
 	pattern = tailwind_filetypes,
 	callback = function(ev)
 		if not project_tailwind_root then
+			vim.notify("")
 			return
 		end
 		local path = vim.fn.expand(project_tailwind_root)
