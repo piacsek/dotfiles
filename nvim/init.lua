@@ -58,6 +58,9 @@ vim.diagnostic.config({
 -- --------------------------------------------------- <COMMANDS> --------------------------------------------------
 -- Overriding the ones from https://github.com/neovim/nvim-lspconfig because they open on new tabs
 vim.api.nvim_create_user_command("LspInfo", "vertical checkhealth vim.lsp", { desc = "Show LSP health check" })
+vim.api.nvim_create_user_command("LspLog", function()
+	vim.cmd.edit(vim.lsp.log.get_filename())
+end, { desc = "Show LSP health check" })
 
 vim.api.nvim_create_user_command("ClearOldfiles", function()
 	vim.v.oldfiles = {}
@@ -1043,10 +1046,6 @@ vim.lsp.enable("tailwindcss")
 vim.lsp.enable("jsonls")
 vim.lsp.enable("yamlls")
 vim.lsp.enable("elixir_ls")
-
-vim.api.nvim_create_user_command("LspLog", function()
-	vim.cmd.edit(vim.lsp.log.get_filename())
-end, { desc = "Show LSP health check" })
 
 -- ----------------------------------------------------- </LSP> -----------------------------------------------------
 
