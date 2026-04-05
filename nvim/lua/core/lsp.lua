@@ -7,6 +7,35 @@ if vim.fn.filereadable(project_lsp_config) == 1 then
 	end
 end
 
+vim.lsp.config("tailwindcss", {
+	filetypes = {
+		"html",
+		"css",
+		"scss",
+		"javascriptreact",
+		"typescriptreact",
+		"svelte",
+		"vue",
+		"heex",
+	},
+	root_dir = function(bufnr, on_dir)
+		local fname = vim.api.nvim_buf_get_name(bufnr)
+		local root = vim.fs.dirname(vim.fs.find({
+			"tailwind.config.js",
+			"tailwind.config.cjs",
+			"tailwind.config.mjs",
+			"tailwind.config.ts",
+			"postcss.config.js",
+			"postcss.config.cjs",
+			"package.json",
+			".git",
+		}, { upward = true, path = fname })[1])
+
+		if root then
+			on_dir(root)
+		end
+	end,
+})
 vim.lsp.config["elixir_ls"] = {
 	cmd = { "elixir-ls" },
 	filetypes = { "elixir", "eelixir", "heex", "surface" },
