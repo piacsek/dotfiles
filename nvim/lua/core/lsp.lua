@@ -20,16 +20,7 @@ local tailwind_filetypes = {
 	"heex",
 }
 vim.lsp.config("tailwindcss", {
-	filetypes = {
-		"html",
-		"css",
-		"scss",
-		"javascriptreact",
-		"typescriptreact",
-		"svelte",
-		"vue",
-		"heex",
-	},
+	filetypes = tailwind_filetypes,
 	root_dir = function(_, on_dir)
 		if project_tailwind_root then
 			local path = vim.fn.expand(project_tailwind_root)
