@@ -13,9 +13,11 @@ end
 vim.pack.add({
 	gh("numToStr/Comment.nvim"),
 	gh("windwp/nvim-autopairs"),
+	gh("echasnovski/mini.ai"),
 })
 
 require("nvim-autopairs").setup({})
+require("mini.ai").setup({})
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
