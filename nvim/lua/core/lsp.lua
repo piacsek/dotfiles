@@ -20,7 +20,7 @@ vim.lsp.config("tailwindcss", {
 		"vue",
 		"heex",
 	},
-	root_dir = function(_bufnr, on_dir)
+	root_dir = function(_, on_dir)
 		if project_tailwind_root then
 			on_dir(project_tailwind_root)
 		else
