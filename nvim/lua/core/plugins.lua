@@ -13,6 +13,30 @@ vim.pack.add({
 	gh("herisetiawan00/jtt.nvim"),
 	gh("christoomey/vim-tmux-navigator"),
 
+	gh("mason-org/mason.nvim"),
+	gh("neovim/nvim-lspconfig"),
+	gh("folke/lazydev.nvim"),
+	gh("lewis6991/gitsigns.nvim"),
+	gh("stevearc/conform.nvim"),
+	gh("nvim-treesitter/nvim-treesitter"),
+
+	gh("stevearc/oil.nvim"),
+	{ src = gh("ThePrimeagen/harpoon"), version = "harpoon2" },
+	gh("nvim-lua/plenary.nvim"),
+	gh("ibhagwan/fzf-lua"),
+
+	gh("nvim-pack/nvim-spectre"),
+	gh("LintaoAmons/scratch.nvim"),
+
+	gh("hrsh7th/nvim-cmp"),
+	gh("L3MON4D3/LuaSnip"),
+	gh("saadparwaiz1/cmp_luasnip"),
+	gh("hrsh7th/cmp-nvim-lsp"),
+	gh("hrsh7th/cmp-path"),
+
+	gh("vim-test/vim-test"),
+	gh("preservim/vimux"),
+	gh("folke/snacks.nvim"),
 	-- Colorschemes
 	gh("scottmckendry/cyberdream.nvim"),
 	gh("piacsek/high-contrast.nvim"),
@@ -22,38 +46,6 @@ vim.pack.add({
 	gh("oxidescheme/oxide.nvim"),
 	gh("dmkc/underwater-vim-theme"),
 	gh("bluz71/vim-moonfly-colors"),
-
-	-- LSP & tooling
-	gh("mason-org/mason.nvim"),
-	gh("neovim/nvim-lspconfig"),
-	gh("folke/lazydev.nvim"),
-	gh("lewis6991/gitsigns.nvim"),
-	gh("stevearc/conform.nvim"),
-	gh("nvim-treesitter/nvim-treesitter"),
-
-	-- File navigation
-	gh("stevearc/oil.nvim"),
-	{ src = gh("ThePrimeagen/harpoon"), version = "harpoon2" },
-	gh("nvim-lua/plenary.nvim"),
-	gh("ibhagwan/fzf-lua"),
-
-	-- Search & replace
-	gh("nvim-pack/nvim-spectre"),
-	gh("LintaoAmons/scratch.nvim"),
-
-	-- Completion
-	gh("hrsh7th/nvim-cmp"),
-	gh("L3MON4D3/LuaSnip"),
-	gh("saadparwaiz1/cmp_luasnip"),
-	gh("hrsh7th/cmp-nvim-lsp"),
-	gh("hrsh7th/cmp-path"),
-
-	-- Testing
-	gh("vim-test/vim-test"),
-	gh("preservim/vimux"),
-
-	-- UI
-	gh("folke/snacks.nvim"),
 }, { load = true })
 
 -- Dev plugins
