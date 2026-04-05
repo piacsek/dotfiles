@@ -304,7 +304,6 @@ require("scratch").setup({
 	window_cmd = "edit",
 	file_picker = "fzflua",
 	filetypes = { "ex", "lua", "js", "sh", "ts", "json", "heex", "html", "sql", "md" },
-	filetype_details = { ex = {} },
 })
 
 -- nvim-cmp
