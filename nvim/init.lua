@@ -1,7 +1,7 @@
 -- Enable bytecode cache for faster Lua module loading
 vim.loader.enable()
 
--- <OPTIONS>
+-- --------------------------------------------------- <OPTIONS> ---------------------------------------------------
 vim.g.have_nerd_font = true
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
