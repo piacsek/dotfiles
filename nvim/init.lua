@@ -274,7 +274,13 @@ require("gitsigns").setup({
 	end,
 })
 require("mason").setup({
-	ui = { icons = { package_installed = "✓", package_pending = "➜", package_uninstalled = "✗" } },
+	ui = {
+		icons = {
+			package_installed = "✓",
+			package_pending = "➜",
+			package_uninstalled = "✗",
+		},
+	},
 })
 vim.keymap.set("", "<C-f>", function()
 	require("conform").format({ async = true, lsp_fallback = true })
