@@ -34,12 +34,6 @@ require("lazy").setup("plugins", {
 	},
 })
 
-local gh = function(x) return "https://github.com/" .. x end
-
-vim.pack.add({
-	gh("numToStr/Comment.nvim"),
-})
-
 -- vim.g._default_colorscheme = "moonfly"
 vim.g._default_colorscheme = "high-contrast"
 -- vim.g._default_colorscheme = "oxide"
