@@ -20,7 +20,7 @@ vim.pack.add({
 	gh("sotte/presenting.nvim"),
 	gh("herisetiawan00/jtt.nvim"),
 	gh("christoomey/vim-tmux-navigator"),
-})
+}, { load = true })
 
 require("nvim-autopairs").setup({})
 require("mini.ai").setup({})
