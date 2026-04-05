@@ -960,6 +960,9 @@ vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
 -- Plugin keymaps
 vim.keymap.set("n", "<leader>jw", "<esc>:URLOpenUnderCursor<cr>", { desc = "[J]ump to [W]eb browser" })
 vim.keymap.set("n", "<leader>jt", "<cmd>JumpTest<CR>", { desc = "[J]ump to [T]est" })
+vim.keymap.set("", "<C-f>", function()
+	require("conform").format({ async = true, lsp_fallback = true })
+end, { desc = "[F]ormat buffer" })
 
 -- -------------------------------------------------- </KEYMAPS> ---------------------------------------------------
 -- ----------------------------------------------------- <LSP> -----------------------------------------------------
