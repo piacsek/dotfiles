@@ -1055,7 +1055,7 @@ vim.lsp.enable("yamlls")
 vim.lsp.enable("elixir_ls")
 
 vim.api.nvim_create_user_command("LspLog", function()
-	vim.cmd.edit(vim.lsp.get_log_path())
+	vim.cmd.edit(vim.lsp.log.get_filename())
 end, { desc = "Show LSP health check" })
 -- </LSP>
 
