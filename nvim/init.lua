@@ -71,11 +71,6 @@ require("lazy").setup("plugins", {
 	},
 })
 
--- vim.g._default_colorscheme = "moonfly"
-vim.g._default_colorscheme = "high-contrast"
--- vim.g._default_colorscheme = "oxide"
-vim.cmd.colorscheme(vim.g._default_colorscheme)
-
 vim.notify = require("snacks").notifier.notify
 
 require("core.lsp")
