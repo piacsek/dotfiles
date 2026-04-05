@@ -61,7 +61,17 @@ vim.lsp.enable("vimls")
 vim.lsp.enable("ts_ls")
 vim.lsp.enable("html")
 vim.lsp.enable("emmet_ls")
-vim.lsp.enable("tailwindcss")
 vim.lsp.enable("jsonls")
 vim.lsp.enable("yamlls")
 vim.lsp.enable("elixir_ls")
+
+-- Tailwind is super laggy on the first file opened
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "heex", "html", "css" },
+	callback = function()
+		vim.defer_fn(function()
+			vim.lsp.enable("tailwindcss")
+		end, 100)
+	end,
+	once = true,
+})
