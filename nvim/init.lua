@@ -29,6 +29,7 @@ vim.pack.add({
 	gh("dmkc/underwater-vim-theme"),
 	gh("bluz71/vim-moonfly-colors"),
 	gh("mason-org/mason.nvim"),
+	gh("neovim/nvim-lspconfig"),
 }, { load = true })
 
 require("nvim-autopairs").setup({})
