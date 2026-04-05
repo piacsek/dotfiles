@@ -28,10 +28,10 @@ vim.lsp.config["elixir_ls"] = {
 	},
 }
 
-local emmet_config = vim.lsp.config["emmet_ls"] or {}
-emmet_config.filetypes = vim.list_extend(emmet_config.filetypes or {}, { "heex", "eelixir" })
-vim.lsp.config["emmet_ls"] = emmet_config
-
+-- local emmet_config = vim.lsp.config["emmet_ls"] or {}
+-- emmet_config.filetypes = vim.list_extend(emmet_config.filetypes or {}, { "heex", "eelixir" })
+-- vim.lsp.config["emmet_ls"] = emmet_config
+--
 -- vim.lsp.enable("lua_ls")
 -- vim.lsp.enable("vimls")
 -- vim.lsp.enable("ts_ls")
@@ -40,4 +40,4 @@ vim.lsp.config["emmet_ls"] = emmet_config
 vim.lsp.enable("tailwindcss")
 vim.lsp.enable("jsonls")
 -- vim.lsp.enable("yamlls")
-vim.lsp.enable("elixir_ls")
+-- vim.lsp.enable("elixir_ls")
