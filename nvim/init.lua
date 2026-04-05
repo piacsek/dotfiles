@@ -243,6 +243,14 @@ vim.keymap.set("n", "<M-'>", function() harpoon:list():select(5) end)
 vim.keymap.set("n", "<M-e>", function() harpoon.ui:toggle_quick_menu(require("harpoon"):list()) end)
 
 -- Spectre
+vim.keymap.set("n", "<leader>SS", function() require("spectre").toggle() end, { desc = "Toggle Spectre" })
+vim.keymap.set("v", "<leader>SS", function() require("spectre").open_visual() end, { desc = "Toggle Spectre w/ selection" })
+vim.keymap.set("n", "<leader>SB", function()
+	require("spectre").toggle({ path = vim.fn.fnamemodify(vim.fn.expand("%:p"), ":~:.") })
+end, { desc = "Toggle Spectre for current buffer" })
+vim.keymap.set("v", "<leader>SB", function()
+	require("spectre").open_visual({ path = vim.fn.fnamemodify(vim.fn.expand("%:p"), ":~:.") })
+end, { desc = "Toggle Spectre w/ selection for current buffer" })
 require("spectre").setup({
 	open_cmd = function()
 		vim.cmd("noautocmd new")
