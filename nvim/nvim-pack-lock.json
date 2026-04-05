@@ -32,6 +32,10 @@
       "rev": "7727e6146afea2254de08d0e65fd2cf904be338d",
       "src": "https://github.com/sontungexpt/url-open",
       "version": "'mini'"
+    },
+    "vim-tmux-navigator": {
+      "rev": "e41c431a0c7b7388ae7ba341f01a0d217eb3a432",
+      "src": "https://github.com/christoomey/vim-tmux-navigator"
     }
   }
 }
