@@ -1057,8 +1057,8 @@ vim.lsp.enable("elixir_ls")
 vim.api.nvim_create_user_command("LspLog", function()
 	vim.cmd.edit(vim.lsp.log.get_filename())
 end, { desc = "Show LSP health check" })
--- </LSP>
 
+-- ----------------------------------------------------- </LSP> -----------------------------------------------------
 local home_init = vim.fn.expand("$HOME/init.lua")
 if vim.fn.filereadable(home_init) == 1 then
 	dofile(home_init)
