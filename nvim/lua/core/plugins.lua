@@ -3,7 +3,6 @@ local gh = function(x)
 end
 
 vim.pack.add({
-	-- Simple plugins
 	gh("numToStr/Comment.nvim"),
 	gh("windwp/nvim-autopairs"),
 	gh("echasnovski/mini.ai"),
