@@ -20,9 +20,6 @@ vim.pack.add({
 	gh("sotte/presenting.nvim"),
 	gh("herisetiawan00/jtt.nvim"),
 	gh("christoomey/vim-tmux-navigator"),
-}, { load = true })
-
-local colorschemes = {
 	gh("scottmckendry/cyberdream.nvim"),
 	gh("piacsek/high-contrast.nvim"),
 	gh("AlexvZyl/nordic.nvim"),
@@ -31,8 +28,7 @@ local colorschemes = {
 	gh("oxidescheme/oxide.nvim"),
 	gh("dmkc/underwater-vim-theme"),
 	gh("bluz71/vim-moonfly-colors"),
-}
-vim.pack.add(colorschemes, { load = true })
+}, { load = true })
 
 require("nvim-autopairs").setup({})
 require("mini.ai").setup({})
