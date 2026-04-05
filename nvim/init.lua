@@ -66,7 +66,7 @@ vim.pack.add({
 })
 
 -- Dev plugins
-vim.opt.rtp:prepend(vim.fn.expand("~/projects/nvim-plugins/buddy.nvim"))
+-- vim.opt.rtp:prepend(vim.fn.expand("~/projects/nvim-plugins/buddy.nvim"))
 
 -- Plugin setup
 require("nvim-autopairs").setup({})
