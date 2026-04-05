@@ -1,9 +1,11 @@
 local project_elixir_root = nil
+local project_tailwind_root = nil
 local project_lsp_config = vim.fn.getcwd() .. "/piacsek/lsp.lua"
 if vim.fn.filereadable(project_lsp_config) == 1 then
 	local ok, config = pcall(dofile, project_lsp_config)
 	if ok and type(config) == "table" and config.elixir_root then
 		project_elixir_root = config.elixir_root
+		project_tailwind_root = config.tailwind_root
 	end
 end
 
@@ -19,6 +21,12 @@ vim.lsp.config("tailwindcss", {
 		"heex",
 	},
 	root_dir = function(bufnr, on_dir)
+		if project_elixir_root then
+			on_dir(project_elixir_root)
+		else
+			vim.notify("elixir_ls unavailable: Please define elixir_root.")
+		end
+
 		local fname = vim.api.nvim_buf_get_name(bufnr)
 		local root = vim.fs.dirname(vim.fs.find({
 			"tailwind.config.js",
