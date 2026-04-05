@@ -16,12 +16,21 @@ vim.pack.add({
 	gh("echasnovski/mini.ai"),
 	gh("echasnovski/mini.icons"),
 	gh("windwp/nvim-ts-autotag"),
+	{ src = gh("sontungexpt/url-open"), version = "mini" },
 })
 
 require("nvim-autopairs").setup({})
 require("mini.ai").setup({})
 require("mini.icons").setup({})
 require("nvim-ts-autotag").setup({})
+require("url-open").setup({
+	highlight_url = {
+		cursor_move = {
+			enabled = false,
+		},
+	},
+})
+vim.keymap.set("n", "<leader>jw", "<esc>:URLOpenUnderCursor<cr>", { desc = "[J]ump to [W]eb browser" })
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
