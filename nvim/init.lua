@@ -52,7 +52,7 @@ vim.diagnostic.config({
 	update_in_insert = false,
 })
 
--- </OPTIONS>
+-- --------------------------------------------------- <OPTIONS> ---------------------------------------------------
 
 -- <COMMANDS>
 -- Overriding the ones from https://github.com/neovim/nvim-lspconfig because they open on new tabs
