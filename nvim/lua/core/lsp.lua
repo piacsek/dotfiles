@@ -64,4 +64,12 @@ vim.lsp.enable("emmet_ls")
 vim.lsp.enable("jsonls")
 vim.lsp.enable("yamlls")
 vim.lsp.enable("elixir_ls")
-vim.lsp.enable("tailwindcss")
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "html", "css", "scss", "javascriptreact", "typescriptreact", "svelte", "vue", "heex" },
+	once = true,
+	callback = function()
+		vim.defer_fn(function()
+			vim.lsp.enable("tailwindcss")
+		end, 0)
+	end,
+})
