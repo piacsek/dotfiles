@@ -20,27 +20,11 @@ vim.lsp.config("tailwindcss", {
 		"vue",
 		"heex",
 	},
-	root_dir = function(bufnr, on_dir)
-		if project_elixir_root then
-			on_dir(project_elixir_root)
+	root_dir = function(_bufnr, on_dir)
+		if project_tailwind_root then
+			on_dir(project_tailwind_root)
 		else
-			vim.notify("elixir_ls unavailable: Please define elixir_root.")
-		end
-
-		local fname = vim.api.nvim_buf_get_name(bufnr)
-		local root = vim.fs.dirname(vim.fs.find({
-			"tailwind.config.js",
-			"tailwind.config.cjs",
-			"tailwind.config.mjs",
-			"tailwind.config.ts",
-			"postcss.config.js",
-			"postcss.config.cjs",
-			"package.json",
-			".git",
-		}, { upward = true, path = fname })[1])
-
-		if root then
-			on_dir(root)
+			vim.notify("tailwindls unavailable: Please define tailwind_root.")
 		end
 	end,
 })
