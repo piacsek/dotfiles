@@ -15,11 +15,13 @@ vim.pack.add({
 	gh("windwp/nvim-autopairs"),
 	gh("echasnovski/mini.ai"),
 	gh("echasnovski/mini.icons"),
+	gh("windwp/nvim-ts-autotag"),
 })
 
 require("nvim-autopairs").setup({})
 require("mini.ai").setup({})
 require("mini.icons").setup({})
+require("nvim-ts-autotag").setup({})
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
