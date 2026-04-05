@@ -70,6 +70,6 @@ vim.api.nvim_create_autocmd("FileType", {
 	callback = function()
 		vim.defer_fn(function()
 			vim.lsp.enable("tailwindcss")
-		end, 0)
+		end, 1000)
 	end,
 })
