@@ -9,29 +9,6 @@ if vim.fn.filereadable(project_lsp_config) == 1 then
 	end
 end
 
-local tailwind_filetypes = {
-	"html",
-	"css",
-	"scss",
-	"javascriptreact",
-	"typescriptreact",
-	"svelte",
-	"vue",
-	"heex",
-}
--- vim.lsp.config("tailwindcss", {
--- 	filetypes = tailwind_filetypes,
--- 	root_dir = function(_, on_dir)
--- 		if project_tailwind_root then
--- 			local path = vim.fn.expand(project_tailwind_root)
--- 			path = vim.uv.fs_realpath(path) or path
--- 			on_dir(path)
--- 		else
--- 			vim.notify("tailwindlsp unavailable: Please define tailwind_root.", vim.log.levels.ERROR)
--- 		end
--- 	end,
--- })
-
 vim.lsp.config["elixir_ls"] = {
 	cmd = { "elixir-ls" },
 	filetypes = { "elixir", "eelixir", "heex", "surface" },
@@ -66,8 +43,18 @@ vim.lsp.enable("jsonls")
 vim.lsp.enable("yamlls")
 vim.lsp.enable("elixir_ls")
 
+-- Tailwind LSP is laggy via vim.lsp.enable, using vim.lsp.start solves the issue
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = tailwind_filetypes,
+	pattern = {
+		"html",
+		"css",
+		"scss",
+		"javascriptreact",
+		"typescriptreact",
+		"svelte",
+		"vue",
+		"heex",
+	},
 	callback = function(ev)
 		if not project_tailwind_root then
 			vim.notify("tailwindlsp unavailable: Please define tailwind_root.", vim.log.levels.ERROR)
