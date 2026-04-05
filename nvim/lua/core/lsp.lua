@@ -9,6 +9,27 @@ if vim.fn.filereadable(project_lsp_config) == 1 then
 	end
 end
 
+local tailwind_filetypes = {
+	filetypes = {
+		"html",
+		"css",
+		"scss",
+		"javascriptreact",
+		"typescriptreact",
+		"svelte",
+		"vue",
+		"heex",
+	},
+	root_dir = function(_, on_dir)
+		if project_tailwind_root then
+			local path = vim.fn.expand(project_tailwind_root)
+			path = vim.uv.fs_realpath(path) or path
+			on_dir(path)
+		else
+			vim.notify("tailwindls unavailable: Please define tailwind_root.")
+		end
+	end,
+}
 vim.lsp.config("tailwindcss", {
 	filetypes = {
 		"html",
@@ -67,7 +88,9 @@ vim.lsp.enable("elixir_ls")
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = { "html", "css", "scss", "javascriptreact", "typescriptreact", "svelte", "vue", "heex" },
 	callback = function(ev)
-		if not project_tailwind_root then return end
+		if not project_tailwind_root then
+			return
+		end
 		local path = vim.fn.expand(project_tailwind_root)
 		path = vim.uv.fs_realpath(path) or path
 		vim.lsp.start({
