@@ -54,7 +54,7 @@ vim.diagnostic.config({
 
 -- --------------------------------------------------- <OPTIONS> ---------------------------------------------------
 
--- <COMMANDS>
+-- --------------------------------------------------- <COMMANDS> --------------------------------------------------
 -- Overriding the ones from https://github.com/neovim/nvim-lspconfig because they open on new tabs
 vim.api.nvim_create_user_command("LspInfo", "vertical checkhealth vim.lsp", { desc = "Show LSP health check" })
 
@@ -154,8 +154,9 @@ vim.api.nvim_create_user_command("ThemeDefault", function()
 	vim.notify(vim.g._default_colorscheme)
 end, { desc = "Assigns the default colorscheme" })
 
--- </COMMANDS>
--- <AUTO_COMMANDS>
+-- --------------------------------------------------- </COMMANDS> --------------------------------------------------
+
+-- ---------------------------------------------- <AUTO_COMMANDS> --------------------------------------------------
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
 	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
@@ -163,7 +164,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		vim.highlight.on_yank()
 	end,
 })
--- </AUTO_COMMANDS>
+-- ---------------------------------------------- </AUTO_COMMANDS> --------------------------------------------------
 
 local gh = function(x)
 	return "https://github.com/" .. x
