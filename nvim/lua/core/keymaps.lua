@@ -6,9 +6,9 @@ vim.keymap.set({ "n", "i", "v", "c" }, "<Right>", "<Nop>", arrow_disabling_opts)
 
 vim.keymap.set({ "n" }, "<M-r>", function()
 	local file = vim.fn.expand("%:p")
-	local pos = vim.api.nvim_win_get_cursor(0)
+	local line = vim.fn.line(".")
 	if file ~= "" and vim.fn.filereadable(file) == 1 then
-		vim.cmd("restart ++cmd 'edit " .. vim.fn.fnameescape(file) .. " | call cursor(" .. pos[1] .. "," .. pos[2] + 1 .. ")'")
+		vim.cmd("restart +" .. line .. " " .. vim.fn.fnameescape(file))
 	else
 		vim.cmd("restart")
 	end
