@@ -20,7 +20,15 @@ vim.lsp.config("tailwindcss", {
 		"vue",
 		"heex",
 	},
-	root_dir = project_tailwind_root,
+	root_dir = function(_, on_dir)
+		if project_tailwind_root then
+			local path = vim.fn.expand(project_tailwind_root)
+			path = vim.uv.fs_realpath(path) or path
+			on_dir(path)
+		else
+			vim.notify("tailwindls unavailable: Please define tailwind_root.")
+		end
+	end,
 })
 
 vim.lsp.config["elixir_ls"] = {
