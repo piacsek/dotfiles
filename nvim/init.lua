@@ -63,7 +63,7 @@ vim.pack.add({
 
 	-- UI
 	gh("folke/snacks.nvim"),
-}, { load = true })
+})
 
 -- Dev plugins
 vim.opt.rtp:prepend(vim.fn.expand("~/projects/nvim-plugins/buddy.nvim"))
@@ -104,8 +104,18 @@ require("gitsigns").setup({
 	},
 	on_attach = function(bufnr)
 		vim.keymap.set("n", "<leader>u", "<cmd>Gitsigns reset_hunk<CR>", { desc = "Reset git hunk", buffer = bufnr })
-		vim.keymap.set("n", "<leader>gb", "<cmd>Gitsigns toggle_current_line_blame<CR>", { desc = "[G]it [B]lame toggle", buffer = bufnr })
-		vim.keymap.set("n", "{", "<cmd>Gitsigns nav_hunk prev<CR>", { desc = "Go to previous git hunk", buffer = bufnr })
+		vim.keymap.set(
+			"n",
+			"<leader>gb",
+			"<cmd>Gitsigns toggle_current_line_blame<CR>",
+			{ desc = "[G]it [B]lame toggle", buffer = bufnr }
+		)
+		vim.keymap.set(
+			"n",
+			"{",
+			"<cmd>Gitsigns nav_hunk prev<CR>",
+			{ desc = "Go to previous git hunk", buffer = bufnr }
+		)
 		vim.keymap.set("n", "}", "<cmd>Gitsigns nav_hunk next<CR>", { desc = "Go to next git hunk", buffer = bufnr })
 	end,
 })
@@ -233,18 +243,39 @@ require("oil").setup({
 local harpoon = require("harpoon")
 harpoon:setup()
 
-vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
-vim.keymap.set("n", "<leader>A", function() harpoon:list():clear(); harpoon:list():add() end)
-vim.keymap.set("n", "<M-j>", function() harpoon:list():select(1) end)
-vim.keymap.set("n", "<M-k>", function() harpoon:list():select(2) end)
-vim.keymap.set("n", "<M-l>", function() harpoon:list():select(3) end)
-vim.keymap.set("n", "<M-;>", function() harpoon:list():select(4) end)
-vim.keymap.set("n", "<M-'>", function() harpoon:list():select(5) end)
-vim.keymap.set("n", "<M-e>", function() harpoon.ui:toggle_quick_menu(require("harpoon"):list()) end)
+vim.keymap.set("n", "<leader>a", function()
+	harpoon:list():add()
+end)
+vim.keymap.set("n", "<leader>A", function()
+	harpoon:list():clear()
+	harpoon:list():add()
+end)
+vim.keymap.set("n", "<M-j>", function()
+	harpoon:list():select(1)
+end)
+vim.keymap.set("n", "<M-k>", function()
+	harpoon:list():select(2)
+end)
+vim.keymap.set("n", "<M-l>", function()
+	harpoon:list():select(3)
+end)
+vim.keymap.set("n", "<M-;>", function()
+	harpoon:list():select(4)
+end)
+vim.keymap.set("n", "<M-'>", function()
+	harpoon:list():select(5)
+end)
+vim.keymap.set("n", "<M-e>", function()
+	harpoon.ui:toggle_quick_menu(require("harpoon"):list())
+end)
 
 -- Spectre
-vim.keymap.set("n", "<leader>SS", function() require("spectre").toggle() end, { desc = "Toggle Spectre" })
-vim.keymap.set("v", "<leader>SS", function() require("spectre").open_visual() end, { desc = "Toggle Spectre w/ selection" })
+vim.keymap.set("n", "<leader>SS", function()
+	require("spectre").toggle()
+end, { desc = "Toggle Spectre" })
+vim.keymap.set("v", "<leader>SS", function()
+	require("spectre").open_visual()
+end, { desc = "Toggle Spectre w/ selection" })
 vim.keymap.set("n", "<leader>SB", function()
 	require("spectre").toggle({ path = vim.fn.fnamemodify(vim.fn.expand("%:p"), ":~:.") })
 end, { desc = "Toggle Spectre for current buffer" })
@@ -481,10 +512,18 @@ require("snacks").setup({
 	zen = { enabled = false },
 })
 
-vim.keymap.set("n", "<leader>jp", function() Snacks.explorer({ position = "right" }) end, { desc = "Filetree" })
-vim.keymap.set("n", "<leader>jn", function() Snacks.notifier.show_history() end, { desc = "Jump to notifications" })
-vim.keymap.set("n", "<leader>gp", function() Snacks.picker.gh_pr() end, { desc = "GitHub Pull Requests (open)" })
-vim.keymap.set("n", "<leader>gw", function() Snacks.gitbrowse() end, { desc = "Open current file on GitHub" })
+vim.keymap.set("n", "<leader>jp", function()
+	Snacks.explorer({ position = "right" })
+end, { desc = "Filetree" })
+vim.keymap.set("n", "<leader>jn", function()
+	Snacks.notifier.show_history()
+end, { desc = "Jump to notifications" })
+vim.keymap.set("n", "<leader>gp", function()
+	Snacks.picker.gh_pr()
+end, { desc = "GitHub Pull Requests (open)" })
+vim.keymap.set("n", "<leader>gw", function()
+	Snacks.gitbrowse()
+end, { desc = "Open current file on GitHub" })
 vim.keymap.set({ "n", "v" }, "<leader>gyy", function()
 	Snacks.gitbrowse({
 		notify = false,
@@ -504,7 +543,9 @@ vim.keymap.set({ "n", "v" }, "<leader>gyc", function()
 		end,
 	})
 end, { desc = "Copy GitHub URL to clipboard (current branch)" })
-vim.keymap.set("n", "<leader>gh", function() Snacks.picker.git_log_file() end, { desc = "Git history for current file" })
+vim.keymap.set("n", "<leader>gh", function()
+	Snacks.picker.git_log_file()
+end, { desc = "Git history for current file" })
 vim.keymap.set("n", "<leader>gd", function()
 	local file = vim.fn.expand("%")
 	Snacks.terminal.open("git diff origin/main -- " .. vim.fn.shellescape(file), {
@@ -513,7 +554,9 @@ vim.keymap.set("n", "<leader>gd", function()
 end, { desc = "Diff current file vs origin/main" })
 vim.keymap.set("n", "<leader>gg", function()
 	local file_dir = vim.fn.expand("%:p:h")
-	if file_dir == "" then file_dir = vim.fn.getcwd() end
+	if file_dir == "" then
+		file_dir = vim.fn.getcwd()
+	end
 	local git_root = vim.fs.root(file_dir, ".git")
 	Snacks.lazygit({ cwd = git_root, win = { width = 0.9, height = 0.9 } })
 end, { desc = "Lazygit" })
@@ -605,16 +648,24 @@ local function run_script_picker()
 		winopts = { height = 0.4, width = 0.5 },
 		actions = {
 			["default"] = function(selected)
-				if selected and #selected == 1 then vim.fn.system(selected[1]) end
+				if selected and #selected == 1 then
+					vim.fn.system(selected[1])
+				end
 			end,
 			["ctrl-w"] = function(selected)
-				if selected and #selected == 1 then vim.fn.system(string.format("tmux new-window '%s';", selected[1])) end
+				if selected and #selected == 1 then
+					vim.fn.system(string.format("tmux new-window '%s';", selected[1]))
+				end
 			end,
 			["ctrl-s"] = function(selected)
-				if selected and #selected == 1 then vim.fn.system(string.format("tmux split-window -v -p 50 '%s';", selected[1])) end
+				if selected and #selected == 1 then
+					vim.fn.system(string.format("tmux split-window -v -p 50 '%s';", selected[1]))
+				end
 			end,
 			["ctrl-v"] = function(selected)
-				if selected and #selected == 1 then vim.fn.system(string.format("tmux split-window -h -p 50 '%s';", selected[1])) end
+				if selected and #selected == 1 then
+					vim.fn.system(string.format("tmux split-window -h -p 50 '%s';", selected[1]))
+				end
 			end,
 		},
 	})
@@ -669,7 +720,9 @@ vim.keymap.set("v", "<leader>sc", function()
 	fzf.live_grep({ cwd = "~/dotfiles", search = text, winopts = grep_winopts })
 end, { desc = "[G]rep selected" })
 
-vim.keymap.set("n", "<leader>/", function() fzf.blines() end, { desc = "[/] Fuzzily search in current buffer" })
+vim.keymap.set("n", "<leader>/", function()
+	fzf.blines()
+end, { desc = "[/] Fuzzily search in current buffer" })
 
 vim.keymap.set("v", "<leader>/", function()
 	local text = vim.getVisualSelection()
