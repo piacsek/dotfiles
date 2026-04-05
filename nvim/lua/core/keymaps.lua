@@ -4,7 +4,15 @@ vim.keymap.set({ "n", "i", "v", "c" }, "<Down>", "<Nop>", arrow_disabling_opts)
 vim.keymap.set({ "n", "i", "v", "c" }, "<Left>", "<Nop>", arrow_disabling_opts)
 vim.keymap.set({ "n", "i", "v", "c" }, "<Right>", "<Nop>", arrow_disabling_opts)
 
-vim.keymap.set({ "n" }, "<M-r>", ":restart<CR>", { desc = "[R]estarts nvim" })
+vim.keymap.set({ "n" }, "<M-r>", function()
+	local file = vim.fn.expand("%:p")
+	local pos = vim.api.nvim_win_get_cursor(0)
+	if file ~= "" and vim.fn.filereadable(file) == 1 then
+		vim.cmd("restart ++cmd 'edit " .. vim.fn.fnameescape(file) .. " | call cursor(" .. pos[1] .. "," .. pos[2] + 1 .. ")'")
+	else
+		vim.cmd("restart")
+	end
+end, { desc = "[R]estarts nvim" })
 vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { desc = "[Y]ank to system clipboard" })
 vim.keymap.set("n", "<leader>yp", function()
 	vim.fn.setreg('"', vim.fn.fnamemodify(vim.fn.expand("%:p"), ":~:."))
