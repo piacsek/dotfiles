@@ -20,13 +20,13 @@ vim.lsp.config("tailwindcss", {
 		"vue",
 		"heex",
 	},
-	root_dir = function(_, on_dir)
-		if project_tailwind_root then
-			on_dir(project_tailwind_root)
-		else
-			vim.notify("tailwindls unavailable: Please define tailwind_root.")
-		end
-	end,
+	-- root_dir = function(_, on_dir)
+	-- 	if project_tailwind_root then
+	-- 		on_dir(project_tailwind_root)
+	-- 	else
+	-- 		vim.notify("tailwindls unavailable: Please define tailwind_root.")
+	-- 	end
+	-- end,
 })
 
 vim.lsp.config["elixir_ls"] = {
