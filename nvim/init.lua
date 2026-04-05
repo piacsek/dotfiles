@@ -1049,6 +1049,8 @@ vim.api.nvim_create_user_command("LspLog", function()
 end, { desc = "Show LSP health check" })
 
 -- ----------------------------------------------------- </LSP> -----------------------------------------------------
+
+-- Config overrides
 local home_init = vim.fn.expand("$HOME/init.lua")
 if vim.fn.filereadable(home_init) == 1 then
 	dofile(home_init)
