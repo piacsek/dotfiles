@@ -668,63 +668,6 @@ require("snacks").setup({
 
 vim.notify = require("snacks").notifier.notify
 
-vim.keymap.set("n", "<leader>jp", function()
-	Snacks.explorer({ position = "right" })
-end, { desc = "Filetree" })
-vim.keymap.set("n", "<leader>jn", function()
-	Snacks.notifier.show_history()
-end, { desc = "Jump to notifications" })
-vim.keymap.set("n", "<leader>gp", function()
-	Snacks.picker.gh_pr()
-end, { desc = "GitHub Pull Requests (open)" })
-vim.keymap.set("n", "<leader>gw", function()
-	Snacks.gitbrowse()
-end, { desc = "Open current file on GitHub" })
-vim.keymap.set({ "n", "v" }, "<leader>gyy", function()
-	Snacks.gitbrowse({
-		notify = false,
-		branch = "main",
-		open = function(url)
-			vim.fn.setreg("+", url)
-			vim.notify("GitHub URL copied (main)", vim.log.levels.INFO)
-		end,
-	})
-end, { desc = "Copy GitHub URL to clipboard (main branch)" })
-vim.keymap.set({ "n", "v" }, "<leader>gyc", function()
-	Snacks.gitbrowse({
-		notify = false,
-		open = function(url)
-			vim.fn.setreg("+", url)
-			vim.notify("GitHub URL copied (current branch)", vim.log.levels.INFO)
-		end,
-	})
-end, { desc = "Copy GitHub URL to clipboard (current branch)" })
-vim.keymap.set("n", "<leader>gh", function()
-	Snacks.picker.git_log_file()
-end, { desc = "Git history for current file" })
-vim.keymap.set("n", "<leader>gd", function()
-	local file = vim.fn.expand("%")
-	Snacks.terminal.open("git diff origin/main -- " .. vim.fn.shellescape(file), {
-		win = { style = "float", width = 0.9, height = 0.9 },
-	})
-end, { desc = "Diff current file vs origin/main" })
-vim.keymap.set("n", "<leader>gg", function()
-	local file_dir = vim.fn.expand("%:p:h")
-	if file_dir == "" then
-		file_dir = vim.fn.getcwd()
-	end
-	local git_root = vim.fs.root(file_dir, ".git")
-	Snacks.lazygit({ cwd = git_root, win = { width = 0.9, height = 0.9 } })
-end, { desc = "Lazygit" })
-vim.keymap.set("n", "<leader>N", function()
-	Snacks.win({
-		file = vim.api.nvim_get_runtime_file("doc/news.txt", false)[1],
-		width = 0.6,
-		height = 0.6,
-		wo = { spell = false, wrap = false, signcolumn = "yes", statuscolumn = " ", conceallevel = 3 },
-	})
-end, { desc = "Neovim News" })
-
 -- fzf-lua
 local fzf = require("fzf-lua")
 
@@ -773,7 +716,7 @@ end
 fzf.setup(fzf_config)
 fzf.register_ui_select()
 
--- ------------------------------------------------- <PLUGINS> ------------------------------------------------------
+-- ------------------------------------------------- </PLUGINS> ------------------------------------------------------
 
 -- --------------------------------------------------- <KEYMAPS> ---------------------------------------------------
 -- Helper fns
@@ -964,6 +907,63 @@ end, { desc = "[/] Fuzzily search in current buffer" })
 
 vim.keymap.set("n", "<leader>fs", ":ScratchOpen<CR>", { desc = "[J]ump to [S]cratch" })
 vim.keymap.set("n", "<leader>n", ":Scratch<CR>", { desc = "[N]ew scratch" })
+
+vim.keymap.set("n", "<leader>jp", function()
+	Snacks.explorer({ position = "right" })
+end, { desc = "Filetree" })
+vim.keymap.set("n", "<leader>jn", function()
+	Snacks.notifier.show_history()
+end, { desc = "Jump to notifications" })
+vim.keymap.set("n", "<leader>gp", function()
+	Snacks.picker.gh_pr()
+end, { desc = "GitHub Pull Requests (open)" })
+vim.keymap.set("n", "<leader>gw", function()
+	Snacks.gitbrowse()
+end, { desc = "Open current file on GitHub" })
+vim.keymap.set({ "n", "v" }, "<leader>gyy", function()
+	Snacks.gitbrowse({
+		notify = false,
+		branch = "main",
+		open = function(url)
+			vim.fn.setreg("+", url)
+			vim.notify("GitHub URL copied (main)", vim.log.levels.INFO)
+		end,
+	})
+end, { desc = "Copy GitHub URL to clipboard (main branch)" })
+vim.keymap.set({ "n", "v" }, "<leader>gyc", function()
+	Snacks.gitbrowse({
+		notify = false,
+		open = function(url)
+			vim.fn.setreg("+", url)
+			vim.notify("GitHub URL copied (current branch)", vim.log.levels.INFO)
+		end,
+	})
+end, { desc = "Copy GitHub URL to clipboard (current branch)" })
+vim.keymap.set("n", "<leader>gh", function()
+	Snacks.picker.git_log_file()
+end, { desc = "Git history for current file" })
+vim.keymap.set("n", "<leader>gd", function()
+	local file = vim.fn.expand("%")
+	Snacks.terminal.open("git diff origin/main -- " .. vim.fn.shellescape(file), {
+		win = { style = "float", width = 0.9, height = 0.9 },
+	})
+end, { desc = "Diff current file vs origin/main" })
+vim.keymap.set("n", "<leader>gg", function()
+	local file_dir = vim.fn.expand("%:p:h")
+	if file_dir == "" then
+		file_dir = vim.fn.getcwd()
+	end
+	local git_root = vim.fs.root(file_dir, ".git")
+	Snacks.lazygit({ cwd = git_root, win = { width = 0.9, height = 0.9 } })
+end, { desc = "Lazygit" })
+vim.keymap.set("n", "<leader>N", function()
+	Snacks.win({
+		file = vim.api.nvim_get_runtime_file("doc/news.txt", false)[1],
+		width = 0.6,
+		height = 0.6,
+		wo = { spell = false, wrap = false, signcolumn = "yes", statuscolumn = " ", conceallevel = 3 },
+	})
+end, { desc = "Neovim News" })
 
 -- -------------------------------------------------- </KEYMAPS> ---------------------------------------------------
 -- ----------------------------------------------------- <LSP> -----------------------------------------------------
