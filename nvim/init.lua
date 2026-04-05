@@ -973,7 +973,7 @@ vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
 vim.keymap.set("n", "<leader>jw", "<esc>:URLOpenUnderCursor<cr>", { desc = "[J]ump to [W]eb browser" })
 vim.keymap.set("n", "<leader>jt", "<cmd>JumpTest<CR>", { desc = "[J]ump to [T]est" })
 
--- </KEYMAPS>
+-- ----------------------------------------------------- </KEYMAPS> -----------------------------------------------------
 -- ----------------------------------------------------- <LSP> -----------------------------------------------------
 
 -- Cache for elixir-ls root directory lookups to avoid expensive filesystem searches
