@@ -282,9 +282,7 @@ require("mason").setup({
 		},
 	},
 })
-vim.keymap.set("", "<C-f>", function()
-	require("conform").format({ async = true, lsp_fallback = true })
-end, { desc = "[F]ormat buffer" })
+
 require("conform").setup({
 	notify_on_error = false,
 	format_on_save = function(bufnr)
