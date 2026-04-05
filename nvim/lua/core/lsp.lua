@@ -14,7 +14,7 @@ end
 vim.lsp.config["elixir_ls"] = {
 	cmd = { "elixir-ls" },
 	filetypes = { "elixir", "eelixir", "heex", "surface" },
-	root_dir = function(bufnr, on_dir)
+	root_dir = function(_, on_dir)
 		if project_elixir_root then
 			on_dir(project_elixir_root)
 		else
