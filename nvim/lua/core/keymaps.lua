@@ -244,6 +244,7 @@ vim.keymap.set("n", "<leader>N", function()
 	})
 end, { desc = "Neovim News" })
 
+local harpoon = require("harpoon")
 vim.keymap.set("n", "<leader>o", ":Oil<CR>", { desc = "Open Oil" })
 vim.keymap.set("n", "<leader>a", function()
 	harpoon:list():add()
