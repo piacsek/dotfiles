@@ -40,4 +40,4 @@ vim.lsp.config["emmet_ls"] = emmet_config
 vim.lsp.enable("tailwindcss")
 vim.lsp.enable("jsonls")
 vim.lsp.enable("yamlls")
-vim.lsp.enable("elixir_ls")
+-- vim.lsp.enable("elixir_ls")
