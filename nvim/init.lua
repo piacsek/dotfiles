@@ -926,7 +926,7 @@ vim.keymap.set("n", "<leader>bs", "<cmd>BufferStats<CR>", { desc = "[B]uffer [S]
 vim.keymap.set("n", "Y", "y$", { desc = "[Y]ank till the end of the line" })
 vim.keymap.set("n", "V", "v$", { desc = "[V]isually select till the end of the line" })
 
-vim.keymap.set("n", "Q", "<nop>", { desc = "Avoiding Q" })
+-- vim.keymap.set("n", "Q", "<nop>", { desc = "Avoiding Q" })
 
 -- Quickfix
 vim.keymap.set("n", "<leader>jq", ":copen<CR>", { desc = "[J]ump to the quickfix list" })
