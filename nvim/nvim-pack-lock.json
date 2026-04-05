@@ -4,6 +4,10 @@
       "rev": "e30b7f2008e52442154b66f7c519bfd2f1e32acb",
       "src": "https://github.com/numToStr/Comment.nvim"
     },
+    "jtt.nvim": {
+      "rev": "6c5cce5f0e64188b09edb16aea13225fcf7ebc2d",
+      "src": "https://github.com/herisetiawan00/jtt.nvim"
+    },
     "mini.ai": {
       "rev": "43eb2074843950a3a25aae56a5f41362ec043bfa",
       "src": "https://github.com/echasnovski/mini.ai"
