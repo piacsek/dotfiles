@@ -152,7 +152,15 @@ vim.api.nvim_create_user_command("ThemeDefault", function()
 end, { desc = "Assigns the default colorscheme" })
 
 -- </COMMANDS>
-require("core.autocmds")
+-- <AUTO_COMMANDS>
+vim.api.nvim_create_autocmd("TextYankPost", {
+	desc = "Highlight when yanking (copying) text",
+	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+	callback = function()
+		vim.highlight.on_yank()
+	end,
+})
+-- </AUTO_COMMANDS>
 
 local gh = function(x)
 	return "https://github.com/" .. x
