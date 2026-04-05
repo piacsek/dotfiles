@@ -36,6 +36,7 @@ vim.lsp.config("tailwindcss", {
 		end
 	end,
 })
+
 vim.lsp.config["elixir_ls"] = {
 	cmd = { "elixir-ls" },
 	filetypes = { "elixir", "eelixir", "heex", "surface" },
