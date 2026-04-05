@@ -1,7 +1,3 @@
--- Cache for elixir-ls root directory lookups to avoid expensive filesystem searches
-local elixir_root_cache = {}
-
--- Load project-specific elixir root if configured
 local project_elixir_root = nil
 local project_lsp_config = vim.fn.getcwd() .. "/piacsek/lsp.lua"
 if vim.fn.filereadable(project_lsp_config) == 1 then
