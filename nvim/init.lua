@@ -1,13 +1,11 @@
 -- Enable bytecode cache for faster Lua module loading
 vim.loader.enable()
-vim.g._default_colorscheme = "high-contrast"
--- vim.g._default_colorscheme = "oxide"
-vim.cmd.colorscheme(vim.g._default_colorscheme)
-
 -- --------------------------------------------------- <OPTIONS> ---------------------------------------------------
 vim.g.have_nerd_font = true
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
+vim.g._default_colorscheme = "high-contrast"
+vim.cmd.colorscheme(vim.g._default_colorscheme)
 
 vim.opt.termguicolors = true
 vim.opt.swapfile = false
