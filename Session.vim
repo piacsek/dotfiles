@@ -10,7 +10,7 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
 endif
 let s:shortmess_save = &shortmess
 set shortmess+=aoO
-badd +1 nvim/lua/core/keymaps.lua
+badd +12 nvim/lua/core/keymaps.lua
 argglobal
 %argdel
 edit nvim/lua/core/keymaps.lua
@@ -25,12 +25,12 @@ setlocal foldnestmax=20
 setlocal foldenable
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 25 - ((24 * winheight(0) + 25) / 50)
+let s:l = 14 - ((13 * winheight(0) + 25) / 50)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 25
-normal! 041|
+keepjumps 14
+normal! 028|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
