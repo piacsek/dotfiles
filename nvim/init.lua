@@ -825,64 +825,6 @@ local function run_script_picker()
 	})
 end
 
--- Script runner
-vim.keymap.set("n", "<leader>r", run_script_picker, { desc = "[R]un script" })
-
--- Find files
-vim.keymap.set("n", "<leader>ff", fzf.files, { desc = "[F]ind [F]iles" })
-vim.keymap.set("n", "<leader>fh", fzf.help_tags, { desc = "[F]ind [H]elp" })
-vim.keymap.set("n", "<leader>ft", fzf.colorschemes, { desc = "[F]ind [T]heme" })
-vim.keymap.set("n", "<leader>fk", fzf.keymaps, { desc = "[F]ind [K]eymaps" })
-vim.keymap.set("n", "<leader>F", fzf.resume, { desc = "Resume last search" })
-vim.keymap.set("n", "<leader><leader>", fzf.buffers, { desc = "Buffers" })
-vim.keymap.set("n", "<leader>fo", fzf.oldfiles, { desc = "[F]ind [O] files" })
-
-vim.keymap.set("v", "<leader>ff", function()
-	local text = vim.getVisualSelection()
-	fzf.files({ query = text })
-end, { noremap = true, silent = true, desc = "[F]ind [F]files with selected text" })
-
-vim.keymap.set("n", "<leader>fp", function()
-	fzf.files({ cwd = vim.fn.getcwd() .. "/piacsek" })
-end, { desc = "[F]ind [P]iacsek files" })
-
-vim.keymap.set("n", "<leader>fd", function()
-	fzf.files({ cwd = "~/dotfiles" })
-end, { desc = "[F]ind [D]otfiles" })
-
-vim.keymap.set("v", "<leader>fm", function()
-	local text = vim.getVisualSelection()
-	fzf.git_status({ query = text })
-end, { noremap = true, silent = true, desc = "[F]ind [M]odified git files with selection" })
-
--- Search
-vim.keymap.set("v", "<leader>ss", function()
-	local text = vim.getVisualSelection()
-	fzf.live_grep({ search = text, winopts = grep_winopts })
-end, { desc = "[G]rep selected" })
-
-vim.keymap.set("n", "<leader>ss", function()
-	fzf.live_grep({ winopts = grep_winopts })
-end, { desc = "[F]ind by [G]rep" })
-
-vim.keymap.set("n", "<leader>sc", function()
-	fzf.live_grep({ cwd = "~/dotfiles", winopts = grep_winopts })
-end, { desc = "Grep config files" })
-
-vim.keymap.set("v", "<leader>sc", function()
-	local text = vim.getVisualSelection()
-	fzf.live_grep({ cwd = "~/dotfiles", search = text, winopts = grep_winopts })
-end, { desc = "[G]rep selected" })
-
-vim.keymap.set("n", "<leader>/", function()
-	fzf.blines()
-end, { desc = "[/] Fuzzily search in current buffer" })
-
-vim.keymap.set("v", "<leader>/", function()
-	local text = vim.getVisualSelection()
-	fzf.blines({ query = text })
-end, { desc = "[/] Fuzzily search in current buffer" })
-
 vim.notify = require("snacks").notifier.notify
 
 -- ------------------------------------------------- <PLUGINS> ------------------------------------------------------
@@ -963,6 +905,63 @@ vim.keymap.set("n", "<leader>gsm", function()
 		cmd = "git log --color --pretty=format:'%C(yellow)%h%Creset %Cgreen(%><(12)%cr%><|(12))%Creset %s %C(blue)<%an>%Creset' main",
 	})
 end, { desc = "[G]it [S]earch [M]ain branch commits" })
+-- Script runner
+vim.keymap.set("n", "<leader>r", run_script_picker, { desc = "[R]un script" })
+
+-- Find files
+vim.keymap.set("n", "<leader>ff", fzf.files, { desc = "[F]ind [F]iles" })
+vim.keymap.set("n", "<leader>fh", fzf.help_tags, { desc = "[F]ind [H]elp" })
+vim.keymap.set("n", "<leader>ft", fzf.colorschemes, { desc = "[F]ind [T]heme" })
+vim.keymap.set("n", "<leader>fk", fzf.keymaps, { desc = "[F]ind [K]eymaps" })
+vim.keymap.set("n", "<leader>F", fzf.resume, { desc = "Resume last search" })
+vim.keymap.set("n", "<leader><leader>", fzf.buffers, { desc = "Buffers" })
+vim.keymap.set("n", "<leader>fo", fzf.oldfiles, { desc = "[F]ind [O] files" })
+
+vim.keymap.set("v", "<leader>ff", function()
+	local text = vim.getVisualSelection()
+	fzf.files({ query = text })
+end, { noremap = true, silent = true, desc = "[F]ind [F]files with selected text" })
+
+vim.keymap.set("n", "<leader>fp", function()
+	fzf.files({ cwd = vim.fn.getcwd() .. "/piacsek" })
+end, { desc = "[F]ind [P]iacsek files" })
+
+vim.keymap.set("n", "<leader>fd", function()
+	fzf.files({ cwd = "~/dotfiles" })
+end, { desc = "[F]ind [D]otfiles" })
+
+vim.keymap.set("v", "<leader>fm", function()
+	local text = vim.getVisualSelection()
+	fzf.git_status({ query = text })
+end, { noremap = true, silent = true, desc = "[F]ind [M]odified git files with selection" })
+
+-- Search
+vim.keymap.set("v", "<leader>ss", function()
+	local text = vim.getVisualSelection()
+	fzf.live_grep({ search = text, winopts = grep_winopts })
+end, { desc = "[G]rep selected" })
+
+vim.keymap.set("n", "<leader>ss", function()
+	fzf.live_grep({ winopts = grep_winopts })
+end, { desc = "[F]ind by [G]rep" })
+
+vim.keymap.set("n", "<leader>sc", function()
+	fzf.live_grep({ cwd = "~/dotfiles", winopts = grep_winopts })
+end, { desc = "Grep config files" })
+
+vim.keymap.set("v", "<leader>sc", function()
+	local text = vim.getVisualSelection()
+	fzf.live_grep({ cwd = "~/dotfiles", search = text, winopts = grep_winopts })
+end, { desc = "[G]rep selected" })
+
+vim.keymap.set("n", "<leader>/", function()
+	fzf.blines()
+end, { desc = "[/] Fuzzily search in current buffer" })
+
+vim.keymap.set("v", "<leader>/", function()
+	local text = vim.getVisualSelection()
+	fzf.blines({ query = text })
+end, { desc = "[/] Fuzzily search in current buffer" })
 
 -- -------------------------------------------------- </KEYMAPS> ---------------------------------------------------
 -- ----------------------------------------------------- <LSP> -----------------------------------------------------
