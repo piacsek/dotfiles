@@ -184,6 +184,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Oil
+vim.keymap.set("n", "<leader>o", ":Oil<CR>", { desc = "Open Oil" })
 require("oil").setup({
 	view_options = { show_hidden = true },
 	keymaps = {
@@ -231,6 +232,15 @@ require("oil").setup({
 -- Harpoon
 local harpoon = require("harpoon")
 harpoon:setup()
+
+vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
+vim.keymap.set("n", "<leader>A", function() harpoon:list():clear(); harpoon:list():add() end)
+vim.keymap.set("n", "<M-j>", function() harpoon:list():select(1) end)
+vim.keymap.set("n", "<M-k>", function() harpoon:list():select(2) end)
+vim.keymap.set("n", "<M-l>", function() harpoon:list():select(3) end)
+vim.keymap.set("n", "<M-;>", function() harpoon:list():select(4) end)
+vim.keymap.set("n", "<M-'>", function() harpoon:list():select(5) end)
+vim.keymap.set("n", "<M-e>", function() harpoon.ui:toggle_quick_menu(require("harpoon"):list()) end)
 
 -- Spectre
 require("spectre").setup({
