@@ -777,6 +777,13 @@ local grep_winopts = {
 	preview = { hidden = "nohidden" },
 }
 
+vim.notify = require("snacks").notifier.notify
+
+-- ------------------------------------------------- <PLUGINS> ------------------------------------------------------
+
+-- --------------------------------------------------- <KEYMAPS> ---------------------------------------------------
+-- Helper fns
+
 function vim.getVisualSelection()
 	vim.cmd('noau normal! "vy"')
 	local text = vim.fn.getreg("v")
@@ -825,11 +832,6 @@ local function run_script_picker()
 	})
 end
 
-vim.notify = require("snacks").notifier.notify
-
--- ------------------------------------------------- <PLUGINS> ------------------------------------------------------
-
--- --------------------------------------------------- <KEYMAPS> ---------------------------------------------------
 local arrow_disabling_opts = { noremap = true, silent = true }
 vim.keymap.set({ "n", "i", "v", "c" }, "<Up>", "<Nop>", arrow_disabling_opts)
 vim.keymap.set({ "n", "i", "v", "c" }, "<Down>", "<Nop>", arrow_disabling_opts)
