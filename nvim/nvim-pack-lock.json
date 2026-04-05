@@ -19,6 +19,11 @@
     "nvim-ts-autotag": {
       "rev": "8e1c0a389f20bf7f5b0dd0e00306c1247bda2595",
       "src": "https://github.com/windwp/nvim-ts-autotag"
+    },
+    "url-open": {
+      "rev": "7727e6146afea2254de08d0e65fd2cf904be338d",
+      "src": "https://github.com/sontungexpt/url-open",
+      "version": "'mini'"
     }
   }
 }
