@@ -12,7 +12,8 @@
       "Bash(ls -t /Users/piacsek/.claude/projects/-Users-piacsek-projects-wonderschool-ws-common-apps-nova/*.jsonl)",
       "Bash(nvim --headless -c 'help vim.pack.add' -c 'w! /tmp/pack_add_help.txt' -c 'qa')",
       "Read(//tmp/**)",
-      "Bash(nvim:*)"
+      "Bash(nvim:*)",
+      "Bash(sort -t' ' -k2 -rn)"
     ]
   }
 }
