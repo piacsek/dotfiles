@@ -771,12 +771,6 @@ end
 fzf.setup(fzf_config)
 fzf.register_ui_select()
 
-local grep_winopts = {
-	height = 0.9,
-	width = 0.9,
-	preview = { hidden = "nohidden" },
-}
-
 vim.notify = require("snacks").notifier.notify
 
 -- ------------------------------------------------- <PLUGINS> ------------------------------------------------------
@@ -936,6 +930,11 @@ vim.keymap.set("v", "<leader>fm", function()
 end, { noremap = true, silent = true, desc = "[F]ind [M]odified git files with selection" })
 
 -- Search
+local grep_winopts = {
+	height = 0.9,
+	width = 0.9,
+	preview = { hidden = "nohidden" },
+}
 vim.keymap.set("v", "<leader>ss", function()
 	local text = vim.getVisualSelection()
 	fzf.live_grep({ search = text, winopts = grep_winopts })
