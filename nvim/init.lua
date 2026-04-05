@@ -30,6 +30,7 @@ vim.pack.add({
 	gh("bluz71/vim-moonfly-colors"),
 	gh("mason-org/mason.nvim"),
 	gh("neovim/nvim-lspconfig"),
+	gh("folke/lazydev.nvim"),
 }, { load = true })
 
 require("nvim-autopairs").setup({})
