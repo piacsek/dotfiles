@@ -588,6 +588,8 @@ vim.g["test#neovim#term_position"] = "topleft vsplit"
 vim.g["test#neovim_sticky#kill_previous"] = 1
 
 -- Snacks
+--
+
 require("snacks").setup({
 	notifier = {},
 	picker = {
@@ -663,6 +665,8 @@ require("snacks").setup({
 	words = { enabled = false },
 	zen = { enabled = false },
 })
+
+vim.notify = require("snacks").notifier.notify
 
 vim.keymap.set("n", "<leader>jp", function()
 	Snacks.explorer({ position = "right" })
@@ -768,8 +772,6 @@ end
 
 fzf.setup(fzf_config)
 fzf.register_ui_select()
-
-vim.notify = require("snacks").notifier.notify
 
 -- ------------------------------------------------- <PLUGINS> ------------------------------------------------------
 
