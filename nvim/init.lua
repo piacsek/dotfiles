@@ -906,6 +906,8 @@ vim.cmd.colorscheme(vim.g._default_colorscheme)
 
 vim.notify = require("snacks").notifier.notify
 
+-- ------------------------------------------------- <PLUGINS> ------------------------------------------------------
+
 -- --------------------------------------------------- <KEYMAPS> ---------------------------------------------------
 local arrow_disabling_opts = { noremap = true, silent = true }
 vim.keymap.set({ "n", "i", "v", "c" }, "<Up>", "<Nop>", arrow_disabling_opts)
