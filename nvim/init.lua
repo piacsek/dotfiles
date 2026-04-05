@@ -905,10 +905,9 @@ vim.keymap.set("n", "<leader>gsm", function()
 		cmd = "git log --color --pretty=format:'%C(yellow)%h%Creset %Cgreen(%><(12)%cr%><|(12))%Creset %s %C(blue)<%an>%Creset' main",
 	})
 end, { desc = "[G]it [S]earch [M]ain branch commits" })
--- Script runner
+
 vim.keymap.set("n", "<leader>r", run_script_picker, { desc = "[R]un script" })
 
--- Find files
 vim.keymap.set("n", "<leader>ff", fzf.files, { desc = "[F]ind [F]iles" })
 vim.keymap.set("n", "<leader>fh", fzf.help_tags, { desc = "[F]ind [H]elp" })
 vim.keymap.set("n", "<leader>ft", fzf.colorschemes, { desc = "[F]ind [T]heme" })
