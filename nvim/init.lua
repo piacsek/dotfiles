@@ -46,6 +46,11 @@ require("url-open").setup({
 })
 require("presenting").setup({})
 require("jtt").setup()
+require("lazydev").setup({
+	library = {
+		{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
+	},
+})
 require("mason").setup({
 	ui = {
 		icons = {
