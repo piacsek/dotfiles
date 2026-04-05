@@ -27,7 +27,7 @@ vim.lsp.config("tailwindcss", {
 			path = vim.uv.fs_realpath(path) or path
 			on_dir(path)
 		else
-			vim.notify("tailwindlsp unavailable: Please define tailwind_root.")
+			vim.notify("tailwindlsp unavailable: Please define tailwind_root.", vim.log.levels.ERROR)
 		end
 	end,
 })
