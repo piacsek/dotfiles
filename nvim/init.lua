@@ -18,6 +18,7 @@ vim.pack.add({
 	gh("windwp/nvim-ts-autotag"),
 	{ src = gh("sontungexpt/url-open"), version = "mini" },
 	gh("sotte/presenting.nvim"),
+	gh("herisetiawan00/jtt.nvim"),
 })
 
 require("nvim-autopairs").setup({})
