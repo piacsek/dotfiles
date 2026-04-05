@@ -17,6 +17,7 @@ vim.pack.add({
 	gh("echasnovski/mini.icons"),
 	gh("windwp/nvim-ts-autotag"),
 	{ src = gh("sontungexpt/url-open"), version = "mini" },
+	gh("sotte/presenting.nvim"),
 })
 
 require("nvim-autopairs").setup({})
