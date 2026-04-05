@@ -349,7 +349,6 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Oil
-vim.keymap.set("n", "<leader>o", ":Oil<CR>", { desc = "Open Oil" })
 require("oil").setup({
 	view_options = { show_hidden = true },
 	keymaps = {
@@ -964,6 +963,8 @@ vim.keymap.set("n", "<leader>N", function()
 		wo = { spell = false, wrap = false, signcolumn = "yes", statuscolumn = " ", conceallevel = 3 },
 	})
 end, { desc = "Neovim News" })
+
+vim.keymap.set("n", "<leader>o", ":Oil<CR>", { desc = "Open Oil" })
 
 -- -------------------------------------------------- </KEYMAPS> ---------------------------------------------------
 -- ----------------------------------------------------- <LSP> -----------------------------------------------------
