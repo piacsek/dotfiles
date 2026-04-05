@@ -22,9 +22,7 @@ vim.lsp.config("tailwindcss", {
 	},
 	root_dir = function(_, on_dir)
 		if project_tailwind_root then
-			local path = vim.fn.expand(project_tailwind_root)
-			path = vim.uv.fs_realpath(path) or path
-			on_dir(path)
+			on_dir(vim.fn.expand(project_tailwind_root))
 		else
 			vim.notify("tailwindls unavailable: Please define tailwind_root.")
 		end
