@@ -25,7 +25,7 @@ vim.lsp.config["elixir_ls"] = {
 			fetchDeps = false,
 			enableTestLenses = false,
 			suggestSpecs = false,
-			mixEnv = "dev",
+			mixEnv = "test",
 		},
 	},
 }
