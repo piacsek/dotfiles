@@ -119,8 +119,14 @@ vim.keymap.set("n", "<leader>gh", fzf.git_bcommits, { desc = "[G]it [H]istory" }
 vim.keymap.set("n", "<leader>fm", fzf.git_status, { desc = "[F]ind [M]odified git files" })
 vim.keymap.set("n", "<leader>fM", function()
 	fzf.fzf_exec("git diff --name-only origin/main...HEAD", {
-		actions = require("fzf-lua.actions").file_edit,
 		previewer = "builtin",
+		actions = {
+			["default"] = function(selected)
+				if selected and #selected == 1 then
+					vim.cmd("edit " .. selected[1])
+				end
+			end,
+		},
 	})
 end, { desc = "[F]ind [M]odified files in branch (vs origin/main)" })
 vim.keymap.set("n", "<leader>gsm", function()
