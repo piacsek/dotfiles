@@ -120,6 +120,7 @@ brew install \
   dua-cli \
   tree-sitter-cli \
   sl \
+  gh \
   bat
 ```
 
