@@ -118,16 +118,7 @@ end, { desc = "[F]ormat buffer" })
 vim.keymap.set("n", "<leader>gh", fzf.git_bcommits, { desc = "[G]it [H]istory" })
 vim.keymap.set("n", "<leader>fm", fzf.git_status, { desc = "[F]ind [M]odified git files" })
 vim.keymap.set("n", "<leader>fM", function()
-	fzf.fzf_exec("git diff --name-only origin/main...HEAD", {
-		previewer = "builtin",
-		actions = {
-			["default"] = function(selected)
-				if selected and #selected == 1 then
-					vim.cmd("edit " .. selected[1])
-				end
-			end,
-		},
-	})
+	fzf.git_files({ cmd = "git diff --name-only origin/main...HEAD" })
 end, { desc = "[F]ind [M]odified files in branch (vs origin/main)" })
 vim.keymap.set("n", "<leader>gsm", function()
 	fzf.git_commits({
