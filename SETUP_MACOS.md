@@ -204,7 +204,6 @@ brew install --cask font-fira-code-nerd-font
 
 gh extension install dlvhdr/gh-dash
 gh extension install dlvhdr/gh-enhance
-
 ```
 
 ---
