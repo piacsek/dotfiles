@@ -16,7 +16,7 @@ vim.lsp.config["elixir_ls"] = {
 		if project_elixir_root then
 			on_dir(project_elixir_root)
 		else
-			vim.notify("elixir_ls unavailable: Please define elixir_root.")
+			vim.notify("elixir_ls unavailable: Please define elixir_root.", vim.log.levels.ERROR)
 		end
 	end,
 	settings = {
