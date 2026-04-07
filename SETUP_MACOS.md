@@ -138,9 +138,11 @@ rm -rf $HOME/.config/nvim
 rm -rf $HOME/.config/ghostty
 
 mkdir -p $HOME/.config/ghostty
+mkdir -p $HOME/.config/gh-dash
 mkdir $HOME/scratch.nvim
 
 ln -sf $HOME/dotfiles/nvim $HOME/.config/nvim
+ln -sf $HOME/dotfiles/gh-dash-config.yml $HOME/.config/gh-dash/config.yml
 ln -sf $HOME/dotfiles/.claude/skills $HOME/.claude/skills
 ln -sf $HOME/dotfiles/.ideavimrc $HOME/.ideavimrc
 ln -sf $HOME/dotfiles/.tmux.conf $HOME/.tmux.conf
