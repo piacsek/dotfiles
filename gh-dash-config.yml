@@ -74,7 +74,7 @@ defaults:
                 hidden: false
             assignees:
                 width: 20
-                hidden: true
+                hidden: false
     refetchIntervalMinutes: 30
 keybindings:
     prs:
