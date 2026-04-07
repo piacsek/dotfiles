@@ -82,7 +82,7 @@ keybindings:
           command: >-
             tmux split-window -h '
               gh enhance -R {{.RepoName}} {{.PrNumber}}
-            '
+            ' && sleep 0.5 && tmux send-keys -t '{right}' l z
 repoPaths: {}
 theme:
     ui:
