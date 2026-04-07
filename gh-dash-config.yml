@@ -80,7 +80,7 @@ keybindings:
     prs:
         - key: T
           command: >-
-            tmux new-window '
+            tmux new-pane '
               gh enhance -R {{.RepoName}} {{.PrNumber}}
             '
 repoPaths: {}
