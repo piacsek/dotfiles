@@ -80,7 +80,7 @@ keybindings:
     prs:
         - key: T
           command: >-
-            tmux split-window -h '
+            tmux new-window '
               gh enhance -R {{.RepoName}} {{.PrNumber}}
             ' && sleep 0.5 && tmux send-keys -t '{right}' l z
 repoPaths: {}
