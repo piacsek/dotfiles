@@ -196,6 +196,17 @@ asdf plugin add zig
 asdf install
 ```
 
+### 9. Install GH extensions
+
+
+```bash
+brew install --cask font-fira-code-nerd-font
+
+gh extension install dlvhdr/gh-dash
+gh extension install dlvhdr/gh-enhance
+
+```
+
 ---
 
 ## Essential Apps
