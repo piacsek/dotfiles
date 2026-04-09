@@ -144,6 +144,7 @@ mkdir $HOME/scratch.nvim
 ln -sf $HOME/dotfiles/nvim $HOME/.config/nvim
 ln -sf $HOME/dotfiles/gh-dash-config.yml $HOME/.config/gh-dash/config.yml
 ln -sf $HOME/dotfiles/.claude/skills $HOME/.claude/skills
+ln -sf $HOME/dotfiles/.claude/statusline-command.sh $HOME/.claude/statusline-command.sh
 ln -sf $HOME/dotfiles/.ideavimrc $HOME/.ideavimrc
 ln -sf $HOME/dotfiles/.tmux.conf $HOME/.tmux.conf
 ln -sf $HOME/dotfiles/opencode.json $HOME/opencode.json
