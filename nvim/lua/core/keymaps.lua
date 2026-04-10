@@ -61,8 +61,9 @@ vim.keymap.set(
 )
 vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { desc = "[Y]ank to system clipboard" })
 vim.keymap.set("n", "<leader>yp", function()
-	vim.fn.setreg('"', vim.fn.fnamemodify(vim.fn.expand("%:p"), ":~:."))
-end, { desc = "Yank current file path" })
+	local path = vim.fn.fnamemodify(vim.fn.expand("%:p"), ":~:.")
+	vim.fn.setreg('"', path .. ":" .. vim.fn.line("."))
+end, { desc = "Yank current file path:line" })
 
 vim.keymap.set("n", "<leader>yb", ":%yank <CR>", { desc = "[Y]ank [B]uffer" })
 vim.keymap.set("n", "<leader>YB", ":%yank +<CR>", { desc = "[Y]ank [B]uffer to system clipboard" })
