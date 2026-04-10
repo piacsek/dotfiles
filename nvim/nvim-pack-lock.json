@@ -138,6 +138,10 @@
       "rev": "43d8eb9dd2a1154dd8259ee3ce37cbbdb28c405c",
       "src": "https://github.com/bluz71/vim-moonfly-colors"
     },
+    "vim-purpura": {
+      "rev": "2398344cb16af941a9057e6b0cf4247ce1abb5de",
+      "src": "https://github.com/yassinebridi/vim-purpura"
+    },
     "vim-test": {
       "rev": "6eb2e5e7b32c321d373d2954199f4510be804713",
       "src": "https://github.com/vim-test/vim-test"

@@ -41,6 +41,7 @@ vim.pack.add({
 	gh("oxidescheme/oxide.nvim"),
 	gh("dmkc/underwater-vim-theme"),
 	gh("bluz71/vim-moonfly-colors"),
+	gh("yassinebridi/vim-purpura"),
 }, { load = true })
 
 -- Dev plugins
