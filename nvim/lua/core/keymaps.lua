@@ -64,6 +64,7 @@ vim.keymap.set("n", "<leader>yp", function()
 	local abs = vim.fn.expand("%:p")
 	local cwd = vim.fn.getcwd() .. "/"
 	local path = abs:sub(1, #cwd) == cwd and abs:sub(#cwd + 1) or abs
+	vim.notify(path)
 	vim.fn.setreg('"', path .. ":" .. vim.fn.line("."))
 end, { desc = "Yank current file path:line" })
 
@@ -121,7 +122,10 @@ end, { desc = "[F]ormat buffer" })
 vim.keymap.set("n", "<leader>gh", fzf.git_bcommits, { desc = "[G]it [H]istory" })
 vim.keymap.set("n", "<leader>fm", fzf.git_status, { desc = "[F]ind [M]odified git files" })
 vim.keymap.set("n", "<leader>fM", function()
-	fzf.git_files({ cmd = "git diff --name-only origin/main...HEAD", winopts = { title = " Branch Changes (vs main) " } })
+	fzf.git_files({
+		cmd = "git diff --name-only origin/main...HEAD",
+		winopts = { title = " Branch Changes (vs main) " },
+	})
 end, { desc = "[F]ind [M]odified files in branch (vs origin/main)" })
 vim.keymap.set("n", "<leader>gsm", function()
 	fzf.git_commits({
