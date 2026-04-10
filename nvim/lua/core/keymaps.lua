@@ -61,7 +61,9 @@ vim.keymap.set(
 )
 vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { desc = "[Y]ank to system clipboard" })
 vim.keymap.set("n", "<leader>yp", function()
-	local path = vim.fn.expand("%")
+	local abs = vim.fn.expand("%:p")
+	local cwd = vim.fn.getcwd() .. "/"
+	local path = abs:sub(1, #cwd) == cwd and abs:sub(#cwd + 1) or abs
 	vim.fn.setreg('"', path .. ":" .. vim.fn.line("."))
 end, { desc = "Yank current file path:line" })
 
