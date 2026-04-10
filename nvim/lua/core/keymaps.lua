@@ -64,7 +64,6 @@ vim.keymap.set("n", "<leader>yp", function()
 	local abs = vim.fn.expand("%:p")
 	local cwd = vim.fn.getcwd() .. "/"
 	local path = abs:sub(1, #cwd) == cwd and abs:sub(#cwd + 1) or abs
-	vim.notify(path .. ":" .. vim.fn.line("."))
 	vim.fn.setreg("+", path .. ":" .. vim.fn.line("."))
 end, { desc = "Yank current file path:line" })
 
