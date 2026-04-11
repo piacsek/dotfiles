@@ -13,6 +13,10 @@ if [ -d "$cwd/.git" ] || git -C "$cwd" rev-parse --git-dir > /dev/null 2>&1; the
   branch=$(git -C "$cwd" -c core.hooksPath=/dev/null symbolic-ref --short HEAD 2>/dev/null)
 fi
 
+# Build cost string
+cost=$(echo "$input" | jq -r '.cost.total_cost_usd // 0')
+cost_str=$(printf "\033[33m\$%.2f\033[0m" "$cost")
+
 # Build context usage string
 ctx=""
 if [ -n "$used_pct" ]; then
