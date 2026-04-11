@@ -35,4 +35,4 @@ if [ -n "$model" ]; then
   model_str=$(printf "\033[36m%s\033[0m" "$model")
 fi
 
-printf "\033[34m%s\033[0m%s - %s%s" "$short_cwd" "$git_str" "$model_str" "$ctx"
+printf "\033[34m%s\033[0m%s - %s %s%s" "$short_cwd" "$git_str" "$model_str" "$cost_str" "$ctx"
