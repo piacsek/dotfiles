@@ -3,8 +3,9 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 local current_date = os.date("*t")
+local weekend_days = {1, 7}
 
-if current_date.wday == 1 or current_date.wday == 7 then
+if current_date.wday in weekend_days then
 	vim.g._default_colorscheme = "elflord"
 else
 	vim.g._default_colorscheme = "high-contrast"
