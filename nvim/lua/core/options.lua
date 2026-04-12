@@ -5,7 +5,7 @@ vim.g.maplocalleader = " "
 -- print(current_date.wday) -- Example: 1 for Sunday, 2 for Monday, etc.
 
 local current_date = os.date("*t")
-vim.notify(current_date)
+-- vim.notify(current_date)
 vim.g._default_colorscheme = "high-contrast"
 vim.cmd.colorscheme(vim.g._default_colorscheme)
 
