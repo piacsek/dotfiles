@@ -3,8 +3,9 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 local current_date = os.date("*t")
-vim.notify("current_date.wday", vim.log.levels.INFO)
-vim.g._default_colorscheme = "high-contrast"
+if current_date.wday == 1 or current_date.wday == 7 then
+	vim.g._default_colorscheme = "high-contrast"
+end
 vim.cmd.colorscheme(vim.g._default_colorscheme)
 
 vim.opt.termguicolors = true
