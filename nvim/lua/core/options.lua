@@ -3,7 +3,7 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 local current_date = os.date("*t")
-vim.notify(current_date.wday, vim.log.levels.INFO)
+vim.notify("current_date.wday", vim.log.levels.INFO)
 vim.g._default_colorscheme = "high-contrast"
 vim.cmd.colorscheme(vim.g._default_colorscheme)
 
