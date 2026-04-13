@@ -13,7 +13,9 @@
       "Bash(nvim --headless -c 'help vim.pack.add' -c 'w! /tmp/pack_add_help.txt' -c 'qa')",
       "Read(//tmp/**)",
       "Bash(nvim:*)",
-      "Bash(sort -t' ' -k2 -rn)"
+      "Bash(sort -t' ' -k2 -rn)",
+      "Read(//Users/piacsek/.local/share/nvim/site/pack/**)",
+      "Read(//Users/piacsek/.local/share/nvim/**)"
     ]
   }
 }
