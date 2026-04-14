@@ -18,6 +18,7 @@ Executable documentation for setting up a fresh macOS system. Follow sections in
   - [8. Set Up Dotfiles Auto-Sync](#8-set-up-dotfiles-auto-sync)
   - [9. Install asdf plugins and versions](#9-install-asdf-plugins-and-versions)
   - [10. Install GH extensions](#10-install-gh-extensions)
+  - [11. Install tmux sessionizer](#11-install-tmux-sessionizer)
 - [Essential Apps](#essential-apps)
   - [Install via Homebrew](#install-via-homebrew)
   - [Manual Installations](#manual-installations)
@@ -208,6 +209,12 @@ brew install --cask font-fira-code-nerd-font
 
 gh extension install dlvhdr/gh-dash
 gh extension install dlvhdr/gh-enhance
+```
+
+### 11. Install tmux sessionizer
+
+```bash
+git clone https://github.com/ThePrimeagen/tmux-sessionizer.git $HOME/.tmux-sessionizer
 ```
 
 ---
