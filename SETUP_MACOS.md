@@ -189,6 +189,7 @@ asdf plugin add ruby
 asdf plugin add postgres
 asdf plugin add yarn
 asdf plugin add java
+asdf plugin add gradle
 asdf plugin add k9s
 asdf plugin add vault
 asdf plugin add gcloud
