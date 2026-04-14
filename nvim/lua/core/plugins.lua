@@ -294,8 +294,8 @@ cmp.setup({
 })
 
 -- vim-test
--- vim.g["test#javascript#runner"] = "vitest"
-vim.g["test#javascript#runner"] = "jest"
+vim.g["test#javascript#runner"] = "vitest"
+-- vim.g["test#javascript#runner"] = "jest"
 vim.g["test#filename_modifier"] = ":p"
 vim.g["test#strategy"] = "vimux"
 vim.g["test#preserve_screen"] = 0
