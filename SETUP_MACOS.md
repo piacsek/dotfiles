@@ -200,7 +200,7 @@ asdf plugin add zig
 asdf install
 ```
 
-### 9. Install GH extensions
+### 10. Install GH extensions
 
 
 ```bash
