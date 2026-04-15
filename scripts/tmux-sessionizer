@@ -327,11 +327,11 @@ if [[ -z $selected ]]; then
     exit 0
 fi
 
-# Resolve symlinks to real paths
-selected=$(realpath "$selected")
-
 if [[ "$selected" =~ ^\[TMUX\]\ (.+)$ ]]; then
     selected="${BASH_REMATCH[1]}"
+else
+    # Resolve symlinks to real paths
+    selected=$(realpath "$selected")
 fi
 
 selected_name=$(basename "$selected" | tr . _)
