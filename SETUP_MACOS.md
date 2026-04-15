@@ -212,11 +212,9 @@ gh extension install dlvhdr/gh-dash
 gh extension install dlvhdr/gh-enhance
 ```
 
-### 11. Install tmux sessionizer
+### 11. Customize tmux sessionizer
 
 ```bash
-git clone https://github.com/ThePrimeagen/tmux-sessionizer.git $HOME/.tmux-sessionizer
-
 mkdir -p $HOME/.config/tmux-sessionizer
 ```
 
