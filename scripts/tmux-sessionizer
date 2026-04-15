@@ -1,4 +1,4 @@
-# Stolen from Prime
+# Stolen from Prime - Thanks, Prime!
 #!/usr/bin/env bash
 
 CONFIG_FILE_NAME="tmux-sessionizer.conf"
