@@ -1,6 +1,6 @@
 # Exports
 export ZSH="$HOME/.oh-my-zsh"
-export PATH=/opt/homebrew/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:$HOME/dotfiles/scripts/:$HOME/scripts/:$HOME/.tmux-sessionizer/
+export PATH=/opt/homebrew/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:$HOME/dotfiles/scripts/:$HOME/scripts/:$HOME/.tmux-sessionizer/:$HOME/.opencode/bin
 export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl/lib/pkgconfig"
 export LDFLAGS="-L/opt/homebrew/opt/openssl/lib"
 export ERL_AFLAGS="-kernel shell_history enabled"
@@ -46,9 +46,6 @@ bindkey -r '^[d'
 if [ -f $HOME/.zshrc_work ]; then
 	source $HOME/.zshrc_work
 fi
-
-# opencode
-export PATH=/Users/piacsek/.opencode/bin:$PATH
 
 # Fzf
 
