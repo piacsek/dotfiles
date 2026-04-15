@@ -18,7 +18,7 @@ Executable documentation for setting up a fresh macOS system. Follow sections in
   - [8. Set Up Dotfiles Auto-Sync](#8-set-up-dotfiles-auto-sync)
   - [9. Install asdf plugins and versions](#9-install-asdf-plugins-and-versions)
   - [10. Install GH extensions](#10-install-gh-extensions)
-  - [11. Install tmux sessionizer](#11-install-tmux-sessionizer)
+  - [11. Customize tmux sessionizer](#11-customize-tmux-sessionizer)
 - [Essential Apps](#essential-apps)
   - [Install via Homebrew](#install-via-homebrew)
   - [Manual Installations](#manual-installations)
