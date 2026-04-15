@@ -219,7 +219,9 @@ gh extension install dlvhdr/gh-enhance
 Configure search paths in `~/.config/tmux-sessionizer/tmux-sessionizer.conf`:
 
 ```bash
-TS_SEARCH_PATHS=(~/path/to/dir1:0 ~/path/to/dir2:0)
+# 1 for `find` depth=1
+# Works w/ symlinks
+TS_SEARCH_PATHS=($HOME/path/to/dir:0 $HOME/path/to/dir/with-symlinks:1)
 ```
 
 ---
