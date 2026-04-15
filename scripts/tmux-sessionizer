@@ -1,4 +1,6 @@
+# Stolen from Prime
 #!/usr/bin/env bash
+
 CONFIG_FILE_NAME="tmux-sessionizer.conf"
 CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/tmux-sessionizer"
 CONFIG_FILE="$CONFIG_DIR/$CONFIG_FILE_NAME"
