@@ -215,6 +215,14 @@ gh extension install dlvhdr/gh-enhance
 
 ```bash
 git clone https://github.com/ThePrimeagen/tmux-sessionizer.git $HOME/.tmux-sessionizer
+
+mkdir -p $HOME/.config/tmux-sessionizer
+```
+
+Configure search paths in `~/.config/tmux-sessionizer/tmux-sessionizer.conf`:
+
+```bash
+TS_SEARCH_PATHS=(~/path/to/dir1:0 ~/path/to/dir2:0)
 ```
 
 ---
