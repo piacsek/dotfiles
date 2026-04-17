@@ -371,3 +371,9 @@ vim.keymap.set("n", "<leader><BS>", function()
 	end
 	vim.cmd("TestLast")
 end, { desc = "Save and run last test" })
+
+-- Markdown stuff
+
+vim.keymap.set("n", "<leader>mm", "<cmd>MarkdownPreview<cr>", { desc = "Markdown Preview" })
+vim.keymap.set("n", "<leader>mr", "<cmd>MarkdownPreviewRefresh<cr>", { desc = "Markdown Preview Refresh" })
+vim.keymap.set("n", "<leader>ms", "<cmd>MarkdownPreviewStop<cr>", { desc = "Markdown Preview Stop" })
