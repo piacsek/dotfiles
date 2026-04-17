@@ -282,7 +282,7 @@ end)
 vim.keymap.set("n", "<M-'>", function()
 	harpoon:list():select(5)
 end)
-vim.keymap.set("n", "<M-e>", function()
+vim.keymap.set("n", "<C-h>h", function()
 	harpoon.ui:toggle_quick_menu(require("harpoon"):list())
 end)
 
