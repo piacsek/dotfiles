@@ -48,6 +48,7 @@ vim.pack.add({
 -- vim.opt.rtp:prepend(vim.fn.expand("~/projects/nvim-plugins/buddy.nvim"))
 
 -- Plugin setup
+require("claudecode").setup({})
 require("nvim-autopairs").setup({})
 require("mini.ai").setup({})
 require("mini.icons").setup({})
