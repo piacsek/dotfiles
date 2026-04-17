@@ -32,6 +32,7 @@ vim.pack.add({
 	gh("vim-test/vim-test"),
 	gh("preservim/vimux"),
 	gh("folke/snacks.nvim"),
+	gh("coder/claudecode.nvim"),
 	-- Colorschemes
 	gh("scottmckendry/cyberdream.nvim"),
 	gh("piacsek/high-contrast.nvim"),
