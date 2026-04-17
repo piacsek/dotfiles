@@ -104,6 +104,12 @@ vim.keymap.set("n", "<", ":vertical resize -5<CR>", { desc = "Decrease window ve
 
 vim.keymap.set("t", "<C-o>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
+-- Tmux navigation (terminal-mode): leave terminal mode before navigating
+vim.keymap.set("t", "<C-h>", [[<C-\><C-n>:TmuxNavigateLeft<CR>]], { desc = "Tmux navigate left" })
+vim.keymap.set("t", "<C-j>", [[<C-\><C-n>:TmuxNavigateDown<CR>]], { desc = "Tmux navigate down" })
+vim.keymap.set("t", "<C-k>", [[<C-\><C-n>:TmuxNavigateUp<CR>]], { desc = "Tmux navigate up" })
+vim.keymap.set("t", "<C-l>", [[<C-\><C-n>:TmuxNavigateRight<CR>]], { desc = "Tmux navigate right" })
+
 vim.keymap.set("n", "<leader>i", ":Inspect<CR>", { desc = "[I]nspect" })
 vim.keymap.set("i", "<C-p>", function()
 	vim.cmd.normal("p")
