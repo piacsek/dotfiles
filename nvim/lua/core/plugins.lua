@@ -54,7 +54,7 @@ require("markdown_preview").setup({
 	open_browser = true,
 	debounce_ms = 300,
 })
--- require("claudecode").setup({ terminal = { provider = "none" } })
+require("claudecode").setup({ terminal = { provider = "none" } })
 require("nvim-autopairs").setup({})
 require("mini.ai").setup({})
 require("mini.icons").setup({})
