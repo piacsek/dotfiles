@@ -32,6 +32,7 @@ vim.pack.add({
 	gh("vim-test/vim-test"),
 	gh("preservim/vimux"),
 	gh("folke/snacks.nvim"),
+	gh("coder/claudecode.nvim"),
 	-- Colorschemes
 	gh("scottmckendry/cyberdream.nvim"),
 	gh("piacsek/high-contrast.nvim"),
@@ -47,6 +48,7 @@ vim.pack.add({
 -- vim.opt.rtp:prepend(vim.fn.expand("~/projects/nvim-plugins/buddy.nvim"))
 
 -- Plugin setup
+require("claudecode").setup({})
 require("nvim-autopairs").setup({})
 require("mini.ai").setup({})
 require("mini.icons").setup({})
