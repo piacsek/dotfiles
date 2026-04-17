@@ -104,7 +104,10 @@ vim.keymap.set("n", "<", ":vertical resize -5<CR>", { desc = "Decrease window ve
 
 vim.keymap.set("t", "<C-o>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
-vim.keymap.set("v", "<leader>cs", "<cmd>ClaudeCodeSend<CR>", { desc = "[C]laude [S]end selection" })
+vim.keymap.set("v", "<leader>cs", function()
+	vim.cmd("ClaudeCodeSend")
+	vim.fn.system({ "tmux", "send-keys", "M-3" })
+end, { desc = "[C]laude [S]end selection" })
 vim.keymap.set("n", "<leader>cda", "<cmd>ClaudeCodeDiffAccept<CR>", { desc = "[C]laude [D]iff [A]ccept" })
 vim.keymap.set("n", "<leader>cdd", "<cmd>ClaudeCodeDiffDeny<CR>", { desc = "[C]laude [D]iff [D]eny" })
 
