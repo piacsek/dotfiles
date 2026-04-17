@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+idx="$1"
+session=$(tmux list-sessions -F '#{session_created} #{session_name}' | sort -n | sed -n "${idx}p" | cut -d' ' -f2-)
+if [ -n "$session" ]; then
+    tmux switch-client -t "$session"
+else
+    tmux display-message "no session at slot $idx"
+fi
