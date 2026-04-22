@@ -9,6 +9,14 @@ if vim.fn.filereadable(project_lsp_config) == 1 then
 	end
 end
 
+local default_show_message = vim.lsp.handlers["window/showMessage"]
+vim.lsp.handlers["window/showMessage"] = function(err, result, ctx, config)
+	if result and type(result.message) == "string" and result.message:find("not included in") then
+		return
+	end
+	return default_show_message(err, result, ctx, config)
+end
+
 vim.lsp.config["elixir_ls"] = {
 	cmd = { "elixir-ls" },
 	filetypes = { "elixir", "eelixir", "heex" },
