@@ -10,7 +10,7 @@ vim.api.nvim_create_user_command("LspRestart", function()
 		return
 	end
 	for _, client in ipairs(clients) do
-		local bufs = vim.lsp.get_buffers_by_client_id(client.id)
+		local bufs = vim.tbl_keys(client.attached_buffers)
 		client:stop()
 		vim.notify("Restarting LSP: " .. client.name, vim.log.levels.INFO)
 		vim.defer_fn(function()
