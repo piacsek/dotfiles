@@ -11,14 +11,16 @@ vim.api.nvim_create_user_command("LspRestart", function()
 	end
 	for _, client in ipairs(clients) do
 		local bufs = vim.tbl_keys(client.attached_buffers)
+		local config = client.config
 		client:stop()
 		vim.notify("Restarting LSP: " .. client.name, vim.log.levels.INFO)
 		vim.defer_fn(function()
-			for _, buf in ipairs(bufs) do
-				if vim.api.nvim_buf_is_valid(buf) then
-					vim.api.nvim_buf_call(buf, function()
-						vim.cmd("edit")
-					end)
+			local new_id = vim.lsp.start(config)
+			if new_id then
+				for _, buf in ipairs(bufs) do
+					if vim.api.nvim_buf_is_valid(buf) then
+						vim.lsp.buf_attach_client(buf, new_id)
+					end
 				end
 			end
 		end, 500)
