@@ -3,6 +3,28 @@ vim.api.nvim_create_user_command("LspLog", function()
 	vim.cmd.edit(vim.lsp.log.get_filename())
 end, { desc = "Show LSP health check" })
 
+vim.api.nvim_create_user_command("LspRestart", function()
+	local clients = vim.lsp.get_clients()
+	if #clients == 0 then
+		vim.notify("No active LSP clients", vim.log.levels.WARN)
+		return
+	end
+	for _, client in ipairs(clients) do
+		local bufs = vim.lsp.get_buffers_by_client_id(client.id)
+		client:stop()
+		vim.notify("Restarting LSP: " .. client.name, vim.log.levels.INFO)
+		vim.defer_fn(function()
+			for _, buf in ipairs(bufs) do
+				if vim.api.nvim_buf_is_valid(buf) then
+					vim.api.nvim_buf_call(buf, function()
+						vim.cmd("edit")
+					end)
+				end
+			end
+		end, 500)
+	end
+end, { desc = "Restart all active LSP clients" })
+
 vim.api.nvim_create_user_command("ClearOldfiles", function()
 	vim.v.oldfiles = {}
 	vim.cmd("wshada!")
