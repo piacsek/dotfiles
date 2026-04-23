@@ -1,0 +1,124 @@
+#!/usr/bin/env bash
+# pg_switch — stop whatever asdf-installed postgres is currently bound to
+# localhost:5432 and start a target version instead.
+#
+# Usage:
+#   pg_switch                # target version from nearest .tool-versions
+#   pg_switch 14.22          # explicit version
+#   pg_switch --status       # show what's running on 5432
+#   pg_switch --stop         # stop the running postgres, don't start anything
+
+set -euo pipefail
+
+ASDF_POSTGRES_DIR="${HOME}/.asdf/installs/postgres"
+PORT=5432
+
+die() { echo "❌ $*" >&2; exit 1; }
+info() { echo "➜ $*"; }
+
+data_dir_for() {
+  echo "${ASDF_POSTGRES_DIR}/$1/data"
+}
+
+bin_for() {
+  echo "${ASDF_POSTGRES_DIR}/$1/bin"
+}
+
+# Returns the version string of the postgres currently listening on $PORT,
+# or empty if nothing (asdf-installed) is listening.
+current_version() {
+  local pid
+  pid="$(lsof -iTCP:${PORT} -sTCP:LISTEN -t -n 2>/dev/null | head -n1)"
+  [[ -z "${pid}" ]] && return 0
+
+  local cmd
+  cmd="$(ps -o command= -p "${pid}" 2>/dev/null || true)"
+  # Matches /Users/.../asdf/installs/postgres/<version>/bin/postgres
+  if [[ "${cmd}" =~ /asdf/installs/postgres/([^/]+)/bin/postgres ]]; then
+    echo "${BASH_REMATCH[1]}"
+  else
+    # Something non-asdf is on 5432. Surface it to the caller.
+    echo "other:${pid}:${cmd}"
+  fi
+}
+
+target_from_tool_versions() {
+  local dir="${PWD}"
+  while [[ "${dir}" != "/" ]]; do
+    if [[ -f "${dir}/.tool-versions" ]]; then
+      awk '$1 == "postgres" { print $2; exit }' "${dir}/.tool-versions"
+      return 0
+    fi
+    dir="$(dirname "${dir}")"
+  done
+  return 0
+}
+
+stop_current() {
+  local cur
+  cur="$(current_version)"
+  if [[ -z "${cur}" ]]; then
+    info "nothing listening on :${PORT}"
+    return 0
+  fi
+
+  if [[ "${cur}" == other:* ]]; then
+    die "port ${PORT} held by non-asdf process: ${cur#other:}"
+  fi
+
+  local data
+  data="$(data_dir_for "${cur}")"
+  info "stopping postgres ${cur} (${data})"
+  "$(bin_for "${cur}")/pg_ctl" -D "${data}" stop -m fast
+}
+
+start_version() {
+  local version="$1"
+  local bin data
+  bin="$(bin_for "${version}")"
+  data="$(data_dir_for "${version}")"
+
+  [[ -x "${bin}/postgres" ]] || die "postgres ${version} not installed (expected ${bin}/postgres). Try: asdf install postgres ${version}"
+
+  if [[ ! -d "${data}" || -z "$(ls -A "${data}" 2>/dev/null)" ]]; then
+    info "initdb for ${version} → ${data}"
+    "${bin}/initdb" -D "${data}" -U postgres >/dev/null
+  fi
+
+  info "starting postgres ${version}"
+  "${bin}/pg_ctl" -D "${data}" -l "${data}/server.log" start
+}
+
+case "${1:-}" in
+  --status|status)
+    cur="$(current_version)"
+    if [[ -z "${cur}" ]]; then
+      echo "nothing on :${PORT}"
+    elif [[ "${cur}" == other:* ]]; then
+      echo "non-asdf process on :${PORT} → ${cur#other:}"
+    else
+      echo "postgres ${cur} on :${PORT}"
+    fi
+    exit 0
+    ;;
+  --stop|stop)
+    stop_current
+    exit 0
+    ;;
+  -h|--help)
+    sed -n '2,10p' "$0" | sed 's/^# \{0,1\}//'
+    exit 0
+    ;;
+esac
+
+target="${1:-$(target_from_tool_versions)}"
+[[ -n "${target}" ]] || die "no version given and no postgres entry in .tool-versions"
+
+cur="$(current_version)"
+if [[ "${cur}" == "${target}" ]]; then
+  info "postgres ${target} already running on :${PORT}"
+  exit 0
+fi
+
+stop_current
+start_version "${target}"
