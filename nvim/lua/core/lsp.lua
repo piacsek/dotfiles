@@ -43,6 +43,11 @@ emmet_config.filetypes = vim.list_extend(emmet_config.filetypes or {}, { "heex",
 vim.lsp.config["emmet_ls"] = emmet_config
 
 vim.lsp.config["ts_ls"] = {
+	init_options = {
+		preferences = {
+			importModuleSpecifier = "relative",
+		},
+	},
 	settings = {
 		typescript = {
 			preferences = {
