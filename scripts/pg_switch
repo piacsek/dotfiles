@@ -109,10 +109,18 @@ case "${1:-}" in
     sed -n '2,10p' "$0" | sed 's/^# \{0,1\}//'
     exit 0
     ;;
+  -*)
+    die "unknown flag: $1 (try --status, --stop, --help)"
+    ;;
 esac
 
 target="${1:-$(target_from_tool_versions)}"
 [[ -n "${target}" ]] || die "no version given and no postgres entry in .tool-versions"
+
+# Validate the target is installed before touching the running server —
+# otherwise a typo'd version stops postgres and leaves nothing running.
+[[ -x "$(bin_for "${target}")/postgres" ]] || \
+  die "postgres ${target} not installed (expected $(bin_for "${target}")/postgres). Try: asdf install postgres ${target}"
 
 cur="$(current_version)"
 if [[ "${cur}" == "${target}" ]]; then
