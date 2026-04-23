@@ -33,8 +33,8 @@ current_version() {
 
   local cmd
   cmd="$(ps -o command= -p "${pid}" 2>/dev/null || true)"
-  # Matches /Users/.../asdf/installs/postgres/<version>/bin/postgres
-  if [[ "${cmd}" =~ /asdf/installs/postgres/([^/]+)/bin/postgres ]]; then
+  # Matches /Users/.../.asdf/installs/postgres/<version>/bin/postgres
+  if [[ "${cmd}" =~ asdf/installs/postgres/([^/]+)/bin/postgres ]]; then
     echo "${BASH_REMATCH[1]}"
   else
     # Something non-asdf is on 5432. Surface it to the caller.
