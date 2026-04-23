@@ -42,6 +42,21 @@ local emmet_config = vim.lsp.config["emmet_ls"] or {}
 emmet_config.filetypes = vim.list_extend(emmet_config.filetypes or {}, { "heex", "eelixir" })
 vim.lsp.config["emmet_ls"] = emmet_config
 
+vim.lsp.config["ts_ls"] = {
+	settings = {
+		typescript = {
+			preferences = {
+				importModuleSpecifier = "relative",
+			},
+		},
+		javascript = {
+			preferences = {
+				importModuleSpecifier = "relative",
+			},
+		},
+	},
+}
+
 vim.lsp.enable("lua_ls")
 vim.lsp.enable("vimls")
 vim.lsp.enable("ts_ls")
