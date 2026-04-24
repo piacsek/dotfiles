@@ -56,7 +56,7 @@ vim.keymap.set({ "n", "i", "v", "c" }, "<Right>", "<Nop>", arrow_disabling_opts)
 vim.keymap.set(
 	{ "n" },
 	"<M-r>",
-	":mksession! Session.vim | restart source Session.vim <CR>",
+	":mksession! Session.vim | wall | restart source Session.vim <CR>",
 	{ desc = "[R]estarts nvim" }
 )
 vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { desc = "[Y]ank to system clipboard" })
