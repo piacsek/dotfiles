@@ -4,6 +4,8 @@ export PATH=/opt/homebrew/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/
 export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl/lib/pkgconfig"
 export LDFLAGS="-L/opt/homebrew/opt/openssl/lib"
 export ERL_AFLAGS="-kernel shell_history enabled"
+# This is supposed to speed up compilation  - 12 comes from 12 CPUs in my work computer
+export ERL_FLAGS="+S 12 +SDcpu 12 +SDio 10"
 export RUBY_CONFIGURE_OPTS="--with-libyaml-dir=$(brew --prefix libyaml)"
 
 # ZSH customization
