@@ -166,9 +166,9 @@ vim.keymap.set("n", "<leader>fp", function()
 	fzf.files({ cwd = vim.fn.getcwd() .. "/piacsek" })
 end, { desc = "[F]ind [P]iacsek files" })
 
-vim.keymap.set("n", "<leader>fd", function()
+vim.keymap.set("n", "<leader>fn", function()
 	fzf.files({ cwd = "~/dotfiles" })
-end, { desc = "[F]ind [D]otfiles" })
+end, { desc = "[F]ind dotfiles ([N]vim config)" })
 
 vim.keymap.set("v", "<leader>fm", function()
 	local text = vim.getVisualSelection()
