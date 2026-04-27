@@ -200,7 +200,6 @@ asdf plugin add gcloud
 asdf plugin add rebar
 asdf plugin add teleport-community
 asdf plugin add zig
-asdf plugin add imagemagick
 
 asdf install
 ```
