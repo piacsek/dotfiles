@@ -123,6 +123,7 @@ brew install \
   tree-sitter-cli \
   sl \
   gh \
+  imagemagick \
   bat
 ```
 
