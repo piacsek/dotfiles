@@ -191,11 +191,11 @@ vim.keymap.set("n", "<leader>ss", function()
 	fzf.live_grep({ winopts = grep_winopts })
 end, { desc = "[F]ind by [G]rep" })
 
-vim.keymap.set("n", "<leader>sc", function()
+vim.keymap.set("n", "<leader>sn", function()
 	fzf.live_grep({ cwd = "~/dotfiles", winopts = grep_winopts })
 end, { desc = "Grep config files" })
 
-vim.keymap.set("v", "<leader>sc", function()
+vim.keymap.set("v", "<leader>sn", function()
 	local text = vim.getVisualSelection()
 	fzf.live_grep({ cwd = "~/dotfiles", search = text, winopts = grep_winopts })
 end, { desc = "[G]rep selected" })
