@@ -156,6 +156,7 @@ vim.keymap.set("n", "<leader>fk", fzf.keymaps, { desc = "[F]ind [K]eymaps" })
 vim.keymap.set("n", "<leader>F", fzf.resume, { desc = "Resume last search" })
 vim.keymap.set("n", "<leader><leader>", fzf.buffers, { desc = "Buffers" })
 vim.keymap.set("n", "<leader>fo", fzf.oldfiles, { desc = "[F]ind [O] files" })
+vim.keymap.set("n", "<leader>fd", fzf.diagnostics_workspace, { desc = "[F]ind [D]iagnostics" })
 
 vim.keymap.set("v", "<leader>ff", function()
 	local text = vim.getVisualSelection()
