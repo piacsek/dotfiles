@@ -1,4 +1,4 @@
-theme = deep
+config-file = ?theme-current
 background = #131314
 font-size = 15
 macos-option-as-alt = true
