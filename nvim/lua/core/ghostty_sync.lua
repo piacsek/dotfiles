@@ -17,5 +17,6 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 		if vim.uv.fs_stat(themes_dir .. "/" .. name) == nil then return end
 		vim.fn.writefile({ "theme = " .. name }, theme_file)
 		vim.system({ "pkill", "-SIGUSR2", "ghostty" }, { detach = true })
+		vim.notify("ghostty: " .. name)
 	end,
 })
