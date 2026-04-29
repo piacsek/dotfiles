@@ -8,8 +8,14 @@ local theme_file = vim.fn.expand("~/.config/ghostty/theme-current")
 vim.api.nvim_create_autocmd("ColorScheme", {
 	group = vim.api.nvim_create_augroup("ghostty-theme-sync", { clear = true }),
 	callback = function(ev)
-		if vim.uv.fs_stat(themes_dir .. "/" .. ev.match) == nil then return end
-		vim.fn.writefile({ "theme = " .. ev.match }, theme_file)
+		-- Some plugins (e.g. cyberdream) set the same g:colors_name for both
+		-- light and dark variants. Prefer "<name>-light" when &background=light.
+		local name = ev.match
+		if vim.o.background == "light" and vim.uv.fs_stat(themes_dir .. "/" .. name .. "-light") then
+			name = name .. "-light"
+		end
+		if vim.uv.fs_stat(themes_dir .. "/" .. name) == nil then return end
+		vim.fn.writefile({ "theme = " .. name }, theme_file)
 		vim.system({ "pkill", "-SIGUSR2", "ghostty" }, { detach = true })
 	end,
 })
