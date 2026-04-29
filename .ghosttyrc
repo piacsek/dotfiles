@@ -1,4 +1,4 @@
-config-file = ?theme-current
+config-file = ?/Users/piacsek/.config/ghostty/theme-current
 background = #131314
 font-size = 15
 macos-option-as-alt = true
