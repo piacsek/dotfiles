@@ -141,7 +141,6 @@ rm -rf $HOME/.config/nvim
 rm -rf $HOME/.config/ghostty
 
 mkdir -p $HOME/.config/ghostty
-mkdir -p $HOME/.config/ghostty/themes
 mkdir -p $HOME/.config/gh-dash
 mkdir -p $HOME/.config/tmux-sessionizer
 touch -p $HOME/.config/tmux-sessionizer/tmux-sessionizer.conf
