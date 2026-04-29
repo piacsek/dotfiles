@@ -2,7 +2,7 @@
 -- Maps nvim colorscheme names to Ghostty theme names (see `ghostty +list-themes`).
 -- Add an entry here whenever you adopt a new nvim colorscheme.
 local nvim_to_ghostty = {
-	["high-contrast"] = "deep",
+	["high-contrast"] = "high-contrast",
 	elflord = "elflord",
 	ron = "ron",
 }
