@@ -1,6 +1,6 @@
 local function tone_down_zaibatsu()
-	vim.api.nvim_set_hl(0, "StatusLine", { fg = "#d7d5db", bg = "#1f0a3a" })
-	vim.api.nvim_set_hl(0, "StatusLineNC", { fg = "#878092", bg = "#170233" })
+	vim.api.nvim_set_hl(0, "StatusLine", { fg = "#e8e6ec", bg = "#3a1e6e" })
+	vim.api.nvim_set_hl(0, "StatusLineNC", { fg = "#a39bb0", bg = "#2a1450" })
 end
 
 vim.api.nvim_create_autocmd("ColorScheme", {
