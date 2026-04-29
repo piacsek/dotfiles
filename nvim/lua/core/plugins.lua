@@ -69,10 +69,10 @@ require("url-open").setup({
 require("presenting").setup({})
 require("jtt").setup({
 	languages = {
-		javascript = { mode = "suffix", test = ".spec", ext = ".{js,ts,jsx,tsx}", source_ext = ".{js,ts,jsx,tsx}" },
-		typescript = { mode = "suffix", test = ".spec", ext = ".{ts,js,tsx,jsx}", source_ext = ".{ts,js,tsx,jsx}" },
-		typescriptreact = { mode = "suffix", test = ".spec", ext = ".{tsx,jsx,ts,js}", source_ext = ".{tsx,jsx,ts,js}" },
-		javascriptreact = { mode = "suffix", test = ".spec", ext = ".{jsx,tsx,js,ts}", source_ext = ".{jsx,tsx,js,ts}" },
+		javascript = { mode = "suffix", test = ".spec", ext = ".\\{js,ts,jsx,tsx\\}", source_ext = ".\\{js,ts,jsx,tsx\\}" },
+		typescript = { mode = "suffix", test = ".spec", ext = ".\\{ts,js,tsx,jsx\\}", source_ext = ".\\{ts,js,tsx,jsx\\}" },
+		typescriptreact = { mode = "suffix", test = ".spec", ext = ".\\{tsx,jsx,ts,js\\}", source_ext = ".\\{tsx,jsx,ts,js\\}" },
+		javascriptreact = { mode = "suffix", test = ".spec", ext = ".\\{jsx,tsx,js,ts\\}", source_ext = ".\\{jsx,tsx,js,ts\\}" },
 	},
 })
 require("lazydev").setup({
