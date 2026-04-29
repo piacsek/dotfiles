@@ -7,7 +7,15 @@ local lines = vim.fn.filereadable(theme_file) == 1 and vim.fn.readfile(theme_fil
 local from_ghostty = lines[1] and lines[1]:match("theme%s*=%s*(%S+)")
 vim.g._default_colorscheme = from_ghostty or "high-contrast"
 
-vim.cmd.colorscheme(vim.g._default_colorscheme)
+-- Plugin colorschemes aren't loaded yet; try now, retry after plugins load.
+if not pcall(vim.cmd.colorscheme, vim.g._default_colorscheme) then
+	vim.api.nvim_create_autocmd("VimEnter", {
+		once = true,
+		callback = function()
+			pcall(vim.cmd.colorscheme, vim.g._default_colorscheme)
+		end,
+	})
+end
 
 vim.opt.termguicolors = true
 vim.opt.swapfile = false
