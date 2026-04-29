@@ -2,15 +2,10 @@ vim.g.have_nerd_font = true
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-local current_date = os.date("*t")
-local SATURDAY = 1
-local SUNDAY = 1
-
-if current_date.wday == SATURDAY or current_date.wday == SUNDAY then
-	vim.g._default_colorscheme = "elflord"
-else
-	vim.g._default_colorscheme = "high-contrast"
-end
+local theme_file = vim.fn.expand("~/.config/ghostty/theme-current")
+local lines = vim.fn.filereadable(theme_file) == 1 and vim.fn.readfile(theme_file) or {}
+local from_ghostty = lines[1] and lines[1]:match("theme%s*=%s*(%S+)")
+vim.g._default_colorscheme = from_ghostty or "high-contrast"
 
 vim.cmd.colorscheme(vim.g._default_colorscheme)
 
