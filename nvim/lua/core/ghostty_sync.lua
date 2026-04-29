@@ -30,3 +30,5 @@ vim.api.nvim_create_user_command("ThemeFromGhostty", function()
 	end
 	vim.cmd.colorscheme(theme)
 end, { desc = "Apply the colorscheme currently set in Ghostty's theme-current" })
+
+vim.keymap.set("n", "<M-t>", "<cmd>ThemeFromGhostty<cr>", { desc = "Sync colorscheme from Ghostty" })
