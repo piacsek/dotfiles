@@ -261,22 +261,7 @@ vim.keymap.set("n", "<leader>gg", function()
 		file_dir = vim.fn.getcwd()
 	end
 	local git_root = vim.fs.root(file_dir, ".git") or file_dir
-	if vim.env.TMUX then
-		vim.system({
-			"tmux",
-			"display-popup",
-			"-E",
-			"-w",
-			"90%",
-			"-h",
-			"90%",
-			"-d",
-			git_root,
-			"lazygit",
-		})
-	else
-		Snacks.lazygit({ cwd = git_root, win = { width = 0.9, height = 0.9 } })
-	end
+	vim.system({ "tmux", "display-popup", "-E", "-w", "90%", "-h", "90%", "-d", git_root, "lazygit" })
 end, { desc = "Lazygit" })
 vim.keymap.set("n", "<leader>N", function()
 	Snacks.win({
