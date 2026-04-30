@@ -1,6 +1,10 @@
 local function tone_down_zaibatsu()
 	vim.api.nvim_set_hl(0, "StatusLine", { fg = "#e8e6ec", bg = "#3a1e6e" })
 	vim.api.nvim_set_hl(0, "StatusLineNC", { fg = "#a39bb0", bg = "#2a1450" })
+	-- Zaibatsu sets terminal_color_0 to its bg (#0e0024), so anything ANSI-black
+	-- (e.g. lazygit borders) vanishes inside :terminal. Lift it just enough
+	-- to be visible without affecting the editor background.
+	vim.g.terminal_color_0 = "#2a1450"
 end
 
 vim.api.nvim_create_autocmd("ColorScheme", {
