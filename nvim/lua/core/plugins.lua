@@ -38,6 +38,7 @@ vim.pack.add({
 	-- Colorschemes
 	gh("scottmckendry/cyberdream.nvim"),
 	gh("piacsek/high-contrast.nvim"),
+	gh("piacsek/deep-purple.nvim"),
 	gh("AlexvZyl/nordic.nvim"),
 	gh("0Risotto/rainbow12"),
 	gh("aisk/kukishinobu.vim"),
