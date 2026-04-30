@@ -5,7 +5,6 @@ require("core.options")
 require("core.plugins")
 require("core.commands")
 require("core.auto_commands")
-require("core.ghostty_sync")
 require("core.keymaps")
 require("core.lsp")
 
