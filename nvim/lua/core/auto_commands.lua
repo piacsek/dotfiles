@@ -42,6 +42,8 @@ local function tone_down_zaibatsu()
 	-- Module / namespace names (Elixir modules, TS namespaces) — italic teal,
 	-- so `LicenseApplication`, `Steps`, `OnboardingSchema` stand apart from variables.
 	vim.api.nvim_set_hl(0, "@module", { fg = "#af87ff", bold = true })
+	-- MatchParen: zaibatsu uses reverse video which obscures the cursor.
+	vim.api.nvim_set_hl(0, "MatchParen", { fg = "#ffd700", bg = "#3a1e6e", bold = true })
 	vim.api.nvim_set_hl(0, "@lsp.type.module", { fg = "#af87ff", bold = true })
 	vim.api.nvim_set_hl(0, "@lsp.type.namespace", { fg = "#af87ff", bold = true })
 	-- LSP semantic tokens override treesitter once the server attaches
