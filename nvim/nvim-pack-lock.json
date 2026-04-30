@@ -32,6 +32,10 @@
       "rev": "a68ffa6af98bf1fc88f33a071c51a188ec85c725",
       "src": "https://github.com/scottmckendry/cyberdream.nvim"
     },
+    "deep-purple.nvim": {
+      "rev": "5c40ad49728e03f86dbec60bc4d4750bdf1f010c",
+      "src": "https://github.com/piacsek/deep-purple.nvim"
+    },
     "fzf-lua": {
       "rev": "abacb0693d7a37de9e85e6fcb2d22d848cb75cef",
       "src": "https://github.com/ibhagwan/fzf-lua"
