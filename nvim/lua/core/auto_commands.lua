@@ -31,6 +31,8 @@ local function tone_down_zaibatsu()
 	-- Distinguish object keys from value identifiers (JSON, JS/TS, Lua tables, etc.)
 	vim.api.nvim_set_hl(0, "@variable.member", { fg = "#87afff" })
 	vim.api.nvim_set_hl(0, "@property", { fg = "#87afff" })
+	-- Elixir atoms / map keys (`:foo`, `%{key: val}`)
+	vim.api.nvim_set_hl(0, "@string.special.symbol", { fg = "#87afff" })
 	-- LSP semantic tokens override treesitter once the server attaches
 	vim.api.nvim_set_hl(0, "@lsp.type.property", { fg = "#87afff" })
 	-- Zaibatsu sets terminal_color_0 to its bg (#0e0024), so anything ANSI-black
