@@ -35,6 +35,7 @@ vim.pack.add({
 	gh("coder/claudecode.nvim"),
 	gh("selimacerbas/live-server.nvim"),
 	gh("selimacerbas/markdown-preview.nvim"),
+	gh("piacsek/ghostty-mirror.nvim"),
 	-- Colorschemes
 	gh("scottmckendry/cyberdream.nvim"),
 	gh("catppuccin/nvim"),
