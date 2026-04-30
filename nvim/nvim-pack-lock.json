@@ -89,6 +89,10 @@
       "rev": "4ce6bad95fde832f9bd10b991de846047a144628",
       "src": "https://github.com/AlexvZyl/nordic.nvim"
     },
+    "nvim": {
+      "rev": "426dbebe06b5c69fd846ceb17b42e12f890aedf1",
+      "src": "https://github.com/catppuccin/nvim"
+    },
     "nvim-autopairs": {
       "rev": "59bce2eef357189c3305e25bc6dd2d138c1683f5",
       "src": "https://github.com/windwp/nvim-autopairs"
