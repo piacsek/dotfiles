@@ -33,10 +33,17 @@ local function tone_down_zaibatsu()
 	vim.api.nvim_set_hl(0, "@property", { fg = "#87afff" })
 	-- Elixir atoms / map keys (`:foo`, `%{key: val}`)
 	vim.api.nvim_set_hl(0, "@string.special.symbol", { fg = "#87afff" })
-	-- Function/method calls — amber, distinct from variables (cyan), strings (yellow),
-	-- keys (blue), keywords (pink). Covers both treesitter and LSP, JS/TS + Elixir.
+	-- Function/method (calls AND declarations) — amber, distinct from variables (cyan),
+	-- strings (yellow), keys (blue), keywords (pink). Covers JS/TS + Elixir.
+	vim.api.nvim_set_hl(0, "@function", { fg = "#ffaf00" })
 	vim.api.nvim_set_hl(0, "@function.call", { fg = "#ffaf00" })
+	vim.api.nvim_set_hl(0, "@function.method", { fg = "#ffaf00" })
 	vim.api.nvim_set_hl(0, "@function.method.call", { fg = "#ffaf00" })
+	-- Module / namespace names (Elixir modules, TS namespaces) — italic teal,
+	-- so `LicenseApplication`, `Steps`, `OnboardingSchema` stand apart from variables.
+	vim.api.nvim_set_hl(0, "@module", { fg = "#5fd7ff", italic = true })
+	vim.api.nvim_set_hl(0, "@lsp.type.module", { fg = "#5fd7ff", italic = true })
+	vim.api.nvim_set_hl(0, "@lsp.type.namespace", { fg = "#5fd7ff", italic = true })
 	-- LSP semantic tokens override treesitter once the server attaches
 	vim.api.nvim_set_hl(0, "@lsp.type.property", { fg = "#87afff" })
 	vim.api.nvim_set_hl(0, "@lsp.type.function", { fg = "#ffaf00" })
