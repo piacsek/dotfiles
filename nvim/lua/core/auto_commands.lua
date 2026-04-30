@@ -31,6 +31,8 @@ local function tone_down_zaibatsu()
 	-- Distinguish object keys from value identifiers (JSON, JS/TS, Lua tables, etc.)
 	vim.api.nvim_set_hl(0, "@variable.member", { fg = "#ffd787" })
 	vim.api.nvim_set_hl(0, "@property", { fg = "#ffd787" })
+	-- LSP semantic tokens override treesitter once the server attaches
+	vim.api.nvim_set_hl(0, "@lsp.type.property", { fg = "#ffd787" })
 	-- Zaibatsu sets terminal_color_0 to its bg (#0e0024), so anything ANSI-black
 	-- (e.g. lazygit borders) vanishes inside :terminal. Lift it just enough
 	-- to be visible without affecting the editor background.
