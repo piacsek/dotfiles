@@ -29,10 +29,10 @@ local function tone_down_zaibatsu()
 	vim.api.nvim_set_hl(0, "WhichKeyFloat", { bg = "#1a0540" })
 	vim.api.nvim_set_hl(0, "WhichKeyBorder", { fg = "#878092", bg = "#1a0540" })
 	-- Distinguish object keys from value identifiers (JSON, JS/TS, Lua tables, etc.)
-	vim.api.nvim_set_hl(0, "@variable.member", { fg = "#ffd787" })
-	vim.api.nvim_set_hl(0, "@property", { fg = "#ffd787" })
+	vim.api.nvim_set_hl(0, "@variable.member", { fg = "#87afff" })
+	vim.api.nvim_set_hl(0, "@property", { fg = "#87afff" })
 	-- LSP semantic tokens override treesitter once the server attaches
-	vim.api.nvim_set_hl(0, "@lsp.type.property", { fg = "#ffd787" })
+	vim.api.nvim_set_hl(0, "@lsp.type.property", { fg = "#87afff" })
 	-- Zaibatsu sets terminal_color_0 to its bg (#0e0024), so anything ANSI-black
 	-- (e.g. lazygit borders) vanishes inside :terminal. Lift it just enough
 	-- to be visible without affecting the editor background.
