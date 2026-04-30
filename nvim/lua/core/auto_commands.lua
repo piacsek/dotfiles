@@ -33,8 +33,14 @@ local function tone_down_zaibatsu()
 	vim.api.nvim_set_hl(0, "@property", { fg = "#87afff" })
 	-- Elixir atoms / map keys (`:foo`, `%{key: val}`)
 	vim.api.nvim_set_hl(0, "@string.special.symbol", { fg = "#87afff" })
+	-- Function/method calls — amber, distinct from variables (cyan), strings (yellow),
+	-- keys (blue), keywords (pink). Covers both treesitter and LSP, JS/TS + Elixir.
+	vim.api.nvim_set_hl(0, "@function.call", { fg = "#ffaf00" })
+	vim.api.nvim_set_hl(0, "@function.method.call", { fg = "#ffaf00" })
 	-- LSP semantic tokens override treesitter once the server attaches
 	vim.api.nvim_set_hl(0, "@lsp.type.property", { fg = "#87afff" })
+	vim.api.nvim_set_hl(0, "@lsp.type.function", { fg = "#ffaf00" })
+	vim.api.nvim_set_hl(0, "@lsp.type.method", { fg = "#ffaf00" })
 	-- Zaibatsu sets terminal_color_0 to its bg (#0e0024), so anything ANSI-black
 	-- (e.g. lazygit borders) vanishes inside :terminal. Lift it just enough
 	-- to be visible without affecting the editor background.
