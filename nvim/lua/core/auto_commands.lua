@@ -41,6 +41,9 @@ local function tone_down_zaibatsu()
 	vim.api.nvim_set_hl(0, "@lsp.type.property", { fg = "#87afff" })
 	vim.api.nvim_set_hl(0, "@lsp.type.function", { fg = "#ffaf00" })
 	vim.api.nvim_set_hl(0, "@lsp.type.method", { fg = "#ffaf00" })
+	-- Class tokens: keep treesitter's Special (lime) color when the LSP attaches,
+	-- otherwise constructor names flicker from green to magenta on file open.
+	vim.api.nvim_set_hl(0, "@lsp.type.class", { link = "Special" })
 	-- Zaibatsu sets terminal_color_0 to its bg (#0e0024), so anything ANSI-black
 	-- (e.g. lazygit borders) vanishes inside :terminal. Lift it just enough
 	-- to be visible without affecting the editor background.
