@@ -41,9 +41,9 @@ local function tone_down_zaibatsu()
 	vim.api.nvim_set_hl(0, "@function.method.call", { fg = "#ffaf00" })
 	-- Module / namespace names (Elixir modules, TS namespaces) — italic teal,
 	-- so `LicenseApplication`, `Steps`, `OnboardingSchema` stand apart from variables.
-	vim.api.nvim_set_hl(0, "@module", { fg = "#af87ff", italic = true })
-	vim.api.nvim_set_hl(0, "@lsp.type.module", { fg = "#af87ff", italic = true })
-	vim.api.nvim_set_hl(0, "@lsp.type.namespace", { fg = "#af87ff", italic = true })
+	vim.api.nvim_set_hl(0, "@module", { fg = "#af87ff", bold = true })
+	vim.api.nvim_set_hl(0, "@lsp.type.module", { fg = "#af87ff", bold = true })
+	vim.api.nvim_set_hl(0, "@lsp.type.namespace", { fg = "#af87ff", bold = true })
 	-- LSP semantic tokens override treesitter once the server attaches
 	vim.api.nvim_set_hl(0, "@lsp.type.property", { fg = "#87afff" })
 	vim.api.nvim_set_hl(0, "@lsp.type.function", { fg = "#ffaf00" })
