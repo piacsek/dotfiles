@@ -44,6 +44,10 @@ local function tone_down_zaibatsu()
 	-- Class tokens: keep treesitter's Special (lime) color when the LSP attaches,
 	-- otherwise constructor names flicker from green to magenta on file open.
 	vim.api.nvim_set_hl(0, "@lsp.type.class", { link = "Special" })
+	-- Enum members and readonly fields: keep them on the @variable.member blue
+	-- (the treesitter color) instead of letting LSP recolor them as Constant (yellow).
+	vim.api.nvim_set_hl(0, "@lsp.type.enumMember", { link = "@variable.member" })
+	vim.api.nvim_set_hl(0, "@lsp.typemod.enumMember.readonly", { link = "@variable.member" })
 	-- Zaibatsu sets terminal_color_0 to its bg (#0e0024), so anything ANSI-black
 	-- (e.g. lazygit borders) vanishes inside :terminal. Lift it just enough
 	-- to be visible without affecting the editor background.
