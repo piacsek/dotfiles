@@ -50,9 +50,9 @@ local function tone_down_zaibatsu()
 	vim.api.nvim_set_hl(0, "@lsp.type.property", { fg = "#87afff" })
 	vim.api.nvim_set_hl(0, "@lsp.type.function", { fg = "#ffaf00" })
 	vim.api.nvim_set_hl(0, "@lsp.type.method", { fg = "#ffaf00" })
-	-- Class tokens: keep treesitter's Special (lime) color when the LSP attaches,
-	-- otherwise constructor names flicker from green to magenta on file open.
-	vim.api.nvim_set_hl(0, "@lsp.type.class", { link = "Special" })
+	-- JS/TS classes & constructors share the Elixir module styling: bold violet.
+	vim.api.nvim_set_hl(0, "@constructor", { fg = "#af87ff", bold = true })
+	vim.api.nvim_set_hl(0, "@lsp.type.class", { fg = "#af87ff", bold = true })
 	-- Enum members and readonly fields: keep them on the @variable.member blue
 	-- (the treesitter color) instead of letting LSP recolor them as Constant (yellow).
 	vim.api.nvim_set_hl(0, "@lsp.type.enumMember", { link = "@variable.member" })
