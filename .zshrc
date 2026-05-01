@@ -35,8 +35,7 @@ fi
 eval "$(direnv hook zsh)"
 
 # Aliases
-alias lab='cd $HOME/Projects/elixir_lab/ && nvim'
-alias bank='cd $HOME/Projects/ex_bank/ && nvim'
+alias vim='nvim'
 alias dotfiles='cd $HOME/dotfiles/'
 alias lz='lazygit'
 alias tx='tmux-sessionizer'
