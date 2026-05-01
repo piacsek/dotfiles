@@ -36,6 +36,7 @@ vim.pack.add({
 	gh("selimacerbas/live-server.nvim"),
 	gh("selimacerbas/markdown-preview.nvim"),
 	gh("piacsek/ghostty-mirror.nvim"),
+	gh("smjonas/inc-rename.nvim"),
 	-- Colorschemes
 	gh("scottmckendry/cyberdream.nvim"),
 	gh("catppuccin/nvim"),
@@ -58,6 +59,7 @@ require("markdown_preview").setup({
 	debounce_ms = 300,
 })
 -- require("claudecode").setup({ terminal = { provider = "none" } })
+require("inc_rename").setup({})
 require("nvim-autopairs").setup({})
 require("mini.ai").setup({})
 require("mini.icons").setup({})
