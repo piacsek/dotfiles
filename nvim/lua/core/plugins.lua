@@ -37,6 +37,7 @@ vim.pack.add({
 	gh("selimacerbas/markdown-preview.nvim"),
 	gh("piacsek/ghostty-mirror.nvim"),
 	gh("smjonas/inc-rename.nvim"),
+	gh("stevearc/dressing.nvim"),
 	-- Colorschemes
 	gh("scottmckendry/cyberdream.nvim"),
 	gh("catppuccin/nvim"),
@@ -59,7 +60,9 @@ require("markdown_preview").setup({
 	debounce_ms = 300,
 })
 -- require("claudecode").setup({ terminal = { provider = "none" } })
+require("dressing").setup({})
 require("inc_rename").setup({
+	input_buffer_type = "dressing",
 	post_hook = function()
 		vim.cmd("silent! wall")
 	end,
