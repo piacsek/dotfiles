@@ -131,6 +131,17 @@ vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
 -- Plugin keymaps
 
 local fzf = require("fzf-lua")
+
+-- LSP pickers via fzf-lua (override default grr/gri/grt)
+vim.keymap.set("n", "grr", fzf.lsp_references, { desc = "LSP references" })
+vim.keymap.set("n", "gri", fzf.lsp_implementations, { desc = "LSP implementations" })
+vim.keymap.set("n", "grd", fzf.lsp_definitions, { desc = "LSP definitions" })
+vim.keymap.set("n", "grt", fzf.lsp_typedefs, { desc = "LSP type definitions" })
+
+-- Rename with live preview via inc-rename.nvim
+vim.keymap.set("n", "grn", function()
+	return ":IncRename " .. vim.fn.expand("<cword>")
+end, { expr = true, desc = "LSP rename (incremental)" })
 vim.keymap.set("n", "<leader>jw", "<esc>:URLOpenUnderCursor<cr>", { desc = "[J]ump to [W]eb browser" })
 vim.keymap.set("n", "<leader>jt", "<cmd>JumpTest<CR>", { desc = "[J]ump to [T]est" })
 vim.keymap.set("", "<C-f>", function()
