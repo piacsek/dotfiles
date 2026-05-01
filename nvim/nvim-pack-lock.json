@@ -36,6 +36,10 @@
       "rev": "5c40ad49728e03f86dbec60bc4d4750bdf1f010c",
       "src": "https://github.com/piacsek/deep-purple.nvim"
     },
+    "dressing.nvim": {
+      "rev": "2d7c2db2507fa3c4956142ee607431ddb2828639",
+      "src": "https://github.com/stevearc/dressing.nvim"
+    },
     "fzf-lua": {
       "rev": "abacb0693d7a37de9e85e6fcb2d22d848cb75cef",
       "src": "https://github.com/ibhagwan/fzf-lua"
