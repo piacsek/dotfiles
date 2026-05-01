@@ -59,7 +59,11 @@ require("markdown_preview").setup({
 	debounce_ms = 300,
 })
 -- require("claudecode").setup({ terminal = { provider = "none" } })
-require("inc_rename").setup({})
+require("inc_rename").setup({
+	post_hook = function()
+		vim.cmd("silent! wall")
+	end,
+})
 require("nvim-autopairs").setup({})
 require("mini.ai").setup({})
 require("mini.icons").setup({})
