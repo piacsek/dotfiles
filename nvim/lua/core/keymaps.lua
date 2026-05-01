@@ -126,12 +126,7 @@ vim.keymap.set("i", "<C-p>", function()
 end, { desc = "[P]aste in insert mode" })
 
 vim.keymap.set("n", "g<Enter>", "gF", { desc = "Go to file with line number support" })
-vim.keymap.set("n", "gd", function()
-	require("fzf-lua").lsp_definitions({
-		winopts = { height = 0.9, width = 0.9, preview = { hidden = "nohidden" } },
-		jump1 = false,
-	})
-end, { desc = "Go to definition" })
+vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
 
 -- Plugin keymaps
 
