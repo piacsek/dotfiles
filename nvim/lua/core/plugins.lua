@@ -59,9 +59,7 @@ require("markdown_preview").setup({
 	debounce_ms = 300,
 })
 -- require("claudecode").setup({ terminal = { provider = "none" } })
-require("dressing").setup({})
 require("inc_rename").setup({
-	input_buffer_type = "dressing",
 	post_hook = function()
 		vim.cmd("silent! wall")
 	end,
