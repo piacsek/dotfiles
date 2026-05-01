@@ -132,11 +132,25 @@ vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
 
 local fzf = require("fzf-lua")
 
+local grep_winopts = {
+	height = 0.9,
+	width = 0.9,
+	preview = { hidden = "nohidden" },
+}
+
 -- LSP pickers via fzf-lua (override default grr/gri/grt)
-vim.keymap.set("n", "grr", fzf.lsp_references, { desc = "LSP references" })
-vim.keymap.set("n", "gri", fzf.lsp_implementations, { desc = "LSP implementations" })
-vim.keymap.set("n", "grd", fzf.lsp_definitions, { desc = "LSP definitions" })
-vim.keymap.set("n", "grt", fzf.lsp_typedefs, { desc = "LSP type definitions" })
+vim.keymap.set("n", "grr", function()
+	fzf.lsp_references({ winopts = grep_winopts, jump1 = false })
+end, { desc = "LSP references" })
+vim.keymap.set("n", "gri", function()
+	fzf.lsp_implementations({ winopts = grep_winopts, jump1 = false })
+end, { desc = "LSP implementations" })
+vim.keymap.set("n", "grd", function()
+	fzf.lsp_definitions({ winopts = grep_winopts, jump1 = false })
+end, { desc = "LSP definitions" })
+vim.keymap.set("n", "grt", function()
+	fzf.lsp_typedefs({ winopts = grep_winopts, jump1 = false })
+end, { desc = "LSP type definitions" })
 
 -- Rename with live preview via inc-rename.nvim
 vim.keymap.set("n", "grn", function()
