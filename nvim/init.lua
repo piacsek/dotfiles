@@ -14,7 +14,5 @@ if vim.fn.filereadable(home_init) == 1 then
 	dofile(home_init)
 end
 
-local local_init = vim.fn.getcwd() .. "/piacsek/init.lua"
-if vim.fn.filereadable(local_init) == 1 then
-	dofile(local_init)
-end
+-- Project-local init now lives in `.nvim.lua` at the project root and is
+-- auto-sourced via `exrc` (see core/options.lua). Mark it trusted with `:trust`.
