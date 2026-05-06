@@ -12,7 +12,7 @@ vim.lsp.config["elixir_ls"] = {
 	filetypes = { "elixir", "eelixir", "heex" },
 	root_dir = function(_, on_dir)
 		if vim.g_elixir_root then
-			on_dir(project_elixir_root)
+			on_dir(vim.g_elixir_root)
 		else
 			vim.notify("elixir_ls unavailable: Please define elixir_root.", vim.log.levels.ERROR)
 		end
