@@ -72,7 +72,9 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 
 ```bash
 echo "piacsek/" > $HOME/.gitignore
+echo "Session.vim" >> $HOME/.gitignore
 echo ".tmux-sessionizer" >> $HOME/.gitignore
+echo ".nvim.lua" >> $HOME/.gitignore
 git config --global core.excludesfile $HOME/.gitignore
 git config --global user.name "Felipe Moraes Piacsek"
 read "git_email?Enter your git email: "
