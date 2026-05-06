@@ -2,6 +2,10 @@ vim.g.have_nerd_font = true
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- Auto-source .nvim.lua / .nvimrc / .exrc from the cwd at startup.
+-- Files must be marked trusted with :trust before nvim will execute them.
+vim.o.exrc = true
+
 local theme_file = vim.fn.expand("~/.config/ghostty/theme-current")
 local lines = vim.fn.filereadable(theme_file) == 1 and vim.fn.readfile(theme_file) or {}
 local from_ghostty = lines[1] and lines[1]:match("theme%s*=%s*(%S+)")
