@@ -11,6 +11,7 @@ end
 
 local default_show_message = vim.lsp.handlers["window/showMessage"]
 vim.lsp.handlers["window/showMessage"] = function(err, result, ctx, config)
+	-- Suppressing formatter errors for files ignored by .formatter.exs(IE: migration files)
 	if result and type(result.message) == "string" and result.message:find("not included in") then
 		return
 	end
@@ -21,7 +22,7 @@ vim.lsp.config["elixir_ls"] = {
 	cmd = { "elixir-ls" },
 	filetypes = { "elixir", "eelixir", "heex" },
 	root_dir = function(_, on_dir)
-		if project_elixir_root then
+		if vim.g_elixir_root then
 			on_dir(project_elixir_root)
 		else
 			vim.notify("elixir_ls unavailable: Please define elixir_root.", vim.log.levels.ERROR)
