@@ -221,16 +221,23 @@ require("oil").setup({
 		["<leader>ss"] = {
 			callback = function()
 				local dir = require("oil").get_current_dir()
+				local width_frac = 0.9
+				local inner_width = math.max(20, math.floor(vim.o.columns * width_frac) - 4)
+				local cwd_line = "cwd: " .. dir
+				local wrapped = {}
+				for i = 1, #cwd_line, inner_width do
+					table.insert(wrapped, cwd_line:sub(i, i + inner_width - 1))
+				end
+				local header = ":: <ctrl-g> to Fuzzy Search\n" .. table.concat(wrapped, "\n")
 				require("fzf-lua").live_grep({
 					cwd = dir,
 					show_cwd_header = false,
 					winopts = {
 						height = 0.9,
-						width = 0.9,
+						width = width_frac,
 						preview = { hidden = "nohidden" },
-						title = " grep: " .. dir .. " ",
-						title_pos = "center",
 					},
+					fzf_opts = { ["--header"] = header },
 				})
 			end,
 			desc = "Grep in current Oil directory",
