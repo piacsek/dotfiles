@@ -218,6 +218,17 @@ require("oil").setup({
 			end,
 			desc = "Run test file under cursor",
 		},
+		["<leader>ss"] = {
+			callback = function()
+				local dir = require("oil").get_current_dir()
+				require("fzf-lua").live_grep({
+					cwd = dir,
+					winopts = { height = 0.9, width = 0.9, preview = { hidden = "nohidden" } },
+				})
+			end,
+			desc = "Grep in current Oil directory",
+			mode = "n",
+		},
 		["<leader>x"] = {
 			callback = function()
 				local oil = require("oil")
