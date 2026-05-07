@@ -1,3 +1,14 @@
+local project_elixir_root = nil
+local project_tailwind_root = nil
+local project_lsp_config = vim.fn.getcwd() .. "/piacsek/lsp.lua"
+if vim.fn.filereadable(project_lsp_config) == 1 then
+	local ok, config = pcall(dofile, project_lsp_config)
+	if ok and type(config) == "table" and config.elixir_root then
+		project_elixir_root = config.elixir_root
+		project_tailwind_root = config.tailwind_root
+	end
+end
+
 -- Suppressing formatter errors for files ignored by .formatter.exs(IE: migration files)
 local default_show_message = vim.lsp.handlers["window/showMessage"]
 vim.lsp.handlers["window/showMessage"] = function(err, result, ctx, config)
@@ -12,7 +23,7 @@ vim.lsp.config["elixir_ls"] = {
 	filetypes = { "elixir", "eelixir", "heex" },
 	root_dir = function(_, on_dir)
 		if vim.g_elixir_root then
-			on_dir(vim.g_elixir_root)
+			on_dir(project_elixir_root)
 		else
 			vim.notify("elixir_ls unavailable: Please define elixir_root.", vim.log.levels.ERROR)
 		end
