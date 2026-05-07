@@ -177,7 +177,27 @@ end, { desc = "[G]it [S]earch [M]ain branch commits" })
 
 vim.keymap.set("n", "<leader>r", run_script_picker, { desc = "[R]un script" })
 
+local function piacsek_search_paths()
+	local path = vim.fn.getcwd() .. "/piacsek/fzf.lua"
+	if vim.fn.filereadable(path) ~= 1 then
+		return nil
+	end
+	local ok, cfg = pcall(dofile, path)
+	if ok and cfg then
+		return cfg.search_paths
+	end
+	return nil
+end
+
 vim.keymap.set("n", "<leader>ff", fzf.files, { desc = "[F]ind [F]iles" })
+
+vim.keymap.set("n", "<leader>fa", function()
+	fzf.files({ search_paths = piacsek_search_paths() })
+end, { desc = "[F]ind [A]ll (incl. configured search paths)" })
+
+vim.keymap.set("n", "<leader>sa", function()
+	fzf.live_grep({ search_paths = piacsek_search_paths(), winopts = grep_winopts })
+end, { desc = "[S]earch [A]ll (incl. configured search paths)" })
 vim.keymap.set("n", "<leader>fh", fzf.help_tags, { desc = "[F]ind [H]elp" })
 vim.keymap.set("n", "<leader>ft", fzf.colorschemes, { desc = "[F]ind [T]heme" })
 vim.keymap.set("n", "<leader>fk", fzf.keymaps, { desc = "[F]ind [K]eymaps" })
