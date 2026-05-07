@@ -178,15 +178,15 @@ end, { desc = "[G]it [S]earch [M]ain branch commits" })
 vim.keymap.set("n", "<leader>r", run_script_picker, { desc = "[R]un script" })
 
 local function piacsek_search_paths()
+	local paths = { vim.fn.expand("$HOME/dotfiles") }
 	local path = vim.fn.getcwd() .. "/piacsek/fzf.lua"
-	if vim.fn.filereadable(path) ~= 1 then
-		return nil
+	if vim.fn.filereadable(path) == 1 then
+		local ok, cfg = pcall(dofile, path)
+		if ok and cfg and cfg.search_paths then
+			vim.list_extend(paths, cfg.search_paths)
+		end
 	end
-	local ok, cfg = pcall(dofile, path)
-	if ok and cfg then
-		return cfg.search_paths
-	end
-	return nil
+	return paths
 end
 
 vim.keymap.set("n", "<leader>ff", fzf.files, { desc = "[F]ind [F]iles" })
