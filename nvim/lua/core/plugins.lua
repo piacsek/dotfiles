@@ -223,7 +223,14 @@ require("oil").setup({
 				local dir = require("oil").get_current_dir()
 				require("fzf-lua").live_grep({
 					cwd = dir,
-					winopts = { height = 0.9, width = 0.9, preview = { hidden = "nohidden" } },
+					show_cwd_header = false,
+					winopts = {
+						height = 0.9,
+						width = 0.9,
+						preview = { hidden = "nohidden" },
+						title = " grep: " .. dir .. " ",
+						title_pos = "center",
+					},
 				})
 			end,
 			desc = "Grep in current Oil directory",
