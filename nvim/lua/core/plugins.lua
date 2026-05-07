@@ -458,8 +458,17 @@ local local_config_path = cwd .. "/piacsek/fzf.lua"
 
 if vim.fn.filereadable(local_config_path) == 1 then
 	local ok, local_config = pcall(dofile, local_config_path)
-	if ok and local_config then
-		fzf_config = vim.tbl_deep_extend("force", fzf_config, local_config)
+	if ok and local_config and local_config.file_ignore_patterns then
+		fzf_config.files = vim.tbl_deep_extend(
+			"force",
+			fzf_config.files or {},
+			{ file_ignore_patterns = local_config.file_ignore_patterns }
+		)
+		fzf_config.grep = vim.tbl_deep_extend(
+			"force",
+			fzf_config.grep or {},
+			{ file_ignore_patterns = local_config.file_ignore_patterns }
+		)
 	end
 end
 
