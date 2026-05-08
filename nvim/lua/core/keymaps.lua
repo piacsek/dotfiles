@@ -278,9 +278,6 @@ vim.keymap.set({ "n", "v" }, "<leader>gyc", function()
 		end,
 	})
 end, { desc = "Copy GitHub URL to clipboard (current branch)" })
-vim.keymap.set("n", "<leader>gh", function()
-	Snacks.picker.git_log_file()
-end, { desc = "Git history for current file" })
 vim.keymap.set("n", "<leader>gd", function()
 	local file = vim.fn.expand("%")
 	Snacks.terminal.open("git diff origin/main -- " .. vim.fn.shellescape(file), {
