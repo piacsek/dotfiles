@@ -73,7 +73,7 @@ vim.keymap.set("n", "<leader>YP", function()
 	vim.fn.setreg("+", vim.fn.expand("%:p") .. ":" .. vim.fn.line("."))
 end, { desc = "Yank absolute file path:line to clipboard" })
 
-vim.keymap.set("n", "<C-g>", "#*viw", { desc = "Multiple cursor replacement" })
+vim.keymap.set("n", "<leader>cw", "#*viw", { desc = "[C]hange [W]ord (multi-cursor-style replacement)" })
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Remove search results highlights" })
 
 vim.keymap.set("n", "<C-Esc>", "<cmd>hide<CR>", { desc = "Hide buffer" })
@@ -125,7 +125,6 @@ vim.keymap.set("i", "<C-p>", function()
 end, { desc = "[P]aste in insert mode" })
 
 vim.keymap.set("n", "g<Enter>", "gF", { desc = "Go to file with line number support" })
-vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
 
 -- Plugin keymaps
 
