@@ -9,22 +9,13 @@ vim.api.nvim_create_user_command("LspRestart", function()
 		vim.notify("No active LSP clients", vim.log.levels.WARN)
 		return
 	end
+	local names = {}
 	for _, client in ipairs(clients) do
-		local bufs = vim.tbl_keys(client.attached_buffers)
-		local config = client.config
-		client:stop()
-		vim.notify("Restarting LSP: " .. client.name, vim.log.levels.INFO)
-		vim.defer_fn(function()
-			local new_id = vim.lsp.start(config)
-			if new_id then
-				for _, buf in ipairs(bufs) do
-					if vim.api.nvim_buf_is_valid(buf) then
-						vim.lsp.buf_attach_client(buf, new_id)
-					end
-				end
-			end
-		end, 500)
+		table.insert(names, client.name)
 	end
+	vim.lsp.enable(names, false)
+	vim.lsp.enable(names, true)
+	vim.notify("Restarting LSP: " .. table.concat(names, ", "), vim.log.levels.INFO)
 end, { desc = "Restart all active LSP clients" })
 
 vim.api.nvim_create_user_command("ClearOldfiles", function()
