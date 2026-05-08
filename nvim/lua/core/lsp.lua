@@ -87,8 +87,8 @@ vim.lsp.enable({
 	"jsonls",
 	"yamlls",
 	"elixir_ls",
+	"harper_ls",
 })
-vim.lsp.enable("harper_ls")
 
 -- Tailwind LSP is laggy via vim.lsp.enable, using vim.lsp.start solves the issue
 vim.api.nvim_create_autocmd("FileType", {
