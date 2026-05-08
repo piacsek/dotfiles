@@ -83,6 +83,11 @@ keybindings:
             tmux new-window -n gh-{{.PrNumber}}-ci '
               gh enhance -R {{.RepoName}} {{.PrNumber}}
             ' && sleep 0.5 && tmux send-keys -t '{right}' l z
+        - key: R
+          command: >-
+            open "https://github.com/{{.RepoName}}/pull/{{.PrNumber}}" &&
+            tmux new-window -n "pr-{{.PrNumber}}-review"
+            "claude 'ultrathink review https://github.com/{{.RepoName}}/pull/{{.PrNumber}}'"
 repoPaths: {}
 theme:
     ui:
