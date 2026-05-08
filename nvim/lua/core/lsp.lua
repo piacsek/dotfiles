@@ -78,14 +78,16 @@ vim.lsp.config["ts_ls"] = {
 	},
 }
 
-vim.lsp.enable("lua_ls")
-vim.lsp.enable("vimls")
-vim.lsp.enable("ts_ls")
-vim.lsp.enable("html")
-vim.lsp.enable("emmet_ls")
-vim.lsp.enable("jsonls")
-vim.lsp.enable("yamlls")
-vim.lsp.enable("elixir_ls")
+vim.lsp.enable({
+	"lua_ls",
+	"vimls",
+	"ts_ls",
+	"html",
+	"emmet_ls",
+	"jsonls",
+	"yamlls",
+	"elixir_ls",
+})
 vim.lsp.enable("harper_ls")
 
 -- Tailwind LSP is laggy via vim.lsp.enable, using vim.lsp.start solves the issue
