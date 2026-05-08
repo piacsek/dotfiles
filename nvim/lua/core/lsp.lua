@@ -39,9 +39,24 @@ vim.lsp.config["elixir_ls"] = {
 	},
 }
 
-local emmet_config = vim.lsp.config["emmet_ls"] or {}
-emmet_config.filetypes = vim.list_extend(emmet_config.filetypes or {}, { "heex", "eelixir" })
-vim.lsp.config["emmet_ls"] = emmet_config
+vim.lsp.config["emmet_ls"] = {
+	filetypes = {
+		"astro",
+		"css",
+		"eelixir",
+		"heex",
+		"html",
+		"htmldjango",
+		"javascriptreact",
+		"less",
+		"pug",
+		"sass",
+		"scss",
+		"svelte",
+		"typescriptreact",
+		"vue",
+	},
+}
 
 vim.lsp.config["ts_ls"] = {
 	init_options = {
