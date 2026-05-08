@@ -60,6 +60,9 @@ require("markdown_preview").setup({
 	debounce_ms = 300,
 })
 -- require("claudecode").setup({ terminal = { provider = "none" } })
+require("render-markdown").setup({
+	completions = { lsp = { enabled = true } },
+})
 require("inc_rename").setup({
 	post_hook = function()
 		vim.cmd("silent! wall")
