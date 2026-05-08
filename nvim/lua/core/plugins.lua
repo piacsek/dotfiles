@@ -404,7 +404,7 @@ require("snacks").setup({
 			},
 		},
 	},
-	bigfile = { enabled = false },
+	bigfile = { enabled = true },
 	bufdelete = { enabled = false },
 	dashboard = { enabled = false },
 	debug = { enabled = false },
