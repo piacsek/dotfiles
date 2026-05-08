@@ -38,6 +38,7 @@ vim.pack.add({
 	gh("piacsek/ghostty-mirror.nvim"),
 	gh("smjonas/inc-rename.nvim"),
 	gh("MeanderingProgrammer/render-markdown.nvim"),
+	gh("nvim-treesitter/nvim-treesitter-context"),
 	-- Colorschemes
 	gh("scottmckendry/cyberdream.nvim"),
 	gh("catppuccin/nvim"),
