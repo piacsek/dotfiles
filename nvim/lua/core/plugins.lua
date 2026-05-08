@@ -64,6 +64,7 @@ require("markdown_preview").setup({
 require("render-markdown").setup({
 	completions = { lsp = { enabled = true } },
 })
+require("treesitter-context").setup({})
 require("inc_rename").setup({
 	post_hook = function()
 		vim.cmd("silent! wall")
