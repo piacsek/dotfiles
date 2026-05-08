@@ -73,7 +73,11 @@ vim.keymap.set("n", "<leader>YP", function()
 	vim.fn.setreg("+", vim.fn.expand("%:p") .. ":" .. vim.fn.line("."))
 end, { desc = "Yank absolute file path:line to clipboard" })
 
-vim.keymap.set("n", "<leader>cg", "*cgn", { desc = "[C]hange [G]lobally (dot-repeat to replace next match)" })
+vim.keymap.set("n", "<leader>cg", function()
+	vim.fn.setreg("/", "\\<" .. vim.fn.expand("<cword>") .. "\\>")
+	vim.o.hlsearch = true
+	return "cgn"
+end, { expr = true, desc = "[C]hange [G]lobally (dot-repeat from first match)" })
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Remove search results highlights" })
 
 vim.keymap.set("n", "<C-Esc>", "<cmd>hide<CR>", { desc = "Hide buffer" })
