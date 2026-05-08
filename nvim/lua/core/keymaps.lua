@@ -88,8 +88,6 @@ vim.keymap.set("n", "<M-p>", ":cprev<CR>", { desc = "Go to the [p]revious item i
 
 vim.keymap.set("x", "<leader>p", [["_dP]], { desc = 'Pastes content without losing current "0 contents' })
 
-vim.keymap.set("n", "[", vim.diagnostic.get_next, { desc = "Go to previous diagnostic message" })
-vim.keymap.set("n", "]", vim.diagnostic.get_prev, { desc = "Go to next diagnostic message" })
 vim.keymap.set("n", "<leader>jd", function()
 	local _, winid = vim.diagnostic.open_float({ focusable = true })
 	if winid then
@@ -161,7 +159,6 @@ vim.keymap.set("n", "<leader>jt", "<cmd>JumpTest<CR>", { desc = "[J]ump to [T]es
 vim.keymap.set("", "<C-f>", function()
 	require("conform").format({ async = true, lsp_fallback = true })
 end, { desc = "[F]ormat buffer" })
-vim.keymap.set("n", "<leader>gh", fzf.git_bcommits, { desc = "[G]it [H]istory" })
 vim.keymap.set("n", "<leader>fm", fzf.git_status, { desc = "[F]ind [M]odified git files" })
 vim.keymap.set("n", "<leader>fM", function()
 	fzf.git_files({
@@ -278,6 +275,9 @@ vim.keymap.set({ "n", "v" }, "<leader>gyc", function()
 		end,
 	})
 end, { desc = "Copy GitHub URL to clipboard (current branch)" })
+vim.keymap.set("n", "<leader>gh", function()
+	Snacks.picker.git_log_file()
+end, { desc = "Git history for current file" })
 vim.keymap.set("n", "<leader>gd", function()
 	local file = vim.fn.expand("%")
 	Snacks.terminal.open("git diff origin/main -- " .. vim.fn.shellescape(file), {
