@@ -119,6 +119,7 @@ vim.keymap.set("t", "<C-k>", [[<C-\><C-n>:TmuxNavigateUp<CR>]], { desc = "Tmux n
 vim.keymap.set("t", "<C-l>", [[<C-\><C-n>:TmuxNavigateRight<CR>]], { desc = "Tmux navigate right" })
 
 vim.keymap.set("n", "<leader>i", ":Inspect<CR>", { desc = "[I]nspect" })
+vim.keymap.set("n", "<leader>I", ":InspectTree<CR>", { desc = "[I]nspect treesitter tree" })
 vim.keymap.set("i", "<C-p>", function()
 	vim.cmd.normal("p")
 end, { desc = "[P]aste in insert mode" })
