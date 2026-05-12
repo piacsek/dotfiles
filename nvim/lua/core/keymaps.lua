@@ -78,6 +78,14 @@ vim.keymap.set("n", "<leader>cg", function()
 	vim.o.hlsearch = true
 	return "cgn"
 end, { expr = true, desc = "[C]hange [G]lobally (dot-repeat from first match)" })
+vim.keymap.set("x", "<leader>cg", function()
+	vim.cmd('normal! "zy')
+	local text = vim.fn.getreg("z")
+	local pat = "\\V" .. vim.fn.escape(text, "\\"):gsub("\n", "\\n")
+	vim.fn.setreg("/", pat)
+	vim.o.hlsearch = true
+	vim.api.nvim_feedkeys("cgn", "n", false)
+end, { desc = "[C]hange [G]lobally from visual selection (dot-repeat)" })
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Remove search results highlights" })
 
 vim.keymap.set("n", "<C-Esc>", "<cmd>hide<CR>", { desc = "Hide buffer" })
