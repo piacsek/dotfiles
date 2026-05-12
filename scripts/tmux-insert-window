@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+idx="${1:?usage: tmux-insert-window <index>}"
+
+if tmux list-windows -F '#I' | grep -qx "$idx"; then
+    tmux new-window -b -t ":$idx"
+else
+    tmux new-window -t ":$idx"
+fi
