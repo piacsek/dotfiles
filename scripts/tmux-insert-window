@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-idx="${1:?usage: tmux-insert-window <index>}"
+idx="${1:?usage: tmux-insert-window <index> [name]}"
+name="${2:-}"
+
+args=()
+[[ -n "$name" ]] && args+=(-n "$name")
 
 if tmux list-windows -F '#I' | grep -qx "$idx"; then
-    tmux new-window -b -t ":$idx"
+    tmux new-window -b -t ":$idx" "${args[@]}"
 else
-    tmux new-window -t ":$idx"
+    tmux new-window -t ":$idx" "${args[@]}"
 fi
