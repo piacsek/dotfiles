@@ -5,6 +5,8 @@ export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl/lib/pkgconfig"
 export LDFLAGS="-L/opt/homebrew/opt/openssl/lib"
 export ERL_AFLAGS="-kernel shell_history enabled"
 export RUBY_CONFIGURE_OPTS="--with-libyaml-dir=$(brew --prefix libyaml)"
+export EDITOR=nvim
+export VISUAL=nvim
 
 # ZSH customization
 # Enable prompt substitution
