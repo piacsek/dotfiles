@@ -336,6 +336,7 @@ cmp.setup({
 -- vim-test
 vim.g["test#filename_modifier"] = ":p"
 vim.g["test#strategy"] = "vimux"
+vim.g["VimuxRunnerName"] = "vimtest"
 vim.g["test#preserve_screen"] = 0
 vim.g["test#echo_command"] = 0
 vim.g["test#neovim#term_position"] = "topleft vsplit"
