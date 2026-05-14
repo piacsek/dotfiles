@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+# Update one or more git repos: fetch, stash if dirty, pull --ff-only, pop stash.
+# Usage: git-update-repos PATH [PATH ...]
+
+set -u
+
+log() { printf '[%s] %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$*"; }
+
+update_repo() {
+  local repo="$1"
+  if [ ! -d "$repo/.git" ]; then
+    log "SKIP  $repo (not a git repo)"
+    return
+  fi
+
+  local branch stashed=0
+  branch=$(git -C "$repo" symbolic-ref --short -q HEAD || echo "DETACHED")
+  if [ "$branch" = "DETACHED" ]; then
+    log "SKIP  $repo (detached HEAD)"
+    return
+  fi
+
+  if ! git -C "$repo" diff --quiet || ! git -C "$repo" diff --cached --quiet; then
+    if git -C "$repo" stash push -u -m "git-update-repos auto-stash" >/dev/null 2>&1; then
+      stashed=1
+      log "STASH $repo ($branch)"
+    else
+      log "FAIL  $repo stash failed; skipping"
+      return
+    fi
+  fi
+
+  if git -C "$repo" fetch --quiet --prune 2>&1; then
+    if git -C "$repo" pull --ff-only --quiet 2>&1; then
+      log "OK    $repo ($branch)"
+    else
+      log "FAIL  $repo pull --ff-only (non-fast-forward or conflict)"
+    fi
+  else
+    log "FAIL  $repo fetch failed"
+  fi
+
+  if [ "$stashed" -eq 1 ]; then
+    if git -C "$repo" stash pop --quiet 2>&1; then
+      log "POP   $repo"
+    else
+      log "WARN  $repo stash pop had conflicts; left in stash"
+    fi
+  fi
+}
+
+if [ "$#" -eq 0 ]; then
+  echo "Usage: $(basename "$0") PATH [PATH ...]" >&2
+  exit 2
+fi
+
+for repo in "$@"; do
+  update_repo "$repo"
+done
