@@ -88,6 +88,7 @@ vim.lsp.enable({
 	"yamlls",
 	"elixir_ls",
 	"harper_ls",
+	"bashls",
 })
 
 -- Tailwind LSP is laggy via vim.lsp.enable, using vim.lsp.start solves the issue
