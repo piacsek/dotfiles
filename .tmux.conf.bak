@@ -1,0 +1,75 @@
+set -g prefix C-Space
+unbind-key C-b
+bind-key C-Space send-prefix
+
+setw -g mode-keys vi
+bind -T copy-mode-vi i send-keys -X cancel
+bind -T copy-mode-vi v send-keys -X begin-selection
+bind -T copy-mode-vi V send-keys -X select-line
+bind -T copy-mode-vi C-v send-keys -X begin-selection \; send-keys -X rectangle-toggle
+
+unbind r
+bind C-r source-file $HOME/.tmux.conf
+
+set -g base-index 1
+set -g pane-base-index 1
+bind-key & kill-window
+bind-key x kill-pane
+bind-key = select-layout even-horizontal
+bind-key | select-layout even-vertical
+
+bind C-v split-window -h -c "#{pane_current_path}"
+bind C-s split-window -v -c "#{pane_current_path}"
+bind C-o copy-mode
+bind C-j command-prompt -I "1.1" -p "join pane to window:" "join-pane -t '%%'"
+bind C-i command-prompt -p "insert window at index:","window name:" "run-shell 'tmux-insert-window %1 %2'"
+bind C-Space swap-pane -U \; select-pane -U \; if-shell "echo '#{pane_current_command}' | grep -vq vim" "copy-mode" "send-keys -t :.! -X cancel"
+
+
+bind C-Enter run-shell -b '\
+    tmux copy-mode; \
+    tmux send-keys -X copy-line; \
+    line=$(tmux show-buffer); \
+    filename=$(echo $line | cut -d\: -f1 | awk '\''{print $NF}'\''); \
+    line_number=$(echo $line | cut -d\: -f2); \
+    tmux send-keys -X cancel; \
+    tmux select-window -t 1; \
+    nvim_pane=$(tmux list-panes -t 1 -F "##{pane_index} ##{pane_current_command}" | grep nvim | cut -d" " -f1 | head -1); \
+    if [ "$nvim_pane" != "1" ] && [ -n "$nvim_pane" ]; then \
+        tmux select-pane -t "$nvim_pane"; \
+        tmux swap-pane -t 1; \
+    fi; \
+    tmux select-pane -t 1; \
+    tmux send-keys Escape Escape ":e +$line_number $filename" Enter;'
+
+
+
+bind -n M-e display-popup -E "tmux-sessionizer"
+bind -n M-j run-shell "tmux-switch-slot 1"
+bind -n M-k run-shell "tmux-switch-slot 2"
+bind -n M-l run-shell "tmux-switch-slot 3"
+bind -n M-\; run-shell "tmux-switch-slot 4"
+bind -n M-1 select-window -t :=1
+bind -n M-2 select-window -t :=2
+bind -n M-3 select-window -t :=3
+bind -n M-4 select-window -t :=4
+bind -n M-5 select-window -t :=5
+bind -n M-6 select-window -t :=6
+bind -n M-7 select-window -t :=7
+bind -n M-8 select-window -t :=8
+bind -n M-9 select-window -t :=9
+
+
+set-option -g renumber-windows on
+set-option -g status-position top
+set-window-option -g pane-base-index 1
+set -s extended-keys on
+
+
+set -g @plugin 'tmux-plugins/tmux-yank'
+set -g @plugin 'christoomey/vim-tmux-navigator'
+set -g @plugin 'yassinebridi/tmux-purpura'
+
+run '~/.tmux/plugins/tpm/tpm'
+
+if-shell "test -f ~/.tmux_work.conf" "source ~/.tmux_work.conf"
