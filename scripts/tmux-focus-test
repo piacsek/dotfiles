@@ -1,21 +1,23 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-current_cmd=$(tmux display-message -p '#{pane_current_command}')
+MARKER="vimtest"
 
-if [[ "$current_cmd" =~ ^n?vim$ ]]; then
-  target=$(tmux list-panes -F '#{pane_id} #{pane_current_command}' \
-    | awk '$2 !~ /^n?vim$/ {print $1; exit}')
-  [[ -z "$target" ]] && exit 0
+current_title=$(tmux display-message -p '#{pane_title}')
+current_id=$(tmux display-message -p '#{pane_id}')
+
+target=$(tmux list-panes -F '#{pane_id} #{pane_title}' \
+  | awk -v m="$MARKER" '$2 == m {print $1; exit}')
+
+[[ -z "$target" ]] && exit 0
+
+if [[ "$current_title" == "$MARKER" ]]; then
+  in_mode=$(tmux display-message -p '#{pane_in_mode}')
+  [[ "$in_mode" == "1" ]] && tmux send-keys -X cancel
+  tmux resize-pane -Z -t "$current_id"
+  tmux select-pane -l 2>/dev/null || tmux select-pane -t :.+
+else
   tmux select-pane -t "$target"
   tmux resize-pane -Z -t "$target"
   tmux copy-mode -t "$target"
-else
-  vim_pane=$(tmux list-panes -F '#{pane_id} #{pane_current_command}' \
-    | awk '$2 ~ /^n?vim$/ {print $1; exit}')
-  in_mode=$(tmux display-message -p '#{pane_in_mode}')
-  [[ "$in_mode" == "1" ]] && tmux send-keys -X cancel
-  [[ -n "$vim_pane" ]] || exit 0
-  tmux resize-pane -Z
-  tmux select-pane -t "$vim_pane"
 fi
