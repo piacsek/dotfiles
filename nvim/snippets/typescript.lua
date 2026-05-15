@@ -9,4 +9,9 @@ return {
 		i(0),
 		t({ "", "}" }),
 	}),
+	s({ trig = "tt", condition = function() return vim.fn.expand("%"):match("%.spec%.[tj]sx?$") ~= nil end }, {
+		t('test.todo("'),
+		i(1),
+		t('")'),
+	}),
 }
