@@ -444,3 +444,19 @@ vim.keymap.set("x", "<leader>cc", function()
 	vim.fn.setreg("z", snake_to_camel(vim.fn.getreg("z")))
 	vim.api.nvim_feedkeys('gv"_d"zP', "n", false)
 end, { desc = "snake_case → [c]amel[C]ase (selection)" })
+
+vim.keymap.set("n", "<leader>cs", function()
+	local word = vim.fn.expand("<cword>")
+	local new = camel_to_snake(word)
+	if new == word then
+		return
+	end
+	local esc = vim.api.nvim_replace_termcodes("<Esc>", true, false, true)
+	vim.api.nvim_feedkeys('"_ciw' .. new .. esc, "n", false)
+end, { desc = "camelCase → [c]amel_[s]nake (word under cursor)" })
+
+vim.keymap.set("x", "<leader>cs", function()
+	vim.cmd('normal! "zy')
+	vim.fn.setreg("z", camel_to_snake(vim.fn.getreg("z")))
+	vim.api.nvim_feedkeys('gv"_d"zP', "n", false)
+end, { desc = "camelCase → [c]amel_[s]nake (selection)" })
