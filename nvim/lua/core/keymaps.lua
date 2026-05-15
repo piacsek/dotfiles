@@ -420,3 +420,23 @@ vim.keymap.set("n", "<leader><BS>", function()
 	end
 	vim.cmd("TestLast")
 end, { desc = "Save and run last test" })
+
+local function snake_to_camel(s)
+	return (s:gsub("_(%w)", string.upper))
+end
+
+vim.keymap.set("n", "<leader>cc", function()
+	local word = vim.fn.expand("<cword>")
+	local new = snake_to_camel(word)
+	if new == word then
+		return
+	end
+	local esc = vim.api.nvim_replace_termcodes("<Esc>", true, false, true)
+	vim.api.nvim_feedkeys('"_ciw' .. new .. esc, "n", false)
+end, { desc = "snake_case → [c]amel[C]ase (word under cursor)" })
+
+vim.keymap.set("x", "<leader>cc", function()
+	vim.cmd('normal! "zy')
+	vim.fn.setreg("z", snake_to_camel(vim.fn.getreg("z")))
+	vim.api.nvim_feedkeys('gv"_d"zP', "n", false)
+end, { desc = "snake_case → [c]amel[C]ase (selection)" })
