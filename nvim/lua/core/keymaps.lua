@@ -425,6 +425,10 @@ local function snake_to_camel(s)
 	return (s:gsub("_(%w)", string.upper))
 end
 
+local function camel_to_snake(s)
+	return (s:gsub("(%u+)(%u%l)", "%1_%2"):gsub("(%l)(%u)", "%1_%2"):lower())
+end
+
 vim.keymap.set("n", "<leader>cc", function()
 	local word = vim.fn.expand("<cword>")
 	local new = snake_to_camel(word)
