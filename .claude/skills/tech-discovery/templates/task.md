@@ -8,37 +8,47 @@ last_synced_at: null               # ISO-8601 of last push to Linear
 content_hash: null                 # sha256 of body — drift detection
 ---
 
+<!--
+DRAFTING NOTES (delete before saving to Linear — these don't belong in the ticket body):
+- Narrow scope. Build instructions only. No alternatives-considered, no soft-dep coordination, no conversation recap.
+- NO "Parent story: …" line. Linear renders parent-child natively.
+- Discovery artifacts: link only the docs that apply to this ticket's layer
+  (DB → ER only; API → ER + OpenAPI; UI → OpenAPI + UI diagrams; async → AsyncAPI ± ER).
+- Tests: default to "Integration tests (`*.ispec.ts`) cover: …" — not unit tests.
+- Doc references: clickable markdown links, never bare paths.
+- Tables: top-level `##` section, never indented under a bullet. Bold-in-cell needs a U+200B ZWSP inside the closing `**`.
+- Read the existing Linear ticket before any update (`get_issue` before `save_issue`).
+-->
+
 # <Task title>
 
-## Parent
-- Parent ticket: [<PARENT-KEY>](<linear-url>)
-- Discovery: [`../README.md`](../README.md)
-
-## Description
-
-What needs to be done. Small, self-contained, and parallelizable with the other tasks where possible.
+One-sentence statement of what this ticket does and why it exists. Skip the conversation history.
 
 ## Acceptance criteria
 
 - [ ] ...
 - [ ] ...
+- [ ] Integration tests (`*.ispec.ts`) cover: <variants the test must exercise>
+
+## Open questions
+
+(optional — list anything the implementer must resolve before coding. Omit the section if none.)
+
+* ...
+
+## Discovery artifacts
+
+Pick the subset that matches the ticket's layer. Drop the lines that don't apply.
+
+- ER diagram: [`../diagrams/er.mmd`](../diagrams/er.mmd)
+- API contract: [`../tech-docs/openapi.yaml`](../tech-docs/openapi.yaml) — `<SchemaName>` / `<path>`
+- UI diagram(s): [`../diagrams/<flow-name>.mmd`](../diagrams/<flow-name>.mmd)
+- AsyncAPI: [`../tech-docs/asyncapi.yaml`](../tech-docs/asyncapi.yaml)
+- Constraints: [`../tech-docs/tech-constraints.md`](../tech-docs/tech-constraints.md)
 
 ## References
 
-Only include the tech-docs that were generated for this discovery (see Step 4 in SKILL.md — OpenAPI/AsyncAPI/ER are conditional on scope). Drop the lines that don't apply.
+Only cross-references Linear doesn't auto-render. Drop the section entirely if none apply.
 
-- Constraints: [`../tech-docs/tech-constraints.md`](../tech-docs/tech-constraints.md)
-- ER diagram: [`../tech-docs/er-diagram.md`](../tech-docs/er-diagram.md)
-- OpenAPI: [`../tech-docs/openapi.yaml`](../tech-docs/openapi.yaml) — section `<path-or-anchor>`
-- AsyncAPI: [`../tech-docs/asyncapi.yaml`](../tech-docs/asyncapi.yaml)
-- User story: [<STORY-KEY>](<linear-url>)
-
-## Sub-items
-
-(populated from nested checkboxes in `initial-doc.md`)
-
-- [ ] ...
-
-## Implementation notes
-
-<optional — anything the implementer should know>
+- Depends on: <SIBLING-KEY> — short reason
+- Extends: <SIBLING-KEY> — short reason
