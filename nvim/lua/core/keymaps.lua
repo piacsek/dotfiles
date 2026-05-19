@@ -354,6 +354,7 @@ vim.keymap.set("v", "<leader>SB", function()
 end, { desc = "Toggle Spectre w/ selection for current buffer" })
 vim.keymap.set("n", "<leader>tt", "<cmd>TestNearest<cr>", { desc = "Test nearest" })
 vim.keymap.set("n", "<leader>tf", "<cmd>TestFile<cr>", { desc = "Test file" })
+vim.keymap.set("n", "<leader>tv", "<cmd>TestVisit<cr>", { desc = "Test visit" })
 vim.keymap.set("n", "<leader>td", function()
 	local snacks = require("snacks")
 	local test_root = vim.g._root_test_dir or "test"
