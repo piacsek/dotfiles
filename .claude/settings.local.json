@@ -15,7 +15,8 @@
       "Bash(nvim:*)",
       "Bash(sort -t' ' -k2 -rn)",
       "Read(//Users/piacsek/.local/share/nvim/site/pack/**)",
-      "Read(//Users/piacsek/.local/share/nvim/**)"
+      "Read(//Users/piacsek/.local/share/nvim/**)",
+      "Bash(log show *)"
     ]
   }
 }
