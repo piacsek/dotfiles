@@ -112,7 +112,6 @@ brew install \
   1password-cli \
   neovim \
   lazygit \
-  lazysql \
   direnv \
   asdf \
   fzf \
