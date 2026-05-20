@@ -41,7 +41,7 @@ alias vim='nvim'
 alias dotfiles='cd $HOME/dotfiles/'
 alias lz='lazygit'
 alias tx='tmux-sessionizer'
-alias lazysql='op run --env-file="./.env" -- lazysql'
+alias lazysql='op run --env-file="./.db_env" -- lazysql'
 
 bindkey -r '^[d'
 
