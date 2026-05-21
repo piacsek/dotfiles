@@ -221,13 +221,17 @@ local function group_elixir_clauses(bufnr, items)
 			end
 		end
 
+		local function is_def_kind(k)
+			return k == "Function" or k == "Method"
+		end
 		local i = 1
 		while i <= #list do
 			local s = list[i]
-			if s.kind == "Function" then
+			if is_def_kind(s.kind) then
 				local base = s.name
+				local base_kind = s.kind
 				local j = i
-				while j + 1 <= #list and list[j + 1].kind == "Function" and list[j + 1].name == base do
+				while j + 1 <= #list and list[j + 1].kind == base_kind and list[j + 1].name == base do
 					j = j + 1
 				end
 				if j > i then
@@ -245,7 +249,7 @@ local function group_elixir_clauses(bufnr, items)
 						table.insert(children, c)
 					end
 					local parent = {
-						kind = "Function",
+						kind = base_kind,
 						name = base,
 						level = level,
 						lnum = list[i].lnum,
@@ -254,7 +258,6 @@ local function group_elixir_clauses(bufnr, items)
 						end_col = list[i].end_col,
 						selection_range = list[i].selection_range,
 						children = children,
-						private = children[1] and children[1].private or false,
 					}
 					for k = j, i, -1 do
 						table.remove(list, k)
