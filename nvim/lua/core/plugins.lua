@@ -169,7 +169,19 @@ local function elixir_clause_signature(bufnr, lnum, col)
 	end
 	local row = lnum - 1
 	local node = tree:root():descendant_for_range(row, math.max(col - 1, 0), row, math.max(col - 1, 0))
-	while node and node:type() ~= "call" do
+	-- Walk up to the outer `def`/`defp`/`defmacro` call, not the inner head call.
+	local def_kinds = { def = true, defp = true, defmacro = true, defmacrop = true }
+	while node do
+		if node:type() == "call" then
+			local target = node:field("target")
+			target = target and target[1]
+			if target then
+				local name = vim.treesitter.get_node_text(target, bufnr)
+				if def_kinds[name] then
+					break
+				end
+			end
+		end
 		node = node:parent()
 	end
 	if not node then
@@ -256,6 +268,7 @@ local function group_elixir_clauses(bufnr, items)
 	end
 
 	process(items, 0)
+	return items
 end
 
 require("aerial").setup({
