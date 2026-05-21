@@ -24,6 +24,10 @@ fi
 [[ "$col"  =~ ^[0-9]+$ ]] || col=""
 
 [ -z "$path" ] && exit 0
+# Must look like a real path: only safe filename chars, and contain at least
+# one '/' or '.' so we don't fire fzf on stray UI glyphs (e.g. fzf borders).
+[[ "$path" =~ ^[A-Za-z0-9_./~-]+$ ]] || exit 0
+[[ "$path" == *[/.]* ]] || exit 0
 
 # Find an nvim pane in window 1, fall back to pane 1.
 read -r nvim_pane nvim_cwd < <(tmux list-panes -t :1 \
