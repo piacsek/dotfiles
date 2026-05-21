@@ -288,6 +288,9 @@ require("aerial").setup({
 	icons = aerial_icons,
 	filter_kind = false,
 	get_highlight = function(symbol, is_icon, _is_collapsed)
+		if is_icon then
+			vim.notify(("hl kind=%s name=%s"):format(tostring(symbol.kind), tostring(symbol.name)))
+		end
 		if symbol.kind == "Function" then
 			return is_icon and "AerialPubFnIcon" or "AerialPubFn"
 		elseif symbol.kind == "Method" then
