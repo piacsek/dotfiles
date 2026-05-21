@@ -158,57 +158,20 @@ require("conform").setup({
 })
 
 -- Aerial: outline w/ Elixir multi-clause grouping
-local function elixir_clause_signature(bufnr, lnum, col)
-	local ok, parser = pcall(vim.treesitter.get_parser, bufnr, "elixir")
-	if not ok or not parser then
+local function elixir_clause_signature(bufnr, lnum, _col)
+	-- Read up to ~5 lines starting at lnum to handle multi-line heads.
+	local lines = vim.api.nvim_buf_get_lines(bufnr, lnum - 1, lnum + 4, false)
+	if not lines or #lines == 0 then
 		return nil
 	end
-	local tree = parser:trees()[1]
-	if not tree then
-		return nil
-	end
-	local row = lnum - 1
-	local node = tree:root():descendant_for_range(row, math.max(col - 1, 0), row, math.max(col - 1, 0))
-	-- Walk up to the outer `def`/`defp`/`defmacro` call, not the inner head call.
-	local def_kinds = { def = true, defp = true, defmacro = true, defmacrop = true }
-	while node do
-		if node:type() == "call" then
-			local target = node:field("target")
-			target = target and target[1]
-			if target then
-				local name = vim.treesitter.get_node_text(target, bufnr)
-				if def_kinds[name] then
-					break
-				end
-			end
-		end
-		node = node:parent()
-	end
-	if not node then
-		return nil
-	end
-	-- node is `def(...)` / `defp(...)`. First arg is the function head.
-	local args = node:field("arguments")[1]
+	local blob = table.concat(lines, " ")
+	-- Match `def[p]/defmacro[p] name(...)` and capture the balanced parens.
+	local _, _, args = blob:find("def%w*%s+[%w_!?]+(%b())")
 	if not args then
 		return nil
 	end
-	local head = args:named_child(0)
-	if head and head:type() == "binary_operator" then
-		-- `def foo(args) when guard`
-		local left = head:field("left")
-		head = left and left[1] or nil
-	end
-	if not head or head:type() ~= "call" then
-		return nil
-	end
-	local head_args = head:field("arguments")
-	head_args = head_args and head_args[1]
-	if not head_args then
-		return nil
-	end
-	local text = vim.treesitter.get_node_text(head_args, bufnr)
-	-- collapse whitespace from multi-line args
-	return (text:gsub("%s+", " "):gsub("^%s+", ""):gsub("%s+$", ""))
+	args = args:sub(2, -2) -- strip the outer parens
+	return (args:gsub("%s+", " "):gsub("^%s+", ""):gsub("%s+$", ""))
 end
 
 local function group_elixir_clauses(bufnr, items)
