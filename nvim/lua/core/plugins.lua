@@ -174,6 +174,11 @@ local function elixir_clause_signature(bufnr, lnum, _col)
 	return (args:gsub("%s+", " "):gsub("^%s+", ""):gsub("%s+$", ""))
 end
 
+local function is_private_def_line(bufnr, lnum)
+	local line = vim.api.nvim_buf_get_lines(bufnr, lnum - 1, lnum, false)[1] or ""
+	return line:match("^%s*defp%s") ~= nil or line:match("^%s*defmacrop%s") ~= nil
+end
+
 local function group_elixir_clauses(bufnr, items)
 	if vim.bo[bufnr].filetype ~= "elixir" then
 		return items
@@ -194,6 +199,19 @@ local function group_elixir_clauses(bufnr, items)
 		end
 	end
 	strip_impl(items)
+
+	-- Tag each function symbol with whether it's private (defp/defmacrop).
+	local function tag_privacy(list)
+		for _, s in ipairs(list) do
+			if s.kind == "Function" then
+				s.private = is_private_def_line(bufnr, s.lnum)
+			end
+			if s.children then
+				tag_privacy(s.children)
+			end
+		end
+	end
+	tag_privacy(items)
 
 	local function process(list, parent_level)
 		for _, s in ipairs(list) do
