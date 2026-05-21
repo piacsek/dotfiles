@@ -57,6 +57,6 @@ else
   # Fall back to fuzzy finder, prepopulated with the path (no line/col).
   # Escape single quotes for the Lua string.
   q="${path//\'/\\\'}"
-  tmux send-keys -l ":lua vim.schedule(function() require('fzf-lua').files({ query = '$q' }) end)"
+  tmux send-keys -l ":lua vim.defer_fn(function() require('fzf-lua').files({ query = '$q' }) end, 50)"
   tmux send-keys Enter
 fi
