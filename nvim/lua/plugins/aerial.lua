@@ -260,13 +260,18 @@ require("aerial").setup({
 })
 
 -- Custom HL groups returned by aerial's get_highlight callback above.
-local PUBLIC_FG = "#bd93f9"
-local PRIVATE_FG = "#e6d3b3"
+-- Colors are derived from the active colorscheme so they follow theme changes.
+local function hl_fg(name)
+	local ok, hl = pcall(vim.api.nvim_get_hl, 0, { name = name, link = false })
+	return ok and hl.fg or nil
+end
 local function set_aerial_privacy_hl()
-	vim.api.nvim_set_hl(0, "AerialPubFn", { fg = PUBLIC_FG })
-	vim.api.nvim_set_hl(0, "AerialPubFnIcon", { fg = PUBLIC_FG })
-	vim.api.nvim_set_hl(0, "AerialPrivFn", { fg = PRIVATE_FG, italic = true })
-	vim.api.nvim_set_hl(0, "AerialPrivFnIcon", { fg = PRIVATE_FG, italic = true })
+	local pub = hl_fg("Function") or hl_fg("Identifier")
+	local priv = hl_fg("Comment") or hl_fg("NonText")
+	vim.api.nvim_set_hl(0, "AerialPubFn", { fg = pub })
+	vim.api.nvim_set_hl(0, "AerialPubFnIcon", { fg = pub })
+	vim.api.nvim_set_hl(0, "AerialPrivFn", { fg = priv, italic = true })
+	vim.api.nvim_set_hl(0, "AerialPrivFnIcon", { fg = priv, italic = true })
 end
 set_aerial_privacy_hl()
 vim.api.nvim_create_autocmd("ColorScheme", { callback = set_aerial_privacy_hl })
