@@ -230,6 +230,14 @@ local function group_elixir_clauses(bufnr, items)
 						table.remove(list, k)
 					end
 					table.insert(list, i, parent)
+				else
+					-- Single-clause: append the args to the name so the popup shows
+					-- `foo(arg1, arg2)` instead of bare `foo`.
+					local sig = elixir_clause_signature(bufnr, s.lnum, s.col or 1)
+					if sig then
+						local short = base:gsub("/.*", "")
+						s.name = short .. "(" .. sig .. ")"
+					end
 				end
 			end
 			i = i + 1
