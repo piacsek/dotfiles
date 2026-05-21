@@ -147,21 +147,22 @@ local function group_elixir_clauses(bufnr, items)
 		return items
 	end
 
-	-- Drop `@impl` markers — they decorate every function head and add noise.
-	local function strip_impl(list)
+	-- Drop noisy decorators (@impl on every clause, @spec/@doc declarations).
+	local noisy = { ["@impl"] = true, ["@spec"] = true, ["@doc"] = true, ["@moduledoc"] = true }
+	local function strip_noise(list)
 		local i = 1
 		while i <= #list do
-			if list[i].name == "@impl" then
+			if noisy[list[i].name] then
 				table.remove(list, i)
 			else
 				if list[i].children then
-					strip_impl(list[i].children)
+					strip_noise(list[i].children)
 				end
 				i = i + 1
 			end
 		end
 	end
-	strip_impl(items)
+	strip_noise(items)
 
 	-- Re-tag privacy by inspecting source lines. Bypasses the cached treesitter
 	-- query that aerial may already have loaded with the bundled (def==Function)
