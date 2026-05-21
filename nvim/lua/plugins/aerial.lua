@@ -16,8 +16,41 @@ local function elixir_clause_signature(bufnr, lnum, _col)
 end
 
 local function is_private_def_line(bufnr, lnum)
-	local line = vim.api.nvim_buf_get_lines(bufnr, lnum - 1, lnum, false)[1] or ""
-	return line:match("^%s*defp%s") ~= nil or line:match("^%s*defmacrop%s") ~= nil
+	local ok, parser = pcall(vim.treesitter.get_parser, bufnr, "elixir")
+	if not ok or not parser then
+		return false
+	end
+	local trees = parser:trees()
+	if not trees or not trees[1] then
+		return false
+	end
+	local root = trees[1]:root()
+	local row = lnum - 1
+	-- Walk the line column-by-column until we hit a node, then climb to the
+	-- enclosing `def[macro][p]` call.
+	local node
+	for col = 0, 200 do
+		node = root:descendant_for_range(row, col, row, col)
+		if node and node:type() ~= "ERROR" then
+			break
+		end
+	end
+	while node do
+		if node:type() == "call" then
+			local target = node:field("target")
+			target = target and target[1]
+			if target then
+				local name = vim.treesitter.get_node_text(target, bufnr)
+				if name == "defp" or name == "defmacrop" then
+					return true
+				elseif name == "def" or name == "defmacro" then
+					return false
+				end
+			end
+		end
+		node = node:parent()
+	end
+	return false
 end
 
 local function group_elixir_clauses(bufnr, items)
