@@ -70,22 +70,9 @@ vim.treesitter.query.set(
     ])
   (#set! "kind" "Method")) @symbol
 
-; All @-prefixed module attributes -> Constant (rendered with @ icon)
-(unary_operator
-  operator: "@"
-  operand: (call
-    target: (identifier) @identifier
-    (#any-of? @identifier "callback" "spec")
-    (arguments
-      [
-        (call
-          target: (identifier) @name)
-        (binary_operator
-          left: (call
-            target: (identifier) @name))
-      ])) @symbol
-  (#set! "kind" "Constant")) @start
-
+; All @-prefixed module attributes -> Constant (rendered with @ icon).
+; @callback / @spec are intentionally skipped — they're type declarations,
+; not symbols worth navigating to.
 (unary_operator
   operator: "@"
   operand: (call
