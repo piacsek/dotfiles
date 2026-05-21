@@ -311,3 +311,5 @@ local function set_aerial_privacy_hl()
 end
 set_aerial_privacy_hl()
 vim.api.nvim_create_autocmd("ColorScheme", { callback = set_aerial_privacy_hl })
+-- Re-apply after startup in case anything else clears these groups during init.
+vim.api.nvim_create_autocmd("VimEnter", { once = true, callback = set_aerial_privacy_hl })
