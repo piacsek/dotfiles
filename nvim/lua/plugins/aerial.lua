@@ -307,7 +307,7 @@ local function hl_fg(name)
 end
 local function set_aerial_privacy_hl()
 	local pub = hl_fg("Function") or hl_fg("Identifier")
-	local priv = hl_fg("Comment") or hl_fg("NonText")
+	local priv = hl_fg("String") or hl_fg("Constant") or hl_fg("Comment")
 	vim.api.nvim_set_hl(0, "AerialPubFn", { fg = pub })
 	vim.api.nvim_set_hl(0, "AerialPubFnIcon", { fg = pub })
 	vim.api.nvim_set_hl(0, "AerialPrivFn", { fg = priv, italic = true })
