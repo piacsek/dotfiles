@@ -138,6 +138,7 @@ end, { desc = "[P]aste in insert mode" })
 
 vim.keymap.set("n", "g<Enter>", "gF", { desc = "Go to file with line number support" })
 vim.keymap.set("n", "gO", function()
+	pcall(require("aerial.backends").attach, vim.api.nvim_get_current_buf(), true)
 	require("aerial.fzf-lua").pick_symbol()
 end, { desc = "Outline (aerial, fuzzy picker)" })
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
