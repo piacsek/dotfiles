@@ -295,6 +295,7 @@ require("aerial").setup({
 		max_width = 60,
 	},
 	icons = aerial_icons,
+	filter_kind = false,
 })
 
 -- Treesitter
