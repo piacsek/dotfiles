@@ -56,6 +56,7 @@ if [ -e "$resolved" ]; then
   fi
 else
   # Fall back to fuzzy finder, prepopulated with the path (no line/col).
-  tmux send-keys Space f f
-  tmux send-keys -l "$path"
+  # Escape single quotes for the Lua string.
+  q="${path//\'/\\\'}"
+  tmux send-keys ":lua require('fzf-lua').files({ query = '$q' })" Enter
 fi
