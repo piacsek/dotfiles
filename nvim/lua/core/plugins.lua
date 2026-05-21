@@ -201,7 +201,7 @@ end
 
 local function group_elixir_clauses(bufnr, items)
 	if vim.bo[bufnr].filetype ~= "elixir" then
-		return
+		return items
 	end
 
 	local function process(list, parent_level)
