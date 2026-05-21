@@ -253,6 +253,7 @@ local function group_elixir_clauses(bufnr, items)
 						end_col = list[i].end_col,
 						selection_range = list[i].selection_range,
 						children = children,
+						private = children[1] and children[1].private or false,
 					}
 					for k = j, i, -1 do
 						table.remove(list, k)
