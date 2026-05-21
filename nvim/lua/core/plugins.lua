@@ -157,7 +157,10 @@ require("conform").setup({
 	},
 })
 
-require("plugins.aerial")
+local ok_aerial, err_aerial = pcall(require, "plugins.aerial")
+if not ok_aerial then
+	vim.notify("plugins.aerial failed to load: " .. tostring(err_aerial), vim.log.levels.ERROR)
+end
 
 -- Treesitter
 vim.api.nvim_create_user_command("TSInstallParsers", function()
