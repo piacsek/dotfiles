@@ -165,19 +165,7 @@ local function group_elixir_clauses(bufnr, items)
 					j = j + 1
 				end
 				if j > i then
-					local children = {}
 					local level = s.level or parent_level or 0
-					for k = i, j do
-						local c = list[k]
-						c.level = level + 1
-						c.parent = nil
-						local sig = elixir_clause_signature(bufnr, c.lnum, c.col or 1)
-						if sig then
-							local short = base:gsub("/.*", "")
-							c.name = short .. "(" .. sig .. ")"
-						end
-						table.insert(children, c)
-					end
 					local parent = {
 						kind = base_kind,
 						name = base,
@@ -187,8 +175,20 @@ local function group_elixir_clauses(bufnr, items)
 						col = list[i].col,
 						end_col = list[i].end_col,
 						selection_range = list[i].selection_range,
-						children = children,
+						parent = list[i].parent,
+						children = {},
 					}
+					for k = i, j do
+						local c = list[k]
+						c.level = level + 1
+						c.parent = parent
+						local sig = elixir_clause_signature(bufnr, c.lnum, c.col or 1)
+						if sig then
+							local short = base:gsub("/.*", "")
+							c.name = short .. "(" .. sig .. ")"
+						end
+						table.insert(parent.children, c)
+					end
 					for k = j, i, -1 do
 						table.remove(list, k)
 					end
