@@ -250,16 +250,23 @@ require("aerial").setup({
 	},
 	icons = aerial_icons,
 	filter_kind = false,
+	get_highlight = function(symbol, is_icon, _is_collapsed)
+		if symbol.kind == "Function" then
+			return is_icon and "AerialPubFnIcon" or "AerialPubFn"
+		elseif symbol.kind == "Method" then
+			return is_icon and "AerialPrivFnIcon" or "AerialPrivFn"
+		end
+	end,
 })
 
--- Public defs render purple; private defs (re-kinded to Method) render beige.
+-- Custom HL groups returned by aerial's get_highlight callback above.
 local PUBLIC_FG = "#bd93f9"
 local PRIVATE_FG = "#e6d3b3"
 local function set_aerial_privacy_hl()
-	vim.api.nvim_set_hl(0, "AerialFunction", { fg = PUBLIC_FG })
-	vim.api.nvim_set_hl(0, "AerialFunctionIcon", { fg = PUBLIC_FG })
-	vim.api.nvim_set_hl(0, "AerialMethod", { fg = PRIVATE_FG, italic = true })
-	vim.api.nvim_set_hl(0, "AerialMethodIcon", { fg = PRIVATE_FG, italic = true })
+	vim.api.nvim_set_hl(0, "AerialPubFn", { fg = PUBLIC_FG })
+	vim.api.nvim_set_hl(0, "AerialPubFnIcon", { fg = PUBLIC_FG })
+	vim.api.nvim_set_hl(0, "AerialPrivFn", { fg = PRIVATE_FG, italic = true })
+	vim.api.nvim_set_hl(0, "AerialPrivFnIcon", { fg = PRIVATE_FG, italic = true })
 end
 set_aerial_privacy_hl()
 vim.api.nvim_create_autocmd("ColorScheme", { callback = set_aerial_privacy_hl })
