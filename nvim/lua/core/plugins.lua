@@ -157,6 +157,122 @@ require("conform").setup({
 	},
 })
 
+-- Aerial: outline w/ Elixir multi-clause grouping
+local function elixir_clause_signature(bufnr, lnum, col)
+	local ok, parser = pcall(vim.treesitter.get_parser, bufnr, "elixir")
+	if not ok or not parser then
+		return nil
+	end
+	local tree = parser:trees()[1]
+	if not tree then
+		return nil
+	end
+	local row = lnum - 1
+	local node = tree:root():descendant_for_range(row, math.max(col - 1, 0), row, math.max(col - 1, 0))
+	while node and node:type() ~= "call" do
+		node = node:parent()
+	end
+	if not node then
+		return nil
+	end
+	-- node is `def(...)` / `defp(...)`. First arg is the function head.
+	local args = node:field("arguments")[1]
+	if not args then
+		return nil
+	end
+	local head = args:named_child(0)
+	if head and head:type() == "binary_operator" then
+		-- `def foo(args) when guard`
+		local left = head:field("left")
+		head = left and left[1] or nil
+	end
+	if not head or head:type() ~= "call" then
+		return nil
+	end
+	local head_args = head:field("arguments")
+	head_args = head_args and head_args[1]
+	if not head_args then
+		return nil
+	end
+	local text = vim.treesitter.get_node_text(head_args, bufnr)
+	-- collapse whitespace from multi-line args
+	return (text:gsub("%s+", " "):gsub("^%s+", ""):gsub("%s+$", ""))
+end
+
+local function group_elixir_clauses(bufnr, items)
+	if vim.bo[bufnr].filetype ~= "elixir" then
+		return
+	end
+
+	local function process(list, parent_level)
+		for _, s in ipairs(list) do
+			if s.children and #s.children > 0 then
+				process(s.children, (s.level or parent_level or 0) + 1)
+			end
+		end
+
+		local i = 1
+		while i <= #list do
+			local s = list[i]
+			if s.kind == "Function" then
+				local base = s.name
+				local j = i
+				while j + 1 <= #list and list[j + 1].kind == "Function" and list[j + 1].name == base do
+					j = j + 1
+				end
+				if j > i then
+					local children = {}
+					local level = s.level or parent_level or 0
+					for k = i, j do
+						local c = list[k]
+						c.level = level + 1
+						c.parent = nil
+						local sig = elixir_clause_signature(bufnr, c.lnum, c.col or 1)
+						if sig then
+							local short = base:gsub("/.*", "")
+							c.name = short .. "(" .. sig .. ")"
+						end
+						table.insert(children, c)
+					end
+					local parent = {
+						kind = "Function",
+						name = base,
+						level = level,
+						lnum = list[i].lnum,
+						end_lnum = list[j].end_lnum or list[j].lnum,
+						col = list[i].col,
+						end_col = list[i].end_col,
+						selection_range = list[i].selection_range,
+						children = children,
+					}
+					for k = j, i, -1 do
+						table.remove(list, k)
+					end
+					table.insert(list, i, parent)
+				end
+			end
+			i = i + 1
+		end
+	end
+
+	process(items, 0)
+end
+
+require("aerial").setup({
+	backends = {
+		["_"] = { "treesitter", "lsp" },
+		elixir = { "treesitter" },
+	},
+	post_add_all_symbols = group_elixir_clauses,
+	show_guides = true,
+	layout = {
+		default_direction = "right",
+		min_width = 30,
+		max_width = 60,
+	},
+	filter_kind = false,
+})
+
 -- Treesitter
 vim.api.nvim_create_user_command("TSInstallParsers", function()
 	require("nvim-treesitter").install({
