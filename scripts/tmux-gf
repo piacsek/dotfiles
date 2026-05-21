@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+# Read a "path[:line[:col]]" token from stdin (selected WORD in copy-mode)
+# and open it in the nvim instance running in window 1.
+
+raw=$(cat)
+raw="${raw#"${raw%%[![:space:]]*}"}"
+raw="${raw%"${raw##*[![:space:]]}"}"
+raw="${raw%%[,\")\'\`]*}"
+raw="${raw%:}"
+
+path="${raw%%:*}"
+line=""
+col=""
+if [ "$path" != "$raw" ]; then
+  rest="${raw#*:}"
+  line="${rest%%:*}"
+  if [ "$line" != "$rest" ]; then
+    rest2="${rest#*:}"
+    col="${rest2%%:*}"
+  fi
+fi
+[[ "$line" =~ ^[0-9]+$ ]] || line=""
+[[ "$col"  =~ ^[0-9]+$ ]] || col=""
+
+[ -z "$path" ] && exit 0
+
+# Find an nvim pane in window 1, fall back to pane 1.
+read -r nvim_pane nvim_cwd < <(tmux list-panes -t :1 \
+  -F '#{pane_index} #{pane_current_command} #{pane_current_path}' \
+  | awk '$2=="nvim"{print $1, $3; exit}')
+if [ -z "$nvim_pane" ]; then
+  nvim_pane=1
+  nvim_cwd=$(tmux display-message -p -t ":1.1" '#{pane_current_path}')
+fi
+
+# Resolve relative paths against nvim's cwd.
+case "$path" in
+  /*) ;;
+  ~*) path="${path/#\~/$HOME}" ;;
+  *)
+    if [ -e "$nvim_cwd/$path" ]; then
+      path="$nvim_cwd/$path"
+    fi
+    ;;
+esac
+
+tmux select-window -t :1
+tmux select-pane -t "$nvim_pane"
+tmux send-keys Escape Escape
+if [ -n "$line" ] && [ -n "$col" ]; then
+  tmux send-keys ":e +'call\\ cursor($line,$col)'\\ $path" Enter
+elif [ -n "$line" ]; then
+  tmux send-keys ":e +$line $path" Enter
+else
+  tmux send-keys ":e $path" Enter
+fi
