@@ -3,20 +3,18 @@
 # and open it in the nvim instance running in window 1.
 
 raw=$(cat)
-printf 'raw=<%s> hex=<' "$raw" >> /tmp/tmux-gf.log
-printf '%s' "$raw" | xxd -p >> /tmp/tmux-gf.log
-printf '>\n' >> /tmp/tmux-gf.log
-raw="${raw#"${raw%%[![:space:]]*}"}"
-raw="${raw%"${raw##*[![:space:]]}"}"
-raw="${raw##[\(\[\{\"\'\`]}"
-raw="${raw%%[,\")\]\}\'\`]*}"
-raw="${raw%:}"
+# Pull the longest path-like token from the line: chars typical in paths,
+# containing a '/' or a '.', optionally followed by :line:col.
+token=$(printf '%s\n' "$raw" \
+  | grep -oE '[A-Za-z0-9_./~-]*[/.][A-Za-z0-9_./~-]+(:[0-9]+){0,2}' \
+  | awk '{ print length, $0 }' | sort -nr | head -1 | cut -d' ' -f2-)
+[ -z "$token" ] && exit 0
 
-path="${raw%%:*}"
+path="${token%%:*}"
 line=""
 col=""
-if [ "$path" != "$raw" ]; then
-  rest="${raw#*:}"
+if [ "$path" != "$token" ]; then
+  rest="${token#*:}"
   line="${rest%%:*}"
   if [ "$line" != "$rest" ]; then
     rest2="${rest#*:}"
@@ -25,12 +23,6 @@ if [ "$path" != "$raw" ]; then
 fi
 [[ "$line" =~ ^[0-9]+$ ]] || line=""
 [[ "$col"  =~ ^[0-9]+$ ]] || col=""
-
-[ -z "$path" ] && exit 0
-# Must look like a real path: only safe filename chars, and contain at least
-# one '/' or '.' so we don't fire fzf on stray UI glyphs (e.g. fzf borders).
-[[ "$path" =~ ^[A-Za-z0-9_./~-]+$ ]] || exit 0
-[[ "$path" == *[/.]* ]] || exit 0
 
 # Find an nvim pane in window 1, fall back to pane 1.
 read -r nvim_pane nvim_cwd < <(tmux list-panes -t :1 \
