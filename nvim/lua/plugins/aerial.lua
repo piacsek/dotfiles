@@ -303,12 +303,11 @@ local function hl_fg(name)
 	return ok and hl.fg or nil
 end
 local function set_aerial_privacy_hl()
-	local pub = hl_fg("Function") or hl_fg("Identifier")
-	local priv = hl_fg("String") or hl_fg("Constant") or hl_fg("Comment")
-	vim.api.nvim_set_hl(0, "AerialPubFn", { fg = pub })
-	vim.api.nvim_set_hl(0, "AerialPubFnIcon", { fg = pub })
-	vim.api.nvim_set_hl(0, "AerialPrivFn", { fg = priv, italic = true })
-	vim.api.nvim_set_hl(0, "AerialPrivFnIcon", { fg = priv, italic = true })
+	-- DEBUG: stark distinct colors to verify picker rendering at all
+	vim.api.nvim_set_hl(0, "AerialPubFn", { fg = "#ff0000" })
+	vim.api.nvim_set_hl(0, "AerialPubFnIcon", { fg = "#ff0000" })
+	vim.api.nvim_set_hl(0, "AerialPrivFn", { fg = "#00ff00", italic = true })
+	vim.api.nvim_set_hl(0, "AerialPrivFnIcon", { fg = "#00ff00", italic = true })
 end
 set_aerial_privacy_hl()
 vim.api.nvim_create_autocmd("ColorScheme", { callback = set_aerial_privacy_hl })
