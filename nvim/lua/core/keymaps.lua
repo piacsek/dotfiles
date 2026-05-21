@@ -140,21 +140,18 @@ vim.keymap.set("n", "g<Enter>", "gF", { desc = "Go to file with line number supp
 vim.keymap.set("n", "gO", function()
 	local bufnr = vim.api.nvim_get_current_buf()
 	local ft = vim.bo[bufnr].filetype
-	local candidates = require("aerial.config").backends(bufnr)
 	local backends = require("aerial.backends")
+	local backend, name = backends.get(bufnr)
 	vim.notify(
-		("aerial: ft=%s buf=%d candidates=%s attached=%s"):format(
+		("aerial: ft=%s buf=%d bufname=%s backend=%s name=%s"):format(
 			ft,
 			bufnr,
-			vim.inspect(candidates),
-			tostring(backends.get_attached_backend(bufnr))
+			vim.api.nvim_buf_get_name(bufnr),
+			tostring(backend),
+			tostring(name)
 		),
 		vim.log.levels.INFO
 	)
-	for _, name in ipairs(candidates) do
-		local ok, err = backends.is_supported(bufnr, name)
-		vim.notify(("  %s: %s (%s)"):format(name, tostring(ok), tostring(err)))
-	end
 	require("aerial.fzf-lua").pick_symbol()
 end, { desc = "Outline (aerial, fuzzy picker)" })
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
