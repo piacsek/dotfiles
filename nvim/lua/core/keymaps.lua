@@ -138,7 +138,23 @@ end, { desc = "[P]aste in insert mode" })
 
 vim.keymap.set("n", "g<Enter>", "gF", { desc = "Go to file with line number support" })
 vim.keymap.set("n", "gO", function()
-	pcall(require("aerial.backends").attach, vim.api.nvim_get_current_buf(), true)
+	local bufnr = vim.api.nvim_get_current_buf()
+	local ft = vim.bo[bufnr].filetype
+	local candidates = require("aerial.config").backends(bufnr)
+	local backends = require("aerial.backends")
+	vim.notify(
+		("aerial: ft=%s buf=%d candidates=%s attached=%s"):format(
+			ft,
+			bufnr,
+			vim.inspect(candidates),
+			tostring(backends.get_attached_backend(bufnr))
+		),
+		vim.log.levels.INFO
+	)
+	for _, name in ipairs(candidates) do
+		local ok, err = backends.is_supported(bufnr, name)
+		vim.notify(("  %s: %s (%s)"):format(name, tostring(ok), tostring(err)))
+	end
 	require("aerial.fzf-lua").pick_symbol()
 end, { desc = "Outline (aerial, fuzzy picker)" })
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
