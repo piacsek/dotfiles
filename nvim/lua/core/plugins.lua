@@ -179,6 +179,22 @@ local function group_elixir_clauses(bufnr, items)
 		return items
 	end
 
+	-- Drop `@impl` markers — they decorate every function head and add noise.
+	local function strip_impl(list)
+		local i = 1
+		while i <= #list do
+			if list[i].name == "@impl" then
+				table.remove(list, i)
+			else
+				if list[i].children then
+					strip_impl(list[i].children)
+				end
+				i = i + 1
+			end
+		end
+	end
+	strip_impl(items)
+
 	local function process(list, parent_level)
 		for _, s in ipairs(list) do
 			if s.children and #s.children > 0 then
