@@ -319,18 +319,14 @@ require("aerial").setup({
 	},
 	icons = aerial_icons,
 	filter_kind = false,
-	get_highlight = function(symbol, is_icon, _is_collapsed)
-		if symbol.private then
-			return is_icon and "AerialPrivateIcon" or "AerialPrivate"
-		end
-	end,
 })
 
--- Public-vs-private color treatment. Privates are dimmed + italic.
+-- Public defs use the default Function HL; private defs (re-kinded to Method)
+-- get a dimmer, italic treatment.
 local function set_aerial_privacy_hl()
 	local comment = vim.api.nvim_get_hl(0, { name = "Comment", link = false })
-	vim.api.nvim_set_hl(0, "AerialPrivate", { fg = comment.fg, italic = true })
-	vim.api.nvim_set_hl(0, "AerialPrivateIcon", { fg = comment.fg, italic = true })
+	vim.api.nvim_set_hl(0, "AerialMethod", { fg = comment.fg, italic = true })
+	vim.api.nvim_set_hl(0, "AerialMethodIcon", { fg = comment.fg, italic = true })
 end
 set_aerial_privacy_hl()
 vim.api.nvim_create_autocmd("ColorScheme", { callback = set_aerial_privacy_hl })
