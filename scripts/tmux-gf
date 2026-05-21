@@ -34,23 +34,27 @@ if [ -z "$nvim_pane" ]; then
 fi
 
 # Resolve relative paths against nvim's cwd.
+resolved="$path"
 case "$path" in
   /*) ;;
-  ~*) path="${path/#\~/$HOME}" ;;
-  *)
-    if [ -e "$nvim_cwd/$path" ]; then
-      path="$nvim_cwd/$path"
-    fi
-    ;;
+  ~*) resolved="${path/#\~/$HOME}" ;;
+  *)  resolved="$nvim_cwd/$path" ;;
 esac
 
 tmux select-window -t :1
 tmux select-pane -t "$nvim_pane"
 tmux send-keys Escape Escape
-if [ -n "$line" ] && [ -n "$col" ]; then
-  tmux send-keys ":e +'call\\ cursor($line,$col)'\\ $path" Enter
-elif [ -n "$line" ]; then
-  tmux send-keys ":e +$line $path" Enter
+
+if [ -e "$resolved" ]; then
+  if [ -n "$line" ] && [ -n "$col" ]; then
+    tmux send-keys ":e +'call\\ cursor($line,$col)'\\ $resolved" Enter
+  elif [ -n "$line" ]; then
+    tmux send-keys ":e +$line $resolved" Enter
+  else
+    tmux send-keys ":e $resolved" Enter
+  fi
 else
-  tmux send-keys ":e $path" Enter
+  # Fall back to fuzzy finder, prepopulated with the path (no line/col).
+  tmux send-keys Space f f
+  tmux send-keys -l "$path"
 fi
