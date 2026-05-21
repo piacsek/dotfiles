@@ -163,6 +163,24 @@ local function group_elixir_clauses(bufnr, items)
 	end
 	strip_impl(items)
 
+	-- Re-tag privacy by inspecting source lines. Bypasses the cached treesitter
+	-- query that aerial may already have loaded with the bundled (def==Function)
+	-- mapping.
+	local function tag_privacy(list)
+		for _, s in ipairs(list) do
+			if s.kind == "Function" then
+				local k = elixir_kind_for(bufnr, s.lnum)
+				if k then
+					s.kind = k
+				end
+			end
+			if s.children then
+				tag_privacy(s.children)
+			end
+		end
+	end
+	tag_privacy(items)
+
 	local function process(list, parent_level)
 		for _, s in ipairs(list) do
 			if s.children and #s.children > 0 then
