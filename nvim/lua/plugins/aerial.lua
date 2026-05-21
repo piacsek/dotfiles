@@ -162,12 +162,14 @@ require("aerial").setup({
 	filter_kind = false,
 })
 
--- Public defs use the default Function HL; private defs (re-kinded to Method)
--- get a dimmer, italic treatment.
+-- Public defs render purple; private defs (re-kinded to Method) render beige.
+local PUBLIC_FG = "#bd93f9"
+local PRIVATE_FG = "#e6d3b3"
 local function set_aerial_privacy_hl()
-	local comment = vim.api.nvim_get_hl(0, { name = "Comment", link = false })
-	vim.api.nvim_set_hl(0, "AerialMethod", { fg = comment.fg, italic = true })
-	vim.api.nvim_set_hl(0, "AerialMethodIcon", { fg = comment.fg, italic = true })
+	vim.api.nvim_set_hl(0, "AerialFunction", { fg = PUBLIC_FG })
+	vim.api.nvim_set_hl(0, "AerialFunctionIcon", { fg = PUBLIC_FG })
+	vim.api.nvim_set_hl(0, "AerialMethod", { fg = PRIVATE_FG, italic = true })
+	vim.api.nvim_set_hl(0, "AerialMethodIcon", { fg = PRIVATE_FG, italic = true })
 end
 set_aerial_privacy_hl()
 vim.api.nvim_create_autocmd("ColorScheme", { callback = set_aerial_privacy_hl })
