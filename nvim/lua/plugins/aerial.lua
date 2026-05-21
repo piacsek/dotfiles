@@ -303,12 +303,16 @@ local function hl_fg(name)
 	return ok and hl.fg or nil
 end
 local function set_aerial_privacy_hl()
-	local pub = hl_fg("Keyword") or hl_fg("Statement") or hl_fg("Function")
-	local priv = hl_fg("Constant") or hl_fg("String") or hl_fg("Comment")
+	local pub = hl_fg("DiagnosticOk") or hl_fg("String") or hl_fg("Special")
+	local priv = hl_fg("DiagnosticError") or hl_fg("Error") or hl_fg("ErrorMsg")
+	local attr = hl_fg("Keyword") or hl_fg("Statement") or hl_fg("Identifier")
 	vim.api.nvim_set_hl(0, "AerialPubFn", { fg = pub })
 	vim.api.nvim_set_hl(0, "AerialPubFnIcon", { fg = pub })
 	vim.api.nvim_set_hl(0, "AerialPrivFn", { fg = priv, italic = true })
 	vim.api.nvim_set_hl(0, "AerialPrivFnIcon", { fg = priv, italic = true })
+	-- @-prefixed module attributes (kind = Constant) get the third color.
+	vim.api.nvim_set_hl(0, "AerialConstant", { fg = attr })
+	vim.api.nvim_set_hl(0, "AerialConstantIcon", { fg = attr })
 end
 set_aerial_privacy_hl()
 vim.api.nvim_create_autocmd("ColorScheme", { callback = set_aerial_privacy_hl })
