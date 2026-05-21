@@ -200,11 +200,12 @@ local function group_elixir_clauses(bufnr, items)
 	end
 	strip_impl(items)
 
-	-- Tag each function symbol with whether it's private (defp/defmacrop).
+	-- Re-kind private (defp/defmacrop) functions as "Method" so aerial picks
+	-- up the AerialMethod / AerialMethodIcon highlight groups for them.
 	local function tag_privacy(list)
 		for _, s in ipairs(list) do
-			if s.kind == "Function" then
-				s.private = is_private_def_line(bufnr, s.lnum)
+			if s.kind == "Function" and is_private_def_line(bufnr, s.lnum) then
+				s.kind = "Method"
 			end
 			if s.children then
 				tag_privacy(s.children)
