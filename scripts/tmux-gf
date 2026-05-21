@@ -3,6 +3,9 @@
 # and open it in the nvim instance running in window 1.
 
 raw=$(cat)
+printf 'raw=<%s> hex=<' "$raw" >> /tmp/tmux-gf.log
+printf '%s' "$raw" | xxd -p >> /tmp/tmux-gf.log
+printf '>\n' >> /tmp/tmux-gf.log
 raw="${raw#"${raw%%[![:space:]]*}"}"
 raw="${raw%"${raw##*[![:space:]]}"}"
 raw="${raw##[\(\[\{\"\'\`]}"
