@@ -123,6 +123,25 @@ vim.treesitter.query.set(
 ]]
 )
 
+-- Detect whether the function at lnum is private. Reads a few surrounding
+-- lines and searches for `defp`/`defmacrop`. Aerial's lnum sometimes lands on
+-- the function name (one line below `defp` on wrapped heads), so we widen
+-- the window in both directions.
+local function elixir_kind_for(bufnr, lnum)
+	local lo = math.max(lnum - 2, 1)
+	local hi = lnum + 1
+	local lines = vim.api.nvim_buf_get_lines(bufnr, lo - 1, hi, false) or {}
+	for i = #lines, 1, -1 do
+		local kw = lines[i]:match("(def%a*)%s+[%w_!?]")
+		if kw == "defp" or kw == "defmacrop" then
+			return "Method"
+		elseif kw == "def" or kw == "defmacro" or kw == "defguard" then
+			return "Function"
+		end
+	end
+	return nil
+end
+
 local function group_elixir_clauses(bufnr, items)
 	if vim.bo[bufnr].filetype ~= "elixir" then
 		return items
