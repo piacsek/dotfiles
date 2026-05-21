@@ -234,6 +234,26 @@ local function group_elixir_clauses(bufnr, items)
 	return items
 end
 
+local aerial_icons = {}
+do
+	local ok, mini_icons = pcall(require, "mini.icons")
+	if ok then
+		local kinds = {
+			"Array", "Boolean", "Class", "Constant", "Constructor", "Enum",
+			"EnumMember", "Event", "Field", "File", "Function", "Interface",
+			"Key", "Method", "Module", "Namespace", "Null", "Number", "Object",
+			"Operator", "Package", "Property", "String", "Struct",
+			"TypeParameter", "Variable",
+		}
+		for _, kind in ipairs(kinds) do
+			local icon = mini_icons.get("lsp", kind:lower())
+			if icon then
+				aerial_icons[kind] = icon
+			end
+		end
+	end
+end
+
 require("aerial").setup({
 	backends = {
 		["_"] = { "treesitter", "lsp" },
@@ -246,6 +266,7 @@ require("aerial").setup({
 		min_width = 30,
 		max_width = 60,
 	},
+	icons = aerial_icons,
 })
 
 -- Treesitter
