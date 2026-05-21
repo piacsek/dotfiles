@@ -5,7 +5,8 @@
 raw=$(cat)
 raw="${raw#"${raw%%[![:space:]]*}"}"
 raw="${raw%"${raw##*[![:space:]]}"}"
-raw="${raw%%[,\")\'\`]*}"
+raw="${raw##[\(\[\{\"\'\`]}"
+raw="${raw%%[,\")\]\}\'\`]*}"
 raw="${raw%:}"
 
 path="${raw%%:*}"
