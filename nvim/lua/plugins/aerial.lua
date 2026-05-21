@@ -180,6 +180,7 @@ local aerial_icons = {
 }
 
 require("aerial").setup({
+	lazy_load = false,
 	backends = {
 		["_"] = { "treesitter", "lsp" },
 		elixir = { "treesitter" },
