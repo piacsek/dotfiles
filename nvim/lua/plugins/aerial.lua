@@ -15,7 +15,115 @@ local function elixir_clause_signature(bufnr, lnum, _col)
 	return (args:gsub("%s+", " "):gsub("^%s+", ""):gsub("%s+$", ""))
 end
 
-local function is_private_def_line(bufnr, lnum)
+-- Override aerial's bundled elixir query so kinds reflect public vs private
+-- defs and @-attributes get a dedicated kind. This is more reliable than
+-- inspecting source lines at post-process time.
+vim.treesitter.query.set(
+	"elixir",
+	"aerial",
+	[[
+(call
+  target: (identifier) @identifier
+  (#any-of? @identifier "defmodule" "defprotocol")
+  (arguments) @name
+  (#set! "kind" "Function")) @symbol
+
+(call
+  target: (identifier) @identifier
+  (#eq? @identifier "defimpl")
+  (arguments
+    (alias) @protocol
+    (keywords
+      (pair
+        key: (keyword) @kw
+        (#match? @kw "^for:")
+        value: (alias) @name)))
+  (#set! "kind" "Function")) @symbol
+
+; Public: def / defmacro / defguard -> Function
+(call
+  target: (identifier) @identifier
+  (#any-of? @identifier "def" "defmacro" "defguard")
+  (arguments
+    [
+      (call
+        target: (identifier) @name)
+      (binary_operator
+        left: (call
+          target: (identifier) @name))
+      (identifier) @name
+    ])
+  (#set! "kind" "Function")) @symbol
+
+; Private: defp / defmacrop -> Method
+(call
+  target: (identifier) @identifier
+  (#any-of? @identifier "defp" "defmacrop")
+  (arguments
+    [
+      (call
+        target: (identifier) @name)
+      (binary_operator
+        left: (call
+          target: (identifier) @name))
+      (identifier) @name
+    ])
+  (#set! "kind" "Method")) @symbol
+
+; All @-prefixed module attributes -> Constant (rendered with @ icon)
+(unary_operator
+  operator: "@"
+  operand: (call
+    target: (identifier) @identifier
+    (#any-of? @identifier "callback" "spec")
+    (arguments
+      [
+        (call
+          target: (identifier) @name)
+        (binary_operator
+          left: (call
+            target: (identifier) @name))
+      ])) @symbol
+  (#set! "kind" "Constant")) @start
+
+(unary_operator
+  operator: "@"
+  operand: (call
+    target: (identifier) @identifier
+    (#eq? @identifier "module_attribute")
+    (arguments) @name) @symbol
+  (#set! "kind" "Constant")) @start
+
+(unary_operator
+  operator: "@"
+  operand: (call
+    target: (identifier) @name
+    (#not-any-of? @name "module_attribute" "callback" "spec" "doc" "moduledoc")) @symbol
+  (#set! "kind" "Constant")) @start
+
+(do_block
+  (call
+    target: (identifier) @identifier
+    (#eq? @identifier "defstruct")) @symbol
+  (#set! "kind" "Function")) @start
+
+(call
+  target: (identifier) @identifier
+  (#any-of? @identifier "describe" "test")
+  (arguments
+    (string
+      (quoted_content) @name))
+  (#set! "kind" "Function")) @symbol
+
+(do_block
+  (call
+    target: (identifier) @identifier @name
+    (#eq? @identifier "setup")) @symbol
+  (#set! "kind" "Function")) @symbol
+]]
+)
+
+local function _unused_is_private_def_line(bufnr, lnum)
 	local ok, parser = pcall(vim.treesitter.get_parser, bufnr, "elixir")
 	if not ok or not parser then
 		return false
