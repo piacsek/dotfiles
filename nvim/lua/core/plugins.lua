@@ -283,7 +283,6 @@ require("aerial").setup({
 		min_width = 30,
 		max_width = 60,
 	},
-	filter_kind = false,
 })
 
 -- Treesitter
