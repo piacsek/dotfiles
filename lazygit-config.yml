@@ -1,0 +1,11 @@
+customCommands:
+  - key: "O"
+    context: "files"
+    description: "Open file in nvim on tmux window 1"
+    command: 'tmux send-keys -t :1 Escape ":edit $(pwd)/{{.SelectedFile.Name}}" Enter'
+    output: none
+  - key: "O"
+    context: "commitFiles"
+    description: "Open file in nvim on tmux window 1"
+    command: 'tmux send-keys -t :1 Escape ":edit $(pwd)/{{.SelectedCommitFile.Name}}" Enter'
+    output: none
