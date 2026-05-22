@@ -144,7 +144,7 @@ rm -rf $HOME/.config/ghostty
 
 mkdir -p $HOME/.config/ghostty
 mkdir -p $HOME/.config/gh-dash
-mkdir -p $HOME/.config/lazygit
+mkdir -p "$HOME/Library/Application Support/lazygit"
 mkdir -p $HOME/.config/tmux-sessionizer
 mkdir -p $HOME/.config/opencode
 touch -p $HOME/.config/tmux-sessionizer/tmux-sessionizer.conf
@@ -152,7 +152,7 @@ mkdir $HOME/scratch.nvim
 
 ln -sf $HOME/dotfiles/nvim $HOME/.config/nvim
 ln -sf $HOME/dotfiles/gh-dash-config.yml $HOME/.config/gh-dash/config.yml
-ln -sf $HOME/dotfiles/lazygit-config.yml $HOME/.config/lazygit/config.yml
+ln -sf $HOME/dotfiles/lazygit-config.yml "$HOME/Library/Application Support/lazygit/config.yml"
 ln -sf $HOME/dotfiles/.claude/skills $HOME/.claude/skills
 ln -sf $HOME/dotfiles/.claude/statusline-command.sh $HOME/.claude/statusline-command.sh
 ln -sf $HOME/dotfiles/claude-settings.json $HOME/.claude/settings.json
