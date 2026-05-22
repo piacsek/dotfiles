@@ -211,14 +211,41 @@ local function group_elixir_clauses(bufnr, items)
 		local function is_def_kind(k)
 			return k == "Function" or k == "Method"
 		end
+
+		-- Pre-compute signature + arity once per def-kind item so grouping can
+		-- key on (name, kind, arity). Without arity, `foo/1` and `foo/2` (whose
+		-- treesitter @name captures are both bare `foo`) would be merged into a
+		-- single bogus multi-clause group when adjacent in source.
+		for _, s in ipairs(list) do
+			if is_def_kind(s.kind) then
+				s._aerial_sig = elixir_clause_signature(bufnr, s.lnum, s.col or 1)
+				s._aerial_arity = elixir_arity_from_sig(s._aerial_sig)
+			end
+		end
+
+		local function rename(item, base)
+			local sig = item._aerial_sig
+			if sig then
+				local short = base:gsub("/.*", "")
+				item.name = short .. "(" .. sig .. ")"
+			end
+			item._aerial_sig = nil
+			item._aerial_arity = nil
+		end
+
 		local i = 1
 		while i <= #list do
 			local s = list[i]
 			if is_def_kind(s.kind) then
 				local base = s.name
 				local base_kind = s.kind
+				local base_arity = s._aerial_arity
 				local j = i
-				while j + 1 <= #list and list[j + 1].kind == base_kind and list[j + 1].name == base do
+				while j + 1 <= #list
+					and list[j + 1].kind == base_kind
+					and list[j + 1].name == base
+					and list[j + 1]._aerial_arity == base_arity
+				do
 					j = j + 1
 				end
 				if j > i then
@@ -239,11 +266,7 @@ local function group_elixir_clauses(bufnr, items)
 						local c = list[k]
 						c.level = level + 1
 						c.parent = parent
-						local sig = elixir_clause_signature(bufnr, c.lnum, c.col or 1)
-						if sig then
-							local short = base:gsub("/.*", "")
-							c.name = short .. "(" .. sig .. ")"
-						end
+						rename(c, base)
 						table.insert(parent.children, c)
 					end
 					for k = j, i, -1 do
@@ -251,13 +274,10 @@ local function group_elixir_clauses(bufnr, items)
 					end
 					table.insert(list, i, parent)
 				else
-					-- Single-clause: append the args to the name so the popup shows
-					-- `foo(arg1, arg2)` instead of bare `foo`.
-					local sig = elixir_clause_signature(bufnr, s.lnum, s.col or 1)
-					if sig then
-						local short = base:gsub("/.*", "")
-						s.name = short .. "(" .. sig .. ")"
-					end
+					-- Single-clause (or arity-distinct neighbor): append the args
+					-- to the name so the popup shows `foo(arg1, arg2)` instead of
+					-- bare `foo`.
+					rename(s, base)
 				end
 			end
 			i = i + 1
