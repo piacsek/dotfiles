@@ -15,6 +15,38 @@ local function elixir_clause_signature(bufnr, lnum, _col)
 	return (args:gsub("%s+", " "):gsub("^%s+", ""):gsub("%s+$", ""))
 end
 
+-- Arity = top-level commas + 1, ignoring commas inside nested (), [], {} and
+-- inside "…" / '…' strings. Empty/nil signature means no parens → arity 0.
+-- Default args (`x \\ 0`) don't add commas at depth 0, so arity is preserved.
+local function elixir_arity_from_sig(sig)
+	if not sig or sig:match("^%s*$") then
+		return 0
+	end
+	local depth, count = 0, 1
+	local in_str = nil
+	local i = 1
+	while i <= #sig do
+		local c = sig:sub(i, i)
+		if in_str then
+			if c == "\\" then
+				i = i + 1 -- skip escaped char
+			elseif c == in_str then
+				in_str = nil
+			end
+		elseif c == '"' or c == "'" then
+			in_str = c
+		elseif c == "(" or c == "[" or c == "{" then
+			depth = depth + 1
+		elseif c == ")" or c == "]" or c == "}" then
+			depth = depth - 1
+		elseif c == "," and depth == 0 then
+			count = count + 1
+		end
+		i = i + 1
+	end
+	return count
+end
+
 -- Override aerial's bundled elixir query so kinds reflect public vs private
 -- defs and @-attributes get a dedicated kind. This is more reliable than
 -- inspecting source lines at post-process time.
