@@ -106,7 +106,7 @@ vim.treesitter.query.set(
   (call
     target: (identifier) @identifier @name
     (#eq? @identifier "setup")) @symbol
-  (#set! "kind" "Function")) @symbol
+  (#set! "kind" "Function")) @start
 ]]
 )
 
