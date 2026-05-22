@@ -1,11 +1,33 @@
 -- Aerial: outline w/ Elixir multi-clause grouping
 local function elixir_clause_signature(bufnr, lnum, _col)
-	-- Read up to ~5 lines starting at lnum to handle multi-line heads.
-	local lines = vim.api.nvim_buf_get_lines(bufnr, lnum - 1, lnum + 4, false)
+	-- Aerial's lnum can land on the function name (one line below the `def`
+	-- keyword on wrapped heads), so read a couple of lines above lnum too.
+	-- Then anchor the search at the def line at-or-above lnum so a following
+	-- clause's `def` (within lnum+4) can't shadow the real head.
+	local lo = math.max(lnum - 2, 1)
+	local hi = lnum + 4
+	local lines = vim.api.nvim_buf_get_lines(bufnr, lo - 1, hi, false)
 	if not lines or #lines == 0 then
 		return nil
 	end
-	local blob = table.concat(lines, " ")
+	local lnum_idx = math.min(lnum - lo + 1, #lines)
+	local def_idx = nil
+	for i = lnum_idx, 1, -1 do
+		-- Match a leading `def`/`defp`/`defmacro[p]`/`defguard` token. The
+		-- char after `def%w*` must be whitespace, `(`, `,`, or EOL — this
+		-- rejects identifiers like `def_foo` (underscore is not in `%w`,
+		-- so it remains as the next char and fails the class match).
+		if lines[i]:match("^%s*def%w*[%s%(,]") or lines[i]:match("^%s*def%w*$") then
+			def_idx = i
+			break
+		end
+	end
+	if not def_idx then
+		return nil
+	end
+	-- Concatenate from the def line forward so wrapped args (`def foo(\n  x,\n  y\n)`)
+	-- still close their `%b()` group inside the blob.
+	local blob = table.concat(lines, " ", def_idx)
 	-- Match `def[p]/defmacro[p] name(...)` and capture the balanced parens.
 	local _, _, args = blob:find("def%w*%s+[%w_!?]+(%b())")
 	if not args then
