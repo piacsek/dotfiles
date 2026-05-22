@@ -156,7 +156,7 @@ local function group_elixir_clauses(bufnr, items)
 	-- mapping.
 	local function tag_privacy(list)
 		for _, s in ipairs(list) do
-			if s.kind == "Function" then
+			if s.kind == "Function" or s.kind == "Method" then
 				local k = elixir_kind_for(bufnr, s.lnum)
 				if k then
 					s.kind = k
