@@ -280,6 +280,9 @@ local function group_elixir_clauses(bufnr, items)
 					for k = i, j do
 						local c = list[k]
 						c.level = level + 1
+						if c.children and #c.children > 0 then
+							bump_subtree_levels(c.children, 1)
+						end
 						c.parent = parent
 						rename(c, base)
 						table.insert(parent.children, c)
