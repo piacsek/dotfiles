@@ -86,7 +86,7 @@ vim.treesitter.query.set(
   target: (identifier) @identifier
   (#eq? @identifier "defimpl")
   (arguments
-    (alias) @protocol
+    (alias)
     (keywords
       (pair
         key: (keyword) @kw
