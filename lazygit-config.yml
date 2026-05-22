@@ -2,10 +2,10 @@ customCommands:
   - key: "O"
     context: "files"
     description: "Open file in nvim on tmux window 1"
-    command: 'pane=$(tmux list-panes -t :1 -F "#{pane_id} #{pane_current_command}" | awk "/nvim/{print \$1; exit}"); tmux send-keys -t "${pane:-:1}" Escape ":edit $(pwd)/{{.SelectedFile.Name}}" Enter'
+    command: '$HOME/dotfiles/scripts/lazygit-open-in-nvim.sh {{.SelectedFile.Name | quote}}'
     output: none
   - key: "O"
     context: "commitFiles"
     description: "Open file in nvim on tmux window 1"
-    command: 'pane=$(tmux list-panes -t :1 -F "#{pane_id} #{pane_current_command}" | awk "/nvim/{print \$1; exit}"); tmux send-keys -t "${pane:-:1}" Escape ":edit $(pwd)/{{.SelectedCommitFile.Name}}" Enter'
+    command: '$HOME/dotfiles/scripts/lazygit-open-in-nvim.sh {{.SelectedCommitFile.Name | quote}}'
     output: none
