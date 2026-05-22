@@ -144,6 +144,7 @@ rm -rf $HOME/.config/ghostty
 
 mkdir -p $HOME/.config/ghostty
 mkdir -p $HOME/.config/gh-dash
+mkdir -p $HOME/.config/lazygit
 mkdir -p $HOME/.config/tmux-sessionizer
 mkdir -p $HOME/.config/opencode
 touch -p $HOME/.config/tmux-sessionizer/tmux-sessionizer.conf
