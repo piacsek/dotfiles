@@ -2,10 +2,10 @@ customCommands:
   - key: "O"
     context: "files"
     description: "Open file in nvim on tmux window 1"
-    command: '$HOME/dotfiles/scripts/lazygit-open-in-nvim.sh {{.SelectedFile.Name | quote}}'
+    command: "$HOME/dotfiles/scripts/lazygit-open-in-nvim.sh '{{.SelectedFile.Name}}'"
     output: none
   - key: "O"
     context: "commitFiles"
     description: "Open file in nvim on tmux window 1"
-    command: '$HOME/dotfiles/scripts/lazygit-open-in-nvim.sh {{.SelectedCommitFile.Name | quote}}'
+    command: "$HOME/dotfiles/scripts/lazygit-open-in-nvim.sh '{{.SelectedCommitFile.Name}}'"
     output: none
