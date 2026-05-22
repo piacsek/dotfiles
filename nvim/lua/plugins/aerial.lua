@@ -233,6 +233,21 @@ local function group_elixir_clauses(bufnr, items)
 			item._aerial_arity = nil
 		end
 
+		-- When a clause is re-parented under a new grouping node it descends
+		-- one level — and so does its entire subtree, whose levels were already
+		-- assigned (during the recursive `process` call above) relative to the
+		-- pre-grouping depth. Bump them so descendants stay consistent.
+		local function bump_subtree_levels(items, delta)
+			for _, item in ipairs(items) do
+				if item.level then
+					item.level = item.level + delta
+				end
+				if item.children and #item.children > 0 then
+					bump_subtree_levels(item.children, delta)
+				end
+			end
+		end
+
 		local i = 1
 		while i <= #list do
 			local s = list[i]
