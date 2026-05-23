@@ -78,6 +78,10 @@ vim.lsp.config["ts_ls"] = {
 	},
 }
 
+-- Workaround for nvim 0.12 bug: ColorScheme autocmd asserts on stale LSP
+-- client_ids in document_color state, crashing colorscheme switches.
+vim.lsp.document_color.enable(false)
+
 vim.lsp.enable({
 	"lua_ls",
 	"vimls",
