@@ -18,7 +18,6 @@ vim.pack.add({
 	gh("lewis6991/gitsigns.nvim"),
 	gh("stevearc/conform.nvim"),
 	gh("nvim-treesitter/nvim-treesitter"),
-	gh("nvim-treesitter/nvim-treesitter-context"),
 	gh("stevearc/oil.nvim"),
 	{ src = gh("ThePrimeagen/harpoon"), version = "harpoon2" },
 	gh("nvim-lua/plenary.nvim"),
