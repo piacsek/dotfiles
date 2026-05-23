@@ -41,6 +41,10 @@ Do NOT mark a task complete until the quality gates for this project have passed
 
 After a task is marked done, stop and wait for the user to review the output before starting the next task. This applies even in auto-accept or "accept edits" mode — never chain tasks without an explicit go-ahead from the user.
 
+Once the user approves, they will commit the changes manually to create a checkpoint. Do not commit on their behalf.
+
+Before starting the next task, explicitly assess refactoring opportunities against the just-committed checkpoint: duplication introduced, naming that no longer fits, abstractions that want to emerge, dead scaffolding. Surface what you'd refactor (or state that nothing warrants it) before moving on. With a clean checkpoint behind you, refactors are cheap to try and easy to roll back.
+
 ## Rules
 
 - Never write production code without a failing test first
