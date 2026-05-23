@@ -106,8 +106,13 @@ vim.keymap.set("n", "<leader>jd", function()
 		vim.api.nvim_set_current_win(winid)
 	end
 end, { desc = "Show diagnostic [E]rror messages" })
-vim.keymap.set("n", "<leader>q", "<cmd>Trouble diagnostics toggle filter.buf=0<CR>", { desc = "Buffer diagnostics (Trouble)" })
-vim.keymap.set("n", "<leader>Q", "<cmd>Trouble diagnostics toggle<CR>", { desc = "Workspace diagnostics (Trouble)" })
+vim.keymap.set(
+	"n",
+	"<leader>qq",
+	"<cmd>Trouble diagnostics toggle filter.buf=0<CR>",
+	{ desc = "Buffer diagnostics (Trouble)" }
+)
+vim.keymap.set("n", "<leader>qa", "<cmd>Trouble diagnostics toggle<CR>", { desc = "Workspace diagnostics (Trouble)" })
 vim.keymap.set({ "n", "v" }, "<C-s>", ":w<CR>", { desc = "[S]ave" })
 
 vim.keymap.set("n", "<C-.>", ":horizontal resize +5<CR>", { desc = "Increase window horizontal size" })
