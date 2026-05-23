@@ -25,6 +25,7 @@ For each task, follow this cycle exactly:
    - Run the test to confirm it passes
 
 3. **Refactor** - Clean up while keeping tests green
+   - This step is not optional. Green code is not done code.
    - Remove duplication
    - Improve naming
    - Run tests after each refactoring step
