@@ -57,3 +57,11 @@ After a task is marked done, stop and wait for the user to review the output bef
 - Each test should verify one thing
 - If stuck, make the step smaller
 - Upon ambiguity, ask the user for clarification
+
+## Outside-in over inside-out
+
+Prefer an outside-in approach: start from the user-facing behavior and drive inward with integration tests. Reach for unit tests only when an integration test can't reasonably cover the branch (complex pure logic, hard-to-reach edge cases).
+
+- Start with a failing integration test that describes the observable behavior (HTTP request → response, LiveView interaction → DOM, CLI invocation → output).
+- Let that failing test pull you into the implementation. Add lower-level tests only if a specific unit's logic can't be exercised cleanly from the outside.
+- Avoid building bottom-up scaffolding (helpers, modules, schemas) before there's a failing outer test demanding them.
