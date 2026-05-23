@@ -37,6 +37,7 @@ vim.pack.add({
 	gh("selimacerbas/markdown-preview.nvim"),
 	gh("piacsek/ghostty-mirror.nvim"),
 	gh("smjonas/inc-rename.nvim"),
+	gh("folke/trouble.nvim"),
 	gh("stevearc/aerial.nvim"),
 	gh("MeanderingProgrammer/render-markdown.nvim"),
 	-- Colorschemes
@@ -158,6 +159,7 @@ require("conform").setup({
 })
 
 require("plugins.aerial")
+require("trouble").setup({})
 
 -- Treesitter
 vim.api.nvim_create_user_command("TSInstallParsers", function()
