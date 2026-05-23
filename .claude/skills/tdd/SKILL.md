@@ -36,7 +36,9 @@ Do NOT mark a task complete until the quality gates for this project have passed
 1. Search memory for what gates apply to this repo/project (linter, type checker, formatter, test runner flags, pre-push hooks, framework-idiomatic flake checks). Project memories often record non-obvious commands (e.g., bypassing `nx test` fan-out, ExUnit `--repeat-until-failure`).
 2. If memory has no entry for this project's quality gates, ask the user which gates to run and save the answer as a project/reference memory for next time. Do not guess.
 3. Run every applicable gate. If one fails, fix it before moving on — do not defer.
-4. Only then mark the task done and move to the next one.
+4. Only then mark the task done.
+
+After a task is marked done, stop and wait for the user to review the output before starting the next task. This applies even in auto-accept or "accept edits" mode — never chain tasks without an explicit go-ahead from the user.
 
 ## Rules
 
