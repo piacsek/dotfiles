@@ -201,14 +201,6 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
-require("treesitter-context").setup({
-	max_lines = 3,
-	min_window_height = 20,
-	multiline_threshold = 1,
-	mode = "cursor",
-	separator = "─",
-})
-
 -- Oil
 require("oil").setup({
 	view_options = { show_hidden = true },
