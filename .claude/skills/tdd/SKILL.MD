@@ -5,9 +5,15 @@ description: Follow strict Test Driven Development with small incremental steps
 
 Follow Test Driven Development (TDD) strictly for all code changes. Work in the smallest possible increments.
 
+## Before starting
+
+- If working from a Linear ticket (or any multi-step task), create a tasklist before writing any code. Break the ticket into the smallest testable behaviors, each one a discrete task.
+- Each task should be small enough to complete in one Red-Green-Refactor cycle.
+- Surface the tasklist to the user before acting on it.
+
 ## The TDD Cycle
 
-For each change, follow this cycle exactly:
+For each task, follow this cycle exactly:
 
 1. **Red** - Write a single failing test that defines the expected behavior
    - Run the test to confirm it fails
@@ -22,6 +28,15 @@ For each change, follow this cycle exactly:
    - Remove duplication
    - Improve naming
    - Run tests after each refactoring step
+
+## Quality gates before marking a task done
+
+Do NOT mark a task complete until the quality gates for this project have passed.
+
+1. Search memory for what gates apply to this repo/project (linter, type checker, formatter, test runner flags, pre-push hooks, framework-idiomatic flake checks). Project memories often record non-obvious commands (e.g., bypassing `nx test` fan-out, ExUnit `--repeat-until-failure`).
+2. If memory has no entry for this project's quality gates, ask the user which gates to run and save the answer as a project/reference memory for next time. Do not guess.
+3. Run every applicable gate. If one fails, fix it before moving on — do not defer.
+4. Only then mark the task done and move to the next one.
 
 ## Rules
 
