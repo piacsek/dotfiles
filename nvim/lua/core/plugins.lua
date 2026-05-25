@@ -39,7 +39,6 @@ vim.pack.add({
 	gh("smjonas/inc-rename.nvim"),
 	gh("folke/trouble.nvim"),
 	gh("stevearc/aerial.nvim"),
-	gh("MeanderingProgrammer/render-markdown.nvim"),
 	-- Colorschemes
 	gh("scottmckendry/cyberdream.nvim"),
 	gh("catppuccin/nvim"),
