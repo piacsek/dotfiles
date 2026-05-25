@@ -1,4 +1,5 @@
 git:
+  autoFetch: false
   log:
     order: default
 customCommands:
