@@ -1,3 +1,6 @@
+git:
+  log:
+    order: default
 customCommands:
   - key: "O"
     context: "files"
