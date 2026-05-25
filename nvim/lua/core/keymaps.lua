@@ -346,7 +346,7 @@ end)
 vim.keymap.set("n", "<BS>;", function()
 	harpoon:list():select(4)
 end)
-vim.keymap.set("n", "<BS>e", function()
+vim.keymap.set("n", "<BS><BS>", function()
 	harpoon.ui:toggle_quick_menu(require("harpoon"):list())
 end)
 
