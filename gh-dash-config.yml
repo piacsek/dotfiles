@@ -90,7 +90,8 @@ keybindings:
             open "https://github.com/{{.RepoName}}/pull/{{.PrNumber}}" &&
             tmux new-window -n "pr-{{.PrNumber}}-review"
             "claude 'ultrathink review https://github.com/{{.RepoName}}/pull/{{.PrNumber}}'"
-repoPaths: {}
+repoPaths:
+    wonderschool/*: /Users/piacsek/projects/wonderschool/*
 theme:
     ui:
         sectionsShowCount: true
