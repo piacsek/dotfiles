@@ -79,7 +79,8 @@ defaults:
 keybindings:
     prs:
         - key: ctrl+enter
-          builtin: checkout
+          command: >-
+            gh-dash-checkout {{.RepoName}} {{.PrNumber}}
         - key: T
           command: >-
             tmux new-window -n gh-{{.PrNumber}}-ci '
