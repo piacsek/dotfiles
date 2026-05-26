@@ -78,6 +78,8 @@ defaults:
     refetchIntervalMinutes: 30
 keybindings:
     prs:
+        - key: ctrl+enter
+          builtin: checkout
         - key: T
           command: >-
             tmux new-window -n gh-{{.PrNumber}}-ci '
