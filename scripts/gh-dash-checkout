@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+# Check out a PR branch in its local clone, discovered by matching git remotes.
+# Used as a gh-dash custom keybinding so no machine-specific paths live in the
+# tracked config.yml.
+#
+# Usage: gh-dash-checkout <owner/repo> <pr-number>
+#
+# Search roots default to a few common locations; override with a colon-
+# separated GH_DASH_REPO_ROOTS (e.g. ~/projects:~/repos). Clones are matched by
+# git remote URL, so basename collisions across orgs are handled correctly.
+
+set -euo pipefail
+
+repo="${1:?usage: gh-dash-checkout <owner/repo> <pr-number>}"
+pr="${2:?usage: gh-dash-checkout <owner/repo> <pr-number>}"
+
+IFS=':' read -ra roots <<<"${GH_DASH_REPO_ROOTS:-$HOME/projects:$HOME/repos:$HOME/code:$HOME/dev}"
+
+# Normalize the wanted remote for comparison (strip scheme/host, .git suffix).
+want="${repo%.git}"
+
+clone=""
+for root in "${roots[@]}"; do
+    [[ -d "$root" ]] || continue
+    while IFS= read -r gitdir; do
+        dir="${gitdir%/.git}"
+        url="$(git -C "$dir" remote get-url origin 2>/dev/null || true)"
+        [[ -n "$url" ]] || continue
+        # Match owner/repo against the tail of the remote URL.
+        norm="${url%.git}"
+        norm="${norm#git@*:}"     # git@github.com:owner/repo -> owner/repo
+        norm="${norm#*github.com/}" # https://github.com/owner/repo -> owner/repo
+        if [[ "$norm" == "$want" ]]; then
+            clone="$dir"
+            break 2
+        fi
+    done < <(find -L "$root" -mindepth 1 -maxdepth 3 -name .git -type d 2>/dev/null)
+done
+
+if [[ -z "$clone" ]]; then
+    echo "No local clone of $repo found under: ${roots[*]}" >&2
+    echo "Set GH_DASH_REPO_ROOTS to point at where you keep it." >&2
+    exit 1
+fi
+
+echo "Checking out PR #$pr in $clone"
+cd "$clone"
+gh pr checkout "$pr" -R "$repo"
