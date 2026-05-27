@@ -35,7 +35,7 @@ vim.opt.list = true
 vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 vim.opt.mouse = "a"
 vim.opt.number = true
-vim.opt.relativenumber = true
+-- vim.opt.relativenumber = true
 vim.opt.scrolloff = 999
 vim.opt.sidescrolloff = 999
 vim.opt.shiftwidth = 2
