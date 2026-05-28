@@ -14,4 +14,9 @@ return {
 		i(1),
 		t('")'),
 	}),
+	s("cdir", {
+		t("console.dir("),
+		i(0),
+		t(", { depth: null });"),
+	}),
 }
