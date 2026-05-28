@@ -287,6 +287,8 @@ local luasnip = require("luasnip")
 luasnip.config.setup({})
 require("luasnip.loaders.from_lua").load({ paths = vim.fn.stdpath("config") .. "/snippets" })
 luasnip.filetype_extend("typescriptreact", { "typescript" })
+luasnip.filetype_extend("javascript", { "typescript" })
+luasnip.filetype_extend("javascriptreact", { "typescript" })
 
 cmp.setup({
 	view = {
