@@ -44,6 +44,7 @@ vim.pack.add({
 	gh("catppuccin/nvim"),
 	gh("piacsek/high-contrast.nvim"),
 	gh("piacsek/deep-purple.nvim"),
+	gh("piacsek/mineral.nvim"),
 	gh("AlexvZyl/nordic.nvim"),
 	gh("0Risotto/rainbow12"),
 	gh("aisk/kukishinobu.vim"),
