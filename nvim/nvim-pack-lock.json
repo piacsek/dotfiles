@@ -89,6 +89,10 @@
       "rev": "44d1e90e1f66e077268191e3ee9d2ac97cc18e65",
       "src": "https://github.com/mason-org/mason.nvim"
     },
+    "mineral.nvim": {
+      "rev": "33d3345d0c6fc31c17d52e5a6077ddd8cff96ddb",
+      "src": "https://github.com/piacsek/mineral.nvim"
+    },
     "mini.ai": {
       "rev": "43eb2074843950a3a25aae56a5f41362ec043bfa",
       "src": "https://github.com/echasnovski/mini.ai"
