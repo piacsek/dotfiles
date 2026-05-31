@@ -43,7 +43,7 @@ vim.pack.add({
 	gh("scottmckendry/cyberdream.nvim"),
 	gh("catppuccin/nvim"),
 	gh("piacsek/high-contrast.nvim"),
-	gh("piacsek/mineral.nvim"),
+	gh("piacsek/scintilla.nvim"),
 	gh("AlexvZyl/nordic.nvim"),
 	gh("0Risotto/rainbow12"),
 	gh("aisk/kukishinobu.vim"),
