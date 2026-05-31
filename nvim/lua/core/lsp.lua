@@ -1,10 +1,8 @@
-local project_elixir_root = nil
 local project_tailwind_root = nil
 local project_lsp_config = vim.fn.getcwd() .. "/piacsek/lsp.lua"
 if vim.fn.filereadable(project_lsp_config) == 1 then
 	local ok, config = pcall(dofile, project_lsp_config)
 	if ok and type(config) == "table" and config.elixir_root then
-		project_elixir_root = config.elixir_root
 		project_tailwind_root = config.tailwind_root
 	end
 end
@@ -23,30 +21,7 @@ vim.lsp.config["dexter"] = {
 	root_markers = { ".dexter/dexter.db", ".dexter.db", ".git", "mix.exs" },
 	filetypes = { "elixir", "eelixir", "heex" },
 	init_options = {
-		followDelegates = true, -- jump through defdelegate to the target function
-		-- stdlibPath = "",      -- override Elixir stdlib path (auto-detected)
-		-- debug = false,        -- verbose logging to stderr (view with :LspLog)
-	},
-}
-
-vim.lsp.config["elixir_ls"] = {
-	cmd = { "elixir-ls" },
-	filetypes = { "elixir", "eelixir", "heex" },
-	root_dir = function(_, on_dir)
-		if project_elixir_root then
-			on_dir(project_elixir_root)
-		else
-			vim.notify("elixir_ls unavailable: Please define elixir_root.", vim.log.levels.ERROR)
-		end
-	end,
-	settings = {
-		elixirLS = {
-			dialyzerEnabled = false,
-			fetchDeps = false,
-			enableTestLenses = false,
-			suggestSpecs = false,
-			mixEnv = "test",
-		},
+		followDelegates = true,
 	},
 }
 
