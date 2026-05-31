@@ -76,7 +76,6 @@ vim.lsp.enable({
 	"emmet_ls",
 	"jsonls",
 	"yamlls",
-	-- "elixir_ls",
 	"dexter",
 	"bashls",
 })
