@@ -7,15 +7,6 @@ if vim.fn.filereadable(project_lsp_config) == 1 then
 	end
 end
 
--- Suppressing formatter errors for files ignored by .formatter.exs(IE: migration files)
-local default_show_message = vim.lsp.handlers["window/showMessage"]
-vim.lsp.handlers["window/showMessage"] = function(err, result, ctx, config)
-	if result and type(result.message) == "string" and result.message:find("not included in") then
-		return
-	end
-	return default_show_message(err, result, ctx, config)
-end
-
 vim.lsp.config["dexter"] = {
 	cmd = { "dexter", "lsp" },
 	root_markers = { ".dexter/dexter.db", ".dexter.db", ".git", "mix.exs" },
