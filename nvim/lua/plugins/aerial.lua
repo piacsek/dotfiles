@@ -82,9 +82,15 @@ vim.treesitter.query.set(
   (arguments) @name
   (#set! "kind" "Function")) @symbol
 
+; NB: capture is @impl_call, NOT @identifier. Aerial's bundled Elixir
+; postprocess (extensions.lua) keys on the @identifier text and, when it
+; equals "defimpl", does `assert(node_from_match(match, "protocol"))`. Our
+; query has no @protocol capture, so naming this @identifier triggers an
+; assertion failure on every buffer containing a defimpl. Renaming the
+; capture hides it from that branch; the #set! below sets the kind anyway.
 (call
-  target: (identifier) @identifier
-  (#eq? @identifier "defimpl")
+  target: (identifier) @impl_call
+  (#eq? @impl_call "defimpl")
   (arguments
     (alias)
     (keywords
