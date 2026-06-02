@@ -9,7 +9,7 @@ vim.o.exrc = true
 local theme_file = vim.fn.expand("~/.config/ghostty/theme-current")
 local lines = vim.fn.filereadable(theme_file) == 1 and vim.fn.readfile(theme_file) or {}
 local from_ghostty = lines[1] and lines[1]:match("theme%s*=%s*(%S+)")
-vim.g._default_colorscheme = from_ghostty or "deep-purple"
+vim.g._default_colorscheme = from_ghostty or "catppuccin"
 
 -- Plugin colorschemes aren't loaded yet; try now, retry after plugins load.
 if not pcall(vim.cmd.colorscheme, vim.g._default_colorscheme) then
