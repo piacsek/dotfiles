@@ -22,6 +22,10 @@ if not pcall(vim.cmd.colorscheme, vim.g._default_colorscheme) then
 end
 
 vim.opt.termguicolors = true
+-- Color the cursor from the `Cursor` highlight so it follows the colorscheme
+-- live (nvim emits OSC 12). Ghostty's own cursor-color isn't hot-reloadable, so
+-- this is what actually changes the cursor in-editor on :colorscheme.
+vim.opt.guicursor = "n-v-c-sm:block-Cursor/lCursor,i-ci-ve:ver25-Cursor/lCursor,r-cr-o:hor20-Cursor/lCursor,t:block-blinkon500-blinkoff500-TermCursor"
 vim.opt.swapfile = false
 vim.opt.winborder = "rounded"
 vim.opt.autoread = true
