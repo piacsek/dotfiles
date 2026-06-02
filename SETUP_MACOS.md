@@ -162,7 +162,6 @@ ln -sf $HOME/dotfiles/.tmux.conf $HOME/.tmux.conf
 ln -sf $HOME/dotfiles/opencode.json $HOME/opencode.json
 ln -sf $HOME/dotfiles/.zshrc $HOME/.zshrc
 ln -sf $HOME/dotfiles/.ghosttyrc $HOME/.config/ghostty/config
-# ln -sf $HOME/dotfiles/ghostty-themes $HOME/.config/ghostty/themes
 ln -sf $HOME/dotfiles/opencode.json $HOME/.config/opencode/
 ln -sf $HOME/dotfiles/.tool-versions $HOME/.tool-versions
 ```
