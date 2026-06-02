@@ -16,6 +16,11 @@ vim.api.nvim_create_autocmd("ColorSchemePre", {
 	desc = "Default &background to dark so adaptive schemes don't inherit a stale light",
 	group = vim.api.nvim_create_augroup("background-baseline-dark", { clear = true }),
 	callback = function()
-		vim.o.background = "dark"
+		-- Guarded: writing &background re-applies the current scheme, so only
+		-- touch it when it's actually stale-light (avoids needless reloads and
+		-- self-retriggering on dark->dark switches).
+		if vim.o.background ~= "dark" then
+			vim.o.background = "dark"
+		end
 	end,
 })
