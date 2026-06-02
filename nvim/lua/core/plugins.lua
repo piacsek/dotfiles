@@ -70,11 +70,11 @@ require("inc_rename").setup({
 require("nvim-autopairs").setup({})
 require("mini.ai").setup({})
 require("mini.icons").setup({})
--- Inline preview of #rrggbb color codes, tinted with the actual color.
+-- Inline preview of #rrggbb color codes: a swatch next to the code.
 local hipatterns = require("mini.hipatterns")
 hipatterns.setup({
 	highlighters = {
-		hex_color = hipatterns.gen_highlighter.hex_color(),
+		hex_color = hipatterns.gen_highlighter.hex_color({ style = "inline" }),
 	},
 })
 require("nvim-ts-autotag").setup({})
