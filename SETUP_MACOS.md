@@ -160,6 +160,9 @@ ln -sf $HOME/dotfiles/claude-settings.json $HOME/.claude/settings.json
 ln -sf $HOME/dotfiles/CLAUDE.md $HOME/.claude/CLAUDE.md
 ln -sf $HOME/dotfiles/.ideavimrc $HOME/.ideavimrc
 ln -sf $HOME/dotfiles/.tmux.conf $HOME/.tmux.conf
+# Hand-made ghostty-mirror.nvim tmux themes (override the plugin's auto-generated ones)
+ln -sf $HOME/dotfiles/tmux-themes/scintilla-amethyst.conf $HOME/.config/tmux/themes/scintilla-amethyst.conf
+ln -sf $HOME/dotfiles/tmux-themes/scintilla-sapphire.conf $HOME/.config/tmux/themes/scintilla-sapphire.conf
 ln -sf $HOME/dotfiles/opencode.json $HOME/opencode.json
 ln -sf $HOME/dotfiles/.zshrc $HOME/.zshrc
 ln -sf $HOME/dotfiles/.ghosttyrc $HOME/.config/ghostty/config
