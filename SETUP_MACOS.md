@@ -125,9 +125,14 @@ brew install \
   tree-sitter-cli \
   sl \
   gh \
+  yq \
   imagemagick \
   bat
 ```
+
+`yq` powers the `gh dash` config-merge wrapper in `.zshrc` (merges
+`~/dotfiles/gh-dash-config.yml` with an optional, untracked
+`~/gh-dash-config.yml` for work-specific sections).
 
 ### 7. Clone and Link Dotfiles
 
