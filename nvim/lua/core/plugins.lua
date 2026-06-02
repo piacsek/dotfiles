@@ -25,6 +25,7 @@ vim.pack.add({
 	gh("nvim-pack/nvim-spectre"),
 	gh("LintaoAmons/scratch.nvim"),
 	gh("hrsh7th/nvim-cmp"),
+	gh("L3MON4D3/LuaSnip"),
 	gh("saadparwaiz1/cmp_luasnip"),
 	gh("hrsh7th/cmp-nvim-lsp"),
 	gh("hrsh7th/cmp-path"),
