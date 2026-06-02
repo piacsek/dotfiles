@@ -130,10 +130,6 @@ brew install \
   bat
 ```
 
-`yq` powers the `gh dash` config-merge wrapper in `.zshrc` (merges
-`~/dotfiles/gh-dash-config.yml` with an optional, untracked
-`~/gh-dash-config.yml` for work-specific sections).
-
 ### 7. Clone and Link Dotfiles
 
 Clone the dotfiles repository and set up symlinks:
