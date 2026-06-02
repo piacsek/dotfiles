@@ -1,0 +1,9 @@
+# ghostty-mirror.nvim writes auto-generated tmux theme caches into this dir.
+# Those are disposable (regenerated on demand), so ignore every .conf by default
+# and track only hand-made overrides.
+#
+# When you author a NEW hand-made theme, add a line for it below:
+#   !my-colorscheme.conf
+*.conf
+!scintilla-amethyst.conf
+!scintilla-sapphire.conf
