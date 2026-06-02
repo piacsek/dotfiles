@@ -23,6 +23,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 -- Writing &background re-applies the current scheme (and re-fires these events),
 -- so every write is wrapped in `adjusting` to prevent the two hooks fighting in
 -- an infinite loop, and skipped when already correct.
+pcall(vim.api.nvim_del_augroup_by_name, "background-baseline-dark") -- drop the earlier Pre-only version
 local bg_group = vim.api.nvim_create_augroup("background-honest", { clear = true })
 local bg_adjusting = false
 
