@@ -70,6 +70,13 @@ require("inc_rename").setup({
 require("nvim-autopairs").setup({})
 require("mini.ai").setup({})
 require("mini.icons").setup({})
+-- Inline preview of #rrggbb color codes, tinted with the actual color.
+local hipatterns = require("mini.hipatterns")
+hipatterns.setup({
+	highlighters = {
+		hex_color = hipatterns.gen_highlighter.hex_color(),
+	},
+})
 require("nvim-ts-autotag").setup({})
 require("url-open").setup({
 	highlight_url = {
