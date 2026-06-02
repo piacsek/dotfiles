@@ -43,6 +43,27 @@ alias lz='lazygit'
 alias tx='tmux-sessionizer'
 # alias lazysql='op run --env-file="$HOME/projects/wonderschool/.db_env" -- lazysql'
 
+# gh dash: merge checked-in base config with optional local override
+# (~/gh-dash-config.yml — kept out of dotfiles for work-specific sections).
+# Deep-merges maps (e.g. repoPaths); arrays are replaced. To append arrays
+# instead, change `. * $item` to `. *+ $item`.
+gh() {
+	if [[ "$1" == "dash" ]]; then
+		shift
+		local base="$HOME/dotfiles/gh-dash-config.yml"
+		local override="$HOME/gh-dash-config.yml"
+		local merged="$HOME/.config/gh-dash/config.merged.yml"
+		if [[ -f "$override" ]]; then
+			yq eval-all '. as $item ireduce ({}; . * $item)' "$base" "$override" > "$merged"
+		else
+			cp "$base" "$merged"
+		fi
+		command gh dash --config "$merged" "$@"
+	else
+		command gh "$@"
+	fi
+}
+
 bindkey -r '^[d'
 
 if [ -f $HOME/.zshrc_work ]; then
