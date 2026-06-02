@@ -89,6 +89,10 @@
       "rev": "43eb2074843950a3a25aae56a5f41362ec043bfa",
       "src": "https://github.com/echasnovski/mini.ai"
     },
+    "mini.hipatterns": {
+      "rev": "e25cf080aae092a651a92fa5e477f64a61adbebf",
+      "src": "https://github.com/echasnovski/mini.hipatterns"
+    },
     "mini.icons": {
       "rev": "7fdae2443a0e2910015ca39ad74b50524ee682d3",
       "src": "https://github.com/echasnovski/mini.icons"
