@@ -35,7 +35,7 @@ vim.pack.add({
 	gh("coder/claudecode.nvim"),
 	gh("selimacerbas/live-server.nvim"),
 	gh("selimacerbas/markdown-preview.nvim"),
-	-- gh("piacsek/ghostty-mirror.nvim"),
+	gh("piacsek/ghostty-mirror.nvim"),
 	gh("smjonas/inc-rename.nvim"),
 	gh("folke/trouble.nvim"),
 	gh("stevearc/aerial.nvim"),
