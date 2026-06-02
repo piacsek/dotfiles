@@ -147,7 +147,7 @@ mkdir -p $HOME/.config/ghostty
 mkdir -p $HOME/.config/gh-dash
 mkdir -p "$HOME/Library/Application Support/lazygit"
 mkdir -p $HOME/.config/tmux-sessionizer
-mkdir -p $HOME/.config/tmux/themes
+mkdir -p $HOME/.config/tmux
 mkdir -p $HOME/.config/opencode
 touch -p $HOME/.config/tmux-sessionizer/tmux-sessionizer.conf
 mkdir $HOME/scratch.nvim
