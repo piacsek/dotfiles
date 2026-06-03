@@ -170,7 +170,8 @@ vim.api.nvim_create_user_command("TokenColor", function()
 	-- The group name line renders in the group itself; each color line gets a
 	-- swatch block colored via a throwaway highlight group.
 	local swatch = "████"
-	local lines, marks = { name }, {}
+	local title = capture == name and name or (capture .. " -> " .. name)
+	local lines, marks = { title }, {}
 	local function color_line(label, color)
 		if not color then
 			table.insert(lines, ("%s  -"):format(label))
