@@ -78,7 +78,6 @@ hipatterns.setup({
 	},
 })
 require("nvim-ts-autotag").setup({})
--- Mirror the colorscheme into Ghostty and tmux on :colorscheme.
 require("ghostty-mirror").setup({
 	manage_background = true,
 	overrides = {
@@ -92,7 +91,7 @@ require("ghostty-mirror").setup({
 		overrides = {
 			["scintilla-amethyst"] = { accent = "#d700ff", bar = "#3a0054" },
 			["high-contrast"] = { accent = "#8547ff", bar_blend = 0.3 },
-			["scintilla-sapphire"] = { accent = "#2e4eb2" },
+			["scintilla-sapphire"] = { accent = "#2e4eb2", bar_blend = 0.4 },
 		},
 	},
 })
