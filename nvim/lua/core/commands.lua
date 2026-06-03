@@ -105,3 +105,19 @@ vim.api.nvim_create_user_command("ThemeDefault", function()
 	vim.cmd.colorscheme(vim.g._default_colorscheme)
 	vim.notify(vim.g._default_colorscheme)
 end, { desc = "Assigns the default colorscheme" })
+
+vim.api.nvim_create_user_command("TokenColor", function()
+	local pos = vim.inspect_pos()
+	local st, ts = pos.semantic_tokens, pos.treesitter
+	local item = st[#st] or ts[#ts] -- semantic tokens outrank treesitter
+	if not item then
+		vim.notify("No highlight under the cursor", vim.log.levels.WARN)
+		return
+	end
+	local name = item.hl_group_link or item.hl_group
+	local hl = vim.api.nvim_get_hl(0, { name = name, link = false })
+	local function hex(n)
+		return n and ("#%06x"):format(n) or "-"
+	end
+	vim.notify(("%s  fg=%s bg=%s%s"):format(name, hex(hl.fg), hex(hl.bg), hl.bold and " bold" or ""))
+end, { desc = "Resolved highlight group + colors under the cursor" })
