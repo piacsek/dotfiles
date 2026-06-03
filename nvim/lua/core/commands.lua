@@ -196,7 +196,12 @@ vim.api.nvim_create_user_command("TokenColor", function()
 
 	-- The LSP docs popup's own machinery: first call opens the float, calling
 	-- it again enters it for normal-mode navigation, q / cursor move closes.
-	local buf = vim.lsp.util.open_floating_preview(lines, "", { focus_id = "token-color", border = "rounded" })
+	local buf, win = vim.lsp.util.open_floating_preview(lines, "", { focus_id = "token-color", border = "rounded" })
+	-- The focus path (second call) enters the existing float without touching
+	-- its content; the swatch extmarks from the first call still stand.
+	if vim.api.nvim_get_current_win() == win then
+		return
+	end
 	local ns = vim.api.nvim_create_namespace("token-color")
 	vim.api.nvim_buf_clear_namespace(buf, ns, 0, -1)
 	vim.api.nvim_buf_set_extmark(buf, ns, 0, 0, { end_col = #lines[1], hl_group = name })
