@@ -85,7 +85,7 @@ require("ghostty-mirror").setup({
 	sync_on_focus = true,
 	tmux = {
 		enabled = true,
-		overrides = { ["scintilla-amethyst"] = { accent = "#ffaabb", bar_blend = 7, divider = "#aabbcc" } },
+		overrides = { ["scintilla-amethyst"] = { accent = "#ffaabb", bar_blend = 0.7, divider = "#aabbcc" } },
 	},
 })
 require("url-open").setup({
