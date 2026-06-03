@@ -83,7 +83,7 @@ require("ghostty-mirror").setup({
 	manage_background = true,
 	sync_on_startup = true,
 	sync_on_focus = true,
-	tmux = { enabled = true },
+	tmux = { enabled = true, overrides = { ["scintilla-amethyst"] = { accent = "#ffaabb" } } },
 })
 require("url-open").setup({
 	highlight_url = {
