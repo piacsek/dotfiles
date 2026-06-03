@@ -132,16 +132,20 @@ vim.api.nvim_create_user_command("TokenColor", function()
 		table.insert(candidates, pos.treesitter[i].hl_group)
 	end
 
-	---Follow the link chain to the defining group's name.
+	---Follow the link chain (and the renderer's dot-segment fallback for
+	---undefined groups like @lsp.type.property.lua) to the defining group.
 	local function resolve_name(group)
 		local seen = {}
 		while true do
 			local h = vim.api.nvim_get_hl(0, { name = group })
-			if not h.link or seen[h.link] then
+			if next(h) == nil and group:find("%.") then
+				group = group:gsub("%.[^.]+$", "")
+			elseif h.link and not seen[h.link] then
+				seen[h.link] = true
+				group = h.link
+			else
 				return group
 			end
-			seen[h.link] = true
-			group = h.link
 		end
 	end
 
