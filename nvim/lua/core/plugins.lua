@@ -81,8 +81,14 @@ require("nvim-ts-autotag").setup({})
 -- Mirror the colorscheme into Ghostty and tmux on :colorscheme.
 require("ghostty-mirror").setup({
 	manage_background = true,
+	overrides = {
+		["high-contrast"] = {
+			cursor_color = "#ffaabb",
+		},
+	},
 	sync_on_startup = true,
 	sync_on_focus = true,
+
 	tmux = {
 		enabled = true,
 		overrides = { ["scintilla-amethyst"] = { accent = "#d700ff", bar = "#3a0054" } },
