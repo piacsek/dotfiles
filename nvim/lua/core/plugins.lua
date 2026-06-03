@@ -79,7 +79,12 @@ hipatterns.setup({
 })
 require("nvim-ts-autotag").setup({})
 -- Mirror the colorscheme into Ghostty and tmux on :colorscheme.
-require("ghostty-mirror").setup({ manage_background = true, tmux = { enabled = true } })
+require("ghostty-mirror").setup({
+	manage_background = true,
+	sync_on_startup = true,
+	sync_on_focus = true,
+	tmux = { enabled = true },
+})
 require("url-open").setup({
 	highlight_url = {
 		cursor_move = {
