@@ -92,7 +92,7 @@ require("ghostty-mirror").setup({
 		overrides = {
 			["scintilla-amethyst"] = { accent = "#d700ff", bar = "#3a0054" },
 			["high-contrast"] = { accent = "#8547ff", bar_blend = 0.3 },
-			["scintilla-sapphire"] = { bar_blend = 0.1 },
+			["scintilla-sapphire"] = { accent = "#0e287e", bar_blend = 0.3 },
 		},
 	},
 })
