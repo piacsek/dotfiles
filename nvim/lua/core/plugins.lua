@@ -81,7 +81,7 @@ require("nvim-ts-autotag").setup({})
 require("ghostty-mirror").setup({
 	manage_background = true,
 	overrides = {
-		["high-contrast"] = { selection_background = "#d700ff" },
+		["scintilla-sapphire"] = { selection_background = "#d700ff" },
 	},
 	sync_on_startup = true,
 	sync_on_focus = true,
