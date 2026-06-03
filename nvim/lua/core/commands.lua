@@ -146,38 +146,13 @@ vim.api.nvim_create_user_command("TokenColor", function()
 		table.insert(lines, table.concat(styles, " "))
 	end
 
-	local buf = vim.api.nvim_create_buf(false, true)
-	vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
-	vim.bo[buf].bufhidden = "wipe"
+	-- The LSP docs popup's own machinery: first call opens the float, calling
+	-- it again enters it for normal-mode navigation, q / cursor move closes.
+	local buf = vim.lsp.util.open_floating_preview(lines, "", { focus_id = "token-color", border = "rounded" })
 	local ns = vim.api.nvim_create_namespace("token-color")
+	vim.api.nvim_buf_clear_namespace(buf, ns, 0, -1)
 	vim.api.nvim_buf_set_extmark(buf, ns, 0, 0, { end_col = #lines[1], hl_group = name })
 	for _, m in ipairs(marks) do
 		vim.api.nvim_buf_set_extmark(buf, ns, m.line, m.col, { end_col = m.end_col, hl_group = m.group })
 	end
-
-	local width = 0
-	for _, l in ipairs(lines) do
-		width = math.max(width, vim.fn.strdisplaywidth(l))
-	end
-	local win = vim.api.nvim_open_win(buf, false, {
-		relative = "cursor",
-		row = 1,
-		col = 0,
-		width = width,
-		height = #lines,
-		style = "minimal",
-		border = "rounded",
-	})
-
-	-- Hover-like lifecycle: q inside the float closes it, any movement in the
-	-- source window dismisses it.
-	vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = buf, nowait = true })
-	vim.api.nvim_create_autocmd({ "CursorMoved", "BufLeave" }, {
-		once = true,
-		callback = function()
-			if vim.api.nvim_win_is_valid(win) then
-				vim.api.nvim_win_close(win, true)
-			end
-		end,
-	})
 end, { desc = "Float with the resolved highlight group + color swatches under the cursor" })
