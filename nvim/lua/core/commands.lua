@@ -116,8 +116,68 @@ vim.api.nvim_create_user_command("TokenColor", function()
 	end
 	local name = item.hl_group_link or item.hl_group
 	local hl = vim.api.nvim_get_hl(0, { name = name, link = false })
-	local function hex(n)
-		return n and ("#%06x"):format(n) or "-"
+
+	local styles = {}
+	for _, s in ipairs({ "bold", "italic", "underline", "undercurl", "strikethrough", "reverse" }) do
+		if hl[s] then
+			table.insert(styles, s)
+		end
 	end
-	vim.notify(("%s  fg=%s bg=%s%s"):format(name, hex(hl.fg), hex(hl.bg), hl.bold and " bold" or ""))
-end, { desc = "Resolved highlight group + colors under the cursor" })
+
+	-- The group name line renders in the group itself; each color line gets a
+	-- swatch block colored via a throwaway highlight group.
+	local swatch = "████"
+	local lines, marks = { name }, {}
+	local function color_line(label, color)
+		if not color then
+			table.insert(lines, ("%s  -"):format(label))
+			return
+		end
+		local hex = ("#%06x"):format(color)
+		local group = "TokenColorSwatch" .. label
+		vim.api.nvim_set_hl(0, group, { fg = color })
+		table.insert(lines, ("%s  %s %s"):format(label, hex, swatch))
+		local start = #label + 2 + #hex + 1
+		table.insert(marks, { line = #lines - 1, col = start, end_col = start + #swatch, group = group })
+	end
+	color_line("fg", hl.fg)
+	color_line("bg", hl.bg)
+	if #styles > 0 then
+		table.insert(lines, table.concat(styles, " "))
+	end
+
+	local buf = vim.api.nvim_create_buf(false, true)
+	vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+	vim.bo[buf].bufhidden = "wipe"
+	local ns = vim.api.nvim_create_namespace("token-color")
+	vim.api.nvim_buf_set_extmark(buf, ns, 0, 0, { end_col = #lines[1], hl_group = name })
+	for _, m in ipairs(marks) do
+		vim.api.nvim_buf_set_extmark(buf, ns, m.line, m.col, { end_col = m.end_col, hl_group = m.group })
+	end
+
+	local width = 0
+	for _, l in ipairs(lines) do
+		width = math.max(width, vim.fn.strdisplaywidth(l))
+	end
+	local win = vim.api.nvim_open_win(buf, false, {
+		relative = "cursor",
+		row = 1,
+		col = 0,
+		width = width,
+		height = #lines,
+		style = "minimal",
+		border = "rounded",
+	})
+
+	-- Hover-like lifecycle: q inside the float closes it, any movement in the
+	-- source window dismisses it.
+	vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = buf, nowait = true })
+	vim.api.nvim_create_autocmd({ "CursorMoved", "BufLeave" }, {
+		once = true,
+		callback = function()
+			if vim.api.nvim_win_is_valid(win) then
+				vim.api.nvim_win_close(win, true)
+			end
+		end,
+	})
+end, { desc = "Float with the resolved highlight group + color swatches under the cursor" })
