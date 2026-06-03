@@ -108,14 +108,57 @@ end, { desc = "Assigns the default colorscheme" })
 
 vim.api.nvim_create_user_command("TokenColor", function()
 	local pos = vim.inspect_pos()
-	local st, ts = pos.semantic_tokens, pos.treesitter
-	local item = st[#st] or ts[#ts] -- semantic tokens outrank treesitter
-	if not item then
+
+	-- Semantic tokens outrank treesitter; within each, higher priority and
+	-- later insertion win. Semantic token entries are extmark records (group
+	-- under opts.hl_group), unlike the flat treesitter items.
+	local candidates = {}
+	local st = {}
+	for i, t in ipairs(pos.semantic_tokens) do
+		if t.opts.hl_group then
+			table.insert(st, { group = t.opts.hl_group, pri = t.opts.priority or 0, idx = i })
+		end
+	end
+	table.sort(st, function(a, b)
+		if a.pri ~= b.pri then
+			return a.pri > b.pri
+		end
+		return a.idx > b.idx
+	end)
+	for _, t in ipairs(st) do
+		table.insert(candidates, t.group)
+	end
+	for i = #pos.treesitter, 1, -1 do
+		table.insert(candidates, pos.treesitter[i].hl_group)
+	end
+
+	---Follow the link chain to the defining group's name.
+	local function resolve_name(group)
+		local seen = {}
+		while true do
+			local h = vim.api.nvim_get_hl(0, { name = group })
+			if not h.link or seen[h.link] then
+				return group
+			end
+			seen[h.link] = true
+			group = h.link
+		end
+	end
+
+	-- First candidate whose effective attrs are non-empty is what's rendered;
+	-- a group that resolves to nothing falls through to the next layer.
+	local capture, name, hl
+	for _, group in ipairs(candidates) do
+		local attrs = vim.api.nvim_get_hl(0, { name = group, link = false })
+		if next(attrs) ~= nil then
+			capture, name, hl = group, resolve_name(group), attrs
+			break
+		end
+	end
+	if not name then
 		vim.notify("No highlight under the cursor", vim.log.levels.WARN)
 		return
 	end
-	local name = item.hl_group_link or item.hl_group
-	local hl = vim.api.nvim_get_hl(0, { name = name, link = false })
 
 	local styles = {}
 	for _, s in ipairs({ "bold", "italic", "underline", "undercurl", "strikethrough", "reverse" }) do
