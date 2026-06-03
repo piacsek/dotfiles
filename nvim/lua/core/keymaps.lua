@@ -136,7 +136,7 @@ vim.keymap.set("t", "<C-j>", [[<C-\><C-n>:TmuxNavigateDown<CR>]], { desc = "Tmux
 vim.keymap.set("t", "<C-k>", [[<C-\><C-n>:TmuxNavigateUp<CR>]], { desc = "Tmux navigate up" })
 vim.keymap.set("t", "<C-l>", [[<C-\><C-n>:TmuxNavigateRight<CR>]], { desc = "Tmux navigate right" })
 
-vim.keymap.set("n", "<leader>i", ":Inspect<CR>", { desc = "[I]nspect" })
+vim.keymap.set("n", "<leader>i", "<cmd>TokenColor<CR>", { desc = "[I]nspect token color (float)" })
 vim.keymap.set("n", "<leader>I", ":InspectTree<CR>", { desc = "[I]nspect treesitter tree" })
 vim.keymap.set("i", "<C-p>", function()
 	vim.cmd.normal("p")
