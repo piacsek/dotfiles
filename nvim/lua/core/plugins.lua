@@ -82,9 +82,9 @@ require("nvim-ts-autotag").setup({})
 require("ghostty-mirror").setup({
 	manage_background = true,
 	overrides = {
-		-- ["high-contrast"] = {
-		-- 	cursor_color = "#ffaabb",
-		-- },
+		["high-contrast"] = {
+			background = "#ffaabb",
+		},
 	},
 	sync_on_startup = true,
 	sync_on_focus = true,
