@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# Read the selected line from stdin (select-line in copy-mode) and open the
+# URL under the cursor column ($1, captured as @gw_x before select-line).
+
+line=$(cat)
+cursor_x=${1:-0}
+
+# Byte offsets of every URL on the line.
+matches=$(printf '%s\n' "$line" | grep -obE 'https?://[^[:space:]"'"'"'<>]+')
+[ -z "$matches" ] && exit 0
+
+url=""
+count=$(printf '%s\n' "$matches" | wc -l | tr -d ' ')
+while IFS=: read -r off match; do
+  end=$((off + ${#match}))
+  if [ "$cursor_x" -ge "$off" ] && [ "$cursor_x" -lt "$end" ]; then
+    url=$match
+    break
+  fi
+done <<< "$matches"
+
+# Cursor not on a URL: fall back to the line's only URL, if there is just one.
+if [ -z "$url" ] && [ "$count" -eq 1 ]; then
+  url=${matches#*:}
+fi
+[ -z "$url" ] && exit 0
+
+# Strip trailing punctuation that's usually sentence context, not the URL.
+url=$(printf '%s' "$url" | sed -E 's/[.,;:!?)}]+$//')
+open "$url"
