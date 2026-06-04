@@ -89,8 +89,7 @@ require("ghostty-mirror").setup({
 	tmux = {
 		enabled = true,
 		overrides = {
-			["scintilla-amethyst"] = { accent = "#220022", bar = "#3a0054" },
-			-- ["scintilla-amethyst"] = { accent = "#d700ff", bar = "#3a0054" },
+			["scintilla-amethyst"] = { accent = "#d700ff", bar = "#3a0054" },
 			["high-contrast"] = { accent = "#8547ff", bar_blend = 0.3 },
 			["scintilla-sapphire"] = { accent = "#2e4eb2", bar_blend = 0.4 },
 			blue = { accent = "#5ff" },
