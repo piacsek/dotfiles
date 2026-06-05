@@ -53,6 +53,10 @@
       "src": "https://github.com/ThePrimeagen/harpoon",
       "version": "'harpoon2'"
     },
+    "hbac.nvim": {
+      "rev": "600896c302fb9232559b93200ed2caab8bd8e28e",
+      "src": "https://github.com/axkirillov/hbac.nvim"
+    },
     "high-contrast.nvim": {
       "rev": "50da55c4c74db1d8c17f70a4571ec9207e6335a2",
       "src": "https://github.com/piacsek/high-contrast.nvim"
