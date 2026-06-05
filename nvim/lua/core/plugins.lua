@@ -204,6 +204,13 @@ require("conform").setup({
 require("plugins.aerial")
 require("trouble").setup({})
 
+-- hbac: auto-close least-recently-used buffers beyond the threshold
+require("hbac").setup({
+	autoclose = true,
+	threshold = 6,
+	close_buffers_with_windows = false,
+})
+
 -- Treesitter
 vim.api.nvim_create_user_command("TSInstallParsers", function()
 	require("nvim-treesitter").install({
