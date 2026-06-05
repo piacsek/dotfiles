@@ -127,7 +127,8 @@ brew install \
   gh \
   yq \
   imagemagick \
-  bat
+  bat \
+  git-delta
 ```
 
 ### 7. Clone and Link Dotfiles
