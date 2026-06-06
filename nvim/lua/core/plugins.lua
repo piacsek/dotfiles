@@ -207,7 +207,7 @@ require("trouble").setup({})
 -- hbac: auto-close least-recently-used buffers beyond the threshold
 require("hbac").setup({
 	autoclose = true,
-	threshold = 6,
+	threshold = 4,
 	close_buffers_with_windows = false,
 })
 
