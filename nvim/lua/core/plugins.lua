@@ -260,6 +260,7 @@ require("oil").setup({
 		["<CR>"] = { "actions.select" },
 		["-"] = { "actions.parent", mode = "n" },
 		["_"] = { "actions.open_cwd", mode = "n" },
+		["~"] = { "<cmd>edit $HOME<CR>", desc = "Open home directory", mode = "n" },
 		["<leader>tt"] = {
 			callback = function()
 				local oil = require("oil")
