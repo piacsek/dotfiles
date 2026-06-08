@@ -1,5 +1,9 @@
 config-file = ?/Users/piacsek/.config/ghostty/theme-current
 font-size = 15
+# Bleed the adjacent cell color into the window padding instead of the
+# background, so the tmux status bar / content reaches the window edge with no
+# bright padding strip (very visible on light themes like scintilla-diamond).
+window-padding-color = extend
 macos-option-as-alt = true
 macos-titlebar-style = hidden
 keybind = alt+d=scroll_page_down
