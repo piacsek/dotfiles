@@ -173,9 +173,9 @@ vim.keymap.set("n", "grt", function()
 end, { desc = "LSP type definitions" })
 
 -- Rename with live preview via inc-rename.nvim
--- vim.keymap.set("n", "grn", function()
--- 	return ":IncRename " .. vim.fn.expand("<cword>")
--- end, { expr = true, desc = "LSP rename (incremental)" })
+vim.keymap.set("n", "grn", function()
+	return ":IncRename " .. vim.fn.expand("<cword>")
+end, { expr = true, desc = "LSP rename (incremental)" })
 vim.keymap.set("n", "<leader>jw", "<esc>:URLOpenUnderCursor<cr>", { desc = "[J]ump to [W]eb browser" })
 vim.keymap.set("n", "<leader>jt", "<cmd>JumpTest<CR>", { desc = "[J]ump to [T]est" })
 vim.keymap.set("", "<C-f>", function()
