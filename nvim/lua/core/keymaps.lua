@@ -333,6 +333,12 @@ vim.keymap.set("n", "<leader>A", function()
 	harpoon:list():clear()
 	harpoon:list():add()
 end)
+for i = 1, 9 do
+	vim.keymap.set("n", "<leader>" .. i, function()
+		harpoon:list():select(i)
+	end)
+end
+
 vim.keymap.set("n", "<BS>", "<Nop>")
 vim.keymap.set("n", "<BS>j", function()
 	harpoon:list():select(1)
