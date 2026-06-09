@@ -91,8 +91,8 @@ require("ghostty-mirror").setup({
 		enabled = true,
 		overrides = {
 			["scintilla-amethyst"] = { accent = "#d700ff", bar = "#3a0054" },
-				["scintilla-ruby"] = { accent = "#ff3b2e", bar = "#bd1424" },
-				["scintilla-diamond-light"] = { accent = "#7c2fd4", bar = "#fbfcff" },
+			["scintilla-ruby"] = { accent = "#ff3b2e", bar = "#bd1424" },
+			["scintilla-diamond-light"] = { accent = "#7c2fd4", bar = "#fbfcff" },
 			["high-contrast"] = { accent = "#8547ff", bar_blend = 0.3 },
 			["scintilla-sapphire"] = { accent = "#2e4eb2", bar_blend = 0.4 },
 			blue = { accent = "#5ff" },
@@ -209,7 +209,7 @@ require("trouble").setup({})
 -- hbac: auto-close least-recently-used buffers beyond the threshold
 require("hbac").setup({
 	autoclose = true,
-	threshold = 4,
+	threshold = 10,
 	close_buffers_with_windows = false,
 })
 
