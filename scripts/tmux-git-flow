@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+# <M-g> flow: open lazygit in the tmux popup; if changes are staged when it
+# exits, auto-commit (Claude message via scripts/auto_commit) and push in the
+# background. Progress is reported through a state file that the tmux status
+# widget reads; states: committing -> pushing -> done | error.
+set -uo pipefail
+
+STATE_DIR="$HOME/.cache/tmux-git-flow"
+STATE_FILE="$STATE_DIR/state"
+LOG_FILE="$STATE_DIR/log"
+mkdir -p "$STATE_DIR"
+
+refresh_status() {
+	# refresh-client needs an explicit client when run from a detached
+	# background process, so hit every attached client.
+	tmux list-clients -F '#{client_tty}' 2>/dev/null | while read -r tty; do
+		tmux refresh-client -S -t "$tty" 2>/dev/null
+	done
+}
+
+set_state() {
+	printf '%s\n' "$1" >"$STATE_FILE"
+	refresh_status
+}
+
+clear_state() {
+	rm -f "$STATE_FILE"
+	refresh_status
+}
+
+run_flow() {
+	set_state committing
+	if ! "$HOME/dotfiles/scripts/auto_commit" >>"$LOG_FILE" 2>&1; then
+		set_state error
+		exit 1
+	fi
+
+	set_state pushing
+	if git rev-parse --abbrev-ref '@{upstream}' >/dev/null 2>&1; then
+		push_ok=$(git push >>"$LOG_FILE" 2>&1 && echo y)
+	else
+		push_ok=$(git push --set-upstream origin HEAD >>"$LOG_FILE" 2>&1 && echo y)
+	fi
+	if [[ "$push_ok" != "y" ]]; then
+		set_state error
+		exit 1
+	fi
+
+	set_state done
+	sleep 5
+	# Only clear if no newer flow has overwritten the state meanwhile.
+	[[ "$(cat "$STATE_FILE" 2>/dev/null)" == "done" ]] && clear_state
+}
+
+if [[ "${1:-}" == "--flow" ]]; then
+	run_flow
+	exit 0
+fi
+
+clear_state # a new run clears any stale done/error state
+lazygit
+
+# Trigger the background flow only when inside a repo with staged changes.
+if git rev-parse --git-dir >/dev/null 2>&1 && ! git diff --cached --quiet; then
+	: >"$LOG_FILE"
+	nohup "$0" --flow >/dev/null 2>&1 &
+fi
