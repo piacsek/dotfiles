@@ -256,6 +256,17 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
+-- JSX/TSX-aware commentstring for built-in gcc/gc
+vim.g.skip_ts_context_commentstring_module = true
+require("ts_context_commentstring").setup({ enable_autocmd = false })
+
+local get_option = vim.filetype.get_option
+vim.filetype.get_option = function(filetype, option)
+	return option == "commentstring"
+			and require("ts_context_commentstring.internal").calculate_commentstring()
+		or get_option(filetype, option)
+end
+
 -- Oil
 require("oil").setup({
 	view_options = { show_hidden = true },
