@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Git segment for the tmux status line. While a tmux-git-flow run is in
+# flight its state wins; otherwise show whether the current pane's repo
+# has uncommitted changes. Prints nothing (no separator) when clean or
+# outside a repo, so the segment disappears entirely.
+# Usage: tmux-git-widget '#{pane_current_path}'
+set -uo pipefail
+
+STATE_FILE="$HOME/.cache/tmux-git-flow/state"
+
+case "$(cat "$STATE_FILE" 2>/dev/null)" in
+committing) echo "🤖 committing |" && exit 0 ;;
+pushing) echo "🚀 pushing |" && exit 0 ;;
+done) echo "✅ pushed |" && exit 0 ;;
+error) echo "💥 flow failed |" && exit 0 ;;
+esac
+
+dir="${1:-}"
+[[ -d "$dir" ]] || exit 0
+if git -C "$dir" rev-parse --is-inside-work-tree >/dev/null 2>&1 &&
+	[[ -n "$(git -C "$dir" status --porcelain | head -1)" ]]; then
+	echo "📝 |"
+fi
