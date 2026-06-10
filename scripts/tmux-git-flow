@@ -68,8 +68,8 @@ lazygit
 
 # Trigger the background flow only when inside a repo with staged changes.
 if git rev-parse --git-dir >/dev/null 2>&1 && ! git diff --cached --quiet; then
-	echo "parent: forking flow from $PWD" >>/tmp/gf-test/parent.log
 	: >"$LOG_FILE"
-	nohup bash -x "$0" --flow >/tmp/gf-test/trace2.log 2>&1 &
-	echo "parent: forked pid $!" >>/tmp/gf-test/parent.log
+	# Hand the flow to the tmux server: anything forked from inside the
+	# popup gets killed in its teardown (SIGHUP races nohup and loses).
+	tmux run-shell -b "$(printf 'cd %q && exec %q --flow' "$PWD" "$0")"
 fi
