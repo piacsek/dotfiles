@@ -53,23 +53,12 @@ vim.keymap.set({ "n", "i", "v", "c" }, "<Down>", "<Nop>", arrow_disabling_opts)
 vim.keymap.set({ "n", "i", "v", "c" }, "<Left>", "<Nop>", arrow_disabling_opts)
 vim.keymap.set({ "n", "i", "v", "c" }, "<Right>", "<Nop>", arrow_disabling_opts)
 
-vim.keymap.set({ "n" }, "<M-r>", function()
-	local restart_cmd = "mksession! Session.vim | wall | restart source Session.vim"
-	-- own servername looks like $TMPDIR/nvim.<user>/<rand>/nvim.<pid>.0;
-	-- sibling instances live under the same nvim.<user> dir
-	local own = vim.v.servername
-	local sock_dir = vim.fn.fnamemodify(own, ":h:h")
-	for _, sock in ipairs(vim.fn.glob(sock_dir .. "/*/nvim.*.0", true, true)) do
-		if sock ~= own then
-			local ok, chan = pcall(vim.fn.sockconnect, "pipe", sock, { rpc = true })
-			if ok and chan > 0 then
-				pcall(vim.rpcnotify, chan, "nvim_command", restart_cmd)
-			end
-		end
-	end
-	vim.wait(100) -- let the notifications flush before this instance goes down
-	vim.cmd(restart_cmd)
-end, { desc = "[R]estarts all nvim instances" })
+vim.keymap.set(
+	{ "n" },
+	"<M-r>",
+	":mksession! Session.vim | wall | restart source Session.vim <CR>",
+	{ desc = "[R]estarts nvim" }
+)
 vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { desc = "[Y]ank to system clipboard" })
 vim.keymap.set("n", "<leader>yp", function()
 	local abs = vim.fn.expand("%:p")
