@@ -307,14 +307,6 @@ vim.keymap.set("n", "<leader>gd", function()
 		win = { style = "float", width = 0.9, height = 0.9 },
 	})
 end, { desc = "Diff current file vs origin/main" })
-vim.keymap.set("n", "<leader>gg", function()
-	local file_dir = vim.fn.expand("%:p:h")
-	if file_dir == "" then
-		file_dir = vim.fn.getcwd()
-	end
-	local git_root = vim.fs.root(file_dir, ".git") or file_dir
-	vim.system({ "tmux", "display-popup", "-E", "-w", "90%", "-h", "90%", "-d", git_root, "lazygit" })
-end, { desc = "Lazygit" })
 vim.keymap.set("n", "<leader>N", function()
 	Snacks.win({
 		file = vim.api.nvim_get_runtime_file("doc/news.txt", false)[1],
