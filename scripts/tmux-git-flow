@@ -1,19 +1,14 @@
 #!/usr/bin/env bash
 # <M-g> flow: open lazygit in the tmux popup; if changes are staged when it
 # exits, auto-commit (Claude message via scripts/auto_commit) and push in the
-# background. Each repo gets its own state file under state.d/ (read by
-# tmux-git-widget) and its own log under logs/.
-# States: committing -> pushing -> done | error.
+# background. Progress is reported through a state file that the tmux status
+# widget reads; states: committing -> pushing -> done | error.
 set -uo pipefail
 
 STATE_DIR="$HOME/.cache/tmux-git-flow"
-STATES="$STATE_DIR/state.d"
-LOGS="$STATE_DIR/logs"
-mkdir -p "$STATES" "$LOGS"
-
-repo_key() { # <repo-root> -> stable, human-readable file name
-	echo "$(basename "$1")-$(md5 -q -s "$1" | cut -c1-8)"
-}
+STATE_FILE="$STATE_DIR/state"
+LOG_FILE="$STATE_DIR/log"
+mkdir -p "$STATE_DIR"
 
 refresh_status() {
 	# refresh-client needs an explicit client when run from a detached
@@ -23,68 +18,57 @@ refresh_status() {
 	done
 }
 
-set_state() { # <state-file> <state>
-	printf '%s\n' "$2" >"$1"
+set_state() {
+	printf '%s\n' "$1" >"$STATE_FILE"
 	refresh_status
 }
 
-clear_state() { # <state-file>
-	rm -f "$1"
+clear_state() {
+	rm -f "$STATE_FILE"
 	refresh_status
 }
 
 run_flow() {
-	local root key state_file log_file
-	root=$(git rev-parse --show-toplevel 2>/dev/null) || return 1
-	key=$(repo_key "$root")
-	state_file="$STATES/$key"
-	log_file="$LOGS/$key.log"
-	: >"$log_file"
-
-	set_state "$state_file" committing
-	if ! "$HOME/dotfiles/scripts/auto_commit" >>"$log_file" 2>&1; then
-		set_state "$state_file" error
-		return 1
+	set_state committing
+	if ! "$HOME/dotfiles/scripts/auto_commit" >>"$LOG_FILE" 2>&1; then
+		set_state error
+		exit 1
 	fi
 
-	set_state "$state_file" pushing
+	set_state pushing
 	# Explicitly push only the current branch; -u sets the upstream on the
 	# first push so the pull --rebase fallback below always has a target.
-	if ! git push -u origin HEAD >>"$log_file" 2>&1; then
+	if ! git push -u origin HEAD >>"$LOG_FILE" 2>&1; then
 		# Remote likely ahead: rebase on top of it and retry once.
 		# --autostash because the working tree may hold unstaged changes.
-		if ! git pull --rebase --autostash >>"$log_file" 2>&1; then
-			git rebase --abort >>"$log_file" 2>&1
-			set_state "$state_file" error
-			return 1
+		if ! git pull --rebase --autostash >>"$LOG_FILE" 2>&1; then
+			git rebase --abort >>"$LOG_FILE" 2>&1
+			set_state error
+			exit 1
 		fi
-		if ! git push -u origin HEAD >>"$log_file" 2>&1; then
-			set_state "$state_file" error
-			return 1
+		if ! git push -u origin HEAD >>"$LOG_FILE" 2>&1; then
+			set_state error
+			exit 1
 		fi
 	fi
 
-	set_state "$state_file" done
+	set_state done
 	sleep 5
-	# Only clear if no newer flow for this repo overwrote the state.
-	[[ "$(cat "$state_file" 2>/dev/null)" == "done" ]] && clear_state "$state_file"
-	return 0
+	# Only clear if no newer flow has overwritten the state meanwhile.
+	[[ "$(cat "$STATE_FILE" 2>/dev/null)" == "done" ]] && clear_state
 }
 
 if [[ "${1:-}" == "--flow" ]]; then
 	run_flow
-	exit $?
+	exit 0
 fi
 
-# Opening the popup in a repo dismisses that repo's stale done/error marker;
-# flows in other repos are untouched.
-root=$(git rev-parse --show-toplevel 2>/dev/null || true)
-[[ -n "$root" ]] && clear_state "$STATES/$(repo_key "$root")"
-
+clear_state # a new run clears any stale done/error state
 lazygit
 
 # Trigger the background flow only when inside a repo with staged changes.
-if [[ -n "$root" ]] && ! git diff --cached --quiet; then
+if git rev-parse --git-dir >/dev/null 2>&1 && ! git diff --cached --quiet; then
+	: >"$LOG_FILE"
 	# Hand the flow to the tmux server: anything forked from inside the
 	# popup gets killed in its teardown (SIGHUP races nohup and loses).
 	tmux run-shell -b "$(printf 'cd %q && exec %q --flow' "$PWD" "$0")"
