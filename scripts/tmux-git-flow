@@ -36,14 +36,20 @@ run_flow() {
 	fi
 
 	set_state pushing
-	if git rev-parse --abbrev-ref '@{upstream}' >/dev/null 2>&1; then
-		push_ok=$(git push >>"$LOG_FILE" 2>&1 && echo y)
-	else
-		push_ok=$(git push --set-upstream origin HEAD >>"$LOG_FILE" 2>&1 && echo y)
-	fi
-	if [[ "$push_ok" != "y" ]]; then
-		set_state error
-		exit 1
+	# Explicitly push only the current branch; -u sets the upstream on the
+	# first push so the pull --rebase fallback below always has a target.
+	if ! git push -u origin HEAD >>"$LOG_FILE" 2>&1; then
+		# Remote likely ahead: rebase on top of it and retry once.
+		# --autostash because the working tree may hold unstaged changes.
+		if ! git pull --rebase --autostash >>"$LOG_FILE" 2>&1; then
+			git rebase --abort >>"$LOG_FILE" 2>&1
+			set_state error
+			exit 1
+		fi
+		if ! git push -u origin HEAD >>"$LOG_FILE" 2>&1; then
+			set_state error
+			exit 1
+		fi
 	fi
 
 	set_state done
