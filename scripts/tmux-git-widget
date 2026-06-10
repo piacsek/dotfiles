@@ -1,56 +1,25 @@
 #!/usr/bin/env bash
-# Git segment for the tmux status line. Aggregates all in-flight
-# tmux-git-flow runs (one state file per repo under state.d/): a single
-# flow shows its state by name, multiple flows show per-state counts.
-# Also shows the changed-file count for the current pane's repo. Prints
-# nothing when there is nothing to report, so the segment disappears.
+# Git segment for the tmux status line. While a tmux-git-flow run is in
+# flight its state wins; otherwise show whether the current pane's repo
+# has uncommitted changes. Prints nothing (no separator) when clean or
+# outside a repo, so the segment disappears entirely.
 # Usage: tmux-git-widget '#{pane_current_path}'
 set -uo pipefail
 
-STATES="$HOME/.cache/tmux-git-flow/state.d"
+STATE_FILE="$HOME/.cache/tmux-git-flow/state"
 
-now=$(date +%s)
-committing=0 pushing=0 finished=0 failed=0
-for f in "$STATES"/*; do
-	[[ -e "$f" ]] || continue
-	s=$(cat "$f" 2>/dev/null)
-	# Drop in-flight markers from flows that died without cleaning up.
-	if [[ "$s" == committing || "$s" == pushing ]]; then
-		mtime=$(stat -f %m "$f" 2>/dev/null || echo 0)
-		if ((now - mtime > 600)); then
-			rm -f "$f"
-			continue
-		fi
-	fi
-	case "$s" in
-	committing) committing=$((committing + 1)) ;;
-	pushing) pushing=$((pushing + 1)) ;;
-	done) finished=$((finished + 1)) ;;
-	error) failed=$((failed + 1)) ;;
-	*) rm -f "$f" ;;
-	esac
-done
-total=$((committing + pushing + finished + failed))
-
-parts=""
-if ((total == 1)); then
-	((committing)) && parts="🤖 committing"
-	((pushing)) && parts="⬆️ pushing"
-	((finished)) && parts="✅ pushed"
-	((failed)) && parts="⚠️ flow failed"
-elif ((total > 1)); then
-	((committing)) && parts+="🤖 $committing "
-	((pushing)) && parts+="⬆️ $pushing "
-	((finished)) && parts+="✅ $finished "
-	((failed)) && parts+="⚠️ $failed "
-	parts="${parts% }"
-fi
+case "$(cat "$STATE_FILE" 2>/dev/null)" in
+committing) echo "🤖 committing |" && exit 0 ;;
+pushing) echo "⬆️ pushing |" && exit 0 ;;
+done) echo "✅ pushed |" && exit 0 ;;
+error) echo "⚠️ flow failed |" && exit 0 ;;
+esac
 
 dir="${1:-}"
-if [[ -d "$dir" ]] && git -C "$dir" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+[[ -d "$dir" ]] || exit 0
+if git -C "$dir" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
 	count=$(git -C "$dir" status --porcelain | wc -l | tr -d ' ')
-	((count > 0)) && parts="${parts:+$parts }📝 $count"
+	if [[ "$count" -gt 0 ]]; then
+		echo "📝 $count |"
+	fi
 fi
-
-[[ -n "$parts" ]] && echo "$parts |"
-exit 0
