@@ -4,6 +4,7 @@ end
 
 vim.pack.add({
 	gh("numToStr/Comment.nvim"),
+	gh("JoosepAlviste/nvim-ts-context-commentstring"),
 	gh("windwp/nvim-autopairs"),
 	gh("echasnovski/mini.ai"),
 	gh("echasnovski/mini.icons"),
