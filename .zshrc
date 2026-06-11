@@ -7,6 +7,8 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 export RUBY_CONFIGURE_OPTS="--with-libyaml-dir=$(brew --prefix libyaml)"
 export EDITOR=nvim
 export VISUAL=nvim
+# Syntax-highlighted man pages via bat
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 # ZSH customization
 # Enable prompt substitution
@@ -41,6 +43,7 @@ eval "$(zoxide init zsh)"
 
 # Aliases
 alias vim='nvim'
+alias cat='bat -pp' # plain style, no pager — safe drop-in for cat
 alias dotfiles='cd $HOME/dotfiles/'
 alias lz='lazygit'
 alias tx='tmux-sessionizer'
