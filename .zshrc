@@ -89,13 +89,6 @@ source_first() {
 	done
 }
 
-# Autosuggestions (ghost-text from history; accept with right-arrow)
-source_first \
-	/opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh \
-	/home/linuxbrew/.linuxbrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh \
-	/usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh \
-	/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-
 # Syntax highlighting — must stay the last thing sourced in this file
 source_first \
 	/opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \

@@ -130,7 +130,6 @@ brew install \
   bat \
   git-delta \
   zoxide \
-  zsh-autosuggestions \
   zsh-syntax-highlighting
 ```
 
