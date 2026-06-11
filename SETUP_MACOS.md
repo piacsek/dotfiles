@@ -128,7 +128,10 @@ brew install \
   yq \
   imagemagick \
   bat \
-  git-delta
+  git-delta \
+  zoxide \
+  zsh-autosuggestions \
+  zsh-syntax-highlighting
 ```
 
 ### 7. Clone and Link Dotfiles
