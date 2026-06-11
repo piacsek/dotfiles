@@ -36,6 +36,9 @@ fi
 # Init direnv
 eval "$(direnv hook zsh)"
 
+# Init zoxide (smarter cd: `z <partial-dir-name>`, `zi` for interactive pick)
+eval "$(zoxide init zsh)"
+
 # Aliases
 alias vim='nvim'
 alias dotfiles='cd $HOME/dotfiles/'
@@ -73,3 +76,9 @@ fi
 # Fzf
 
 source <(fzf --zsh)
+
+# Autosuggestions (ghost-text from history; accept with right-arrow)
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# Syntax highlighting — must stay the last thing sourced in this file
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
