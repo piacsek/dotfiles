@@ -77,8 +77,28 @@ fi
 
 source <(fzf --zsh)
 
+# Source the first existing file among the candidates; silently skips if the
+# plugin isn't installed. Covers macOS brew, Linuxbrew, Debian/Fedora, Arch.
+source_first() {
+	local f
+	for f in "$@"; do
+		if [[ -f "$f" ]]; then
+			source "$f"
+			return
+		fi
+	done
+}
+
 # Autosuggestions (ghost-text from history; accept with right-arrow)
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source_first \
+	/opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh \
+	/home/linuxbrew/.linuxbrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh \
+	/usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh \
+	/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Syntax highlighting — must stay the last thing sourced in this file
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source_first \
+	/opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
+	/home/linuxbrew/.linuxbrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
+	/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
+	/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
