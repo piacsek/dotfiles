@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# Restart gh-dash inside tmux when the Ghostty theme changes, so it relaunches
+# through the gh() wrapper in .zshrc and picks up the regenerated theme overlay
+# (scripts/gh-dash-theme). gh-dash reads its config once at startup and has no
+# reload signal, so a restart is the only refresh path.
+# Triggered by launchd (com.gh-dash.theme-refresh) watching
+# ~/.config/ghostty/theme-current. No-op when tmux or gh-dash isn't running.
+set -uo pipefail
+export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+
+command -v tmux >/dev/null || exit 0
+tmux has-session 2>/dev/null || exit 0
+
+panes=$(tmux list-panes -a -F '#{pane_id} #{pane_pid}')
+
+# walk up the process tree until we hit a tmux pane shell
+pane_for_pid() {
+	local p=$1 match
+	while [[ -n "$p" && "$p" -gt 1 ]]; do
+		match=$(awk -v pid="$p" '$2 == pid { print $1 }' <<<"$panes")
+		if [[ -n "$match" ]]; then
+			echo "$match"
+			return
+		fi
+		p=$(ps -o ppid= -p "$p" 2>/dev/null | tr -d ' ')
+	done
+}
+
+for pid in $(pgrep -x gh-dash); do
+	pane=$(pane_for_pid "$pid")
+	[[ -n "$pane" ]] || continue
+	# Escape closes any open input/prompt; separate send avoids the two keys
+	# being read together as alt+q. q quits (confirmQuit: false).
+	tmux send-keys -t "$pane" Escape
+	sleep 0.3
+	tmux send-keys -t "$pane" q
+	for _ in $(seq 1 20); do
+		kill -0 "$pid" 2>/dev/null || break
+		sleep 0.25
+	done
+	if kill -0 "$pid" 2>/dev/null; then
+		# didn't exit (e.g. focus in a text input) — leave it alone
+		continue
+	fi
+	tmux send-keys -t "$pane" 'gh dash' Enter
+done
