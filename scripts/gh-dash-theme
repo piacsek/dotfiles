@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+# Emit a gh-dash theme overlay (YAML) derived from the current Ghostty theme,
+# so gh dash launches matching the terminal's light/dark colors instead of
+# gh-dash's built-in dark defaults. Consumed by the gh() wrapper in .zshrc,
+# which yq-merges it between the base config and the local override.
+# Falls back to `{}` (no overlay) if the theme can't be resolved.
+set -uo pipefail
+
+fallback() {
+	echo '{}'
+	exit 0
+}
+
+name=$(awk -F' *= *' '$1 == "theme" { print $2; exit }' "$HOME/.config/ghostty/theme-current" 2>/dev/null)
+[[ -n "${name:-}" ]] || fallback
+
+theme_file=""
+for dir in "$HOME/.config/ghostty/themes" "$HOME/dotfiles/ghostty-themes" \
+	"/Applications/Ghostty.app/Contents/Resources/ghostty/themes"; do
+	if [[ -f "$dir/$name" ]]; then
+		theme_file="$dir/$name"
+		break
+	fi
+done
+[[ -n "$theme_file" ]] || fallback
+
+color() { awk -F' *= *' -v k="$1" '$1 == k { sub(/^#/, "", $2); print $2; exit }' "$theme_file"; }
+fg=$(color foreground)
+bg=$(color background)
+[[ "$fg" =~ ^[0-9a-fA-F]{6}$ && "$bg" =~ ^[0-9a-fA-F]{6}$ ]] || fallback
+
+# blend N -> hex color that is N% foreground mixed into background
+blend() {
+	local pct=$1 out="#" i f b
+	for i in 0 2 4; do
+		f=$((16#${fg:$i:2}))
+		b=$((16#${bg:$i:2}))
+		printf -v out '%s%02x' "$out" $(((f * pct + b * (100 - pct)) / 100))
+	done
+	echo "$out"
+}
+
+# warning/error/success use ANSI palette indices so the terminal resolves
+# them from the active theme's red/green slots.
+cat <<EOF
+theme:
+  colors:
+    text:
+      primary: "#$fg"
+      secondary: "$(blend 80)"
+      inverted: "#$bg"
+      faint: "$(blend 55)"
+      warning: "1"
+      error: "1"
+      success: "2"
+      actor: "$(blend 85)"
+    background:
+      selected: "$(blend 14)"
+    border:
+      primary: "$(blend 40)"
+      secondary: "$(blend 25)"
+      faint: "$(blend 15)"
+EOF
