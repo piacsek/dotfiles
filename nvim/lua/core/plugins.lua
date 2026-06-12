@@ -43,8 +43,6 @@ vim.pack.add({
 	gh("stevearc/aerial.nvim"),
 	gh("axkirillov/hbac.nvim"),
 	-- Colorschemes
-	gh("scottmckendry/cyberdream.nvim"),
-	gh("catppuccin/nvim"),
 	gh("piacsek/high-contrast.nvim"),
 	gh("piacsek/scintilla.nvim"),
 	gh("AlexvZyl/nordic.nvim"),
@@ -262,8 +260,7 @@ require("ts_context_commentstring").setup({ enable_autocmd = false })
 
 local get_option = vim.filetype.get_option
 vim.filetype.get_option = function(filetype, option)
-	return option == "commentstring"
-			and require("ts_context_commentstring.internal").calculate_commentstring()
+	return option == "commentstring" and require("ts_context_commentstring.internal").calculate_commentstring()
 		or get_option(filetype, option)
 end
 
