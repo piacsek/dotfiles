@@ -1,34 +1,16 @@
 nvim roadmap:
 
-- disable arrow keys;
-- map <leader>u to "undo git changes";
-- map <leader>gy to "copy github url";
-- map <leader>go to "open github url";
-- map <leader>/ to "gcc";
-- map <leader>h to "display docs";
-- map <leader>ft to "find test file";
-- map <leader><BS> to "save & maybe re-run test";
-- map <leader>l* to lsp actions:
-    - <leader>ll shows logs;
-    - <leader>li shows info;
-- Y == y$;
-- V == v$;
+- snacks:
+  - assess scratches;
+  - assess terminal;
 
-- have topbar display the complete filepath;
-- add https://github.com/stevearc/stickybuf.nvim plugin;
-- add symbols explorer plugin(aerial):
-    - as a popup, just like Idea's FileStructurePopup;
-    - make sure you can type to filter without additional keystrokes;
-    - nice to have: colorful icons to distinguished between private & public;
+- fix singleton terminal;
 
-- add plugin to run custom scripts:
-    - make sure alternating between those buffers is smooth 😎;
+- https://github.com/piacsek/buddy.nvim!
+   - manage claude buffers;
+	 - send text to the current conversation;
+	 - check if claude code exposes any events like opencode does;
 
-- add a file explorer plugin;
-- explore & customize telescope;
-- add sneak plugin;
-- add matchit plugin;
-- add a plugin for scratch files;
 - add a plugin to connect to Postgres;
-- figure out find/replace within buffer;
-- figure out find/replace across files(quickfix list);
+
+
