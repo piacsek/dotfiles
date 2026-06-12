@@ -1,5 +1,5 @@
 git:
-  autoFetch: false
+  autoFetch: true
   log:
     order: default
   pagers:
