@@ -411,6 +411,8 @@ vim.g["test#preserve_screen"] = 0
 vim.g["test#echo_command"] = 0
 vim.g["test#neovim#term_position"] = "topleft vsplit"
 vim.g["test#neovim_sticky#kill_previous"] = 1
+-- playwright-bdd (.feature) runner, defined in autoload/test/javascript/playwrightbdd.vim
+vim.g["test#custom_runners"] = { JavaScript = { "PlaywrightBdd" } }
 
 -- Snacks
 --
