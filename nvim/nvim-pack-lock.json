@@ -32,10 +32,6 @@
       "rev": "086a40dc7ed8242c03be9f47fbcee68699cc2395",
       "src": "https://github.com/stevearc/conform.nvim"
     },
-    "cyberdream.nvim": {
-      "rev": "a68ffa6af98bf1fc88f33a071c51a188ec85c725",
-      "src": "https://github.com/scottmckendry/cyberdream.nvim"
-    },
     "fzf-lua": {
       "rev": "abacb0693d7a37de9e85e6fcb2d22d848cb75cef",
       "src": "https://github.com/ibhagwan/fzf-lua"
@@ -104,10 +100,6 @@
     "nordic.nvim": {
       "rev": "4ce6bad95fde832f9bd10b991de846047a144628",
       "src": "https://github.com/AlexvZyl/nordic.nvim"
-    },
-    "nvim": {
-      "rev": "426dbebe06b5c69fd846ceb17b42e12f890aedf1",
-      "src": "https://github.com/catppuccin/nvim"
     },
     "nvim-autopairs": {
       "rev": "59bce2eef357189c3305e25bc6dd2d138c1683f5",
