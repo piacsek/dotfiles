@@ -28,3 +28,7 @@ customCommands:
     command: "$HOME/dotfiles/scripts/lazygit-sync-branches.sh delete"
     output: log
     loadingText: "Deleting merged branches..."
+    prompts:
+      - type: "confirm"
+        title: "Delete merged branches"
+        body: "Delete all local branches already merged into main (including squash-merges)? This force-deletes squash-merged branches."
