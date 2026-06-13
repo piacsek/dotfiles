@@ -16,3 +16,9 @@ customCommands:
     description: "Open file in nvim on tmux window 1"
     command: "$HOME/dotfiles/scripts/lazygit-open-in-nvim.sh '{{.SelectedCommitFile.Name}}'"
     output: none
+  - key: "<c-f>"
+    context: "localBranches"
+    description: "Fast-forward all branches with upstreams"
+    command: "$HOME/dotfiles/scripts/lazygit-sync-branches.sh"
+    output: log
+    loadingText: "Syncing branches..."
