@@ -34,6 +34,7 @@
       "mcp__claude_ai_Linear__search_documentation"
     ]
   },
+  "model": "opus[1m]",
   "statusLine": {
     "type": "command",
     "command": "bash /Users/piacsek/.claude/statusline-command.sh"
@@ -46,6 +47,5 @@
   "theme": "auto",
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true,
-  "model": "claude-fable-5[1m]"
+  "voiceEnabled": true
 }
