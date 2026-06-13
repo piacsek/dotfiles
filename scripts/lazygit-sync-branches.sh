@@ -55,7 +55,6 @@ if [ -n "$main" ]; then
 
     base=$(git merge-base "$main" "$local") || continue
     squashed=$(git commit-tree "$(git rev-parse "$local^{tree}")" -p "$base" -m _) || continue
-    if [ "$(git cherry "$main" "$squashed")" = "-"* ] 2>/dev/null; then :; fi
     case "$(git cherry "$main" "$squashed")" in
       "-"*) git branch -D "$local" --quiet && echo "deleted: $local (squash-merged into $main)" ;;
     esac
