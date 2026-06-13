@@ -1,10 +1,16 @@
 #!/usr/bin/env bash
-# Fast-forward every local branch that tracks an upstream, except the
-# checked-out one (git refuses to move it; pull it normally), then delete
-# any branch already merged into main.
+# Branch maintenance for lazygit. Two modes:
+#
+#   sync   (default) -- fetch all remotes, then fast-forward every local
+#                        branch that tracks an upstream, except the checked-out
+#                        one (git refuses to move it; pull it normally).
+#   delete           -- delete every local branch already integrated into main,
+#                        including squash/rebase merges.
+#
+# Usage: lazygit-sync-branches.sh [sync|delete]
 set -uo pipefail
 
-git fetch --all --prune --quiet
+mode="${1:-sync}"
 
 current=$(git branch --show-current)
 
@@ -17,17 +23,21 @@ for cand in main master; do
   fi
 done
 
-git for-each-ref --format='%(refname:short) %(upstream:short)' refs/heads |
-while read -r local upstream; do
-  [ -n "$upstream" ] || continue
-  [ "$local" = "$current" ] && continue
+sync_branches() {
+  git fetch --all --prune --quiet
 
-  if git fetch . "refs/remotes/$upstream:refs/heads/$local" --quiet 2>/dev/null; then
-    echo "ff: $local <- $upstream"
-  else
-    echo "skipped: $local (diverged or up to date)"
-  fi
-done
+  git for-each-ref --format='%(refname:short) %(upstream:short)' refs/heads |
+  while read -r local upstream; do
+    [ -n "$upstream" ] || continue
+    [ "$local" = "$current" ] && continue
+
+    if git fetch . "refs/remotes/$upstream:refs/heads/$local" --quiet 2>/dev/null; then
+      echo "ff: $local <- $upstream"
+    else
+      echo "skipped: $local (diverged or up to date)"
+    fi
+  done
+}
 
 # Delete branches already integrated into main, by two methods:
 #
@@ -42,7 +52,12 @@ done
 #      branch's content is in main even though its commits aren't. This needs
 #      `git branch -D` (force) -- `-d` would refuse -- so we only force-delete
 #      after the patch-id check confirms equivalence.
-if [ -n "$main" ]; then
+delete_merged() {
+  if [ -z "$main" ]; then
+    echo "no main/master branch found; nothing to do"
+    return
+  fi
+
   git for-each-ref --format='%(refname:short)' refs/heads |
   while read -r local; do
     [ "$local" = "$main" ] && continue
@@ -59,4 +74,10 @@ if [ -n "$main" ]; then
       "-"*) git branch -D "$local" --quiet && echo "deleted: $local (squash-merged into $main)" ;;
     esac
   done
-fi
+}
+
+case "$mode" in
+  sync)   sync_branches ;;
+  delete) delete_merged ;;
+  *) echo "usage: $(basename "$0") [sync|delete]" >&2; exit 2 ;;
+esac
