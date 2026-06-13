@@ -2,7 +2,7 @@ elixir 1.19.3-otp-28
 erlang 28.1.1
 gcloud 453.0.0
 java zulu-jre-javafx-21.28.85
-k9s 0.50.9
+k9s 0.51.0
 nodejs 24.12.0
 postgres 14.19
 python 3.9.18
