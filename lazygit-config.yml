@@ -19,6 +19,12 @@ customCommands:
   - key: "<c-f>"
     context: "localBranches"
     description: "Fast-forward all branches with upstreams"
-    command: "$HOME/dotfiles/scripts/lazygit-sync-branches.sh"
+    command: "$HOME/dotfiles/scripts/lazygit-sync-branches.sh sync"
     output: log
     loadingText: "Syncing branches..."
+  - key: "<c-x>"
+    context: "localBranches"
+    description: "Delete all branches merged into main"
+    command: "$HOME/dotfiles/scripts/lazygit-sync-branches.sh delete"
+    output: log
+    loadingText: "Deleting merged branches..."
