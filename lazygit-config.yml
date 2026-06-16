@@ -4,7 +4,7 @@ git:
     order: default
   pagers:
     - colorArg: always
-      pager: delta --paging=never
+      pager: delta --paging=never --detect-dark-light=always
 customCommands:
   - key: "O"
     context: "files"
