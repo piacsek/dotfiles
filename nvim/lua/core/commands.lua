@@ -1,3 +1,7 @@
+vim.api.nvim_create_user_command("R", function()
+	vim.cmd("mksession! Session.vim | wall | restart source Session.vim")
+end, { desc = "Restart nvim (save session, then source Session.vim)" })
+
 vim.api.nvim_create_user_command("LspInfo", "vertical checkhealth vim.lsp", { desc = "Show LSP health check" })
 vim.api.nvim_create_user_command("LspLog", function()
 	vim.cmd.edit(vim.lsp.log.get_filename())
