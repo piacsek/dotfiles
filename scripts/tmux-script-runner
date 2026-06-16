@@ -37,7 +37,16 @@ else
 	cmd="$choice"
 fi
 
+# A self-managing script spawns its own pane/window, so the wrapper must exit
+# to leave a single pane. Everything else runs in place, then drops to an
+# interactive shell so the pane survives a fast-exiting command.
+if [[ "$src" == dir ]] && grep -qE 'tmux[[:space:]]+(split-window|new-window|new-session)' "$cmd" 2>/dev/null; then
+	run="$cmd"
+else
+	run="$cmd; exec \$SHELL"
+fi
+
 case "$key" in
-ctrl-w) tmux new-window "$cmd" ;;
-*) tmux split-window "$cmd" ;;
+ctrl-w) tmux new-window "$run" ;;
+*) tmux split-window "$run" ;;
 esac
