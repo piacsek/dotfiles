@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# fzf script selector for a tmux popup (bound to M-r).
+#
+#   <CR>   run the script in a new pane in the current window
+#   <C-w>  run the script in a new window in the current session
+#
+# Source list: a per-directory `.available-scripts` file if present (each line
+# a runnable command), otherwise the contents of ~/scripts (run by full path).
+#
+# Arg $1 is the calling pane id (#{pane_id}), so spawned panes/windows land in
+# the right window/session regardless of the popup being its own overlay.
+set -euo pipefail
+
+target_pane="${1:-}"
+
+if [[ -f .available-scripts ]]; then
+	src=file
+	list=$(grep -vE '^[[:space:]]*(#|$)' .available-scripts || true)
+else
+	src=dir
+	list=$(ls -1 "$HOME/scripts" 2>/dev/null || true)
+fi
+
+[[ -z "$list" ]] && { echo "No scripts found."; sleep 1; exit 0; }
+
+out=$(printf '%s\n' "$list" | fzf --prompt='Scripts> ' --expect=ctrl-w) || exit 0
+key=$(printf '%s\n' "$out" | head -1)
+choice=$(printf '%s\n' "$out" | sed -n '2p')
+[[ -z "$choice" ]] && exit 0
+
+if [[ "$src" == dir ]]; then
+	cmd="$HOME/scripts/$choice"
+else
+	cmd="$choice"
+fi
+
+session=$(tmux display -p ${target_pane:+-t "$target_pane"} '#{session_name}')
+
+case "$key" in
+ctrl-w) tmux new-window -t "$session:" "$cmd" ;;
+*) tmux split-window ${target_pane:+-t "$target_pane"} "$cmd" ;;
+esac
