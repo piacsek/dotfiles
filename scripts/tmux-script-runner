@@ -36,11 +36,15 @@ key=$(printf '%s\n' "$out" | head -1)
 cmd=$(printf '%s\n' "$out" | sed -n '2p')
 [[ -z "$cmd" ]] && exit 0
 
-# <C-t>: send the command to the floating "scratch" session's current pane
-# (create it detached if it doesn't exist yet — M-t toggles its popup).
+# <C-t>: run the command in the floating "scratch" session (create it detached
+# if needed), then pop its float open. Popups can't nest, so the float is opened
+# by a detached job that outlives this (M-r) popup — it waits for it to close,
+# then displays scratch (same geometry as the M-t binding).
 if [[ "$key" == ctrl-t ]]; then
 	tmux has-session -t scratch 2>/dev/null || tmux new-session -d -s scratch
 	tmux send-keys -t scratch "$cmd" C-m
+	nohup bash -c 'sleep 0.3; tmux display-popup -E -w 80% -h 80% "tmux new-session -A -s scratch"' >/dev/null 2>&1 &
+	disown
 	exit 0
 fi
 
