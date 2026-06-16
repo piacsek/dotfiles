@@ -6,59 +6,12 @@ function vim.getVisualSelection()
 	return #text > 0 and text or ""
 end
 
-local function run_script_picker()
-	local entries = vim.g._available_scripts
-	if entries == nil then
-		vim.notify("No available scripts configured. Please set vim.g._available_scripts", vim.log.levels.ERROR)
-		return
-	end
-
-	local fzf = require("fzf-lua")
-	fzf.fzf_exec(function(fzf_cb)
-		for _, entry in ipairs(entries) do
-			fzf_cb(entry)
-		end
-		fzf_cb()
-	end, {
-		prompt = "Scripts> ",
-		winopts = { height = 0.4, width = 0.5 },
-		actions = {
-			["default"] = function(selected)
-				if selected and #selected == 1 then
-					vim.fn.system(selected[1])
-				end
-			end,
-			["ctrl-w"] = function(selected)
-				if selected and #selected == 1 then
-					vim.fn.system(string.format("tmux new-window '%s';", selected[1]))
-				end
-			end,
-			["ctrl-s"] = function(selected)
-				if selected and #selected == 1 then
-					vim.fn.system(string.format("tmux split-window -v -p 50 '%s';", selected[1]))
-				end
-			end,
-			["ctrl-v"] = function(selected)
-				if selected and #selected == 1 then
-					vim.fn.system(string.format("tmux split-window -h -p 50 '%s';", selected[1]))
-				end
-			end,
-		},
-	})
-end
-
 local arrow_disabling_opts = { noremap = true, silent = true }
 vim.keymap.set({ "n", "i", "v", "c" }, "<Up>", "<Nop>", arrow_disabling_opts)
 vim.keymap.set({ "n", "i", "v", "c" }, "<Down>", "<Nop>", arrow_disabling_opts)
 vim.keymap.set({ "n", "i", "v", "c" }, "<Left>", "<Nop>", arrow_disabling_opts)
 vim.keymap.set({ "n", "i", "v", "c" }, "<Right>", "<Nop>", arrow_disabling_opts)
 
-vim.keymap.set(
-	{ "n" },
-	"<M-r>",
-	":mksession! Session.vim | wall | restart source Session.vim <CR>",
-	{ desc = "[R]estarts nvim" }
-)
 vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { desc = "[Y]ank to system clipboard" })
 vim.keymap.set("n", "<leader>yp", function()
 	local abs = vim.fn.expand("%:p")
