@@ -7,9 +7,11 @@
 # Source list: a per-directory `.available-scripts` file if present (each line
 # a runnable command), otherwise the contents of ~/scripts (run by full path).
 #
-# The command runs as the new pane/window's start-command. A self-managing
-# script (one that runs its own `tmux split-window`) thus spawns its pane and
-# the wrapper exits immediately, leaving exactly one pane — no empty shell.
+# A self-managing script (one that runs its own `tmux split-window` etc.) is run
+# directly: its own tmux commands target the caller pane, so it builds exactly
+# the layout it wants with no wrapper pane left behind. Everything else runs as
+# the start-command of a new pane/window, then drops to an interactive shell so
+# the pane survives a fast-exiting command.
 #
 # Run from a display-popup: commands here that omit -t target the pane/session
 # *behind* the popup, which is the caller — so no pane id needs to be passed
@@ -37,16 +39,14 @@ else
 	cmd="$choice"
 fi
 
-# A self-managing script spawns its own pane/window, so the wrapper must exit
-# to leave a single pane. Everything else runs in place, then drops to an
-# interactive shell so the pane survives a fast-exiting command.
+# Self-managing scripts build their own layout — run directly (like the old
+# nvim `system()` picker) so their tmux commands target the caller pane and no
+# wrapper pane is left behind. The CR/C-w distinction doesn't apply to them.
 if [[ "$src" == dir ]] && grep -qE 'tmux[[:space:]]+(split-window|new-window|new-session)' "$cmd" 2>/dev/null; then
-	run="$cmd"
-else
-	run="$cmd; exec \$SHELL"
+	exec "$cmd"
 fi
 
 case "$key" in
-ctrl-w) tmux new-window "$run" ;;
-*) tmux split-window "$run" ;;
+ctrl-w) tmux new-window "$cmd; exec \$SHELL" ;;
+*) tmux split-window "$cmd; exec \$SHELL" ;;
 esac
