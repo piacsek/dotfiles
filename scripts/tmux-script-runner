@@ -7,6 +7,11 @@
 # Source list: a per-directory `.available-scripts` file if present (each line
 # a runnable command), otherwise the contents of ~/scripts (run by full path).
 #
+# The target (pane or window) is created as a normal shell, then the command is
+# typed into it with send-keys. This keeps the pane alive after the command
+# exits and lets self-managing scripts (e.g. ones that run their own
+# `tmux split-window`) behave exactly as if typed at the prompt.
+#
 # Arg $1 is the calling pane id (#{pane_id}), so spawned panes/windows land in
 # the right window/session regardless of the popup being its own overlay.
 set -euo pipefail
