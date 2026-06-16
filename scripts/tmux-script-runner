@@ -34,9 +34,21 @@ else
 	cmd="$choice"
 fi
 
-session=$(tmux display -p ${target_pane:+-t "$target_pane"} '#{session_name}')
+if [[ -n "$target_pane" ]]; then
+	session=$(tmux display -p -t "$target_pane" '#{session_name}')
+else
+	session=$(tmux display -p '#{session_name}')
+fi
 
 case "$key" in
-ctrl-w) tmux new-window -t "$session:" "$cmd" ;;
-*) tmux split-window ${target_pane:+-t "$target_pane"} "$cmd" ;;
+ctrl-w)
+	tmux new-window -t "$session:" "$cmd"
+	;;
+*)
+	if [[ -n "$target_pane" ]]; then
+		tmux split-window -t "$target_pane" "$cmd"
+	else
+		tmux split-window "$cmd"
+	fi
+	;;
 esac
