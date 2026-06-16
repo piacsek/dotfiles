@@ -3,7 +3,7 @@
 #
 #   <CR>   run the script in a new pane in the current window
 #   <C-w>  run the script in a new window in the current session
-#   <C-f>  run the script in the floating "scratch" session (the M-t popup)
+#   <C-t>  run the script in the floating "scratch" session (the M-t popup)
 #
 # Source list: a per-directory `.available-scripts` file if present (each line
 # a runnable command), otherwise the contents of ~/scripts (run by full path).
