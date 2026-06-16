@@ -75,6 +75,7 @@ echo "piacsek/" > $HOME/.gitignore
 echo "Session.vim" >> $HOME/.gitignore
 echo ".tmux-sessionizer" >> $HOME/.gitignore
 echo ".nvim.lua" >> $HOME/.gitignore
+echo ".available-scripts" >> $HOME/.gitignore
 git config --global core.excludesfile $HOME/.gitignore
 git config --global user.name "Felipe Moraes Piacsek"
 read "git_email?Enter your git email: "
