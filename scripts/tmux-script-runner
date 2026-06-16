@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # fzf script selector for a tmux popup (bound to M-r).
 #
-#   <CR>   run the script in a new pane in the current window
+#   <CR>   run the script in a new pane (vertical split) in the current window
 #   <C-w>  run the script in a new window in the current session
 #   <C-t>  run the script in the floating "scratch" session (the M-t popup)
 #
@@ -30,7 +30,7 @@ fi
 if [[ -z "$list" ]]; then
 	src=dir
 	list=$(ls -1 "$HOME/scripts" 2>/dev/null || true)
-	header="No .available-scripts file found on ${TMUX_WINDOW_PWD:-$PWD}"
+	header="No .available-scripts file found on $PWD"
 fi
 
 [[ -z "$list" ]] && { echo "No scripts found."; sleep 1; exit 0; }
@@ -67,5 +67,5 @@ fi
 
 case "$key" in
 ctrl-w) tmux new-window "$cmd; exec \$SHELL" ;;
-*) tmux split-window "$cmd; exec \$SHELL" ;;
+*) tmux split-window -h "$cmd; exec \$SHELL" ;;
 esac
