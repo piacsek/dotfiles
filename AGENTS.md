@@ -1,0 +1,29 @@
+# AGENTS.md
+
+Notes and gotchas for working in this dotfiles repo. Each item is a hard-won fact — verify against current code before treating as live state.
+
+## Repo conventions
+
+- **Auto-sync:** `~/dotfiles` commits/pushes automatically. Don't offer to commit or push — just finish editing. Don't run manual commits unless explicitly asked.
+
+## Neovim
+
+- **`<M-r>` restart is unreliable.** When testing config changes (plugin setup, autocmds, highlight groups, treesitter query overrides), prefer a full `:qa!` + shell relaunch. Stale state from session restore leaks through `<M-r>` and makes working code look broken.
+- **`gd` is NOT a Neovim 0.11+ LSP default.** The 0.11 defaults are `grr` (references), `gri` (implementation), `grn` (rename), `gra` (code action), `K` (hover). `gd` stays the built-in cword-search. A custom `gd → vim.lsp.buf.definition` mapping is load-bearing — don't drop it.
+- **fzf-lua `setup()` resets defaults.** A second `setup(opts)` call (e.g. from a project `.nvim.lua`) wipes the global config back to built-in defaults. Pass the second positional arg: `setup(opts, true)` to merge instead of replace.
+- **Treesitter injections need `include-children`.** Custom injection queries in `nvim/after/queries/<lang>/injections.scm` targeting nodes whose text lives in named children (`template_string`, `string`, block `comment`) come out empty unless you add `(#set! injection.include-children)`. Pair with `injection.language` and `(#offset! @injection.content 0 1 0 -1)` to trim delimiters. Note: tree-sitter-typescript misparses `await sql<T>\`...\`` as `<`/`>` comparison, so a content-based predicate on a bare `(template_string)` is the workaround.
+- **exrc + Session.vim gotcha.** `exrc` auto-sources `.nvim.lua` only once, from the cwd at startup — it doesn't walk up the tree or re-fire on `:cd`. A session plugin that restores cwd to a subdir after startup defeats it: `&exrc` is `1`, the file is trusted, but its autocmds never register (`E216`). Fix: delete the stale `Session.vim`, `cd` to repo root, relaunch.
+- **vim-test reads only `g:` vars, never `b:`.** Buffer-local `b:test#...` overrides are ignored. For per-buffer behavior, mutate the `g:` globals (`g:test#javascript#runner`, `...#jest#executable`, etc.) on `BufEnter`. vim-test's `nx.vim` runner auto-claims buffers when the runner global is `'nx'` or unset — set a specific runner (`jest`/`vitest`) to bypass it.
+
+## Terminal / theme sync
+
+- **Ghostty theme follows nvim colorscheme.** Changing nvim's colorscheme writes `theme = <name>` to `~/.config/ghostty/theme-current` and reloads Ghostty. Theme files live in `~/dotfiles/ghostty-themes/` (symlinked to `~/.config/ghostty/themes/`), named after nvim colorschemes — drop a new file in and it works. Sync logic is in the `piacsek/ghostty-mirror.nvim` plugin. `:ThemeFromGhostty` (`<M-t>`) applies the current theme cross-instance. Light variants: when `&background=light` and `<name>-light` exists, it's preferred. gh-dash follows too via `scripts/gh-dash-theme` + a launchd WatchPaths refresh (no hot-reload — gh-dash restarts).
+- **delta light/dark in lazygit.** delta's default is dark; removing `--dark` does NOT fall back to light. `--detect-dark-light=auto/always` queries the terminal via stdout-tty, which **fails through lazygit's pipe** → always dark. Fix: `scripts/delta-themed.sh` reads `~/.config/ghostty/theme-current`, picks `--light` if the name contains `-light` else `--dark`, then `exec delta`. lazygit's `git.pagers[].pager` points at it and respawns per diff, so it tracks theme switches live. (Detection is by `-light` suffix — built-in light themes without it would wrongly pick dark.)
+
+## macOS paths
+
+- **lazygit config** lives at `~/Library/Application Support/lazygit/config.yml`, NOT `~/.config/lazygit/`. Confirm with `lazygit -cd`. A pre-existing empty file there silently overrides `~/.config`. Dotfiles symlink it to `~/dotfiles/lazygit-config.yml`.
+
+## ws-common (referenced from this repo's `.nvim.lua`)
+
+- **`nx test <project>` fans out.** For **nexus**, `test` runs unit/integration/component sequentially — slow and noisy for a single file. For **nova-assets** (`@nx/vite:test`), `--test-file` is silently ignored and the whole suite runs. Bypass nx: call `npx jest --config <path>` (file conventions: `*.spec.ts`→unit, `*.ispec.ts`→integration, `*.cspec.ts`→component) or `npx vitest --root apps/nova/assets run <file>`. The `ws-common/.nvim.lua` already wires vim-test to do this via BufEnter global swaps.
