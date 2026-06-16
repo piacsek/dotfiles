@@ -38,22 +38,12 @@ else
 	cmd="$choice"
 fi
 
-if [[ -n "$target_pane" ]]; then
-	session=$(tmux display -p -t "$target_pane" '#{session_name}')
-else
-	session=$(tmux display -p '#{session_name}')
-fi
-
 case "$key" in
 ctrl-w)
-	pane=$(tmux new-window -t "$session:" -P -F '#{pane_id}')
+	pane=$(tmux new-window -P -F '#{pane_id}')
 	;;
 *)
-	if [[ -n "$target_pane" ]]; then
-		pane=$(tmux split-window -t "$target_pane" -P -F '#{pane_id}')
-	else
-		pane=$(tmux split-window -P -F '#{pane_id}')
-	fi
+	pane=$(tmux split-window -P -F '#{pane_id}')
 	;;
 esac
 
