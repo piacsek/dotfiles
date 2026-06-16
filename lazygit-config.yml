@@ -4,7 +4,7 @@ git:
     order: default
   pagers:
     - colorArg: always
-      pager: delta --paging=never --detect-dark-light=always
+      pager: $HOME/dotfiles/scripts/delta-themed.sh --paging=never
 customCommands:
   - key: "O"
     context: "files"
