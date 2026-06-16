@@ -40,6 +40,14 @@ else
 	cmd="$choice"
 fi
 
+# <C-f>: send the command to the floating "scratch" session's current pane
+# (create it detached if it doesn't exist yet — M-t toggles its popup).
+if [[ "$key" == ctrl-f ]]; then
+	tmux has-session -t scratch 2>/dev/null || tmux new-session -d -s scratch
+	tmux send-keys -t scratch "$cmd" C-m
+	exit 0
+fi
+
 # Self-managing scripts build their own layout — run directly (like the old
 # nvim `system()` picker) so their tmux commands target the caller pane and no
 # wrapper pane is left behind. The CR/C-w distinction doesn't apply to them.
