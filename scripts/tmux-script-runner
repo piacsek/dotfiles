@@ -16,6 +16,11 @@
 # the right window/session regardless of the popup being its own overlay.
 set -euo pipefail
 
+log=/tmp/tmux-script-runner.log
+exec 2>>"$log"
+echo "=== $(date '+%H:%M:%S') invoked: args=[$*] TMUX_PANE=${TMUX_PANE:-} ===" >>"$log"
+set -x
+
 target_pane="${1:-}"
 
 if [[ -f .available-scripts ]]; then
