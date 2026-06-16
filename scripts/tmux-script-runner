@@ -35,18 +35,6 @@ key=$(printf '%s\n' "$out" | head -1)
 cmd=$(printf '%s\n' "$out" | sed -n '2p')
 [[ -z "$cmd" ]] && exit 0
 
-# <C-t>: run the command in the floating "scratch" session (create it detached
-# if needed), then pop its float open. Popups can't nest, so the float is opened
-# by `run-shell -b` — a tmux-server-managed job that outlives this (M-r) popup
-# (a plain backgrounded job gets killed when the popup closes). It waits for the
-# popup to close, then displays scratch (same geometry as the M-t binding).
-if [[ "$key" == ctrl-t ]]; then
-	tmux has-session -t scratch 2>/dev/null || tmux new-session -d -s scratch
-	tmux send-keys -t scratch "$cmd" C-m
-	tmux run-shell -b 'sleep 0.3; tmux display-popup -E -w 80% -h 80% "tmux new-session -A -s scratch"'
-	exit 0
-fi
-
 # Self-managing scripts build their own layout — run directly (like the old nvim
 # `system()` picker) so their tmux commands target the caller pane and no wrapper
 # pane is left behind. Detected when the command's first word is a file that runs
