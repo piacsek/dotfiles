@@ -47,13 +47,17 @@ fi
 
 case "$key" in
 ctrl-w)
-	tmux new-window -t "$session:" "$cmd"
+	pane=$(tmux new-window -t "$session:" -P -F '#{pane_id}')
 	;;
 *)
 	if [[ -n "$target_pane" ]]; then
-		tmux split-window -t "$target_pane" "$cmd"
+		pane=$(tmux split-window -t "$target_pane" -P -F '#{pane_id}')
 	else
-		tmux split-window "$cmd"
+		pane=$(tmux split-window -P -F '#{pane_id}')
 	fi
 	;;
 esac
+
+# -l sends the command literally (no key-name interpretation), then Enter runs it.
+tmux send-keys -t "$pane" -l "$cmd"
+tmux send-keys -t "$pane" C-m
