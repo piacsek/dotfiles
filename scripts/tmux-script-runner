@@ -30,7 +30,7 @@ if [[ -z "$list" ]]; then
 	exit 0
 fi
 
-out=$(printf '%s\n' "$list" | fzf --prompt='Scripts> ' --expect=ctrl-w,ctrl-t) || exit 0
+out=$(printf '%s\n' "$list" | fzf --prompt='Scripts> ' --expect=ctrl-w) || exit 0
 key=$(printf '%s\n' "$out" | head -1)
 cmd=$(printf '%s\n' "$out" | sed -n '2p')
 [[ -z "$cmd" ]] && exit 0
