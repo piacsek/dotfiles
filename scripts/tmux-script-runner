@@ -7,10 +7,9 @@
 # Source list: a per-directory `.available-scripts` file if present (each line
 # a runnable command), otherwise the contents of ~/scripts (run by full path).
 #
-# The target (pane or window) is created as a normal shell, then the command is
-# typed into it with send-keys. This keeps the pane alive after the command
-# exits and lets self-managing scripts (e.g. ones that run their own
-# `tmux split-window`) behave exactly as if typed at the prompt.
+# The command runs as the new pane/window's start-command. A self-managing
+# script (one that runs its own `tmux split-window`) thus spawns its pane and
+# the wrapper exits immediately, leaving exactly one pane — no empty shell.
 #
 # Run from a display-popup: commands here that omit -t target the pane/session
 # *behind* the popup, which is the caller — so no pane id needs to be passed
