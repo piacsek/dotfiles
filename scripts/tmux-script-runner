@@ -5,8 +5,9 @@
 #   <C-w>  run the script in a new window in the current session
 #   <C-t>  run the script in the floating "scratch" session (the M-t popup)
 #
-# Source list: a per-directory `.available-scripts` file if present (each line
-# a runnable command), otherwise the contents of ~/scripts (run by full path).
+# Source list: the per-directory `.available-scripts` file (each line a runnable
+# command, blank/`#` lines ignored). If it's missing or empty, just warn — there
+# is no global fallback.
 #
 # A self-managing script (one that runs its own `tmux split-window` etc.) is run
 # directly: its own tmux commands target the caller pane, so it builds exactly
@@ -19,36 +20,21 @@
 # (tmux doesn't expand #{...} in a popup's command string anyway).
 set -euo pipefail
 
-src=dir
 list=""
-header=""
 if [[ -s .available-scripts ]]; then
-	src=file
 	list=$(grep -vE '^[[:space:]]*(#|$)' .available-scripts || true)
 fi
-# Missing or empty .available-scripts: fall back to ~/scripts and warn why.
+
 if [[ -z "$list" ]]; then
-	src=dir
-	list=$(ls -1 "$HOME/scripts" 2>/dev/null || true)
-	header="No .available-scripts file found on $PWD"
+	echo "No .available-scripts file found on $PWD"
+	sleep 2
+	exit 0
 fi
 
-[[ -z "$list" ]] && { echo "No scripts found."; sleep 1; exit 0; }
-
-if [[ -n "$header" ]]; then
-	out=$(printf '%s\n' "$list" | fzf --prompt='Scripts> ' --expect=ctrl-w,ctrl-t --header="$header") || exit 0
-else
-	out=$(printf '%s\n' "$list" | fzf --prompt='Scripts> ' --expect=ctrl-w,ctrl-t) || exit 0
-fi
+out=$(printf '%s\n' "$list" | fzf --prompt='Scripts> ' --expect=ctrl-w,ctrl-t) || exit 0
 key=$(printf '%s\n' "$out" | head -1)
-choice=$(printf '%s\n' "$out" | sed -n '2p')
-[[ -z "$choice" ]] && exit 0
-
-if [[ "$src" == dir ]]; then
-	cmd="$HOME/scripts/$choice"
-else
-	cmd="$choice"
-fi
+cmd=$(printf '%s\n' "$out" | sed -n '2p')
+[[ -z "$cmd" ]] && exit 0
 
 # <C-t>: send the command to the floating "scratch" session's current pane
 # (create it detached if it doesn't exist yet — M-t toggles its popup).
@@ -58,11 +44,13 @@ if [[ "$key" == ctrl-t ]]; then
 	exit 0
 fi
 
-# Self-managing scripts build their own layout — run directly (like the old
-# nvim `system()` picker) so their tmux commands target the caller pane and no
-# wrapper pane is left behind. The CR/C-w distinction doesn't apply to them.
-if [[ "$src" == dir ]] && grep -qE 'tmux[[:space:]]+(split-window|new-window|new-session)' "$cmd" 2>/dev/null; then
-	exec "$cmd"
+# Self-managing scripts build their own layout — run directly (like the old nvim
+# `system()` picker) so their tmux commands target the caller pane and no wrapper
+# pane is left behind. Detected when the command's first word is a file that runs
+# its own tmux split/new-window/new-session.
+script_file=${cmd%% *}
+if [[ -f "$script_file" ]] && grep -qE 'tmux[[:space:]]+(split-window|new-window|new-session)' "$script_file" 2>/dev/null; then
+	exec sh -c "$cmd"
 fi
 
 case "$key" in
