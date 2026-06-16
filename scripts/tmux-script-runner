@@ -38,16 +38,13 @@ cmd=$(printf '%s\n' "$out" | sed -n '2p')
 
 # <C-t>: run the command in the floating "scratch" session (create it detached
 # if needed), then pop its float open. Popups can't nest, so the float is opened
-# by a detached job that outlives this (M-r) popup — it waits for it to close,
-# then displays scratch (same geometry as the M-t binding).
+# by `run-shell -b` — a tmux-server-managed job that outlives this (M-r) popup
+# (a plain backgrounded job gets killed when the popup closes). It waits for the
+# popup to close, then displays scratch (same geometry as the M-t binding).
 if [[ "$key" == ctrl-t ]]; then
-	{
-		echo "=== $(date '+%H:%M:%S') C-t: cmd=[$cmd] ==="
-		tmux has-session -t scratch 2>/dev/null && echo "scratch exists" || { echo "creating scratch"; tmux new-session -d -s scratch; }
-		tmux send-keys -t scratch "$cmd" C-m && echo "send-keys ok"
-	} >>/tmp/ctf.log 2>&1
-	nohup bash -c 'sleep 0.3; { echo "deferred: opening popup"; tmux display-popup -E -w 80% -h 80% "tmux new-session -A -s scratch"; echo "deferred: popup exit=$?"; } >>/tmp/ctf.log 2>&1' >/dev/null 2>&1 &
-	disown
+	tmux has-session -t scratch 2>/dev/null || tmux new-session -d -s scratch
+	tmux send-keys -t scratch "$cmd" C-m
+	tmux run-shell -b 'sleep 0.3; tmux display-popup -E -w 80% -h 80% "tmux new-session -A -s scratch"'
 	exit 0
 fi
 
