@@ -147,8 +147,6 @@ vim.keymap.set("n", "<leader>gsm", function()
 	})
 end, { desc = "[G]it [S]earch [M]ain branch commits" })
 
-vim.keymap.set("n", "<leader>r", run_script_picker, { desc = "[R]un script" })
-
 local function piacsek_search_paths()
 	local paths = { vim.fn.expand("$HOME/dotfiles") }
 	local path = vim.fn.getcwd() .. "/piacsek/fzf.lua"
