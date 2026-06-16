@@ -50,9 +50,9 @@ else
 	cmd="$choice"
 fi
 
-# <C-f>: send the command to the floating "scratch" session's current pane
+# <C-t>: send the command to the floating "scratch" session's current pane
 # (create it detached if it doesn't exist yet — M-t toggles its popup).
-if [[ "$key" == ctrl-f ]]; then
+if [[ "$key" == ctrl-t ]]; then
 	tmux has-session -t scratch 2>/dev/null || tmux new-session -d -s scratch
 	tmux send-keys -t scratch "$cmd" C-m
 	exit 0
