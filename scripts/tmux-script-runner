@@ -12,16 +12,10 @@
 # exits and lets self-managing scripts (e.g. ones that run their own
 # `tmux split-window`) behave exactly as if typed at the prompt.
 #
-# Arg $1 is the calling pane id (#{pane_id}), so spawned panes/windows land in
-# the right window/session regardless of the popup being its own overlay.
+# Run from a display-popup: commands here that omit -t target the pane/session
+# *behind* the popup, which is the caller — so no pane id needs to be passed
+# (tmux doesn't expand #{...} in a popup's command string anyway).
 set -euo pipefail
-
-log=/tmp/tmux-script-runner.log
-exec 2>>"$log"
-echo "=== $(date '+%H:%M:%S') invoked: args=[$*] TMUX_PANE=${TMUX_PANE:-} ===" >>"$log"
-set -x
-
-target_pane="${1:-}"
 
 if [[ -f .available-scripts ]]; then
 	src=file
