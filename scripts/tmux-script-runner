@@ -48,5 +48,6 @@ fi
 
 case "$key" in
 ctrl-w) tmux new-window "$cmd; exec \$SHELL" ;;
+ctrl-s) tmux split-window -v "$cmd; exec \$SHELL" ;;
 *) tmux split-window -h "$cmd; exec \$SHELL" ;;
 esac
