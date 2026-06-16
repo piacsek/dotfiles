@@ -2,6 +2,8 @@
 # fzf script selector for a tmux popup (bound to M-r).
 #
 #   <CR>   run the script in a new pane (vertical split) in the current window
+#   <C-v>  run the script in a vertical-split pane (side by side)
+#   <C-s>  run the script in a horizontal-split pane (stacked)
 #   <C-w>  run the script in a new window in the current session
 #
 # Source list: the per-directory `.available-scripts` file (each line a runnable
