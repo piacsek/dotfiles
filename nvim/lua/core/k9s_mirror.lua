@@ -70,8 +70,7 @@ function M.generate()
 	local warn = fg_of({ "DiagnosticWarn", "WarningMsg" }, "#ffaf00")
 	local add = fg_of({ "DiagnosticOk", "diffAdded", "Added", "String" }, "#5fff5f")
 	local modify = fg_of({ "DiagnosticInfo", "diffChanged", "Changed" }, accent)
-	local string_c = fg_of({ "String" }, add)
-	local value = fg_of({ "Constant", "Number" }, fg)
+	local value = fg_of({ "String", "Constant", "Number" }, fg)
 
 	-- Hand-rolled YAML: a flat, fixed-shape document, so concatenation is clearer
 	-- than pulling in a serializer. Anchors keep it close to k9s's stock skins.
