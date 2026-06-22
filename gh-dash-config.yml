@@ -1,8 +1,6 @@
 prSections:
     - title: My Pull Requests
       filters: is:open assignee:@me
-    - title: Merged
-      filters: org:wonderschool is:merged author:@me
     - title: Needs My Review
       filters: is:open review-requested:@me
     - title: Involved
