@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+# Update core Homebrew dependencies — the "### 6. Install Common CLI Tools"
+# list in SETUP_MACOS.md is the single source of truth.
+#
+#   macos_core_deps_update --all              update every core dep
+#   macos_core_deps_update nvim fzf ripgrep   update only the named deps
+#
+# Quiet by design: one status line per dep. brew's output is shown only when an
+# upgrade actually fails.
+set -euo pipefail
+
+DOC="$HOME/dotfiles/SETUP_MACOS.md"
+
+if [[ -t 1 ]]; then
+	GREEN=$'\033[32m'; BLUE=$'\033[34m'; RED=$'\033[31m'; DIM=$'\033[2m'; RST=$'\033[0m'
+else
+	GREEN=""; BLUE=""; RED=""; DIM=""; RST=""
+fi
+
+usage() {
+	cat >&2 <<-EOF
+	usage: macos_core_deps_update --all | <dep>...
+
+	Updates core Homebrew deps listed in SETUP_MACOS.md (section 6).
+	  --all, -a   update all core deps
+	  <dep>...    update only the named deps (must be in the core list)
+	EOF
+	exit 2
+}
+
+[[ $# -eq 0 ]] && usage
+
+# Core deps = the brew install block under "### 6. Install Common CLI Tools".
+CORE=()
+while IFS= read -r d; do
+	[[ -n "$d" ]] && CORE+=("$d")
+done < <(
+	awk '/^### 6\./{s=1;next} s&&/^```/{if(b)exit;b=1;next} s&&b{print}' "$DOC" \
+		| tr -d '\\' | tr ' \t' '\n' | grep -vE '^(brew|install|)$'
+)
+
+[[ ${#CORE[@]} -eq 0 ]] && { echo "${RED}Could not parse core deps from $DOC${RST}" >&2; exit 1; }
+
+in_core() {
+	local x="$1" c
+	for c in "${CORE[@]}"; do [[ "$c" == "$x" ]] && return 0; done
+	return 1
+}
+
+# Resolve targets from args.
+TARGETS=()
+if [[ "$1" == "--all" || "$1" == "-a" ]]; then
+	[[ $# -ne 1 ]] && usage
+	TARGETS=("${CORE[@]}")
+else
+	for arg in "$@"; do
+		[[ "$arg" == -* ]] && usage
+		if ! in_core "$arg"; then
+			echo "${RED}'$arg' is not a core dep.${RST} Core deps: ${CORE[*]}" >&2
+			exit 1
+		fi
+		TARGETS+=("$arg")
+	done
+fi
+
+# Single refresh + outdated snapshot, so per-dep checks are just lookups.
+echo "${DIM}Refreshing Homebrew…${RST}"
+if ! brew_log=$(brew update 2>&1); then
+	echo "${RED}✗ brew update failed${RST}"
+	printf '%s\n' "$brew_log" | sed 's/^/    /'
+	exit 1
+fi
+
+OUTDATED=" $(brew outdated --quiet 2>/dev/null | tr '\n' ' ') "
+
+failed=0 upgraded=0 current=0 missing=0
+for dep in "${TARGETS[@]}"; do
+	if ! brew list --versions "$dep" >/dev/null 2>&1; then
+		echo "${RED}✗${RST} $dep ${DIM}(not installed)${RST}"
+		missing=$((missing + 1))
+		continue
+	fi
+	if [[ "$OUTDATED" != *" $dep "* ]]; then
+		echo "${GREEN}✓${RST} $dep ${DIM}(up to date)${RST}"
+		current=$((current + 1))
+		continue
+	fi
+	if log=$(brew upgrade "$dep" 2>&1); then
+		echo "${BLUE}↑${RST} $dep ${DIM}(upgraded)${RST}"
+		upgraded=$((upgraded + 1))
+	else
+		echo "${RED}✗${RST} $dep ${DIM}(upgrade failed)${RST}"
+		printf '%s\n' "$log" | sed 's/^/    /'
+		failed=$((failed + 1))
+	fi
+done
+
+echo "${DIM}---${RST}"
+echo "${upgraded} upgraded, ${current} up to date, ${missing} missing, ${failed} failed"
+[[ $failed -eq 0 ]]
