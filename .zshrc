@@ -31,9 +31,7 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 # Init ASDF
-if [ -f /opt/homebrew/opt/asdf/libexec/asdf.sh ]; then
-	. /opt/homebrew/opt/asdf/libexec/asdf.sh
-fi
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 
 # Init direnv
 eval "$(direnv hook zsh)"
