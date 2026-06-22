@@ -66,11 +66,12 @@ if [[ "$1" == "--all" || "$1" == "-a" ]]; then
 else
 	for arg in "$@"; do
 		[[ "$arg" == -* ]] && usage
-		if ! in_core "$arg"; then
+		dep=$(alias_formula "$arg")
+		if ! in_core "$dep"; then
 			echo "${RED}'$arg' is not a core dep.${RST} Core deps: ${CORE[*]}" >&2
 			exit 1
 		fi
-		TARGETS+=("$arg")
+		TARGETS+=("$dep")
 	done
 fi
 
