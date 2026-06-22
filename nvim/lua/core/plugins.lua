@@ -98,6 +98,8 @@ require("ghostty-mirror").setup({
 		},
 	},
 })
+-- Mirror the colorscheme into k9s too (ghostty-mirror only covers Ghostty/tmux).
+require("core.k9s_mirror").setup()
 require("url-open").setup({
 	highlight_url = {
 		cursor_move = {
