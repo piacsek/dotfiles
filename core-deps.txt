@@ -1,0 +1,28 @@
+# Core Homebrew CLI dependencies — single source of truth.
+# Consumed by SETUP_MACOS.md (section 6) and scripts/macos_core_deps_update.
+# One formula per line. Blank lines and #-comments are ignored.
+claude
+btop
+tmux
+1password-cli
+neovim
+lazygit
+direnv
+asdf
+fzf
+ripgrep
+fd
+gpg
+libyaml
+lua
+luarocks
+dua-cli
+tree-sitter-cli
+sl
+gh
+yq
+imagemagick
+bat
+git-delta
+zoxide
+zsh-syntax-highlighting

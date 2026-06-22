@@ -105,34 +105,17 @@ echo "Add it to GitHub: https://github.com/settings/keys"
 
 ### 6. Install Common CLI Tools
 
+The canonical list lives in [`core-deps.txt`](core-deps.txt) (one formula per
+line) — the single source of truth shared with `scripts/macos_core_deps_update`.
+This fetches it from the public repo, so it works before the dotfiles clone in
+step 7:
+
 ```bash
-brew install \
-  claude \
-  btop \
-  tmux \
-  1password-cli \
-  neovim \
-  lazygit \
-  direnv \
-  asdf \
-  fzf \
-  ripgrep \
-  fd \
-  gpg \
-  libyaml \
-  lua \
-  luarocks \
-  dua-cli \
-  tree-sitter-cli \
-  sl \
-  gh \
-  yq \
-  imagemagick \
-  bat \
-  git-delta \
-  zoxide \
-  zsh-syntax-highlighting
+brew install $(curl -fsSL https://raw.githubusercontent.com/piacsek/dotfiles/main/core-deps.txt | sed 's/#.*//' | tr -d ' ' | grep .)
 ```
+
+After cloning the repo you can use the local file instead:
+`brew install $(sed 's/#.*//' "$HOME/dotfiles/core-deps.txt" | tr -d ' ' | grep .)`
 
 ### 7. Clone and Link Dotfiles
 
