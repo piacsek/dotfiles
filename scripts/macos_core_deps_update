@@ -36,7 +36,7 @@ while IFS= read -r d; do
 	[[ -n "$d" ]] && CORE+=("$d")
 done < <(
 	awk '/^### 6\./{s=1;next} s&&/^```/{if(b)exit;b=1;next} s&&b{print}' "$DOC" \
-		| tr -d '\\' | tr ' \t' '\n' | grep -vE '^(brew|install|)$'
+		| tr -d '\\' | tr ' \t' '\n' | grep -vE '^(brew|install)$' | grep .
 )
 
 [[ ${#CORE[@]} -eq 0 ]] && { echo "${RED}Could not parse core deps from $DOC${RST}" >&2; exit 1; }
