@@ -48,6 +48,16 @@ in_core() {
 	return 1
 }
 
+# Map common binary names to their brew formula (the doc lists formulae).
+alias_formula() {
+	case "$1" in
+	nvim) echo neovim ;;
+	rg) echo ripgrep ;;
+	delta) echo git-delta ;;
+	*) echo "$1" ;;
+	esac
+}
+
 # Resolve targets from args.
 TARGETS=()
 if [[ "$1" == "--all" || "$1" == "-a" ]]; then
