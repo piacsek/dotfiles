@@ -41,6 +41,20 @@ eval "$(direnv hook zsh)"
 # Init zoxide (smarter cd: `z <partial-dir-name>`, `zi` for interactive pick)
 eval "$(zoxide init zsh)"
 
+# Override zoxide's `z` completion: always query the db interactively via fzf,
+# so `z ws<Tab>` (no trailing space needed) opens the picker filtered to "ws",
+# and `z<Tab>` opens it with everything. Default behavior only completed local
+# subdirs and reserved the db query for the awkward Space-Tab. Reuses zoxide's
+# own helper + keybinding (set by `zoxide init`); we only swap the function body.
+function __zoxide_z_complete() {
+    [[ "${#words[@]}" -eq "${CURRENT}" ]] || return 0
+    __zoxide_result="$(\command zoxide query --exclude "$(__zoxide_pwd || \builtin true)" --interactive -- ${words[2,-1]})" || __zoxide_result=''
+    compadd -Q ""
+    \builtin bindkey '\e[0n' '__zoxide_z_complete_helper'
+    \builtin printf '\e[5n'
+    return 0
+}
+
 # Aliases
 alias vim='nvim'
 alias cat='bat -pp' # plain style, no pager — safe drop-in for cat
