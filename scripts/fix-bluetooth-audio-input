@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# Stop the brain.fm beeping / garbled Bluetooth audio.
+#
+# When a Bluetooth headset (e.g. Hesh Evo / AirPods) is the DEFAULT INPUT
+# device, macOS drops it into Hands-Free Profile (HFP/SCO) call mode: 16 kHz
+# mono, degraded output, audible beeping/static. Forcing input back to the
+# built-in mic keeps the headset in high-quality A2DP output-only mode.
+#
+# macOS re-grabs the BT mic on every restart/reconnect, so this re-asserts it.
+# Runs at login via com.dotfiles.audio-input-fix.plist; also runnable by hand.
+
+set -euo pipefail
+
+BUILTIN_MIC="MacBook Pro Microphone"
+SAS="$(command -v SwitchAudioSource || echo /opt/homebrew/bin/SwitchAudioSource)"
+
+current="$("$SAS" -c -t input 2>/dev/null || true)"
+
+# Only reclaim input when a Bluetooth device currently holds it, so an
+# intentional choice (built-in, Zoom/Teams virtual mic) is left untouched.
+if "$SAS" -a -t input | grep -qx "$current" && \
+   system_profiler SPAudioDataType 2>/dev/null \
+     | awk -v d="$current" '
+         $0 ~ "^        "d":" {f=1}
+         f && /Input Source/ {exit}
+         f && /Default Input Device: Yes/ {di=1}
+         f && /Transport: Bluetooth/ && di {print "bt"; exit}
+       ' | grep -q bt; then
+  "$SAS" -t input -s "$BUILTIN_MIC"
+  echo "audio input reclaimed from \"$current\" -> \"$BUILTIN_MIC\""
+else
+  echo "audio input is \"$current\"; no change"
+fi
