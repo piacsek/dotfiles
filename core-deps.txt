@@ -26,3 +26,4 @@ bat
 git-delta
 zoxide
 zsh-syntax-highlighting
+switchaudio-osx

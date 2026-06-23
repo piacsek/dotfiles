@@ -185,6 +185,24 @@ ln -sf $HOME/dotfiles/com.gh-dash.theme-refresh.plist $HOME/Library/LaunchAgents
 launchctl load $HOME/Library/LaunchAgents/com.gh-dash.theme-refresh.plist
 ```
 
+Also install the Bluetooth audio-input fix agent. When a Bluetooth headset
+(Hesh Evo, AirPods) is the **default input** device, macOS drops it into
+Hands-Free Profile (HFP/SCO) call mode — 16 kHz mono, degraded output, audible
+beeping/static (notably in brain.fm). `scripts/fix-bluetooth-audio-input`
+reclaims input to the built-in mic so the headset stays in high-quality A2DP
+output-only mode. The agent runs it at login/restart (the script only acts when
+a Bluetooth device holds input, so Zoom/Teams virtual mics are left untouched).
+Depends on `switchaudio-osx` (in `core-deps.txt`):
+
+```bash
+ln -sf $HOME/dotfiles/com.dotfiles.audio-input-fix.plist $HOME/Library/LaunchAgents/com.dotfiles.audio-input-fix.plist
+
+launchctl load $HOME/Library/LaunchAgents/com.dotfiles.audio-input-fix.plist
+```
+
+Run `fix-bluetooth-audio-input` by hand if beeping returns after merely
+reconnecting the headset without a restart.
+
 ### 9. Install asdf plugins and versions
 
 Install common language plugins and their versions (from $HOME/.tool-versions):
