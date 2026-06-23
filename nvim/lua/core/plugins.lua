@@ -92,7 +92,11 @@ require("ghostty-mirror").setup({
 		overrides = {
 			["scintilla-amethyst"] = { accent = "#d700ff", bar = "#3a0054" },
 			["stargum"] = { accent = "#ec33ac", bar = "#3a0026" },
+			-- stargum-light is itself a light scheme, so ghostty-mirror sees
+			-- &background=light and appends light_variant_suffix, resolving the
+			-- theme name to "stargum-light-light" — that's the key it looks up.
 			["stargum-light"] = { accent = "#d61f8f", bar = "#f7d4e8" },
+			["stargum-light-light"] = { accent = "#d61f8f", bar = "#f7d4e8" },
 			["scintilla-ruby"] = { accent = "#ff3b2e", bar = "#bd1424" },
 			["scintilla-diamond-light"] = { accent = "#1840d8", bar = "#fbfcff" },
 			["high-contrast"] = { accent = "#8547ff", bar_blend = 0.3 },
