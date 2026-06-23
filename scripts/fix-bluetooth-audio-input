@@ -16,16 +16,16 @@ SAS="$(command -v SwitchAudioSource || echo /opt/homebrew/bin/SwitchAudioSource)
 
 current="$("$SAS" -c -t input 2>/dev/null || true)"
 
-# Only reclaim input when a Bluetooth device currently holds it, so an
-# intentional choice (built-in, Zoom/Teams virtual mic) is left untouched.
-if "$SAS" -a -t input | grep -qx "$current" && \
-   system_profiler SPAudioDataType 2>/dev/null \
-     | awk -v d="$current" '
-         $0 ~ "^        "d":" {f=1}
-         f && /Input Source/ {exit}
-         f && /Default Input Device: Yes/ {di=1}
-         f && /Transport: Bluetooth/ && di {print "bt"; exit}
-       ' | grep -q bt; then
+# Is the current default input device on a Bluetooth transport? Only reclaim
+# input in that case, so an intentional choice (built-in mic, or a Zoom/Teams
+# virtual mic during a call) is left untouched.
+is_bt="$(system_profiler SPAudioDataType 2>/dev/null | awk '
+  /^        [^ ].*:$/ { name = $0; sub(/^ +/, "", name); sub(/:$/, "", name) }
+  /Default Input Device: Yes/ { def = name }
+  /Transport: Bluetooth/ { if (name == def) { print "bt"; exit } }
+')"
+
+if [[ "$is_bt" == "bt" ]]; then
   "$SAS" -t input -s "$BUILTIN_MIC"
   echo "audio input reclaimed from \"$current\" -> \"$BUILTIN_MIC\""
 else
