@@ -89,6 +89,9 @@ require("ghostty-mirror").setup({
 
 	tmux = {
 		enabled = true,
+		-- Copy-mode selection mirrors nvim's Visual highlight (its default), so a
+		-- drag in a tmux pane matches a Visual selection in the editor per-theme.
+		selection_hl = "Visual",
 		overrides = {
 			["scintilla-amethyst"] = { accent = "#d700ff", bar = "#3a0054" },
 			["stargum"] = { accent = "#ec33ac", bar = "#3a0026" },
