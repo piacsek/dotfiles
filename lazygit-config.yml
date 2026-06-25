@@ -6,6 +6,15 @@ git:
     - colorArg: always
       pager: $HOME/dotfiles/scripts/delta-themed.sh --paging=never
 customCommands:
+  - key: "<c-q>"
+    context: "global"
+    description: "Quit without triggering auto-commit/push"
+    # Drop an abort sentinel the tmux-git-flow wrapper checks, then quit
+    # lazygit by signalling its process (the custom command's parent).
+    # tcell restores the terminal on SIGTERM, so the exit stays graceful;
+    # lazygit returns non-zero (143), which also gates the flow.
+    command: 'touch "$HOME/.cache/tmux-git-flow/abort"; kill -TERM $PPID'
+    output: none
   - key: "O"
     context: "files"
     description: "Open file in nvim on tmux window 1"
