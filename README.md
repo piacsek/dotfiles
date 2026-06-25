@@ -1,2 +1,2 @@
 # dotfiles
-Let's not lose our dear dot files.
+Let's not lose our dear dot files!
