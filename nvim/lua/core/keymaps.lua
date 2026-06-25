@@ -49,6 +49,20 @@ vim.keymap.set("n", "V", "v$", { desc = "[V]isually select till the end of the l
 
 vim.keymap.set("n", "<leader>jq", ":copen<CR>", { desc = "[J]ump to the quickfix list" })
 
+-- Cycle through quickfix items (wrapping)
+vim.keymap.set("n", "<C-n>", function()
+	local ok = pcall(vim.cmd.cnext)
+	if not ok then
+		pcall(vim.cmd.cfirst)
+	end
+end, { desc = "Next quickfix item" })
+vim.keymap.set("n", "<C-p>", function()
+	local ok = pcall(vim.cmd.cprevious)
+	if not ok then
+		pcall(vim.cmd.clast)
+	end
+end, { desc = "Previous quickfix item" })
+
 vim.keymap.set("x", "<leader>p", [["_dP]], { desc = 'Pastes content without losing current "0 contents' })
 
 vim.keymap.set("n", "<leader>jd", function()
