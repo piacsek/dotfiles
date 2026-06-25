@@ -8,6 +8,7 @@ set -uo pipefail
 STATE_DIR="$HOME/.cache/tmux-git-flow"
 STATE_FILE="$STATE_DIR/state"
 LOG_FILE="$STATE_DIR/log"
+ABORT_FILE="$STATE_DIR/abort"
 mkdir -p "$STATE_DIR"
 
 refresh_status() {
