@@ -64,8 +64,17 @@ if [[ "${1:-}" == "--flow" ]]; then
 	exit 0
 fi
 
-clear_state # a new run clears any stale done/error state
+clear_state    # a new run clears any stale done/error state
+rm -f "$ABORT_FILE" # and any stale abort sentinel from a prior run
 lazygit
+lg_status=$?
+
+# <C-q> aborts the flow: it drops the abort sentinel and quits lazygit via
+# SIGTERM (exit 143). Honor either signal and skip the auto-commit/push.
+if [[ -f "$ABORT_FILE" || "$lg_status" -ne 0 ]]; then
+	rm -f "$ABORT_FILE"
+	exit 0
+fi
 
 # Trigger the background flow only when inside a repo with staged changes.
 if git rev-parse --git-dir >/dev/null 2>&1 && ! git diff --cached --quiet; then
