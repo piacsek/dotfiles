@@ -44,9 +44,9 @@
     "typescript-lsp@claude-plugins-official": true
   },
   "effortLevel": "medium",
+  "tui": "default",
   "theme": "auto",
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true,
-  "tui": "fullscreen"
+  "voiceEnabled": true
 }
