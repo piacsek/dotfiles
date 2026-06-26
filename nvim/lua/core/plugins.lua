@@ -378,7 +378,7 @@ cmp.setup({
 	},
 	window = {
 		completion = {
-			winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+			winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None",
 			col_offset = -3,
 			side_padding = 0,
 			max_width = 60,
