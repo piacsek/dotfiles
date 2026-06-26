@@ -94,7 +94,9 @@ require("ghostty-mirror").setup({
 		selection_hl = "Visual",
 		overrides = {
 			["scintilla-amethyst"] = { accent = "#d700ff", bar = "#3a0054" },
-			["stargum"] = { accent = "#cf5f9e", bar = "#3a0026" },
+			-- accent kept just under 0.5 luminance so ghostty-mirror's readable_on
+			-- picks the light fg (white text) for the active window / status-right.
+			["stargum"] = { accent = "#c24e8e", bar = "#3a0026" },
 			-- stargum-light is itself a light scheme, so ghostty-mirror sees
 			-- &background=light and appends light_variant_suffix, resolving the
 			-- theme name to "stargum-light-light" — that's the key it looks up.
