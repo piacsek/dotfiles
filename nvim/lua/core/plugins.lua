@@ -103,6 +103,10 @@ require("ghostty-mirror").setup({
 			["stargum-light"] = { accent = "#d61f8f", bar = "#f7d4e8" },
 			["stargum-light-light"] = { accent = "#d61f8f", bar = "#f7d4e8" },
 			["scintilla-ruby"] = { accent = "#ff3b2e", bar = "#bd1424" },
+			-- Default jade accent is Type's light #a0e6c0, so readable_on picks
+			-- dark pill text. A deep jade green (luminance ~0.11) flips it to
+			-- white text on the active window / status-right, matching sapphire.
+			["scintilla-jade"] = { accent = "#0f6b3f", bar_blend = 0.4 },
 			["scintilla-diamond-light"] = { accent = "#1840d8", bar = "#fbfcff" },
 			["high-contrast"] = { accent = "#8547ff", bar_blend = 0.3 },
 			["scintilla-sapphire"] = { accent = "#2e4eb2", bar_blend = 0.4 },
