@@ -408,7 +408,13 @@ cmp.setup({
 				cmp.open_docs()
 			end
 		end),
-		["<C-y>"] = cmp.mapping.confirm({ select = true }),
+		["<C-y>"] = cmp.mapping(function()
+			if cmp.visible() then
+				cmp.confirm({ select = true })
+			else
+				cmp.complete()
+			end
+		end, { "i", "s" }),
 	}),
 	sources = {
 		{ name = "nvim_lsp" },
