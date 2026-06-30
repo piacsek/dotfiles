@@ -339,6 +339,21 @@ require("oil").setup({
 	use_default_keymaps = false,
 })
 
+-- fzf-lua: results in blines/grep/lines are treesitter-highlighted, and the
+-- default match color is "-1:reverse" — it inverts each matched substring,
+-- turning the token's *foreground* syntax color into the match *background*.
+-- That reads fine on dark variants but produces garish syntax-colored blocks
+-- with near-invisible text on light themes (scintilla-diamond). Replace the
+-- reverse trick with a single bold accent foreground, sourced from
+-- FzfLuaFzfMatch (links to Special) so it stays theme-aware across variants.
+do
+	local match = {
+		["hl"] = { "fg", "FzfLuaFzfMatch", "bold" },
+		["hl+"] = { "fg", "FzfLuaFzfMatch", "bold" },
+	}
+	require("fzf-lua").setup({ winopts = { treesitter = { fzf_colors = match } } })
+end
+
 -- Harpoon
 local harpoon = require("harpoon")
 harpoon:setup()
