@@ -23,6 +23,7 @@ gh
 yq
 imagemagick
 bat
+wget
 git-delta
 zoxide
 zsh-syntax-highlighting
