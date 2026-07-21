@@ -222,6 +222,7 @@ require("conform").setup({
 })
 
 require("plugins.aerial")
+require("plugins.nine")
 require("trouble").setup({})
 
 -- hbac: auto-close least-recently-used buffers beyond the threshold
