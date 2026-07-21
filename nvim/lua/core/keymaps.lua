@@ -282,7 +282,8 @@ vim.keymap.set("n", "<leader>A", function()
 	harpoon:list():add()
 end)
 
-for i = 1, 9 do
+-- 1..8 only; <leader>9 is the prefix for the 99 AI plugin (see plugins/nine.lua)
+for i = 1, 8 do
 	vim.keymap.set("n", "<leader>" .. i, function()
 		harpoon:list():select(i)
 	end)
