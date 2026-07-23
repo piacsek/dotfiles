@@ -96,7 +96,7 @@ keybindings:
         - key: Q
           command: >-
             tmux display-popup -w 70% -h 50% -T " merge queue "
-            -E "$HOME/dotfiles/scripts/gh-dash-merge-queue.sh {{.RepoName}}"
+            -E "$HOME/dotfiles/scripts/gh-dash-merge-queue.sh --pause {{.RepoName}}"
 repoPaths: {}
 theme:
     ui:
