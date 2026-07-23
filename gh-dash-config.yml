@@ -95,8 +95,8 @@ keybindings:
             "claude 'ultrathink review https://github.com/{{.RepoName}}/pull/{{.PrNumber}}'"
         - key: Q
           command: >-
-            tmux display-popup -w 80% -h 60% -E
-            "$HOME/dotfiles/scripts/gh-dash-merge-queue.sh {{.RepoName}} | less -R"
+            tmux display-popup -w 70% -h 50% -T " merge queue "
+            -E "$HOME/dotfiles/scripts/gh-dash-merge-queue.sh {{.RepoName}}"
 repoPaths: {}
 theme:
     ui:
