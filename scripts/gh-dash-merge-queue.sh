@@ -1,11 +1,24 @@
 #!/usr/bin/env bash
 # Show a repo's REAL GitHub merge queue (not a search proxy).
-# Usage: gh-dash-merge-queue.sh owner/name [branch]   (branch defaults to main)
+# Usage: gh-dash-merge-queue.sh [--pause] owner/name [branch]  (branch defaults to main)
+# --pause: after printing, wait for a keypress (used by the gh-dash `Q` popup,
+#          which closes the instant the command exits).
 # Wired to the `Q` keybinding in gh-dash's prs view.
 set -euo pipefail
 
-repo="${1:?usage: gh-dash-merge-queue.sh owner/name [branch]}"
+pause=0
+if [ "${1:-}" = "--pause" ]; then pause=1; shift; fi
+
+repo="${1:?usage: gh-dash-merge-queue.sh [--pause] owner/name [branch]}"
 branch="${2:-main}"
+
+finish() {
+  if [ "$pause" = "1" ]; then
+    printf '\n\033[2m── press any key to close ──\033[0m'
+    read -rsn1 _ || true
+  fi
+}
+trap finish EXIT
 owner="${repo%%/*}"
 name="${repo##*/}"
 
