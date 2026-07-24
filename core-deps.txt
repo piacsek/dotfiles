@@ -17,6 +17,7 @@ libyaml
 lua
 luarocks
 dua-cli
+entr
 tree-sitter-cli
 sl
 gh
