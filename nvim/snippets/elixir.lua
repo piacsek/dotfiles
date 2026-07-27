@@ -16,6 +16,9 @@ return {
 		t("defmodule "), i(1, "Name"), t({ " do", "\t" }),
 		i(2), t({ "", "end" }),
 	}),
+	s("do", {
+		t({ "do", "\t" }), i(1), t({ "", "end" }),
+	}),
 	s("skip", {
 		t("@tag :skip"),
 	}),
