@@ -229,10 +229,25 @@ require("plugins.nine")
 require("trouble").setup({})
 
 -- hbac: auto-close least-recently-used buffers beyond the threshold
+-- hbac has no exclude option, so terminals are kept safe two ways: pinned on
+-- open (pins are never autoclose candidates), plus a hard guard in close_command.
 require("hbac").setup({
 	autoclose = true,
 	threshold = 10,
 	close_buffers_with_windows = false,
+	close_command = function(bufnr)
+		if vim.bo[bufnr].buftype == "terminal" then
+			return
+		end
+		vim.api.nvim_buf_delete(bufnr, {})
+	end,
+})
+
+vim.api.nvim_create_autocmd("TermOpen", {
+	group = vim.api.nvim_create_augroup("hbac_pin_terminals", { clear = true }),
+	callback = function(ev)
+		require("hbac.state").set_pin(ev.buf, true)
+	end,
 })
 
 -- Treesitter
