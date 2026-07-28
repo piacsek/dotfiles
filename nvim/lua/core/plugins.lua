@@ -223,18 +223,28 @@ local mason_tools = {
 }
 
 vim.api.nvim_create_user_command("MasonInstallTools", function()
+	-- snacks' notifier draws nothing without a UI, so fall back to print under
+	-- `nvim --headless` (how SETUP_MACOS.md drives this).
+	local report = function(msg)
+		if #vim.api.nvim_list_uis() == 0 then
+			print(msg)
+		else
+			vim.notify(msg, vim.log.levels.INFO)
+		end
+	end
+
 	local registry = require("mason-registry")
-	-- Blocking refresh (no callback) so this also works under `nvim --headless`,
-	-- where a deferred callback would never run before qall.
+	-- Blocking refresh (no callback) so this also works headless, where a
+	-- deferred callback would never run before qall.
 	registry.refresh()
 	local missing = vim.tbl_filter(function(tool)
 		return not registry.is_installed(tool)
 	end, mason_tools)
 	if vim.tbl_isempty(missing) then
-		vim.notify("mason: all " .. #mason_tools .. " tools already installed", vim.log.levels.INFO)
+		report("mason: all " .. #mason_tools .. " tools already installed")
 		return
 	end
-	vim.notify("mason: installing " .. table.concat(missing, ", "), vim.log.levels.INFO)
+	report("mason: installing " .. table.concat(missing, ", "))
 	vim.cmd("MasonInstall " .. table.concat(missing, " "))
 end, { desc = "Install any missing mason tools" })
 
