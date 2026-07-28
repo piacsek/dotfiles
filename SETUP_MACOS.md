@@ -19,6 +19,7 @@ Executable documentation for setting up a fresh macOS system. Follow sections in
   - [9. Install asdf plugins and versions](#9-install-asdf-plugins-and-versions)
   - [10. Install GH extensions](#10-install-gh-extensions)
   - [11. Customize tmux sessionizer](#11-customize-tmux-sessionizer)
+  - [12. Install Neovim LSP servers, formatters and parsers](#12-install-neovim-lsp-servers-formatters-and-parsers)
 - [Essential Apps](#essential-apps)
   - [Install via Homebrew](#install-via-homebrew)
   - [Manual Installations](#manual-installations)
@@ -247,6 +248,24 @@ Configure search paths in `~/.config/tmux-sessionizer/tmux-sessionizer.conf`:
 # :1 for `find` depth=1(useful for working w/ symlinks)
 TS_SEARCH_PATHS=($HOME/path/to/dir:0 $HOME/.tmux-sessions:1)
 ```
+
+### 12. Install Neovim LSP servers, formatters and parsers
+
+Mason keeps no manifest of what you installed, so the list lives in
+`nvim/lua/core/plugins.lua` (`mason_tools`). Both commands below install only
+what's missing and are safe to re-run:
+
+```bash
+# LSP servers + formatters (mason)
+nvim --headless -c "MasonInstallTools" -c "qall"
+
+# Treesitter parsers
+nvim --headless -c "TSInstallParsers" -c "qall"
+```
+
+A missing formatter is silent — conform falls back to LSP formatting because
+`notify_on_error = false` — so run this before wondering why JSON comes out
+indented with tabs.
 
 ---
 
