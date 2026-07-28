@@ -234,6 +234,7 @@ require("trouble").setup({})
 require("hbac").setup({
 	autoclose = true,
 	threshold = 10,
+	count_pinned = false,
 	close_buffers_with_windows = false,
 	close_command = function(bufnr)
 		if vim.bo[bufnr].buftype == "terminal" then
