@@ -200,6 +200,43 @@ require("mason").setup({
 	},
 })
 
+-- Source of truth for mason-installed tools. Mason itself keeps no manifest,
+-- so on a fresh machine `:MasonInstallTools` installs whatever is missing.
+-- Add an entry when wiring up a new LSP server (core/lsp.lua) or formatter
+-- (conform, below) — an absent formatter falls back to LSP formatting silently
+-- (notify_on_error = false), and an absent server just never attaches.
+local mason_tools = {
+	-- LSP servers
+	"bash-language-server",
+	"dexter",
+	"emmet-ls",
+	"html-lsp",
+	"json-lsp",
+	"lua-language-server",
+	"tailwindcss-language-server",
+	"typescript-language-server",
+	"vim-language-server",
+	"yaml-language-server",
+	-- Formatters
+	"prettierd",
+	"stylua",
+}
+
+vim.api.nvim_create_user_command("MasonInstallTools", function()
+	local registry = require("mason-registry")
+	registry.refresh(function()
+		local missing = vim.tbl_filter(function(tool)
+			return not registry.is_installed(tool)
+		end, mason_tools)
+		if vim.tbl_isempty(missing) then
+			vim.notify("mason: all " .. #mason_tools .. " tools already installed", vim.log.levels.INFO)
+			return
+		end
+		vim.notify("mason: installing " .. table.concat(missing, ", "), vim.log.levels.INFO)
+		vim.cmd("MasonInstall " .. table.concat(missing, " "))
+	end)
+end, { desc = "Install any missing mason tools" })
+
 require("conform").setup({
 	notify_on_error = false,
 	format_on_save = function(bufnr)
