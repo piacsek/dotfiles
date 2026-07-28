@@ -224,17 +224,18 @@ local mason_tools = {
 
 vim.api.nvim_create_user_command("MasonInstallTools", function()
 	local registry = require("mason-registry")
-	registry.refresh(function()
-		local missing = vim.tbl_filter(function(tool)
-			return not registry.is_installed(tool)
-		end, mason_tools)
-		if vim.tbl_isempty(missing) then
-			vim.notify("mason: all " .. #mason_tools .. " tools already installed", vim.log.levels.INFO)
-			return
-		end
-		vim.notify("mason: installing " .. table.concat(missing, ", "), vim.log.levels.INFO)
-		vim.cmd("MasonInstall " .. table.concat(missing, " "))
-	end)
+	-- Blocking refresh (no callback) so this also works under `nvim --headless`,
+	-- where a deferred callback would never run before qall.
+	registry.refresh()
+	local missing = vim.tbl_filter(function(tool)
+		return not registry.is_installed(tool)
+	end, mason_tools)
+	if vim.tbl_isempty(missing) then
+		vim.notify("mason: all " .. #mason_tools .. " tools already installed", vim.log.levels.INFO)
+		return
+	end
+	vim.notify("mason: installing " .. table.concat(missing, ", "), vim.log.levels.INFO)
+	vim.cmd("MasonInstall " .. table.concat(missing, " "))
 end, { desc = "Install any missing mason tools" })
 
 require("conform").setup({
