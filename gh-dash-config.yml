@@ -93,10 +93,6 @@ keybindings:
             open "https://github.com/{{.RepoName}}/pull/{{.PrNumber}}" &&
             tmux new-window -n "pr-{{.PrNumber}}-review"
             "claude 'ultrathink review https://github.com/{{.RepoName}}/pull/{{.PrNumber}}'"
-        - key: Q
-          command: >-
-            tmux display-popup -w 70% -h 50% -T " merge queue "
-            -E "$HOME/dotfiles/scripts/gh-dash-merge-queue.sh --pause {{.RepoName}}"
 repoPaths: {}
 theme:
     ui:
