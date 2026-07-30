@@ -3,7 +3,6 @@ local gh = function(x)
 end
 
 vim.pack.add({
-	gh("numToStr/Comment.nvim"),
 	gh("JoosepAlviste/nvim-ts-context-commentstring"),
 	gh("windwp/nvim-autopairs"),
 	gh("echasnovski/mini.ai"),
@@ -25,7 +24,7 @@ vim.pack.add({
 	gh("ThePrimeagen/99"),
 	gh("nvim-lua/plenary.nvim"),
 	gh("ibhagwan/fzf-lua"),
-	gh("nvim-pack/nvim-spectre"),
+	gh("MagicDuck/grug-far.nvim"),
 	gh("LintaoAmons/scratch.nvim"),
 	gh("hrsh7th/nvim-cmp"),
 	gh("L3MON4D3/LuaSnip"),
