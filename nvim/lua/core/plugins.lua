@@ -610,6 +610,22 @@ local fzf_config = {
 		preview = {
 			hidden = "hidden",
 		},
+		-- Results in blines/grep/lines are treesitter-highlighted, and the
+		-- default match color is "-1:reverse" — it inverts each matched
+		-- substring, turning the token's *foreground* syntax color into the
+		-- match *background*. That reads fine on dark variants but produces
+		-- garish syntax-colored blocks with near-invisible text on light
+		-- themes (scintilla-diamond). Replace the reverse trick with a single
+		-- bold accent foreground, sourced from FzfLuaFzfMatch (links to
+		-- Special) so it stays theme-aware across variants. Must live in THIS
+		-- setup call: fzf-lua's setup() resets all prior config unless told to
+		-- merge, so a separate earlier setup({winopts...}) would be wiped here.
+		treesitter = {
+			fzf_colors = {
+				["hl"] = { "fg", "FzfLuaFzfMatch", "bold" },
+				["hl+"] = { "fg", "FzfLuaFzfMatch", "bold" },
+			},
+		},
 	},
 	keymap = {
 		fzf = {
