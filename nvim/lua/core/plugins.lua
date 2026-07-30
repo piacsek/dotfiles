@@ -321,22 +321,13 @@ vim.api.nvim_create_user_command("TSInstallParsers", function()
 	})
 end, {})
 
+-- Start treesitter for any filetype with an installed parser, instead of a
+-- hardcoded list (which silently missed typescriptreact/javascriptreact — no
+-- highlighting, injections, or autotag in .tsx). pcall: start() errors when
+-- no parser exists for the filetype; that's the no-op path, not a failure.
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = {
-		"bash",
-		"html",
-		"lua",
-		"javascript",
-		"typescript",
-		"markdown",
-		"vim",
-		"elixir",
-		"heex",
-		"eex",
-		"json",
-	},
 	callback = function()
-		vim.treesitter.start()
+		pcall(vim.treesitter.start)
 	end,
 })
 
