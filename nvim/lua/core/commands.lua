@@ -2,9 +2,13 @@ vim.api.nvim_create_user_command("R", function()
 	vim.cmd("mksession! Session.vim | wall | restart source Session.vim")
 end, { desc = "Restart nvim (save session, then source Session.vim)" })
 
--- Restart lives in the 0.12 builtin `:lsp restart` (which also does a proper
--- stop-then-start — the old custom enable(false)/enable(true) same-tick
--- version could orphan clients). These two have no builtin command form.
+-- Muscle-memory alias for the 0.12 builtin `:lsp restart` (a proper
+-- stop-then-start — the old hand-rolled enable(false)/enable(true) same-tick
+-- version could orphan clients). LspInfo/LspLog have no builtin command form.
+vim.api.nvim_create_user_command("LspRestart", "lsp restart <args>", {
+	nargs = "*",
+	desc = "Alias to `:lsp restart`",
+})
 vim.api.nvim_create_user_command("LspInfo", "vertical checkhealth vim.lsp", { desc = "Show LSP health check" })
 vim.api.nvim_create_user_command("LspLog", function()
 	vim.cmd.edit(vim.lsp.log.get_filename())
