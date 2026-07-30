@@ -46,12 +46,13 @@ key=$(printf '%s\n' "$out" | head -1)
 cmd=$(printf '%s\n' "$out" | sed -n '2p')
 [[ -z "$cmd" ]] && exit 0
 
-# Self-managing scripts build their own layout — run directly (like the old nvim
-# `system()` picker) so their tmux commands target the caller pane and no wrapper
-# pane is left behind. Detected when the command's first word resolves (via PATH
-# or as a path) to a file that runs its own tmux split/new-window/new-session.
+# Self-managing scripts build their own window — run directly (like the old nvim
+# `system()` picker) so no wrapper pane is left behind. Detected when the
+# command's first word resolves (via PATH or as a path) to a file that creates
+# its own tmux new-window/new-session. split-window alone does NOT qualify:
+# split-only scripts assume they start inside a fresh pane and must be wrapped.
 script_file=$(command -v "${cmd%% *}" 2>/dev/null || printf '%s' "${cmd%% *}")
-if [[ -f "$script_file" ]] && grep -qE 'tmux[[:space:]]+(split-window|new-window|new-session)' "$script_file" 2>/dev/null; then
+if [[ -f "$script_file" ]] && grep -qE 'tmux[[:space:]]+(new-window|new-session)' "$script_file" 2>/dev/null; then
 	exec sh -c "$cmd"
 fi
 
