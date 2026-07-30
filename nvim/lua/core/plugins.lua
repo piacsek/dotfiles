@@ -34,8 +34,6 @@ vim.pack.add({
 	gh("vim-test/vim-test"),
 	gh("preservim/vimux"),
 	gh("folke/snacks.nvim"),
-	gh("coder/claudecode.nvim"),
-	gh("selimacerbas/live-server.nvim"),
 	gh("selimacerbas/markdown-preview.nvim"),
 	gh("piacsek/ghostty-mirror.nvim"),
 	gh("smjonas/inc-rename.nvim"),
@@ -62,7 +60,6 @@ require("markdown_preview").setup({
 	open_browser = true,
 	debounce_ms = 300,
 })
--- require("claudecode").setup({ terminal = { provider = "none" } })
 require("inc_rename").setup({
 	post_hook = function()
 		vim.cmd("silent! wall")
@@ -411,20 +408,7 @@ require("oil").setup({
 local harpoon = require("harpoon")
 harpoon:setup()
 
-require("spectre").setup({
-	open_cmd = function()
-		vim.cmd("noautocmd new")
-		vim.api.nvim_win_set_config(0, {
-			relative = "editor",
-			width = math.floor(vim.o.columns * 0.8),
-			height = math.floor(vim.o.lines * 0.8),
-			row = math.floor(vim.o.lines * 0.1),
-			col = math.floor(vim.o.columns * 0.1),
-			style = "minimal",
-			border = "rounded",
-		})
-	end,
-})
+require("grug-far").setup({})
 
 require("scratch").setup({
 	scratch_file_dir = "~/scratch.nvim",
