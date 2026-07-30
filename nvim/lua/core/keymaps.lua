@@ -12,7 +12,6 @@ vim.keymap.set({ "n", "i", "v", "c" }, "<Down>", "<Nop>", arrow_disabling_opts)
 vim.keymap.set({ "n", "i", "v", "c" }, "<Left>", "<Nop>", arrow_disabling_opts)
 vim.keymap.set({ "n", "i", "v", "c" }, "<Right>", "<Nop>", arrow_disabling_opts)
 
-vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { desc = "[Y]ank to system clipboard" })
 vim.keymap.set("n", "<leader>yp", function()
 	local abs = vim.fn.expand("%:p")
 	local cwd = vim.fn.getcwd() .. "/"
@@ -300,7 +299,9 @@ vim.keymap.set("n", "<leader>SB", function()
 	require("grug-far").open({ prefills = { paths = vim.fn.fnamemodify(vim.fn.expand("%:p"), ":~:.") } })
 end, { desc = "grug-far for current buffer" })
 vim.keymap.set("v", "<leader>SB", function()
-	require("grug-far").with_visual_selection({ prefills = { paths = vim.fn.fnamemodify(vim.fn.expand("%:p"), ":~:.") } })
+	require("grug-far").with_visual_selection({
+		prefills = { paths = vim.fn.fnamemodify(vim.fn.expand("%:p"), ":~:.") },
+	})
 end, { desc = "grug-far w/ selection for current buffer" })
 vim.keymap.set("n", "<leader>tt", "<cmd>TestNearest<cr>", { desc = "Test nearest" })
 vim.keymap.set("n", "<leader>tf", "<cmd>TestFile<cr>", { desc = "Test file" })
