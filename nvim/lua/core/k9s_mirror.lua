@@ -50,10 +50,13 @@ local function bg_of(groups, fallback)
 	return fallback
 end
 
----Build the k9s skin YAML from the live colorscheme. Returns nil when Normal
----has no fg/bg to anchor the theme (an aborted/partial colorscheme load).
+---Build the k9s skin YAML from the live colorscheme. Returns nil when no real
+---colorscheme is loaded (headless runs never apply one — writing then would
+---stomp the skin with the built-in default palette, which passes the Normal
+---check below) or when Normal has no fg/bg to anchor the theme.
 ---@return string|nil
 function M.generate()
+	if not vim.g.colors_name then return nil end
 	local normal = hl("Normal")
 	local bg, fg = hex(normal.bg), hex(normal.fg)
 	if not bg or not fg then return nil end
