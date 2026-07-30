@@ -22,12 +22,18 @@
 set -euo pipefail
 
 list=""
-if [[ -s .available-scripts ]]; then
-	list=$(grep -vE '^[[:space:]]*(#|$)' .available-scripts || true)
-fi
+dir=$PWD
+while :; do
+	if [[ -s "$dir/.available-scripts" ]]; then
+		list=$(grep -vE '^[[:space:]]*(#|$)' "$dir/.available-scripts" || true)
+		break
+	fi
+	[[ "$dir" == "/" ]] && break
+	dir=$(dirname "$dir")
+done
 
 if [[ -z "$list" ]]; then
-	echo "No .available-scripts file found on $PWD"
+	echo "No .available-scripts file found from $PWD upward"
 	sleep 2
 	exit 0
 fi
@@ -39,9 +45,9 @@ cmd=$(printf '%s\n' "$out" | sed -n '2p')
 
 # Self-managing scripts build their own layout — run directly (like the old nvim
 # `system()` picker) so their tmux commands target the caller pane and no wrapper
-# pane is left behind. Detected when the command's first word is a file that runs
-# its own tmux split/new-window/new-session.
-script_file=${cmd%% *}
+# pane is left behind. Detected when the command's first word resolves (via PATH
+# or as a path) to a file that runs its own tmux split/new-window/new-session.
+script_file=$(command -v "${cmd%% *}" 2>/dev/null || printf '%s' "${cmd%% *}")
 if [[ -f "$script_file" ]] && grep -qE 'tmux[[:space:]]+(split-window|new-window|new-session)' "$script_file" 2>/dev/null; then
 	exec sh -c "$cmd"
 fi
