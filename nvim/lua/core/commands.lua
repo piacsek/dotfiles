@@ -2,26 +2,6 @@ vim.api.nvim_create_user_command("R", function()
 	vim.cmd("mksession! Session.vim | wall | restart source Session.vim")
 end, { desc = "Restart nvim (save session, then source Session.vim)" })
 
-vim.api.nvim_create_user_command("LspInfo", "vertical checkhealth vim.lsp", { desc = "Show LSP health check" })
-vim.api.nvim_create_user_command("LspLog", function()
-	vim.cmd.edit(vim.lsp.log.get_filename())
-end, { desc = "Show LSP health check" })
-
-vim.api.nvim_create_user_command("LspRestart", function()
-	local clients = vim.lsp.get_clients()
-	if #clients == 0 then
-		vim.notify("No active LSP clients", vim.log.levels.WARN)
-		return
-	end
-	local names = {}
-	for _, client in ipairs(clients) do
-		table.insert(names, client.name)
-	end
-	vim.lsp.enable(names, false)
-	vim.lsp.enable(names, true)
-	vim.notify("Restarting LSP: " .. table.concat(names, ", "), vim.log.levels.INFO)
-end, { desc = "Restart all active LSP clients" })
-
 vim.api.nvim_create_user_command("ClearOldfiles", function()
 	vim.v.oldfiles = {}
 	vim.cmd("wshada!")
