@@ -32,5 +32,6 @@ The dotfiles repo at `~/dotfiles/` holds tracked configs as plain files at the r
 ## Gotchas
 
 - `~/dotfiles/.claude/` is **project-scoped** for Claude Code (only loads when running claude inside `~/dotfiles`). User-global Claude settings belong at `~/dotfiles/claude-settings.json` symlinked to `~/.claude/settings.json`, NOT inside `.claude/`.
-- If the source is a directory (e.g. a themes folder), use `ln -sf` on the directory itself, not its contents — see the `ghostty-themes` line in SETUP_MACOS.md as the pattern.
+- If the source is a directory, use `ln -sf` on the directory itself, not its contents.
+- Don't track GENERATED files (e.g. ghostty-mirror.nvim's theme output in `~/.config/ghostty/themes/`) — track the config that generates them instead.
 - Don't `git add` files inside `~/dotfiles/.claude/skills/` of unrelated changes; the auto-sync handles staging.
