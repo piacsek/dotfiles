@@ -10,11 +10,14 @@
 # upward to / (each line a runnable command, blank/`#` lines ignored). If none
 # is found, just warn — there is no global fallback.
 #
-# A self-managing script (one that runs its own `tmux split-window` etc.) is run
-# directly: its own tmux commands target the caller pane, so it builds exactly
-# the layout it wants with no wrapper pane left behind. Everything else runs as
-# the start-command of a new pane/window, then drops to an interactive shell so
-# the pane survives a fast-exiting command.
+# A self-managing script (one that creates its own `tmux new-window` or
+# new-session) is run directly: its tmux commands target the window it creates,
+# so it builds exactly the layout it wants with no wrapper pane left behind.
+# Everything else — including scripts that only `split-window`/`send-keys` from
+# the current pane — runs as the start-command of a new pane/window, then drops
+# to an interactive shell so the pane survives a fast-exiting command. (A
+# split-only script run directly from the popup would send-keys into the caller
+# pane behind the popup — e.g. typing `mix credo` into nvim.)
 #
 # Run from a display-popup: commands here that omit -t target the pane/session
 # *behind* the popup, which is the caller — so no pane id needs to be passed
