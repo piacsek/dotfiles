@@ -48,5 +48,18 @@
   "theme": "auto",
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "hooks": {
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /Users/piacsek/.claude/ws-session-capture/ws-claude-session-capture.py",
+            "timeout": 10000
+          }
+        ]
+      }
+    ]
+  }
 }
