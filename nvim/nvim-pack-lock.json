@@ -4,10 +4,6 @@
       "rev": "c17422457027c913c76c75a921fca1e623d2678e",
       "src": "https://github.com/ThePrimeagen/99"
     },
-    "Comment.nvim": {
-      "rev": "e30b7f2008e52442154b66f7c519bfd2f1e32acb",
-      "src": "https://github.com/numToStr/Comment.nvim"
-    },
     "LuaSnip": {
       "rev": "642b0c595e11608b4c18219e93b88d7637af27bc",
       "src": "https://github.com/L3MON4D3/LuaSnip"
@@ -15,10 +11,6 @@
     "aerial.nvim": {
       "rev": "43dd88ad4024b1945906887521057c73d3b0d84e",
       "src": "https://github.com/stevearc/aerial.nvim"
-    },
-    "claudecode.nvim": {
-      "rev": "432121f0f5b9bda041030d1e9e83b7ba3a93dd8f",
-      "src": "https://github.com/coder/claudecode.nvim"
     },
     "cmp-nvim-lsp": {
       "rev": "cbc7b02bb99fae35cb42f514762b89b5126651ef",
@@ -48,6 +40,10 @@
       "rev": "4ed47e8c4c66c921dc1d6643977e0526e1f44396",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
+    "grug-far.nvim": {
+      "rev": "6e05398cf6cad05b3fb46569db96b1ccfcbbd402",
+      "src": "https://github.com/MagicDuck/grug-far.nvim"
+    },
     "harpoon": {
       "rev": "87b1a3506211538f460786c23f98ec63ad9af4e5",
       "src": "https://github.com/ThePrimeagen/harpoon",
@@ -76,10 +72,6 @@
     "lazydev.nvim": {
       "rev": "ff2cbcba459b637ec3fd165a2be59b7bbaeedf0d",
       "src": "https://github.com/folke/lazydev.nvim"
-    },
-    "live-server.nvim": {
-      "rev": "1ee8ab4cbd18e2b2b38236321a73edcaba023fbd",
-      "src": "https://github.com/selimacerbas/live-server.nvim"
     },
     "markdown-preview.nvim": {
       "rev": "793b32e327bd51143d7cc345aa3ecd10c357ddee",
@@ -116,10 +108,6 @@
     "nvim-lspconfig": {
       "rev": "9ccd58a7949091c0cc2777d4e92a45a209c808c1",
       "src": "https://github.com/neovim/nvim-lspconfig"
-    },
-    "nvim-spectre": {
-      "rev": "72f56f7585903cd7bf92c665351aa585e150af0f",
-      "src": "https://github.com/nvim-pack/nvim-spectre"
     },
     "nvim-treesitter": {
       "rev": "4916d6592ede8c07973490d9322f187e07dfefac",
