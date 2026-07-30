@@ -78,7 +78,7 @@ echo ".tmux-sessionizer" >> $HOME/.gitignore
 echo ".nvim.lua" >> $HOME/.gitignore
 echo ".available-scripts" >> $HOME/.gitignore
 git config --global core.excludesfile $HOME/.gitignore
-git config --global user.name "Felipe Moraes Piacsek"
+git config --global user.name "epileF Moraes Piacsek"
 read "git_email?Enter your git email: "
 git config --global user.email "$git_email"
 git config --global pull.rebase false
