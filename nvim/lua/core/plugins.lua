@@ -34,6 +34,9 @@ vim.pack.add({
 	gh("vim-test/vim-test"),
 	gh("preservim/vimux"),
 	gh("folke/snacks.nvim"),
+	-- live-server is a hard dependency of markdown-preview (same author) — its
+	-- init.lua requires live_server.server. Not directly used; don't prune.
+	gh("selimacerbas/live-server.nvim"),
 	gh("selimacerbas/markdown-preview.nvim"),
 	gh("piacsek/ghostty-mirror.nvim"),
 	gh("smjonas/inc-rename.nvim"),
