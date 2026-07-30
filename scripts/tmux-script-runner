@@ -6,9 +6,9 @@
 #   <C-s>  run the script in a horizontal-split pane (stacked)
 #   <C-w>  run the script in a new window in the current session
 #
-# Source list: the per-directory `.available-scripts` file (each line a runnable
-# command, blank/`#` lines ignored). If it's missing or empty, just warn — there
-# is no global fallback.
+# Source list: the nearest `.available-scripts` file, searching from the cwd
+# upward to / (each line a runnable command, blank/`#` lines ignored). If none
+# is found, just warn — there is no global fallback.
 #
 # A self-managing script (one that runs its own `tmux split-window` etc.) is run
 # directly: its own tmux commands target the caller pane, so it builds exactly
