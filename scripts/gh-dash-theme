@@ -15,7 +15,7 @@ name=$(awk -F' *= *' '$1 == "theme" { print $2; exit }' "$HOME/.config/ghostty/t
 [[ -n "${name:-}" ]] || fallback
 
 theme_file=""
-for dir in "$HOME/.config/ghostty/themes" "$HOME/dotfiles/ghostty-themes" \
+for dir in "$HOME/.config/ghostty/themes" \
 	"/Applications/Ghostty.app/Contents/Resources/ghostty/themes"; do
 	if [[ -f "$dir/$name" ]]; then
 		theme_file="$dir/$name"
