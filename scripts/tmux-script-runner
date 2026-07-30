@@ -41,7 +41,16 @@ if [[ -z "$list" ]]; then
 	exit 0
 fi
 
-out=$(printf '%s\n' "$list" | fzf --prompt='Scripts> ' --expect=ctrl-w,ctrl-s,ctrl-v) || exit 0
+# Preview: resolve the entry's first word via PATH (entries are bare names) or
+# as a path, and show the script source. Non-resolving entries show "not found"
+# — a stale line in .available-scripts is visible before you run it.
+preview='f=$(command -v {1} 2>/dev/null || printf "%s" {1});
+if [[ -f "$f" ]]; then bat --color=always --style=plain "$f" 2>/dev/null || cat "$f";
+else echo "not found: {1}"; fi'
+
+out=$(printf '%s\n' "$list" | fzf --prompt='Scripts> ' --expect=ctrl-w,ctrl-s,ctrl-v \
+	--preview "$preview" --preview-window 'right,60%,border-left' \
+	--bind 'ctrl-/:toggle-preview') || exit 0
 key=$(printf '%s\n' "$out" | head -1)
 cmd=$(printf '%s\n' "$out" | sed -n '2p')
 [[ -z "$cmd" ]] && exit 0
