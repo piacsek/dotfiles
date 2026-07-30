@@ -87,7 +87,11 @@ vim.api.nvim_create_autocmd("FileType", {
 	},
 	callback = function(ev)
 		if not project_tailwind_root then
-			vim.notify("tailwindlsp unavailable: Please define tailwind_root.", vim.log.levels.ERROR)
+			-- No piacsek/lsp.lua at all → project doesn't use tailwind, stay quiet.
+			-- One exists but lacks tailwind_root → likely an oversight, nudge once.
+			if has_project_lsp_config then
+				vim.notify_once("tailwindlsp unavailable: define tailwind_root in piacsek/lsp.lua.", vim.log.levels.WARN)
+			end
 			return
 		end
 		local path = vim.fn.expand(project_tailwind_root)
