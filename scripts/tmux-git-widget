@@ -3,10 +3,19 @@
 # flight its state wins; otherwise show whether the current pane's repo
 # has uncommitted changes. Prints nothing (no separator) when clean or
 # outside a repo, so the segment disappears entirely.
+#
+# The dirty count is served from a per-repo cache and refreshed by a detached
+# background job: #() runs inside the tmux server loop, and a synchronous
+# `git status` on a large repo (ws-common) blocks the whole server for
+# hundreds of ms every status-interval. The segment therefore lags reality by
+# up to one interval — fine for a status line. The background job MUST have
+# stdout/stderr redirected: tmux reads the #() pipe until EOF, and a child
+# inheriting stdout would hold the segment stale until git finishes.
 # Usage: tmux-git-widget '#{pane_current_path}'
 set -uo pipefail
 
 STATE_FILE="$HOME/.cache/tmux-git-flow/state"
+CACHE_DIR="$HOME/.cache/tmux-git-widget"
 
 case "$(cat "$STATE_FILE" 2>/dev/null)" in
 committing) echo "🤖 committing |" && exit 0 ;;
@@ -17,9 +26,30 @@ esac
 
 dir="${1:-}"
 [[ -d "$dir" ]] || exit 0
-if git -C "$dir" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-	count=$(git -C "$dir" status --porcelain | wc -l | tr -d ' ')
-	if [[ "$count" -gt 0 ]]; then
-		echo "📝 $count |"
-	fi
+
+# Cache per repo root so every pane/window in the same repo shares one entry
+# (and one refresh job) regardless of subdirectory.
+root=$(git -C "$dir" rev-parse --show-toplevel 2>/dev/null) || exit 0
+cache="$CACHE_DIR/$(printf '%s' "$root" | cksum | cut -d' ' -f1)"
+
+count=$(cat "$cache" 2>/dev/null || echo 0)
+if [[ "$count" -gt 0 ]]; then
+	echo "📝 $count |"
 fi
+
+# Refresh when the cache is older than the status-interval. The .lock guard
+# keeps slow git runs from stacking; a lock older than 60s is presumed dead
+# (crashed job) and stolen.
+now=$(date +%s)
+age=$((now - $(stat -f %m "$cache" 2>/dev/null || echo 0)))
+((age < 5)) && exit 0
+lock_age=$((now - $(stat -f %m "$cache.lock" 2>/dev/null || echo 0)))
+((lock_age < 60)) && exit 0
+
+mkdir -p "$CACHE_DIR"
+touch "$cache.lock"
+(
+	git -C "$root" status --porcelain | wc -l | tr -d ' ' >"$cache.tmp" &&
+		mv "$cache.tmp" "$cache"
+	rm -f "$cache.lock"
+) >/dev/null 2>&1 &
