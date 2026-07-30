@@ -1,8 +1,10 @@
 local project_tailwind_root = nil
+local has_project_lsp_config = false
 local project_lsp_config = vim.fn.getcwd() .. "/piacsek/lsp.lua"
 if vim.fn.filereadable(project_lsp_config) == 1 then
+	has_project_lsp_config = true
 	local ok, config = pcall(dofile, project_lsp_config)
-	if ok and type(config) == "table" and config.elixir_root then
+	if ok and type(config) == "table" and config.tailwind_root then
 		project_tailwind_root = config.tailwind_root
 	end
 end
