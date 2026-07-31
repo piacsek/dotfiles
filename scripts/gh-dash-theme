@@ -41,7 +41,7 @@ blend() {
 }
 
 # warning/error/success use ANSI palette indices so the terminal resolves
-# them from the active theme's red/green slots.
+# them from the active theme's yellow/red/green slots.
 cat <<EOF
 theme:
   colors:
