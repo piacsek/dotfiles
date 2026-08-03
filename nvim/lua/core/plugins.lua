@@ -56,6 +56,7 @@ vim.pack.add({
 	gh("DRoma82/add-subtract-ex.nvim"),
 }, { load = true })
 
+require("add-subtract-ex").setup({})
 -- Dev plugins
 -- vim.opt.rtp:prepend(vim.fn.expand("~/projects/nvim-plugins/buddy.nvim")) Plugin setup
 require("markdown_preview").setup({
