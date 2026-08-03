@@ -53,6 +53,7 @@ vim.pack.add({
 	gh("oxidescheme/oxide.nvim"),
 	gh("dmkc/underwater-vim-theme"),
 	gh("bluz71/vim-moonfly-colors"),
+	gh("DRoma82/add-subtract-ex.nvim"),
 }, { load = true })
 
 -- Dev plugins
