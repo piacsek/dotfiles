@@ -8,6 +8,10 @@
       "rev": "642b0c595e11608b4c18219e93b88d7637af27bc",
       "src": "https://github.com/L3MON4D3/LuaSnip"
     },
+    "add-subtract-ex.nvim": {
+      "rev": "f3fb2b3fbf790e5367506b279a937324903bf46c",
+      "src": "https://github.com/DRoma82/add-subtract-ex.nvim"
+    },
     "aerial.nvim": {
       "rev": "43dd88ad4024b1945906887521057c73d3b0d84e",
       "src": "https://github.com/stevearc/aerial.nvim"
