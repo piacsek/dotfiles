@@ -63,24 +63,4 @@ else
   echo "PR already exists"
 fi
 
-# Generate deterministic session ID from branch name
-session_id=$(python3 -c "import uuid; print(uuid.uuid5(uuid.NAMESPACE_DNS, '$branch_name'))")
-
-if [ -z "$LINEAR_KICKOFF_INITIAL_MESSAGE" ]; then
-	LINEAR_KICKOFF_INITIAL_MESSAGE="Please run the /linear-context skill to grab context for the current task."
-fi
-
-# Try --session-id first (new session), fall back to --resume (existing session)
-# Start or resume Claude Code session in tmux window 3
-echo "Starting Claude Code session: $branch_name"
-current_window=$(tmux display-message -p '#I')
-if tmux list-windows -F '#I' | grep -q '^3$' 2>/dev/null; then
-  tmux respawn-window -t :3 -k "zsh -l"
-else
-  tmux new-window -t :3 -n claude "zsh -l"
-fi
-
-tmux send-keys -t :3 "claude --session-id $session_id \"$LINEAR_KICKOFF_INITIAL_MESSAGE\" 2>/dev/null || claude --resume $session_id" Enter
-tmux select-window -t ":$current_window"
-
 echo "Ready to work on $branch_name"
