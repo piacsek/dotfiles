@@ -63,4 +63,8 @@ else
   echo "PR already exists"
 fi
 
+echo "Reverting unnecesary .sql changes..."
+git restore apps/nova/priv/repo/structure.sql
+git restore apps/nova/priv/repo_payments/structure.sql
+
 echo "Ready to work on $branch_name"
