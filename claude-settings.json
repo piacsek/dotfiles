@@ -34,7 +34,20 @@
       "mcp__claude_ai_Linear__search_documentation"
     ]
   },
-  "model": "claude-fable-5[1m]",
+  "model": "claude-opus-5[1m]",
+  "hooks": {
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /Users/piacsek/.claude/ws-session-capture/ws-claude-session-capture.py",
+            "timeout": 10000
+          }
+        ]
+      }
+    ]
+  },
   "statusLine": {
     "type": "command",
     "command": "bash /Users/piacsek/.claude/statusline-command.sh"
@@ -48,18 +61,5 @@
   "theme": "auto",
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true,
-  "hooks": {
-    "SessionEnd": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 /Users/piacsek/.claude/ws-session-capture/ws-claude-session-capture.py",
-            "timeout": 10000
-          }
-        ]
-      }
-    ]
-  }
+  "voiceEnabled": true
 }
