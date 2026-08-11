@@ -19,17 +19,10 @@ dap.adapters["pwa-node"] = {
 dap.adapters.node = dap.adapters["pwa-node"]
 
 -- nvim-dap ships no language configs; without these `continue` has nothing to
--- run. Project-specific setups go in the project's .vscode/launch.json.
+-- run. Attaching to an already-running server is inherently project-specific
+-- (which inspector port) — those configs belong in the project's `.nvim.lua`
+-- or `.vscode/launch.json`, both of which nvim-dap merges into this list.
 dap.configurations.javascript = {
-	{ -- server already running under `node --inspect`
-		type = "pwa-node",
-		request = "attach",
-		name = "Attach to port 9229",
-		port = 9229,
-		cwd = "${workspaceFolder}",
-		restart = true,
-		skipFiles = { "<node_internals>/**", "${workspaceFolder}/node_modules/**" },
-	},
 	{
 		type = "pwa-node",
 		request = "launch",
