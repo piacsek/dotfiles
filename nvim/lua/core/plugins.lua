@@ -47,6 +47,7 @@ vim.pack.add({
 	gh("mfussenegger/nvim-dap"),
 	gh("nvim-neotest/nvim-nio"),
 	gh("rcarriga/nvim-dap-ui"),
+	gh("theHamsta/nvim-dap-virtual-text"),
 	-- Colorschemes
 	gh("piacsek/high-contrast.nvim"),
 	gh("piacsek/scintilla.nvim"),
