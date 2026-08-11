@@ -37,6 +37,8 @@ dap.configurations.typescript = dap.configurations.javascript
 
 -- Scopes/stack/watches UI, opened and closed with the session.
 dapui.setup({})
+-- Inline variable values next to their declarations while stopped.
+require("nvim-dap-virtual-text").setup({})
 dap.listeners.after.event_initialized.dapui = dapui.open
 dap.listeners.before.event_terminated.dapui = dapui.close
 dap.listeners.before.event_exited.dapui = dapui.close
