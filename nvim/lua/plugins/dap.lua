@@ -11,6 +11,10 @@ dap.adapters["pwa-node"] = {
 	executable = { command = "js-debug-adapter", args = { "${port}" } },
 }
 
+-- Project .vscode/launch.json files (read automatically) still use the legacy
+-- `node` type; vscode-js-debug handles those, so alias it.
+dap.adapters.node = dap.adapters["pwa-node"]
+
 -- nvim-dap ships no language configs; without these `continue` has nothing to
 -- run. Project-specific setups go in the project's .vscode/launch.json.
 dap.configurations.javascript = {
