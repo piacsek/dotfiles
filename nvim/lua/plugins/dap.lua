@@ -4,11 +4,14 @@ local dapui = require("dapui")
 
 -- vscode-js-debug speaks DAP over TCP: nvim-dap picks a free port, passes it
 -- as argv[1], then connects. `${port}` is substituted by nvim-dap.
+-- The host argv[2] is load-bearing: given only a port, js-debug binds ::1, and
+-- nvim-dap's connect to 127.0.0.1 then fails with no error — the session just
+-- never starts.
 dap.adapters["pwa-node"] = {
 	type = "server",
 	host = "127.0.0.1",
 	port = "${port}",
-	executable = { command = "js-debug-adapter", args = { "${port}" } },
+	executable = { command = "js-debug-adapter", args = { "${port}", "127.0.0.1" } },
 }
 
 -- Project .vscode/launch.json files (read automatically) still use the legacy
