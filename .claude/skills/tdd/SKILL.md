@@ -70,6 +70,15 @@ Before starting the next task, explicitly assess refactoring opportunities again
 - Repository happy-path tests must assert **both** the returned object **and** the persisted row. Check the method's return value, then re-read the entity from the database (fresh query / repo `find*`) and assert on that too — a method can return the right shape without actually persisting it (or persist different values than it returns).
 - When testing a repository's read method (`find*` / `get*`), set up the scenario with the factory / DB-helper insert utility — never with the repository's own `create`. Using `create` couples the read test to write behavior, so a bug in `create` fails the read test (and vice versa); seeding directly isolates the method under test.
 
+### Mocks and spies: assert behavior, not wiring
+
+- Never assert that a callback was merely *passed*. `expect(mutate).toHaveBeenCalledWith(args, expect.objectContaining({ onError: expect.any(Function) }))` proves nothing about behavior: it passes whether the handler reverts state, swallows the error, or does nothing. It pins a wiring detail that a refactor can change without breaking a single user-facing promise.
+- Decide which of the two the assertion is really about, then write that test instead:
+  - **The error path matters** → drive it. Make the mocked call reject/invoke its error path, then assert the observable result: the visible error text, the reverted control value, the absent success state.
+  - **The error path doesn't matter** → drop the clause. Assert only the arguments the behavior actually depends on.
+- `expect.any(Function)` inside a call assertion is the smell that flags this. Treat it as a prompt to ask "what would break for the user if this were wrong?" — if there is no answer, the assertion is dead weight that will one day fail for a reason nobody cares about.
+- Same rule for every incidental argument: assert the values that carry meaning, not the shape of the plumbing around them.
+
 ## Outside-in over inside-out
 
 Prefer an outside-in approach: start from the user-facing behavior and drive inward with integration tests. Reach for unit tests only when an integration test can't reasonably cover the branch (complex pure logic, hard-to-reach edge cases).
