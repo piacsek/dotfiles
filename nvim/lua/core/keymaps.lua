@@ -423,3 +423,7 @@ vim.keymap.set("n", "<leader>di", dap.step_into, { desc = "[D]ebug step [I]nto" 
 vim.keymap.set("n", "<leader>do", dap.step_out, { desc = "[D]ebug step [O]ut" })
 vim.keymap.set("n", "<leader>dt", dap.terminate, { desc = "[D]ebug [T]erminate" })
 vim.keymap.set({ "n", "v" }, "<leader>de", require("dapui").eval, { desc = "[D]ebug [E]val expression" })
+vim.keymap.set("n", "<leader>dC", function()
+	dap.clear_breakpoints()
+	vim.notify("dap: cleared all breakpoints")
+end, { desc = "[D]ebug [C]lear all breakpoints" })
