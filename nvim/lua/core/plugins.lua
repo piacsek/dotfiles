@@ -226,6 +226,8 @@ local mason_tools = {
 	-- Formatters
 	"prettierd",
 	"stylua",
+	-- Debug adapters (see plugins/dap.lua)
+	"js-debug-adapter",
 }
 
 vim.api.nvim_create_user_command("MasonInstallTools", function()
@@ -280,6 +282,7 @@ require("conform").setup({
 
 require("plugins.aerial")
 require("plugins.nine")
+require("plugins.dap")
 require("trouble").setup({})
 
 -- hbac: auto-close least-recently-used buffers beyond the threshold
