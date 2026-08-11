@@ -43,6 +43,11 @@ vim.pack.add({
 	gh("folke/trouble.nvim"),
 	gh("stevearc/aerial.nvim"),
 	gh("axkirillov/hbac.nvim"),
+	-- Debugging (DAP). nvim-nio is a hard dependency of nvim-dap-ui.
+	gh("mfussenegger/nvim-dap"),
+	gh("nvim-neotest/nvim-nio"),
+	gh("rcarriga/nvim-dap-ui"),
+	gh("theHamsta/nvim-dap-virtual-text"),
 	-- Colorschemes
 	gh("piacsek/high-contrast.nvim"),
 	gh("piacsek/scintilla.nvim"),
