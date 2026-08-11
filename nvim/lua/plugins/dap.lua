@@ -11,52 +11,32 @@ dap.adapters["pwa-node"] = {
 	executable = { command = "js-debug-adapter", args = { "${port}" } },
 }
 
-for _, ft in ipairs({ "javascript", "typescript", "javascriptreact", "typescriptreact" }) do
-	dap.configurations[ft] = {
-		{
-			-- Server already running under `node --inspect` (port 9229).
-			type = "pwa-node",
-			request = "attach",
-			name = "Attach to port 9229",
-			address = "127.0.0.1",
-			port = 9229,
-			cwd = "${workspaceFolder}",
-			restart = true,
-			skipFiles = { "<node_internals>/**", "${workspaceFolder}/node_modules/**" },
-		},
-		{
-			type = "pwa-node",
-			request = "launch",
-			name = "Launch current file",
-			program = "${file}",
-			cwd = "${workspaceFolder}",
-			console = "integratedTerminal",
-			skipFiles = { "<node_internals>/**", "${workspaceFolder}/node_modules/**" },
-		},
-		{
-			type = "pwa-node",
-			request = "attach",
-			name = "Attach to process…",
-			processId = require("dap.utils").pick_process,
-			cwd = "${workspaceFolder}",
-			skipFiles = { "<node_internals>/**", "${workspaceFolder}/node_modules/**" },
-		},
-	}
-end
--- Anything project-specific (Docker localRoot/remoteRoot, env, monorepo cwd)
--- goes in the project's .vscode/launch.json — nvim-dap reads it on demand.
+-- nvim-dap ships no language configs; without these `continue` has nothing to
+-- run. Project-specific setups go in the project's .vscode/launch.json.
+dap.configurations.javascript = {
+	{ -- server already running under `node --inspect`
+		type = "pwa-node",
+		request = "attach",
+		name = "Attach to port 9229",
+		port = 9229,
+		cwd = "${workspaceFolder}",
+		restart = true,
+		skipFiles = { "<node_internals>/**", "${workspaceFolder}/node_modules/**" },
+	},
+	{
+		type = "pwa-node",
+		request = "launch",
+		name = "Launch current file",
+		program = "${file}",
+		cwd = "${workspaceFolder}",
+		console = "integratedTerminal",
+		skipFiles = { "<node_internals>/**", "${workspaceFolder}/node_modules/**" },
+	},
+}
+dap.configurations.typescript = dap.configurations.javascript
 
+-- Scopes/stack/watches UI, opened and closed with the session.
 dapui.setup({})
-require("nvim-dap-virtual-text").setup({})
-dap.listeners.after.event_initialized.dapui = function()
-	dapui.open({})
-end
-dap.listeners.before.event_terminated.dapui = function()
-	dapui.close({})
-end
-dap.listeners.before.event_exited.dapui = function()
-	dapui.close({})
-end
-
-vim.fn.sign_define("DapBreakpoint", { text = "●", texthl = "DiagnosticError" })
-vim.fn.sign_define("DapStopped", { text = "▶", texthl = "DiagnosticOk" })
+dap.listeners.after.event_initialized.dapui = dapui.open
+dap.listeners.before.event_terminated.dapui = dapui.close
+dap.listeners.before.event_exited.dapui = dapui.close
