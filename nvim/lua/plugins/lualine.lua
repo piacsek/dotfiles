@@ -40,7 +40,7 @@ local function start_spinner(on_tick)
 	spinner_timer = vim.uv.new_timer()
 	spinner_timer:start(
 		0,
-		100, -- 8 frames
+		220, -- ~4.5 fps: reads as "busy" in peripheral vision without pulling the eye
 		vim.schedule_wrap(function()
 			spinner_idx = spinner_idx % #spinner_chars + 1
 			on_tick()
