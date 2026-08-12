@@ -53,7 +53,10 @@ require("lualine").setup({
 			{
 				function()
 					local ok, tc = pcall(require, "core.typecheck")
-					return (ok and tc.is_running and tc.is_running()) and "tsc…" or ""
+					if not (ok and tc.is_running and tc.is_running()) then
+						return ""
+					end
+					return spinner_frame() .. " tsc"
 				end,
 			},
 			-- This buffer.
