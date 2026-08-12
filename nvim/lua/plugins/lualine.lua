@@ -11,6 +11,40 @@ local severities = {
 	{ level = vim.diagnostic.severity.HINT, label = "H", hl = "DiagnosticHint" },
 }
 
+-- Spinner for the typecheck indicator. lualine's own refresh is a 1s timer, far
+-- too slow to animate, so a dedicated 100ms timer runs — but only while a
+-- typecheck is in flight, so there is no idle repaint loop.
+local spinner_chars = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+local spinner_idx = 1
+local spinner_timer
+
+local function spinner_frame()
+	return spinner_chars[spinner_idx]
+end
+
+local function stop_spinner()
+	if spinner_timer then
+		spinner_timer:stop()
+		spinner_timer:close()
+		spinner_timer = nil
+	end
+end
+
+local function start_spinner(on_tick)
+	if spinner_timer then
+		return
+	end
+	spinner_timer = vim.uv.new_timer()
+	spinner_timer:start(
+		0,
+		100,
+		vim.schedule_wrap(function()
+			spinner_idx = spinner_idx % #spinner_chars + 1
+			on_tick()
+		end)
+	)
+end
+
 -- nil bufnr = every buffer nvim holds diagnostics for. Returns a table keyed by
 -- severity, so one call covers all four counts.
 local function workspace_diagnostics()
@@ -98,5 +132,16 @@ vim.api.nvim_create_autocmd("DiagnosticChanged", { group = lualine_refresh, call
 vim.api.nvim_create_autocmd("User", {
 	group = lualine_refresh,
 	pattern = "TypecheckStateChanged",
-	callback = refresh,
+	callback = function()
+		local ok, tc = pcall(require, "core.typecheck")
+		if ok and tc.is_running and tc.is_running() then
+			start_spinner(refresh)
+		else
+			stop_spinner()
+		end
+		refresh()
+	end,
 })
+
+-- A live uv timer keeps the loop alive at exit; stop it explicitly.
+vim.api.nvim_create_autocmd("VimLeavePre", { group = lualine_refresh, callback = stop_spinner })
