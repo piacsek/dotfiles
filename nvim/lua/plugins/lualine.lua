@@ -80,11 +80,20 @@ require("lualine").setup({
 	},
 })
 
--- lualine's own refresh is a 1s timer; without this the counts visibly lag a
--- save-and-lint cycle.
-vim.api.nvim_create_autocmd("DiagnosticChanged", {
-	group = vim.api.nvim_create_augroup("lualine_diagnostics_refresh", { clear = true }),
-	callback = function()
-		require("lualine").refresh({ place = { "statusline" } })
-	end,
+-- lualine's own refresh is a 1s timer; without these the counts visibly lag a
+-- save-and-lint cycle, and the tsc indicator would appear up to a second late
+-- (and linger that long after the run ends).
+-- Two autocmds, not one with both events: `pattern` applies to every event in
+-- the list, and for DiagnosticChanged it is matched against the file name — so
+-- a shared "TypecheckStateChanged" pattern would silently disable the
+-- diagnostics refresh.
+local lualine_refresh = vim.api.nvim_create_augroup("lualine_refresh", { clear = true })
+local function refresh()
+	require("lualine").refresh({ place = { "statusline" } })
+end
+vim.api.nvim_create_autocmd("DiagnosticChanged", { group = lualine_refresh, callback = refresh })
+vim.api.nvim_create_autocmd("User", {
+	group = lualine_refresh,
+	pattern = "TypecheckStateChanged",
+	callback = refresh,
 })
