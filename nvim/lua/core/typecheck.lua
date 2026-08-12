@@ -96,10 +96,21 @@ local M = {}
 local running -- vim.system handle of the in-flight run
 local timer -- debounce timer
 
--- opts.quiet    suppress notifications (counts still land in the statusline)
--- opts.debounce ms to wait before starting; a newer call resets the wait
+-- opts.quiet     suppress notifications (counts still land in the statusline)
+-- opts.debounce  ms to wait before starting; a newer call resets the wait
+-- opts.clear_buf drop this buffer's results now, before the run
 function M.run(opts)
 	opts = opts or {}
+
+	-- Without this, a fixed error keeps its marker for the whole run (seconds),
+	-- unlike LSP diagnostics which vanish the moment the server re-publishes.
+	-- Clearing up front makes the edited file feel live; the run below puts
+	-- back anything still broken, here or elsewhere.
+	if opts.clear_buf and vim.api.nvim_buf_is_valid(opts.clear_buf) then
+		vim.diagnostic.set(ns, opts.clear_buf, {})
+		opts = vim.deepcopy(opts)
+		opts.clear_buf = nil -- only clear once, not again after the debounce
+	end
 
 	if opts.debounce and opts.debounce > 0 then
 		if timer then
