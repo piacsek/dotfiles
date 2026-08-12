@@ -63,24 +63,30 @@ vim.api.nvim_create_user_command("Typecheck", function(opts)
 	vim.notify("typecheck: running…")
 	-- Non-zero exit is the normal case (that's what "there are errors" means),
 	-- so the result is parsed regardless of res.code.
-	vim.system({ "sh", "-c", cfg.cmd }, { cwd = cwd, text = true }, vim.schedule_wrap(function(res)
-		local by_file = parse((res.stdout or "") .. (res.stderr or ""), root)
-		vim.diagnostic.reset(ns)
+	vim.system(
+		{ "sh", "-c", cfg.cmd },
+		{ cwd = cwd, text = true },
+		vim.schedule_wrap(function(res)
+			local by_file = parse((res.stdout or "") .. (res.stderr or ""), root)
+			vim.diagnostic.reset(ns)
 
-		local files, total = 0, 0
-		for path, diags in pairs(by_file) do
-			-- bufadd, not bufload: an unlisted, unloaded buffer is enough to
-			-- hold diagnostics, and it keeps a 200-error run from opening 200
-			-- real buffers. They render as soon as you open the file.
-			vim.diagnostic.set(ns, vim.fn.bufadd(path), diags)
-			files = files + 1
-			total = total + #diags
-		end
+			local files, total = 0, 0
+			for path, diags in pairs(by_file) do
+				-- bufadd, not bufload: an unlisted, unloaded buffer is enough to
+				-- hold diagnostics, and it keeps a 200-error run from opening 200
+				-- real buffers. They render as soon as you open the file.
+				vim.diagnostic.set(ns, vim.fn.bufadd(path), diags)
+				files = files + 1
+				total = total + #diags
+			end
 
-		if total == 0 then
-			vim.notify("typecheck: clean" .. (res.code ~= 0 and " (command failed — check the command itself)" or ""))
-		else
-			vim.notify(("typecheck: %d error(s) in %d file(s)"):format(total, files), vim.log.levels.WARN)
-		end
-	end))
+			if total == 0 then
+				vim.notify(
+					"typecheck: clean" .. (res.code ~= 0 and " (command failed — check the command itself)" or "")
+				)
+			else
+				vim.notify(("typecheck: %d error(s) in %d file(s)"):format(total, files), vim.log.levels.WARN)
+			end
+		end)
+	)
 end, { bang = true, desc = "Run the project typecheck, publish results as diagnostics (! to clear)" })
