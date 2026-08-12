@@ -294,12 +294,19 @@ end, { desc = "Install any missing mason tools" })
 
 require("conform").setup({
 	notify_on_error = false,
+	-- Lowest-priority default: filetypes with no configured formatter still get
+	-- LSP formatting. Filetype-level settings below outrank it.
+	default_format_opts = { lsp_format = "fallback" },
 	format_on_save = function(bufnr)
 		local disable_filetypes = { c = true, cpp = true, yaml = true }
-		return {
-			timeout_ms = 3000,
-			lsp_format = disable_filetypes[vim.bo[bufnr].filetype] and "never" or "fallback",
-		}
+		if disable_filetypes[vim.bo[bufnr].filetype] then
+			return { timeout_ms = 3000, lsp_format = "never" }
+		end
+		-- Deliberately no lsp_format here. conform fills only nil keys when
+		-- merging, and options passed at format time outrank filetype ones —
+		-- so returning "fallback" unconditionally silently overrode elixir's
+		-- `lsp_format = "prefer"` and ran mix on every save.
+		return { timeout_ms = 3000 }
 	end,
 	formatters_by_ft = {
 		lua = { "stylua" },
