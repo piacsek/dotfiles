@@ -35,15 +35,6 @@ dap.configurations.javascript = {
 }
 dap.configurations.typescript = dap.configurations.javascript
 
--- Gutter signs. nvim-dap's defaults are plain letters (B / →); emoji read
--- faster at a glance. They're double-width, so signcolumn needs the room —
--- `auto` (the default) gives it.
-vim.fn.sign_define("DapBreakpoint", { text = "🔴", texthl = "", numhl = "" })
-vim.fn.sign_define("DapBreakpointCondition", { text = "🟠", texthl = "", numhl = "" })
-vim.fn.sign_define("DapLogPoint", { text = "🔵", texthl = "", numhl = "" })
-vim.fn.sign_define("DapBreakpointRejected", { text = "⚪", texthl = "", numhl = "" })
-vim.fn.sign_define("DapStopped", { text = "👉", texthl = "", numhl = "", linehl = "Visual" })
-
 -- Scopes/stack/watches UI, opened and closed with the session.
 dapui.setup({})
 -- Inline variable values next to their declarations while stopped.
