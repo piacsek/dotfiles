@@ -26,10 +26,15 @@ local severities = {
 -- doesn't match and is dropped.
 local function parse(output, root)
 	local by_file = {}
+	-- A target that runs several tsc passes (e.g. tsconfig.app.json plus
+	-- tsconfig.spec.json) emits the same error once per pass for any file both
+	-- configs include. Identical file+position+code+message is one error.
+	local seen = {}
 	for line in output:gmatch("[^\r\n]+") do
 		line = line:gsub("\27%[[%d;]*m", "") -- strip ANSI, in case a tty slipped through
 		local file, lnum, col, kind, code, msg = line:match("^(.-)%((%d+),(%d+)%):%s*(%a+)%s+(TS%d+):%s*(.+)$")
-		if file then
+		if file and not seen[line] then
+			seen[line] = true
 			local path = file:sub(1, 1) == "/" and file or vim.fs.normalize(root .. "/" .. file)
 			by_file[path] = by_file[path] or {}
 			table.insert(by_file[path], {
