@@ -12,13 +12,12 @@ local severities = {
 }
 
 -- Spinner for the typecheck indicator. lualine's own refresh is a 1s timer, far
--- too slow to animate, so a dedicated 100ms timer runs — but only while a
+-- too slow to animate, so a dedicated 120ms timer runs — but only while a
 -- typecheck is in flight, so there is no idle repaint loop.
--- Geometric frames, not braille: braille cells render in the upper part of the
--- cell and the classic ⠋⠙⠹ set moves dots between the top and bottom rows, so
--- it visibly bobs against the text baseline. These four are the same shape
--- rotated, so nothing shifts vertically.
-local spinner_chars = { "◐", "◓", "◑", "◒" }
+-- Dense braille: every frame lights 7 of the 8 dots, so the glyph's ink stays
+-- constant and only the gap moves. The classic ⠋⠙⠹ set lights 3 dots that hop
+-- between the top and bottom rows, which reads as vertical bobbing.
+local spinner_chars = { "⣾", "⣽", "⣻", "⢿", "⡿", "⣟", "⣯", "⣷" }
 local spinner_idx = 1
 local spinner_timer
 
@@ -41,7 +40,7 @@ local function start_spinner(on_tick)
 	spinner_timer = vim.uv.new_timer()
 	spinner_timer:start(
 		0,
-		100,
+		120, -- 4 frames: slower per-frame than the 10-frame braille cycle
 		vim.schedule_wrap(function()
 			spinner_idx = spinner_idx % #spinner_chars + 1
 			on_tick()
