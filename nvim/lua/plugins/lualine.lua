@@ -49,6 +49,13 @@ require("lualine").setup({
 			{ "filename", path = 1, symbols = { modified = "●", readonly = "", unnamed = "" } },
 		},
 		lualine_x = {
+			-- Visible only while a project typecheck is queued or in flight.
+			{
+				function()
+					local ok, tc = pcall(require, "core.typecheck")
+					return (ok and tc.is_running and tc.is_running()) and "tsc…" or ""
+				end,
+			},
 			-- This buffer.
 			{
 				"diagnostics",

@@ -130,6 +130,7 @@ function M.run(opts)
 			timer:close()
 		end
 		timer = vim.uv.new_timer()
+		notify_state_change()
 		timer:start(
 			opts.debounce,
 			0,
@@ -174,11 +175,12 @@ function M.run(opts)
 	end
 	-- Non-zero exit is the normal case (that's what "there are errors" means),
 	-- so the result is parsed regardless of res.code.
-	running = vim.system(
+	local started = vim.system(
 		{ "sh", "-c", cfg.cmd },
 		{ cwd = cwd, text = true },
 		vim.schedule_wrap(function(res)
 			running = nil
+			notify_state_change()
 			-- SIGTERM from the kill above: a superseded run, not a result.
 			if res.signal ~= 0 then
 				return
@@ -209,6 +211,8 @@ function M.run(opts)
 			end
 		end)
 	)
+	running = started
+	notify_state_change()
 end
 
 vim.api.nvim_create_user_command("Typecheck", function(opts)
