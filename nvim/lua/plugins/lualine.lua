@@ -78,7 +78,11 @@ require("lualine").setup({
 		disabled_filetypes = { statusline = { "oil", "aerial", "dap-repl", "trouble" } },
 	},
 	sections = {
-		lualine_a = { "mode" },
+		-- Pinned to the normal-mode highlight so the section doesn't repaint on
+		-- every mode change. A highlight *group name* rather than literal colors,
+		-- so it still follows the colorscheme (lualine rebuilds these groups from
+		-- theme = "auto" on ColorScheme).
+		lualine_a = { { "mode", color = "lualine_a_normal" } },
 		lualine_b = {},
 		lualine_c = {
 			-- path = 1: relative to cwd. The tail alone is ambiguous in a
