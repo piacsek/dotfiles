@@ -96,6 +96,18 @@ local M = {}
 local running -- vim.system handle of the in-flight run
 local timer -- debounce timer
 
+-- True from the moment a run is queued until its results are published, so a
+-- statusline component can show activity. Counts the debounce window too —
+-- otherwise saving would look like nothing happened for a second.
+function M.is_running()
+	return running ~= nil or timer ~= nil
+end
+
+-- Consumers (lualine) listen for this instead of polling on their own timer.
+local function notify_state_change()
+	vim.api.nvim_exec_autocmds("User", { pattern = "TypecheckStateChanged", modeline = false })
+end
+
 -- opts.quiet     suppress notifications (counts still land in the statusline)
 -- opts.debounce  ms to wait before starting; a newer call resets the wait
 -- opts.clear_buf drop this buffer's results now, before the run
