@@ -14,7 +14,11 @@ local severities = {
 -- Spinner for the typecheck indicator. lualine's own refresh is a 1s timer, far
 -- too slow to animate, so a dedicated 100ms timer runs — but only while a
 -- typecheck is in flight, so there is no idle repaint loop.
-local spinner_chars = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+-- Geometric frames, not braille: braille cells render in the upper part of the
+-- cell and the classic ⠋⠙⠹ set moves dots between the top and bottom rows, so
+-- it visibly bobs against the text baseline. These four are the same shape
+-- rotated, so nothing shifts vertically.
+local spinner_chars = { "◐", "◓", "◑", "◒" }
 local spinner_idx = 1
 local spinner_timer
 
