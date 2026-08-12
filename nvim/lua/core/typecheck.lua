@@ -45,6 +45,47 @@ local function parse(output, root)
 	return by_file
 end
 
+-- Once ts_ls attaches to a file it publishes its own diagnostics, which would
+-- sit on top of ours — same error, twice in the gutter and twice in Trouble.
+-- Drop our copy of anything the live server is already reporting, matched on
+-- position + code. Errors ts_ls does NOT report (it resolves a different
+-- tsconfig than the spec pass) survive, which is the whole point.
+local function normalize_code(code)
+	return (tostring(code or ""):gsub("^TS", ""))
+end
+
+local deduping = false
+vim.api.nvim_create_autocmd("DiagnosticChanged", {
+	group = vim.api.nvim_create_augroup("typecheck_dedup", { clear = true }),
+	callback = function(ev)
+		-- set() below re-fires this event; without the guard it recurses.
+		if deduping then
+			return
+		end
+		local mine = vim.diagnostic.get(ev.buf, { namespace = ns })
+		if #mine == 0 then
+			return
+		end
+
+		local live = {}
+		for _, d in ipairs(vim.diagnostic.get(ev.buf)) do
+			if d.namespace ~= ns then
+				live[("%d:%d:%s"):format(d.lnum, d.col, normalize_code(d.code))] = true
+			end
+		end
+
+		local kept = vim.tbl_filter(function(d)
+			return not live[("%d:%d:%s"):format(d.lnum, d.col, normalize_code(d.code))]
+		end, mine)
+
+		if #kept ~= #mine then
+			deduping = true
+			vim.diagnostic.set(ns, ev.buf, kept)
+			deduping = false
+		end
+	end,
+})
+
 vim.api.nvim_create_user_command("Typecheck", function(opts)
 	if opts.bang then
 		vim.diagnostic.reset(ns)
