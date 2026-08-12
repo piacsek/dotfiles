@@ -186,3 +186,5 @@ vim.api.nvim_create_user_command("Typecheck", function(opts)
 	end
 	M.run()
 end, { bang = true, desc = "Run the project typecheck, publish results as diagnostics (! to clear)" })
+
+return M
