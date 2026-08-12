@@ -93,7 +93,9 @@ require("lualine").setup({
 					if not (ok and tc.is_running and tc.is_running()) then
 						return ""
 					end
-					return spinner_frame() .. " tsc"
+					-- Name the checkers still working, so a slow one is
+					-- distinguishable from the whole batch running.
+					return spinner_frame() .. " " .. table.concat(tc.running_names(), " ")
 				end,
 			},
 			-- This buffer.
