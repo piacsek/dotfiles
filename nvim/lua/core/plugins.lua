@@ -81,7 +81,34 @@ require("inc_rename").setup({
 	end,
 })
 require("nvim-autopairs").setup({})
-require("mini.ai").setup({})
+-- mini.ai: treesitter-backed textobjects for whole constructs. Overriding `f`
+-- costs the default function-CALL object, so that moves to `F`.
+--   vaf / dif  function definition (also one Elixir def/defp clause)
+--   vac / dic  class / module body
+--   vao / dio  conditional or loop block
+--   vaF / diF  function call (mini.ai's old `f`)
+local ai_ts = require("mini.ai").gen_spec.treesitter
+require("mini.ai").setup({
+	custom_textobjects = {
+		f = ai_ts({ a = "@function.outer", i = "@function.inner" }),
+		c = ai_ts({ a = "@class.outer", i = "@class.inner" }),
+		o = ai_ts({
+			a = { "@conditional.outer", "@loop.outer" },
+			i = { "@conditional.inner", "@loop.inner" },
+		}),
+		F = require("mini.ai").gen_spec.function_call(),
+	},
+})
+
+-- mini.surround: sa add / sd delete / sr replace, all dot-repeatable. This
+-- takes over `s` as a prefix (built-in `s` is just `cl`); set
+-- `mappings = { add = "gsa", ... }` to reclaim it.
+require("mini.surround").setup({
+	custom_surroundings = {
+		-- `sdf` unwraps a call: `await getConfig().url` -> its argument.
+		f = { input = require("mini.ai").gen_spec.function_call() },
+	},
+})
 require("mini.icons").setup({})
 -- Inline preview of #rrggbb color codes: a swatch next to the code.
 local hipatterns = require("mini.hipatterns")
