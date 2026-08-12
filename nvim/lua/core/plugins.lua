@@ -87,7 +87,15 @@ require("nvim-autopairs").setup({})
 --   vac / dic  class / module body
 --   vao / dio  conditional or loop block
 --   vaF / diF  function call (mini.ai's old `f`)
-local ai_ts = require("mini.ai").gen_spec.treesitter
+-- use_nvim_treesitter = false is load-bearing: the default path goes through
+-- nvim-treesitter's query loader, which doesn't resolve the `; inherits: ecma`
+-- modeline. TS's own textobjects.scm defines @class.* but inherits @function.*
+-- from ecma, so `ac` worked while `af` silently found nothing. Core's
+-- vim.treesitter.query.get() honors inherits.
+local ai_ts_raw = require("mini.ai").gen_spec.treesitter
+local ai_ts = function(captures)
+	return ai_ts_raw(captures, { use_nvim_treesitter = false })
+end
 require("mini.ai").setup({
 	-- Default is 50, which silently fails to find `af`/`ac` on anything longer
 	-- — i.e. exactly the long use-case methods and class bodies where a
