@@ -12,7 +12,7 @@ local severities = {
 }
 
 -- Spinner for the typecheck indicator. lualine's own refresh is a 1s timer, far
--- too slow to animate, so a dedicated 100ms timer runs — but only while a
+-- too slow to animate, so a dedicated 220ms timer runs — but only while a
 -- typecheck is in flight, so there is no idle repaint loop.
 -- Dense braille: every frame lights 7 of the 8 dots, so the glyph's ink stays
 -- constant and only the gap moves. The classic ⠋⠙⠹ set lights 3 dots that hop
