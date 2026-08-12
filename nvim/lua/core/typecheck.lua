@@ -86,28 +86,71 @@ vim.api.nvim_create_autocmd("DiagnosticChanged", {
 	end,
 })
 
-vim.api.nvim_create_user_command("Typecheck", function(opts)
-	if opts.bang then
-		vim.diagnostic.reset(ns)
-		vim.notify("typecheck: cleared")
+local M = {}
+
+local running -- vim.system handle of the in-flight run
+local timer -- debounce timer
+
+-- opts.quiet    suppress notifications (counts still land in the statusline)
+-- opts.debounce ms to wait before starting; a newer call resets the wait
+function M.run(opts)
+	opts = opts or {}
+
+	if opts.debounce and opts.debounce > 0 then
+		if timer then
+			timer:stop()
+			timer:close()
+		end
+		timer = vim.uv.new_timer()
+		timer:start(
+			opts.debounce,
+			0,
+			vim.schedule_wrap(function()
+				if timer then
+					timer:stop()
+					timer:close()
+					timer = nil
+				end
+				M.run(vim.tbl_extend("force", opts, { debounce = nil }))
+			end)
+		)
 		return
 	end
 
 	local cfg = vim.g.typecheck
 	if not cfg or not cfg.cmd then
-		vim.notify("typecheck: set vim.g.typecheck = { cmd = ... } in .nvim.lua", vim.log.levels.WARN)
+		if not opts.quiet then
+			vim.notify("typecheck: set vim.g.typecheck = { cmd = ... } in .nvim.lua", vim.log.levels.WARN)
+		end
 		return
 	end
 	local cwd = cfg.cwd or vim.fn.getcwd()
 	local root = cfg.root or cwd
 
-	vim.notify("typecheck: running…")
+	-- A save during a run makes the in-flight result stale; kill it rather than
+	-- letting two tsc passes race to publish.
+	if running then
+		pcall(function()
+			running:kill(15)
+		end)
+		running = nil
+	end
+
+	if not opts.quiet then
+		vim.notify("typecheck: running…")
+	end
 	-- Non-zero exit is the normal case (that's what "there are errors" means),
 	-- so the result is parsed regardless of res.code.
-	vim.system(
+	running = vim.system(
 		{ "sh", "-c", cfg.cmd },
 		{ cwd = cwd, text = true },
 		vim.schedule_wrap(function(res)
+			running = nil
+			-- SIGTERM from the kill above: a superseded run, not a result.
+			if res.signal ~= 0 then
+				return
+			end
+
 			local by_file = parse((res.stdout or "") .. (res.stderr or ""), root)
 			vim.diagnostic.reset(ns)
 
@@ -121,6 +164,9 @@ vim.api.nvim_create_user_command("Typecheck", function(opts)
 				total = total + #diags
 			end
 
+			if opts.quiet then
+				return
+			end
 			if total == 0 then
 				vim.notify(
 					"typecheck: clean" .. (res.code ~= 0 and " (command failed — check the command itself)" or "")
@@ -130,4 +176,13 @@ vim.api.nvim_create_user_command("Typecheck", function(opts)
 			end
 		end)
 	)
+end
+
+vim.api.nvim_create_user_command("Typecheck", function(opts)
+	if opts.bang then
+		vim.diagnostic.reset(ns)
+		vim.notify("typecheck: cleared")
+		return
+	end
+	M.run()
 end, { bang = true, desc = "Run the project typecheck, publish results as diagnostics (! to clear)" })
