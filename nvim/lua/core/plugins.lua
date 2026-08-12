@@ -89,6 +89,10 @@ require("nvim-autopairs").setup({})
 --   vaF / diF  function call (mini.ai's old `f`)
 local ai_ts = require("mini.ai").gen_spec.treesitter
 require("mini.ai").setup({
+	-- Default is 50, which silently fails to find `af`/`ac` on anything longer
+	-- — i.e. exactly the long use-case methods and class bodies where a
+	-- whole-construct textobject earns its keep.
+	n_lines = 500,
 	custom_textobjects = {
 		f = ai_ts({ a = "@function.outer", i = "@function.inner" }),
 		c = ai_ts({ a = "@class.outer", i = "@class.inner" }),
