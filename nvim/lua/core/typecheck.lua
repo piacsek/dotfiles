@@ -111,7 +111,12 @@ function M.run(opts)
 					timer:close()
 					timer = nil
 				end
-				M.run(vim.tbl_extend("force", opts, { debounce = nil }))
+				-- NOT tbl_extend(opts, { debounce = nil }): a nil value makes
+				-- that an empty table, so debounce would survive and this
+				-- would reschedule itself forever without ever running.
+				local now = vim.deepcopy(opts)
+				now.debounce = nil
+				M.run(now)
 			end)
 		)
 		return
