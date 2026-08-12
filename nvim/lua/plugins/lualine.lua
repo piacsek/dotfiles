@@ -87,7 +87,14 @@ require("lualine").setup({
 		lualine_c = {
 			-- path = 1: relative to cwd. The tail alone is ambiguous in a
 			-- monorepo where five apps each have an index.ts.
-			{ "filename", path = 1, symbols = { modified = "●", readonly = "", unnamed = "" } },
+			-- Same reason as the mode section: pinned so mode changes don't
+			-- repaint the filename too.
+			{
+				"filename",
+				path = 1,
+				symbols = { modified = "●", readonly = "", unnamed = "" },
+				color = "lualine_c_normal",
+			},
 		},
 		lualine_x = {
 			-- Visible only while a project typecheck is queued or in flight.
@@ -112,7 +119,7 @@ require("lualine").setup({
 			{ workspace_diagnostics },
 		},
 		lualine_y = {},
-		lualine_z = { "location" },
+		lualine_z = { { "location", color = "lualine_z_normal" } },
 	},
 	-- Inactive windows get the filename only; anything more is noise you can't
 	-- act on without focusing the window first.
