@@ -6,6 +6,10 @@ vim.pack.add({
 	gh("JoosepAlviste/nvim-ts-context-commentstring"),
 	gh("windwp/nvim-autopairs"),
 	gh("echasnovski/mini.ai"),
+	gh("echasnovski/mini.surround"),
+	-- Queries only (textobjects.scm) — mini.ai reads them, nothing else here
+	-- uses this plugin's own module. Must track `main` to match nvim-treesitter.
+	{ src = gh("nvim-treesitter/nvim-treesitter-textobjects"), version = "main" },
 	gh("echasnovski/mini.icons"),
 	gh("echasnovski/mini.hipatterns"),
 	gh("windwp/nvim-ts-autotag"),
