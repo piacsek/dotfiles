@@ -130,6 +130,14 @@ vim.keymap.set("n", "grt", function()
 	fzf.lsp_typedefs({ winopts = grep_winopts, jump1 = false })
 end, { desc = "LSP type definitions" })
 
+-- Inlay hints are off by default (they shift text around); toggle per buffer
+-- when inferred types are worth the noise.
+vim.keymap.set("n", "<leader>h", function()
+	local enabled = vim.lsp.inlay_hint.is_enabled({ bufnr = 0 })
+	vim.lsp.inlay_hint.enable(not enabled, { bufnr = 0 })
+	vim.notify("inlay hints " .. (enabled and "off" or "on"))
+end, { desc = "Toggle inlay [H]ints (buffer)" })
+
 -- Rename with live preview via inc-rename.nvim
 vim.keymap.set("n", "grn", function()
 	return ":IncRename " .. vim.fn.expand("<cword>")
