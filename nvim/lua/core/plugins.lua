@@ -303,7 +303,13 @@ require("conform").setup({
 	end,
 	formatters_by_ft = {
 		lua = { "stylua" },
-		elixir = { "mix" },
+		-- dexter formats over LSP in-process; `mix format` pays Elixir/Mix
+		-- startup on every save. lsp_format = "prefer" uses dexter when it is
+		-- attached and falls back to mix when it isn't (no project index,
+		-- server crashed, non-project file).
+		-- heex/eelixir stay on mix: its formatter handles them through the
+		-- Phoenix formatter plugins, and dexter's handling there is unverified.
+		elixir = { "mix", lsp_format = "prefer" },
 		eelixir = { "mix" },
 		heex = { "mix" },
 		javascript = { "prettierd", "prettier", stop_after_first = true },
