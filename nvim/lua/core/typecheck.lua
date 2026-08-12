@@ -60,14 +60,15 @@ local function parse_tsc(line, root)
 	if not file then
 		return nil
 	end
-	return resolve(file, root), {
-		lnum = tonumber(lnum) - 1,
-		col = tonumber(col) - 1,
-		severity = severities[kind:lower()] or vim.diagnostic.severity.ERROR,
-		message = msg,
-		code = code,
-		source = "tsc",
-	}
+	return resolve(file, root),
+		{
+			lnum = tonumber(lnum) - 1,
+			col = tonumber(col) - 1,
+			severity = severities[kind:lower()] or vim.diagnostic.severity.ERROR,
+			message = msg,
+			code = code,
+			source = "tsc",
+		}
 end
 
 -- eslint --format unix: `/abs/foo.ts:12:5: message [Error/rule-name]`
@@ -76,14 +77,15 @@ local function parse_unix(line, root)
 	if not file then
 		return nil
 	end
-	return resolve(file, root), {
-		lnum = tonumber(lnum) - 1,
-		col = tonumber(col) - 1,
-		severity = severities[kind:lower()] or vim.diagnostic.severity.WARN,
-		message = msg,
-		code = rule,
-		source = "eslint",
-	}
+	return resolve(file, root),
+		{
+			lnum = tonumber(lnum) - 1,
+			col = tonumber(col) - 1,
+			severity = severities[kind:lower()] or vim.diagnostic.severity.WARN,
+			message = msg,
+			code = rule,
+			source = "eslint",
+		}
 end
 
 local parsers = { tsc = parse_tsc, unix = parse_unix }
@@ -185,10 +187,7 @@ local function start(checker, opts)
 						.. (res.code ~= 0 and " (command failed — check the command itself)" or "")
 				)
 			else
-				vim.notify(
-					("%s: %d problem(s) in %d file(s)"):format(checker.name, total, files),
-					vim.log.levels.WARN
-				)
+				vim.notify(("%s: %d problem(s) in %d file(s)"):format(checker.name, total, files), vim.log.levels.WARN)
 			end
 		end)
 	)
