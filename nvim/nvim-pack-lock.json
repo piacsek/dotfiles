@@ -81,6 +81,10 @@
       "rev": "f98bae79fd30274524412f7514549d84391d6bb2",
       "src": "https://github.com/selimacerbas/live-server.nvim"
     },
+    "lualine.nvim": {
+      "rev": "221ce6b2d999187044529f49da6554a92f740a96",
+      "src": "https://github.com/nvim-lualine/lualine.nvim"
+    },
     "markdown-preview.nvim": {
       "rev": "793b32e327bd51143d7cc345aa3ecd10c357ddee",
       "src": "https://github.com/selimacerbas/markdown-preview.nvim"
