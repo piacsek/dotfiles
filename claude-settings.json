@@ -34,7 +34,7 @@
       "mcp__claude_ai_Linear__search_documentation"
     ]
   },
-  "model": "claude-opus-5[1m]",
+  "model": "claude-fable-5[1m]",
   "hooks": {
     "SessionEnd": [
       {
