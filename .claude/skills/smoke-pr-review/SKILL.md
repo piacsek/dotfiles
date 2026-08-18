@@ -122,7 +122,9 @@ Compare the stated intent (title, body, linked ticket) against the diff:
 
 **Output format is a hard constraint**: the emoji, then at most **3
 sentences of at most 10 words each**. Count the words. No headers, no
-bullets, no preamble, no code blocks, nothing after.
+bullets, no preamble, no code blocks. For 🟢 and 🟡, nothing after.
+For 🔴, the verdict is followed by the two paste blocks in section 5 —
+and nothing else.
 
 - 🟢: one short sentence is enough (or the emoji alone).
 - 🟡: state concisely why the promise is unverifiable.
