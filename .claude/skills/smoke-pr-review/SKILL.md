@@ -142,3 +142,78 @@ Examples:
 > References `STRIPE_WEBHOOK_SECRET_V2`, defined nowhere.
 
 > 🔴 Body promises retry logic; diff contains none.
+
+## 5. On 🔴 only — two paste-ready blocks
+
+After the verdict, output exactly two fenced markdown blocks, each
+introduced by a one-line bold label. Nothing else after them.
+
+Rules for both blocks:
+
+- Never use em dashes. Use commas, colons, or separate sentences.
+- Every finding names its file (and line where known) and states the
+  concrete failure, not a vibe.
+- Include only the findings that made the verdict 🔴 — no nits, no
+  suggestions, no style notes. This stays a smoke test.
+- No AI attribution, no footers, no sign-offs.
+
+**Block 1 — GH reply.** A comment ready to paste into a
+"Request changes" review on the PR. Shape:
+
+- One opening sentence: what class of problem blocks the merge.
+- One bullet per finding: `file:line`, what breaks, and the trigger
+  (the input, state, or click that sets it off).
+- One closing sentence stating what would make it mergeable (fix +
+  regression test), nothing more.
+
+**Block 2 — author prompt.** A prompt the author can paste into Claude
+Code to fix the findings. Shape:
+
+- First line: `On branch <branch>, fix the following before merge:`
+- One numbered item per finding: the file and function, the defect
+  mechanism (why it fails, not just that it fails), and the required
+  regression test with the exact scenario it must pin.
+- Final line instructing to run the affected tests and report results,
+  and to not push or commit.
+
+Example (structure, not length — real blocks carry the actual details):
+
+~~~
+**GH reply — request changes:**
+
+```markdown
+Blocking on two prod risks in the send path.
+
+- `review_requests.ex:207`: `get_or_create_ai_phone/1` returns
+  `{:ok, %SchoolContactInfo{}}` when only the legacy managed phone is
+  set, so a struct reaches Twilio as `from`. Triggered by any existing
+  provider with `wonderschool_managed_phone` and no AI phone.
+- `index.ex:313`: "Send all" fans out N async tasks that each pass the
+  unlocked provisioning guard, so one click can buy several Twilio
+  numbers. Triggered by send-all on a school with no number yet.
+
+Happy to approve once both are fixed with regression tests.
+```
+
+**Author prompt:**
+
+```
+On branch gmb-2-agentmail, fix the following before merge:
+
+1. apps/nova/.../review_requests.ex get_or_create_ai_phone/1: the bare
+   `with` has no else, so when HelpingHands returns
+   {:error, :already_provisioned} (legacy wonderschool_managed_phone
+   set, helping_hands_phone nil) the reread struct is returned verbatim
+   and passed to Twilio as `from`. Add an else returning {:error,
+   reason}. Regression test: school with wonderschool_managed_phone set
+   and no helping_hands_phone must get an error, not a Twilio call.
+
+2. apps/nova/.../index.ex send_all_review_requests: each async task
+   independently runs the unlocked provision guard, so N tasks can each
+   buy a number. Resolve/provision the channels once before the
+   fan-out and pass them into the tasks. Regression test: send-all over
+   three recipients buys exactly one number.
+
+Run the affected test files and report results. Do not commit or push.
+```
+~~~
