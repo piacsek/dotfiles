@@ -81,15 +81,17 @@ Compare the stated intent (title, body, linked ticket) against the diff:
   only the backend half exists, UI absent, and the body doesn't say so).
 - Honest partial delivery is fine: a PR that *says* "part 1 of 3" or
   "backend only" and delivers exactly that = 🟢 on this check.
-- A PR with no stated intent at all (empty body, vague title) cannot be
-  verified — treat unverifiable promises as not delivered only if the
-  title claims something the diff clearly doesn't do; otherwise judge on
-  the title alone.
+- A PR with no stated intent at all (empty body, vague title, no linked
+  ticket) has an **unverifiable promise**. Same when the stated intent is
+  too vague to compare against the diff ("misc fixes", "cleanup"). This
+  is the 🟡 case — see Verdict.
 
 ## 4. Verdict
 
 - 🟢 — both checks pass.
-- 🔴 — either check fails.
+- 🟡 — no Check 1 finding, but the promise is unverifiable.
+- 🔴 — either check fails. 🔴 always trumps 🟡: a concrete
+  prod risk is 🔴 regardless of how vague the description is.
 
 **Output format is a hard constraint**: the emoji, then at most **3
 sentences of at most 10 words each**. Count the words. No headers, no
