@@ -68,9 +68,36 @@ exhaustive — anything of the same severity class counts):
 If a risk is claimed to be gated behind a feature flag, verify the flag
 actually defaults **off** — a flag defaulting on gates nothing.
 
-A risk must be **concrete and traceable to a line in the diff**. A vague
-"this could maybe be risky" is not a finding — do not red-flag on vibes.
-No concrete finding = this check passes.
+**Mandatory guard audit** — whenever the diff touches a path that spends
+money, sends messages, or provisions paid resources (SMS/email sends,
+number/inbox provisioning, charges, paid API calls), do all three, every
+time, no exceptions:
+
+1. **Open the guard, don't trust the diff's word for it.** If safety
+   rests on an idempotency check, dedupe, or get-or-create living in a
+   *called* function, read that function — even when it's outside the
+   diff, even when a comment in the diff describes it. A comment
+   claiming "guards with X" is a claim to verify, not evidence.
+2. **Re-run the guard under concurrency.** If the diff fans out async
+   work (loops spawning tasks/jobs, "send all" buttons, batch
+   endpoints), ask: N tasks hit this guard at once with no row yet —
+   does it hold? A guard that is a plain unlocked read-then-act does
+   not; that's a duplicate-purchase/duplicate-send finding.
+3. **Trace the retry/re-invoke path to its success claim.** Follow what
+   happens when the action is triggered again after it already
+   succeeded (a "send again"/"retry" button, a re-enqueued job). If
+   dedupe makes the second run a no-op but the code still returns
+   success and stamps sent/paid state or shows success UI, that's a
+   finding — success UI for an operation that wrote nothing.
+
+Dedupe/skip logic is not automatically a mitigant — it's a trigger to
+run step 3. Do not credit a safety mechanism you haven't read.
+
+A risk must be **concrete and traceable to a line in the diff**. That
+means the finding *anchors* to a diff line (the fan-out, the send call,
+the button) — the evidence may live in an unchanged callee you read to
+verify it. A vague "this could maybe be risky" is not a finding — do
+not red-flag on vibes. No concrete finding = this check passes.
 
 ## 3. Check 2 — Does it deliver what it promises?
 
