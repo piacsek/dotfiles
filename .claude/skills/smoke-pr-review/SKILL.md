@@ -1,6 +1,6 @@
 ---
 name: smoke-pr-review
-description: Binary smoke check on a PR — will it blow up prod, and does it deliver what it promises? Outputs 🟢 or 🔴 plus at most 3 sentences of at most 10 words each.
+description: Smoke check on a PR — will it blow up prod, and does it deliver what it promises? Outputs 🟢, 🟡 (promise unverifiable), or 🔴, plus at most 3 sentences of at most 10 words each.
 ---
 
 Smoke-test a pull request against exactly two questions. Nothing else.
@@ -41,6 +41,15 @@ exhaustive — anything of the same severity class counts):
   idempotency keys, silenced error handling around money or data writes,
   commented-out guards. A stated, plausible reason in the PR body makes
   it fine; silent removal does not.
+- **Data corruption**: writes that mangle existing rows — lossy type
+  casts, encoding changes, double-applied backfills, race-prone
+  read-modify-write on shared records, wrong-column mappings.
+- **Spamming**: code paths that can mass-send email/SMS/push — loops over
+  all users, removed dedupe/throttle guards, notification triggers firing
+  on backfill or migration, test sends pointed at real recipients.
+- **Data leaking**: PII or secrets written to logs/analytics/third
+  parties, endpoints or queries losing tenant/user scoping, permissive
+  CORS/serialization exposing hidden fields, private data in public URLs.
 - Same class of risk in disguise: hardcoded prod credentials/URLs,
   debug/test code paths left live, retry loops turned infinite,
   timezone/precision changes on billing math.
