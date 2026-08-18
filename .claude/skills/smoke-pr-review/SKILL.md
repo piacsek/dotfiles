@@ -50,12 +50,27 @@ exhaustive — anything of the same severity class counts):
 - **Data leaking**: PII or secrets written to logs/analytics/third
   parties, endpoints or queries losing tenant/user scoping, permissive
   CORS/serialization exposing hidden fields, private data in public URLs.
+- **Money bugs**: double-charging, cents-vs-dollars mixups, refund loops,
+  wrong amounts sent to Stripe or other payment rails, charging the
+  wrong customer, disabled payment idempotency.
+- **Unbounded work**: full-table scans or missing pagination on hot
+  paths, N+1 queries introduced on high-traffic endpoints, jobs with
+  unbounded fan-out, retries with no backoff or cap.
+- **Cost bombs**: uncapped loops around paid APIs (SMS, LLM calls,
+  metered third parties) — a surprise bill is a prod incident.
+- **Breaking un-rollbackable consumers**: removing or renaming API
+  fields, endpoints, or event payloads consumed by mobile apps or
+  external partners — the server rolls back, their clients don't.
 - Same class of risk in disguise: hardcoded prod credentials/URLs,
   debug/test code paths left live, retry loops turned infinite,
   timezone/precision changes on billing math.
 
+If a risk is claimed to be gated behind a feature flag, verify the flag
+actually defaults **off** — a flag defaulting on gates nothing.
+
 A risk must be **concrete and traceable to a line in the diff**. A vague
 "this could maybe be risky" is not a finding — do not red-flag on vibes.
+No concrete finding = this check passes.
 
 ## 3. Check 2 — Does it deliver what it promises?
 
