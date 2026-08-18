@@ -98,6 +98,7 @@ sentences of at most 10 words each**. Count the words. No headers, no
 bullets, no preamble, no code blocks, nothing after.
 
 - 🟢: one short sentence is enough (or the emoji alone).
+- 🟡: state concisely why the promise is unverifiable.
 - 🔴: name the single worst problem with its location. Fit the top 1–2
   issues in the sentence budget; drop the rest — this is a smoke test,
   not a report.
@@ -105,6 +106,8 @@ bullets, no preamble, no code blocks, nothing after.
 Examples:
 
 > 🟢 Migration is additive and delivery matches the description.
+
+> 🟡 Empty body and vague title; nothing to verify against.
 
 > 🔴 Migration drops `users.email` while old code reads it.
 > References `STRIPE_WEBHOOK_SECRET_V2`, defined nowhere.
