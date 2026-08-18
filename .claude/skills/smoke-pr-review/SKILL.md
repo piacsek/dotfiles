@@ -1,6 +1,6 @@
 ---
 name: smoke-pr-review
-description: Smoke check on a PR — will it blow up prod, and does it deliver what it promises? Outputs 🟢, 🟡 (promise unverifiable), or 🔴, plus at most 3 sentences of at most 10 words each.
+description: Smoke check on a PR — will it blow up prod, and does it deliver what it promises? Outputs 🟢, 🟡 (promise unverifiable), or 🔴, plus at most 3 sentences of at most 10 words each. On 🔴, also emits a paste-ready GH request-changes reply and a fix prompt for the author.
 ---
 
 Smoke-test a pull request against exactly two questions. Nothing else.
@@ -19,8 +19,9 @@ architecture, refactoring opportunities, and nits entirely.
    lives in title + body (and any linked ticket referenced there).
 2. `gh pr diff <ref>` — the delivery. For huge diffs, read every file
    in full only where the two checks below need it; skim the rest.
-3. If the body references a Linear ticket and the body itself is thin,
-   fetch the ticket to establish what was promised.
+3. If the body references a ticket (Linear, Jira, GitHub issue, …) and
+   the body itself is thin, fetch the ticket to establish what was
+   promised.
 
 ## 2. Check 1 — Will this blow up prod?
 
@@ -182,15 +183,16 @@ Example (structure, not length — real blocks carry the actual details):
 **GH reply — request changes:**
 
 ```markdown
-Blocking on two prod risks in the send path.
+Blocking on two prod risks in the notification send path.
 
-- `review_requests.ex:207`: `get_or_create_ai_phone/1` returns
-  `{:ok, %SchoolContactInfo{}}` when only the legacy managed phone is
-  set, so a struct reaches Twilio as `from`. Triggered by any existing
-  provider with `wonderschool_managed_phone` and no AI phone.
-- `index.ex:313`: "Send all" fans out N async tasks that each pass the
-  unlocked provisioning guard, so one click can buy several Twilio
-  numbers. Triggered by send-all on a school with no number yet.
+- `notifications/dispatch.py:88`: `get_or_create_sender/1` returns the
+  raw settings record when the legacy sender field is set, so an object
+  reaches the SMS provider as `from`. Triggered by any account with a
+  legacy sender and no new-style sender configured.
+- `notifications/views.py:313`: "Send all" fans out N async tasks that
+  each pass the unlocked provisioning guard, so one click can buy
+  several phone numbers. Triggered by send-all on an account with no
+  number yet.
 
 Happy to approve once both are fixed with regression tests.
 ```
@@ -198,21 +200,21 @@ Happy to approve once both are fixed with regression tests.
 **Author prompt:**
 
 ```
-On branch gmb-2-agentmail, fix the following before merge:
+On branch fix/notification-dispatch, fix the following before merge:
 
-1. apps/nova/.../review_requests.ex get_or_create_ai_phone/1: the bare
-   `with` has no else, so when HelpingHands returns
-   {:error, :already_provisioned} (legacy wonderschool_managed_phone
-   set, helping_hands_phone nil) the reread struct is returned verbatim
-   and passed to Twilio as `from`. Add an else returning {:error,
-   reason}. Regression test: school with wonderschool_managed_phone set
-   and no helping_hands_phone must get an error, not a Twilio call.
+1. notifications/dispatch.py get_or_create_sender: the early-return
+   path has no error branch, so when provisioning reports
+   already_provisioned (legacy sender set, new sender empty) the
+   re-read settings record is returned verbatim and passed to the SMS
+   provider as `from`. Return an explicit error instead. Regression
+   test: account with only the legacy sender must get an error, not a
+   provider call.
 
-2. apps/nova/.../index.ex send_all_review_requests: each async task
-   independently runs the unlocked provision guard, so N tasks can each
-   buy a number. Resolve/provision the channels once before the
-   fan-out and pass them into the tasks. Regression test: send-all over
-   three recipients buys exactly one number.
+2. notifications/views.py send_all: each async task independently runs
+   the unlocked provision guard, so N tasks can each buy a number.
+   Resolve/provision the sender once before the fan-out and pass it
+   into the tasks. Regression test: send-all over three recipients
+   buys exactly one number.
 
 Run the affected test files and report results. Do not commit or push.
 ```
