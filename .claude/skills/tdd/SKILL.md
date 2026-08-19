@@ -63,6 +63,11 @@ Before starting the next task, explicitly assess refactoring opportunities again
 - If stuck, make the step smaller
 - Upon ambiguity, ask the user for clarification
 
+## Elixir / ExUnit
+
+- New test files default to `use <Case>, async: true`. Every ws-common Nova case template is async-ready; a sync file serializes a whole suite lane. Keep a file synchronous only for global state: `Mock`/`with_mock`, `FunWithFlags` writes, DB access inside `on_exit` (the handler process has no sandbox allowance), `Application.put_env`-style global config, Elasticsearch/Redis, `Mix.Task` state, raw DDL, or hardcoded unique values shared across files. Full disqualifier list: ws-common `docs/modules/testing.md`.
+- Do not add `on_exit` cleanup for sandboxed DB state (including feature flags) — the SQL sandbox rolls it back, and under `async: true` the cleanup itself crashes with `DBConnection.OwnershipError`.
+
 ## TypeScript
 
 - Never assert a bare `toThrow()` / `rejects.toThrow()`. Always match against a specific error so the test fails when the *wrong* thing throws. Match the most legible specific signal available: a custom error class, a message regex, or — for DB errors — the `pg` `DatabaseError` fields (`code`, plus `table` / `column` / `constraint` when present). Prefer named/structured fields over a cryptic code alone, e.g. `rejects.toMatchObject({ code: '23502', table: '...', column: '...' })` over `rejects.toMatchObject({ code: '23502' })`.
