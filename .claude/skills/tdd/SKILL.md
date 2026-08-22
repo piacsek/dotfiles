@@ -65,7 +65,7 @@ Before starting the next task, explicitly assess refactoring opportunities again
 
 ## Elixir / ExUnit
 
-- New test files default to `use <Case>, async: true`. Every ws-common Nova case template is async-ready; a sync file serializes a whole suite lane. Keep a file synchronous only for global state: `Mock`/`with_mock`, `FunWithFlags` writes, DB access inside `on_exit` (the handler process has no sandbox allowance), `Application.put_env`-style global config, Elasticsearch/Redis, `Mix.Task` state, raw DDL, or hardcoded unique values shared across files. Full disqualifier list: ws-common `docs/modules/testing.md`.
+- New test files default to `use <Case>, async: true`. Every ws-common Nova case template is async-ready; a sync file serializes a whole suite lane. Keep a file synchronous only for global state: `Mock`/`with_mock`, `FunWithFlags` writes, DB access inside `on_exit` (the handler process has no sandbox allowance), `Application.put_env`-style global config, Elasticsearch/Redis, `Mix.Task` state, raw DDL, or hardcoded unique values shared across files.
 - Do not add `on_exit` cleanup for sandboxed DB state (including feature flags) — the SQL sandbox rolls it back, and under `async: true` the cleanup itself crashes with `DBConnection.OwnershipError`.
 
 ## TypeScript
