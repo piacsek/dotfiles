@@ -34,7 +34,7 @@
       "mcp__claude_ai_Linear__search_documentation"
     ]
   },
-  "model": "claude-fable-5[1m]",
+  "model": "opus[1m]",
   "hooks": {
     "SessionEnd": [
       {
@@ -61,8 +61,18 @@
   "theme": "auto",
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true,
   "autoMode": {
+    "allow": [
+      "$defaults",
+      "Bash(mix test:*) in ~/projects/wonderschool/ws-common",
+      "Bash(npx playwright show-trace:*) in ~/projects/wonderschool/ws-common",
+      "Bash(mix format:*) in ~/projects/wonderschool/ws-common"
+    ],
+    "soft_deny": [
+      "$defaults",
+      "Bash(mix ecto.drop:*) in ~/projects/wonderschool/ws-common",
+      "Bash(gh pr merge:*) targeting main in wonderschool/ws-common"
+    ],
     "environment": [
       "### Org-wide",
       "**Organization**: Wonderschool (github.com/wonderschool)",
@@ -88,17 +98,7 @@
       "**Trusted repo**: /Users/piacsek/projects/wonderschool/ws-common (github.com/wonderschool/ws-common, private)",
       "**Org-specific CLIs**: mix, npx, elixir, asdf, gh, argocd, kubectl, tsh, tailscale (from shell history; org affiliation unconfirmed beyond routine dev use)",
       "routine under ws-common/ prefix: mix, npx, elixir test/build commands scoped to this repo"
-    ],
-    "allow": [
-      "$defaults",
-      "Bash(mix test:*) in ~/projects/wonderschool/ws-common",
-      "Bash(npx playwright show-trace:*) in ~/projects/wonderschool/ws-common",
-      "Bash(mix format:*) in ~/projects/wonderschool/ws-common"
-    ],
-    "soft_deny": [
-      "$defaults",
-      "Bash(mix ecto.drop:*) in ~/projects/wonderschool/ws-common",
-      "Bash(gh pr merge:*) targeting main in wonderschool/ws-common"
     ]
-  }
+  },
+  "voiceEnabled": true
 }
