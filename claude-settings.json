@@ -61,5 +61,44 @@
   "theme": "auto",
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "autoMode": {
+    "environment": [
+      "### Org-wide",
+      "**Organization**: Wonderschool (github.com/wonderschool)",
+      "**Cloud provider(s)**: Google Cloud (GCLOUD_PROJECT=moxit-wonderschool-dev seen in .env.example); Firebase",
+      "**Repository visibility**: private (confirmed via gh) — github.com/wonderschool/ws-common",
+      "**Internal sharing / snippet hosting**: None configured — treat public paste/gist services as outside the trust boundary",
+      "**Secrets management**: 1Password (referenced in .env.example for Stripe/LaunchDarkly credentials); CI secrets managed via GitHub Actions secrets (see CI secret names)",
+      "**Default / protected branches**: `main` (protected, via gh); no rulesets listed",
+      "**CI/CD deploy targets**: GitHub Actions workflows deploying Provider API, CCMS Website, Engineering guide (per README badges); ARGOCD_AUTH_TOKEN present in CI secrets suggesting ArgoCD-based deploys",
+      "**Network posture**: None configured",
+      "**Source control**: github.com/wonderschool/ws-common and its remote(s) only",
+      "**Trusted internal domains**: wonderschool.dev, wonderschool.io (seen in PROVIDER_API_CORS_ORIGINS: ccms.wonderschool.dev, provider.wonderschool.io)",
+      "**Trusted cloud buckets**: idec-licensing-files (config-derived — not a confirmed upload destination; uploads of local data still require confirmation)",
+      "**Key internal services**: Nexus API, Lego API, Parent API, Internal API, Payments API, Auth API (all localhost-scoped per .env.example; no confirmed remote hosts)",
+      "**Internal package registry**: npm.pkg.github.com",
+      "**Sensitive data locations & audiences**: .env* files (DB passwords, Stripe keys, Sendgrid key, LaunchDarkly client IDs, Google credentials); CI secret names (ANTHROPIC_API_KEY, ARGOCD_AUTH_TOKEN, STRIPE_SECRET_KEY_TEST, NPM_TOKEN, GITHUB_TOKEN, ROLLBAR_ACCESS_TOKEN, Slack webhook URLs, Oban license keys, app private keys); share only with engineers cleared for Wonderschool infra credentials",
+      "**Data retention / declassification**: None configured",
+      "**Sensitive remote targets**: any namespace/host/container with `prod` or `production` as a whole word/segment; apps/nova/config/prod.exs and apps/pyre/config/prod.exs (production config files)",
+      "**Protected deployment namespaces / environments**: production Firebase/GCP projects and prod.exs-configured environments (moxit-wonderschool-dev is dev, not prod, and is not itself protected)",
+      "**Protected IaC scopes**: IAM, RBAC, networking, quota, node-pool resources; anything tagged prod/production",
+      "### User-specific",
+      "**Primary use of Claude Code**: software development (Elixir/Phoenix + React monorepo, IDEC licensing feature work)",
+      "**Trusted repo**: /Users/piacsek/projects/wonderschool/ws-common (github.com/wonderschool/ws-common, private)",
+      "**Org-specific CLIs**: mix, npx, elixir, asdf, gh, argocd, kubectl, tsh, tailscale (from shell history; org affiliation unconfirmed beyond routine dev use)",
+      "routine under ws-common/ prefix: mix, npx, elixir test/build commands scoped to this repo"
+    ],
+    "allow": [
+      "$defaults",
+      "Bash(mix test:*) in ~/projects/wonderschool/ws-common",
+      "Bash(npx playwright show-trace:*) in ~/projects/wonderschool/ws-common",
+      "Bash(mix format:*) in ~/projects/wonderschool/ws-common"
+    ],
+    "soft_deny": [
+      "$defaults",
+      "Bash(mix ecto.drop:*) in ~/projects/wonderschool/ws-common",
+      "Bash(gh pr merge:*) targeting main in wonderschool/ws-common"
+    ]
+  }
 }
