@@ -16,6 +16,22 @@ scenario the body does NOT mention and run the code through it. If every
 scenario you tested appears in the body or the PR's own tests, you have
 not reviewed anything yet.
 
+**Burden of proof.** On a high-risk path (money, messaging, data
+deletion, auth/permissions), the diff is unsafe until proven safe. 🟢
+is not "I found no findings" — it is "I completed every mandatory audit
+below and each one affirmatively passed". If any audit cannot be
+completed (missing context, unreadable callee, time), the verdict is
+capped at 🟡 with the reason "safety unproven". A 🟢 you cannot back
+with the completed audits is a lie, and a false 🟢 is strictly worse
+than a false 🔴 — when torn between them, output 🔴.
+
+**The PR's tests are claims, not evidence.** Tests written by the
+author encode the author's same blind spots. Treat suspiciously
+convenient fixtures as a smell to probe, not reassurance: amounts that
+are clean multiples of the divisor, UTC-only dates, single-item lists,
+periods with no DST or month-length variation. Ask of every fixture:
+what ugly value would break this, and does the code survive it?
+
 ## 0. Resolve the PR
 
 - Argument given (PR number or URL): use it.
@@ -31,6 +47,21 @@ not reviewed anything yet.
 3. If the body references a ticket (Linear, Jira, GitHub issue, …) and
    the body itself is thin, fetch the ticket to establish what was
    promised.
+4. **Entry-point sweep.** For every changed function, grep the repo for
+   all its callers and list every entry point that reaches the change:
+   triggers, crons, endpoints, queue consumers, UI actions. The review
+   covers the union of those paths, not just the caller the PR body
+   discusses — a function safe when called from the unenroll modal may
+   be lethal when the delete trigger calls it. Note: the branch may be
+   ahead of your local checkout; when a symbol seems missing, check the
+   PR head and remote main via `gh api` before concluding anything.
+5. **Behavioral diff vs main.** Enumerate every externally visible
+   action (charge, send, write, delete) that can happen after this diff
+   that cannot happen on current main — including actions in states
+   where main did nothing. Each new action needs an affirmative "this
+   is correct because..." traced to code; "the body says it's intended"
+   does not count. A diff that turns main's no-op into a charge or send
+   is guilty until each such path is proven right.
 
 ## 2. Check 1 — Will this blow up prod?
 
