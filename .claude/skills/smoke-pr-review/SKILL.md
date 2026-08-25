@@ -191,6 +191,46 @@ in whose favor? If the answer is "every prorated/affected invoice", it
 is a finding, full stop. Noticing an issue and dismissing it without
 that quantification is the exact failure this rule prohibits.
 
+**Independent skeptic pass** — mandatory whenever the diff touches a
+high-risk path (money, messaging, data deletion, auth). Your own pass
+carries your own blind spots; buy independent ones. Spawn 2–3 read-only
+subagents in parallel (Explore or general-purpose), each with ONE lens
+and one job — construct a single concrete scenario where this diff
+misfires in production:
+
+- **Lifecycle lens**: "Here are the changed guards. Walk the mutated
+  record through every lifecycle state (pre-cycle, mid-flight,
+  post-cycle with rolled-forward dates, re-entry/undo). Find one state
+  where a guard passes and fires against the wrong period, amount, or
+  person. Report the exact state and file:line, or 'none constructed'."
+- **Math/units lens**: "Here are the changed amount computations. Prove
+  the unit of every amount at its final consumer, chase every sibling
+  field through every transform, and try ugly values: non-divisible
+  amounts, 31-day months, DST boundaries, discounts, zero and negative.
+  Report one concrete wrong-amount scenario with numbers, or 'none
+  constructed'."
+- **Downstream lens**: "Here are the fields this diff writes or scales.
+  Find every reader of those fields outside the diff and report one
+  reader that now misbehaves (stored record vs charged amount mismatch,
+  status never cleared, balance never clearing), or 'none constructed'."
+
+Give each skeptic the diff location, branch name, and the instruction
+to default toward reporting a scenario when uncertain. Then verify
+their scenarios yourself against the code — a skeptic's claim is a
+lead, not a verdict. 🟢 requires every skeptic scenario to be refuted
+with file:line evidence you actually read; any scenario you cannot
+refute is a finding. Skipping this pass on a high-risk path caps the
+verdict at 🟡.
+
+**Prosecution pass** — always, last, before any verdict. Write (in your
+reasoning) the strongest concrete 🔴 case against this PR: the single
+most damaging scenario you can construct, with the state, trigger, and
+file:line it would flow through. Then refute it with code you have
+actually read — if the refutation rests on a function you haven't
+opened, open it. If you cannot refute it, it is a finding. If your
+strongest case is weak and refuted, say why in one line of reasoning;
+only then is 🟢 on the table.
+
 A risk must be **concrete and traceable to a line in the diff**. That
 means the finding *anchors* to a diff line (the fan-out, the send call,
 the button) — the evidence may live in an unchanged callee you read to
