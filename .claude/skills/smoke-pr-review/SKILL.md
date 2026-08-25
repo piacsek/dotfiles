@@ -107,6 +107,59 @@ time, no exceptions:
 Dedupe/skip logic is not automatically a mitigant — it's a trigger to
 run step 3. Do not credit a safety mechanism you haven't read.
 
+**Mandatory state sweep** — whenever the diff branches on a mutable
+field of a long-lived record (a timestamp, a status enum, a rolled-
+forward date), do this before crediting the branch:
+
+1. **List the record's lifecycle states.** Not the states the body
+   names — all of them. For anything cron- or cycle-driven, that list
+   always includes at least: before the cycle fires, mid-flight, and
+   *after* the cycle fired and the fields rolled forward.
+2. **Re-evaluate the guard predicate in each state.** A predicate like
+   `dateSend > now` means different things before and after a send has
+   rolled `dateSend` to the next cycle — same expression, opposite
+   semantics. Ask in each state: the guard passes, then what fires,
+   against which period/record, for whom?
+3. **Compare each outcome against current `main`.** A path that today
+   produces nothing and after this diff produces a charge, send, or
+   write is a finding even when every state the body listed behaves.
+
+The bug this exists to catch: a guard tested only in the author's
+named scenario, passing in an unnamed lifecycle state and firing an
+action against the wrong period or the wrong person.
+
+**Mandatory money-math audit** — whenever the diff computes, scales, or
+copies an amount that reaches an invoice, ledger, or payment rail, do
+all three, every time:
+
+1. **Verify the unit at the consumer, not the comment.** JSDoc, PR
+   body, and variable names claiming cents/dollars are claims. Trace
+   the value to the payment-rail call (`convertToCents`,
+   `amount_in_cents`, Stripe params) and let the consumer tell you the
+   unit. Any rounding step (`Math.round`, integer division) is wrong
+   until you have proven which unit it rounds in.
+2. **Trace every sibling field the transform copies through.** Scaling
+   `amount` but spreading the rest of the item (`...item`) carries
+   `discounts`, `tax`, `fees` through unscaled — and any `total`
+   computed nearby may disagree with how the rest of the system
+   computes totals (discount-inclusive vs exclusive). Check what the
+   stored record says versus what the rail actually charges; a
+   permanent mismatch (a balance that never clears) is a finding.
+3. **Check the time basis of any day/period arithmetic.** Day counts
+   taken in UTC against timestamps produced in an org's local timezone
+   (or vice versa) shift `periodDays`/`daysAttended` by one across DST
+   and month boundaries. Mixed time bases in billing math is a
+   finding; do not wave it off as an edge case (see severity rule).
+
+**Severity rule for wrong amounts**: on a billing path, *systematically
+wrong* beats *slightly wrong*. A bug that misbills every invoice by a
+few dollars is catastrophe class — same as the money-bug bullet above —
+regardless of per-invoice magnitude. Before dismissing anything as "a
+rounding edge", quantify it: which invoices does it hit, how often, and
+in whose favor? If the answer is "every prorated/affected invoice", it
+is a finding, full stop. Noticing an issue and dismissing it without
+that quantification is the exact failure this rule prohibits.
+
 A risk must be **concrete and traceable to a line in the diff**. That
 means the finding *anchors* to a diff line (the fan-out, the send call,
 the button) — the evidence may live in an unchanged callee you read to
@@ -128,6 +181,21 @@ Compare the stated intent (title, body, linked ticket) against the diff:
   is the 🟡 case — see Verdict.
 
 ## 4. Verdict
+
+**Pre-🟢 gate** — before outputting 🟢, answer these in your reasoning
+(not in the output); if any answer is no, go back and do the work:
+
+1. Did I test at least one scenario per guard that the PR body and its
+   tests do NOT mention? Name it.
+2. If amounts are touched: did I prove the unit at the payment-rail
+   consumer, trace copied sibling fields (discounts/totals), and check
+   the time basis of period math?
+3. If the diff branches on mutable timestamps/status: did I run the
+   guard in the post-cycle state where the dates have rolled forward?
+4. Did I dismiss anything as minor without quantifying which records it
+   hits and how often?
+
+A 🟢 that only re-verified the author's own claims is void.
 
 - 🟢 — both checks pass.
 - 🟡 — no Check 1 finding, but the promise is unverifiable.
