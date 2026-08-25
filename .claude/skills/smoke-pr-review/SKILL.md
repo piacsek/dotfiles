@@ -76,7 +76,11 @@ exhaustive — anything of the same severity class counts):
   timezone/precision changes on billing math.
 
 If a risk is claimed to be gated behind a feature flag, verify the flag
-actually defaults **off** — a flag defaulting on gates nothing.
+actually defaults **off** — a flag defaulting on gates nothing. Also
+check flag **symmetry**: if any related half of the feature (frontend,
+sibling PR, same flag name elsewhere in the repo) is behind a flag, and
+this diff's half runs unconditionally, that's a finding — the risky half
+ships to every org with no kill switch while the safe half is gated.
 
 **Mandatory guard audit** — whenever the diff touches a path that spends
 money, sends messages, or provisions paid resources (SMS/email sends,
