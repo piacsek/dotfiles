@@ -388,7 +388,5 @@ On branch fix/notification-dispatch, fix the following before merge:
    Resolve/provision the sender once before the fan-out and pass it
    into the tasks. Regression test: send-all over three recipients
    buys exactly one number.
-
-Run the affected test files and report results. Do not commit or push.
 ```
 ~~~
