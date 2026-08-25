@@ -1,6 +1,6 @@
 ---
 name: smoke-pr-review
-description: Smoke check on a PR — will it blow up prod, and does it deliver what it promises? Outputs 🟢, 🟡 (promise unverifiable), or 🔴, plus at most 3 sentences of at most 10 words each. On 🔴, also emits a paste-ready GH request-changes reply and a fix prompt for the author.
+description: Smoke check on a PR — will it blow up prod, and does it deliver what it promises? Outputs 🟢, 🟡 (promise unverifiable OR safety unproven), or 🔴, plus at most 3 sentences of at most 10 words each. On 🔴, also emits a paste-ready GH request-changes reply and a fix prompt for the author.
 ---
 
 Smoke-test a pull request against exactly two questions. Nothing else.
