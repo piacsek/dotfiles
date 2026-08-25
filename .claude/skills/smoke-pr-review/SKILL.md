@@ -7,6 +7,12 @@ Smoke-test a pull request against exactly two questions. Nothing else.
 Not a code review: ignore style, naming, test coverage, performance,
 architecture, refactoring opportunities, and nits entirely.
 
+"Smoke test" bounds the SCOPE (two questions), never the DEPTH. On
+Check 1 the depth budget is unlimited: read every callee, spawn every
+skeptic, and take every pass the audits below demand. "It's just a
+smoke test" is never a reason to skip an audit — the only shortcut this
+skill permits is ignoring the nit categories above.
+
 **Prime directive — the body is a suspect, not a checklist.** The PR
 body's "invariants preserved" / "edge cases handled" lists tell you what
 the author *thought about*. Verifying those claims and stopping is a
