@@ -7,6 +7,15 @@ Smoke-test a pull request against exactly two questions. Nothing else.
 Not a code review: ignore style, naming, test coverage, performance,
 architecture, refactoring opportunities, and nits entirely.
 
+**Prime directive — the body is a suspect, not a checklist.** The PR
+body's "invariants preserved" / "edge cases handled" lists tell you what
+the author *thought about*. Verifying those claims and stopping is a
+claims audit, not a review — the bug lives in the state the author never
+listed. For every guard and invariant, you must generate at least one
+scenario the body does NOT mention and run the code through it. If every
+scenario you tested appears in the body or the PR's own tests, you have
+not reviewed anything yet.
+
 ## 0. Resolve the PR
 
 - Argument given (PR number or URL): use it.
