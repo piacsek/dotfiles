@@ -254,22 +254,34 @@ Compare the stated intent (title, body, linked ticket) against the diff:
 ## 4. Verdict
 
 **Pre-🟢 gate** — before outputting 🟢, answer these in your reasoning
-(not in the output); if any answer is no, go back and do the work:
+(not in the output); if any answer is no, go back and do the work; if
+the work cannot be done, the verdict is 🟡 "safety unproven", never 🟢:
 
 1. Did I test at least one scenario per guard that the PR body and its
    tests do NOT mention? Name it.
-2. If amounts are touched: did I prove the unit at the payment-rail
+2. Did I enumerate every entry point that reaches the changed code and
+   every action possible after this diff that main cannot do — and
+   prove each such action correct?
+3. If amounts are touched: did I prove the unit at the payment-rail
    consumer, trace copied sibling fields (discounts/totals), and check
    the time basis of period math?
-3. If the diff branches on mutable timestamps/status: did I run the
+4. If the diff branches on mutable timestamps/status: did I run the
    guard in the post-cycle state where the dates have rolled forward?
-4. Did I dismiss anything as minor without quantifying which records it
+5. On a high-risk path: did the independent skeptic pass run, and did I
+   refute every scenario the skeptics constructed with file:line
+   evidence I read myself?
+6. Did I run the prosecution pass and refute my own strongest 🔴 case?
+7. Did I dismiss anything as minor without quantifying which records it
    hits and how often?
 
-A 🟢 that only re-verified the author's own claims is void.
+A 🟢 that only re-verified the author's own claims is void. A false 🟢
+is worse than a false 🔴 — under residual doubt on a high-risk path,
+downgrade.
 
-- 🟢 — both checks pass.
-- 🟡 — no Check 1 finding, but the promise is unverifiable.
+- 🟢 — both checks pass AND every mandatory audit completed and passed.
+- 🟡 — no Check 1 finding, but either the promise is unverifiable OR a
+  mandatory audit could not be completed ("safety unproven" — say which
+  audit and why in the sentence budget).
 - 🔴 — either check fails. 🔴 always trumps 🟡: a concrete
   prod risk is 🔴 regardless of how vague the description is.
 
@@ -280,7 +292,8 @@ For 🔴, the verdict is followed by the two paste blocks in section 5 —
 and nothing else.
 
 - 🟢: one short sentence is enough (or the emoji alone).
-- 🟡: state concisely why the promise is unverifiable.
+- 🟡: state concisely why — unverifiable promise, or which audit is
+  incomplete and what blocked it.
 - 🔴: name the single worst problem with its location. Fit the top 1–2
   issues in the sentence budget; drop the rest — this is a smoke test,
   not a report.
@@ -290,6 +303,8 @@ Examples:
 > 🟢 Migration is additive and delivery matches the description.
 
 > 🟡 Empty body and vague title; nothing to verify against.
+
+> 🟡 Safety unproven: could not read the charge callee.
 
 > 🔴 Migration drops `users.email` while old code reads it.
 > References `STRIPE_WEBHOOK_SECRET_V2`, defined nowhere.
