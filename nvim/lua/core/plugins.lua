@@ -25,7 +25,6 @@ vim.pack.add({
 	gh("nvim-treesitter/nvim-treesitter"),
 	gh("stevearc/oil.nvim"),
 	{ src = gh("ThePrimeagen/harpoon"), version = "harpoon2" },
-	gh("ThePrimeagen/99"),
 	gh("nvim-lua/plenary.nvim"),
 	gh("ibhagwan/fzf-lua"),
 	gh("MagicDuck/grug-far.nvim"),
