@@ -1,5 +1,5 @@
 vim.api.nvim_create_user_command("R", function()
-	vim.cmd("mksession! Session.vim | wall | restart source Session.vim")
+	vim.cmd("restart")
 end, { desc = "Restart nvim (save session, then source Session.vim)" })
 
 -- Muscle-memory alias for the 0.12 builtin `:lsp restart` (a proper
