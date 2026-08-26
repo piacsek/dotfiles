@@ -379,8 +379,41 @@ vim.keymap.set("n", "<leader><BS>", function()
 	if vim.bo.buftype == "" then
 		vim.cmd("w")
 	end
-	vim.cmd("TestLast")
-end, { desc = "Save and run last test" })
+	-- vim-test's vimux strategy funnels through VimuxRunCommand too, so
+	-- g:VimuxLastCommand holds the last run of either kind (test or <leader>r).
+	if vim.g.VimuxLastCommand and vim.g.VimuxLastCommand ~= "" then
+		vim.cmd("VimuxRunLastCommand")
+	else
+		vim.cmd("TestLast")
+	end
+end, { desc = "Save and rerun last test/file run" })
+
+local run_file_cmd = {
+	python = "python3",
+	sh = "sh",
+	bash = "bash",
+	zsh = "zsh",
+	javascript = "node",
+	typescript = "npx tsx",
+	lua = "nvim -l",
+	elixir = "elixir",
+	ruby = "ruby",
+	go = "go run",
+}
+
+vim.keymap.set("n", "<leader>r", function()
+	local runner = run_file_cmd[vim.bo.filetype]
+	if not runner then
+		vim.notify("No file runner for filetype: " .. vim.bo.filetype, vim.log.levels.WARN)
+		return
+	end
+	if vim.bo.buftype ~= "" then
+		vim.notify("Not a file buffer", vim.log.levels.WARN)
+		return
+	end
+	vim.cmd("w")
+	vim.fn.VimuxRunCommand(runner .. " " .. vim.fn.shellescape(vim.fn.expand("%:p")))
+end, { desc = "[R]un current file (vimux)" })
 
 local function snake_to_camel(s)
 	return (s:gsub("_(%w)", string.upper))
