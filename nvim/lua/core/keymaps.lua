@@ -411,7 +411,6 @@ vim.keymap.set("n", "<leader>r", function()
 		vim.notify("Not a file buffer", vim.log.levels.WARN)
 		return
 	end
-	vim.cmd("w")
 	vim.fn.VimuxRunCommand(runner .. " " .. vim.fn.shellescape(vim.fn.expand("%:p")))
 end, { desc = "[R]un current file (vimux)" })
 
