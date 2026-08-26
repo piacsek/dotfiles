@@ -1,6 +1,6 @@
 vim.api.nvim_create_user_command("R", function()
 	vim.cmd("restart")
-end, { desc = "Restart nvim (save session, then source Session.vim)" })
+end, { desc = "Restart nvim" })
 
 -- Muscle-memory alias for the 0.12 builtin `:lsp restart` (a proper
 -- stop-then-start — the old hand-rolled enable(false)/enable(true) same-tick
