@@ -329,7 +329,6 @@ require("conform").setup({
 })
 
 require("plugins.aerial")
-require("plugins.nine")
 require("plugins.dap")
 require("plugins.lualine")
 require("trouble").setup({})
