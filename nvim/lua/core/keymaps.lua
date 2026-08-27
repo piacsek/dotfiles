@@ -422,7 +422,7 @@ vim.keymap.set("n", "<leader>r", function()
 		vim.notify("Not a file buffer", vim.log.levels.WARN)
 		return
 	end
-	vim.fn.VimuxRunCommand(runner .. " " .. vim.fn.shellescape(vim.fn.expand("%:p")))
+	vimux_run_clearing(runner .. " " .. vim.fn.shellescape(vim.fn.expand("%:p")))
 end, { desc = "[R]un current file (vimux)" })
 
 local function snake_to_camel(s)
