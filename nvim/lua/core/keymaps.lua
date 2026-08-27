@@ -375,6 +375,17 @@ vim.keymap.set("n", "<leader>tm", function()
 
 	vim.cmd("TestSuite " .. table.concat(paths, " "))
 end, { desc = "[T]est [M]odified (vs main)" })
+-- With test#preserve_screen=0, vim-test clears the runner pane via separate
+-- VimuxClear* calls before VimuxRunCommand — the clear is never part of
+-- g:VimuxLastCommand. Any run outside vim-test must clear the same way, or
+-- output stacks up in the pane.
+local function vimux_run_clearing(cmd)
+	vim.fn.VimuxOpenRunner()
+	vim.fn.VimuxClearTerminalScreen()
+	vim.fn.VimuxClearRunnerHistory()
+	vim.fn.VimuxRunCommand(cmd)
+end
+
 vim.keymap.set("n", "<leader><BS>", function()
 	if vim.bo.buftype == "" then
 		vim.cmd("w")
@@ -382,7 +393,7 @@ vim.keymap.set("n", "<leader><BS>", function()
 	-- vim-test's vimux strategy funnels through VimuxRunCommand too, so
 	-- g:VimuxLastCommand holds the last run of either kind (test or <leader>r).
 	if vim.g.VimuxLastCommand and vim.g.VimuxLastCommand ~= "" then
-		vim.cmd("VimuxRunLastCommand")
+		vimux_run_clearing(vim.g.VimuxLastCommand)
 	else
 		vim.cmd("TestLast")
 	end
