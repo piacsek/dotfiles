@@ -21,6 +21,7 @@ watchexec
 tree-sitter-cli
 sl
 gh
+gama
 yq
 imagemagick
 bat
