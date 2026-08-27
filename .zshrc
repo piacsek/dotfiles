@@ -85,6 +85,12 @@ gh() {
 	fi
 }
 
+# gama (GitHub Actions TUI) doesn't reuse gh's keyring auth — it wants a
+# GITHUB_TOKEN env var. Borrow gh's oauth token so no PAT is stored anywhere.
+gama() {
+	GITHUB_TOKEN="${GITHUB_TOKEN:-$(command gh auth token)}" command gama "$@"
+}
+
 bindkey -r '^[d'
 
 if [ -f $HOME/.zshrc_work ]; then
