@@ -260,6 +260,7 @@ local mason_tools = {
 	"yaml-language-server",
 	-- Formatters
 	"prettierd",
+	"shfmt",
 	"stylua",
 	-- Debug adapters (see plugins/dap.lua)
 	"js-debug-adapter",
