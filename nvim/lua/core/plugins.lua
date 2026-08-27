@@ -324,6 +324,10 @@ require("conform").setup({
 		typescript = { "prettierd", "prettier", stop_after_first = true },
 		typescriptreact = { "prettierd", "prettier", stop_after_first = true },
 		json = { "prettierd", "prettier", stop_after_first = true },
+		-- Indent comes from the buffer: conform's shfmt passes `-i shiftwidth`
+		-- only when expandtab is set (after/ftplugin/sh.lua), and passes nothing
+		-- when an .editorconfig is found so project conventions win.
+		sh = { "shfmt" },
 		css = { "prettierd", "prettier", stop_after_first = true },
 		html = { "prettierd", "prettier", stop_after_first = true },
 	},
