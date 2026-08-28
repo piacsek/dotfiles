@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Toggle tailscale up/down, bound to tmux prefix + M-v.
+set -euo pipefail
+
+state=$(tailscale status --json | /usr/bin/python3 -c 'import json,sys; print(json.load(sys.stdin)["BackendState"])')
+
+if [[ "$state" == "Running" ]]; then
+  tailscale down
+  tmux display-message "tailscale: down"
+else
+  tailscale up
+  tmux display-message "tailscale: up"
+fi
