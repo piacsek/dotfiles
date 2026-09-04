@@ -425,6 +425,20 @@ vim.keymap.set("n", "<leader>r", function()
 	vimux_run_clearing(runner .. " " .. vim.fn.shellescape(vim.fn.expand("%:p")))
 end, { desc = "[R]un current file (vimux)" })
 
+vim.keymap.set("n", "<leader>R", function()
+	vim.ui.input({ prompt = "Command: " }, function(cmd)
+		if not cmd or cmd == "" then
+			return
+		end
+		vim.ui.input({ prompt = "Dir: ", default = vim.fn.expand("%:p:h"), completion = "dir" }, function(dir)
+			if not dir or dir == "" then
+				return
+			end
+			vimux_run_clearing("cd " .. vim.fn.shellescape(vim.fn.expand(dir)) .. " && " .. cmd)
+		end)
+	end)
+end, { desc = "[R]un arbitrary command in dir (vimux)" })
+
 local function snake_to_camel(s)
 	return (s:gsub("_(%w)", string.upper))
 end
