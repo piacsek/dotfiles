@@ -34,7 +34,7 @@
       "mcp__claude_ai_Linear__search_documentation"
     ]
   },
-  "model": "sonnet",
+  "model": "claude-fable-5-1[1m]",
   "hooks": {
     "SessionEnd": [
       {
