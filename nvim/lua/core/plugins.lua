@@ -254,6 +254,7 @@ local mason_tools = {
 	"html-lsp",
 	"json-lsp",
 	"lua-language-server",
+	"rust-analyzer",
 	"tailwindcss-language-server",
 	"typescript-language-server",
 	"vim-language-server",
