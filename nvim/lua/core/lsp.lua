@@ -37,6 +37,14 @@ vim.lsp.config["emmet_ls"] = {
 	},
 }
 
+-- Formatting only for now — strip the completion capability so cmp-nvim-lsp
+-- never offers rust-analyzer as a completion source.
+vim.lsp.config["rust_analyzer"] = {
+	on_attach = function(client)
+		client.server_capabilities.completionProvider = nil
+	end,
+}
+
 vim.lsp.config["ts_ls"] = {
 	init_options = {
 		preferences = {
@@ -71,6 +79,7 @@ vim.lsp.enable({
 	"yamlls",
 	"dexter",
 	"bashls",
+	"rust_analyzer",
 })
 
 -- Tailwind LSP is laggy via vim.lsp.enable, using vim.lsp.start solves the issue
