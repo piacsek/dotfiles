@@ -41,7 +41,18 @@ impl App {
     }
 
     pub fn refresh(&mut self, agents: Vec<Agent>) {
+        let selected_pid = self.selected_agent().map(|agent| agent.pid);
         self.agents = agents;
+        let index = selected_pid
+            .and_then(|pid| self.visible().iter().position(|agent| agent.pid == pid))
+            .unwrap_or(0);
+        self.list.select(Some(index));
+    }
+
+    fn selected_agent(&self) -> Option<&Agent> {
+        self.list
+            .selected()
+            .and_then(|i| self.visible().get(i).copied())
     }
 
     pub fn visible(&self) -> Vec<&Agent> {
@@ -74,11 +85,7 @@ impl App {
             KeyCode::Char('g') if pending_g => self.list.select_first(),
             KeyCode::Char('g') => self.pending_g = true,
             KeyCode::Enter => {
-                if let Some(agent) = self
-                    .list
-                    .selected()
-                    .and_then(|i| self.visible().get(i).copied())
-                {
+                if let Some(agent) = self.selected_agent() {
                     return Action::Focus(agent.pane.clone());
                 }
             }
