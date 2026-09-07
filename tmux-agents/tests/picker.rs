@@ -136,3 +136,12 @@ fn row_shows_title_after_label_when_present() {
     );
     assert_eq!(screen.lines().nth(1).unwrap().trim_end(), "  ws-common");
 }
+
+#[test]
+fn screen_is_drawn_before_any_key_arrives() {
+    let mut picker = Picker::new(vec![agent("dotfiles", "%1")]);
+
+    picker.run(Vec::new()).unwrap();
+
+    assert!(picker.screen().contains("dotfiles"), "{}", picker.screen());
+}
