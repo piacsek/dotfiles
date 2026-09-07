@@ -1,3 +1,5 @@
+use ratatui::style::Color;
+
 use crate::registry::Status;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
@@ -33,6 +35,15 @@ impl State {
         match self {
             State::Working | State::Blocked => "●",
             State::Idle | State::Unknown => "○",
+        }
+    }
+
+    pub fn color(self) -> Color {
+        match self {
+            State::Working => Color::Yellow,
+            State::Blocked => Color::Red,
+            State::Idle => Color::Green,
+            State::Unknown => Color::DarkGray,
         }
     }
 }
