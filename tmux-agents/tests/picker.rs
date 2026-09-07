@@ -108,3 +108,23 @@ fn esc_and_ctrl_c_quit_without_focusing() {
     picker.run(vec![ctrl('c'), key(KeyCode::Enter)]).unwrap();
     assert!(picker.tmux.focused().is_empty());
 }
+
+#[test]
+fn row_shows_title_after_label_when_present() {
+    let mut titled = agent("dotfiles", "%1");
+    titled.title = Some("Tmux Claude Code session picker".to_string());
+    let mut picker = Picker::new(vec![titled, agent("ws-common", "%2")]);
+
+    picker.run(vec![key(KeyCode::Char('q'))]).unwrap();
+
+    let screen = picker.screen();
+    assert!(
+        screen
+            .lines()
+            .next()
+            .unwrap()
+            .starts_with("> dotfiles  Tmux Claude Code session picker"),
+        "{screen}"
+    );
+    assert_eq!(screen.lines().nth(1).unwrap().trim_end(), "  ws-common");
+}
