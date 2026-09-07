@@ -114,6 +114,7 @@ pub fn agent(label: &str, pane: &str) -> Agent {
         window_index: 1,
         title: None,
         status_age: None,
+        waiting_for: None,
     }
 }
 

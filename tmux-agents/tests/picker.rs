@@ -643,3 +643,24 @@ fn rows_show_the_state_age_right_aligned() {
     assert_eq!(rows[2].trim_end(), "  ○ idle     c", "{screen}");
     assert!(picker.cell(59, 0).modifier.contains(Modifier::DIM));
 }
+
+#[test]
+fn blocked_rows_show_the_reason_in_red_before_the_title() {
+    let mut with_title = agent_with_status("a", "%1", Status::Waiting);
+    with_title.waiting_for = Some("permission prompt".to_string());
+    with_title.title = Some("Fix it".to_string());
+    let mut bare = agent_with_status("b", "%2", Status::Waiting);
+    bare.waiting_for = Some("input needed".to_string());
+    let mut picker = Picker::new(vec![with_title, bare]);
+
+    picker.run(Vec::new()).unwrap();
+
+    let screen = picker.screen();
+    assert!(
+        screen.contains("◉ blocked  a  permission prompt · Fix it"),
+        "{screen}"
+    );
+    assert!(screen.contains("◉ blocked  b  input needed"), "{screen}");
+    assert_eq!(picker.cell(17, 0).symbol(), "p");
+    assert_eq!(picker.cell(17, 0).fg, Color::Red);
+}
