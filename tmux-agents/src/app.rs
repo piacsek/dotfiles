@@ -45,7 +45,7 @@ impl App {
 
     pub fn refresh(&mut self, agents: Vec<Agent>) {
         let selected_pid = self.selected_agent().map(|agent| agent.pid);
-        self.agents = agents;
+        self.agents = merge_keeping_order(std::mem::take(&mut self.agents), agents);
         let index = selected_pid
             .and_then(|pid| self.visible().iter().position(|agent| agent.pid == pid))
             .unwrap_or(0);
@@ -115,6 +115,19 @@ impl App {
         self.list.select_first();
         Action::Continue
     }
+}
+
+fn merge_keeping_order(current: Vec<Agent>, fresh: Vec<Agent>) -> Vec<Agent> {
+    let mut fresh = fresh;
+    let mut merged: Vec<Agent> = current
+        .iter()
+        .filter_map(|old| {
+            let index = fresh.iter().position(|new| new.pid == old.pid)?;
+            Some(fresh.remove(index))
+        })
+        .collect();
+    merged.extend(fresh);
+    merged
 }
 
 pub fn visible_agents<'a>(agents: &'a [Agent], filter: Option<&str>) -> Vec<&'a Agent> {
