@@ -2,7 +2,7 @@ use crate::agents::Agent;
 use crate::state::State;
 
 const ORDER: [State; 4] = [State::Blocked, State::Working, State::Idle, State::Unknown];
-const CLAUDE_GLYPH: &str = "#[dim]✳#[default]";
+const CLAUDE_GLYPH: &str = "#[dim]\u{F0674}#[default]";
 
 pub fn render(agents: &[Agent]) -> String {
     if agents.is_empty() {
