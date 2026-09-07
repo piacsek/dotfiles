@@ -1,0 +1,50 @@
+use std::io;
+
+use ratatui::Terminal;
+use ratatui::backend::Backend;
+use ratatui::crossterm::event::{Event, KeyCode, KeyEvent};
+
+use crate::agents::Agent;
+use crate::tmux::Tmux;
+use crate::ui;
+
+#[derive(Debug, PartialEq, Eq)]
+pub enum Action {
+    Continue,
+    Quit,
+}
+
+pub struct App {
+    pub agents: Vec<Agent>,
+}
+
+impl App {
+    pub fn new(agents: Vec<Agent>) -> Self {
+        Self { agents }
+    }
+
+    pub fn handle_key(&mut self, key: KeyEvent) -> Action {
+        match key.code {
+            KeyCode::Char('q') => Action::Quit,
+            _ => Action::Continue,
+        }
+    }
+}
+
+pub fn run<B: Backend, T: Tmux>(
+    terminal: &mut Terminal<B>,
+    app: &mut App,
+    events: impl Iterator<Item = io::Result<Event>>,
+    _tmux: &T,
+) -> io::Result<()> {
+    for event in events {
+        terminal.draw(|frame| ui::draw(frame, app))?;
+        if let Event::Key(key) = event? {
+            match app.handle_key(key) {
+                Action::Quit => return Ok(()),
+                Action::Continue => {}
+            }
+        }
+    }
+    Ok(())
+}
