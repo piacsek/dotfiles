@@ -49,5 +49,5 @@ echo "Committing changes..."
 git commit -m "$COMMIT_MSG"
 
 echo ""
-echo "✓ Commit completed successfully!"
+echo "󰄬 Commit completed successfully!"
 echo "Run 'git-push' task to push changes."

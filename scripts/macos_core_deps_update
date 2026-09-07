@@ -78,7 +78,7 @@ fi
 # Single refresh + outdated snapshot, so per-dep checks are just lookups.
 echo "${DIM}Refreshing Homebrew…${RST}"
 if ! brew_log=$(brew update 2>&1); then
-	echo "${RED}✗ brew update failed${RST}"
+	echo "${RED}󰅖 brew update failed${RST}"
 	printf '%s\n' "$brew_log" | sed 's/^/    /'
 	exit 1
 fi
@@ -88,12 +88,12 @@ OUTDATED=" $(brew outdated --quiet 2>/dev/null | tr '\n' ' ') "
 failed=0 upgraded=0 current=0 missing=0
 for dep in "${TARGETS[@]}"; do
 	if ! brew list --versions "$dep" >/dev/null 2>&1; then
-		echo "${RED}✗${RST} $dep ${DIM}(not installed)${RST}"
+		echo "${RED}󰅖${RST} $dep ${DIM}(not installed)${RST}"
 		missing=$((missing + 1))
 		continue
 	fi
 	if [[ "$OUTDATED" != *" $dep "* ]]; then
-		echo "${GREEN}✓${RST} $dep ${DIM}(up to date)${RST}"
+		echo "${GREEN}󰄬${RST} $dep ${DIM}(up to date)${RST}"
 		current=$((current + 1))
 		continue
 	fi
@@ -101,7 +101,7 @@ for dep in "${TARGETS[@]}"; do
 		echo "${BLUE}↑${RST} $dep ${DIM}(upgraded)${RST}"
 		upgraded=$((upgraded + 1))
 	else
-		echo "${RED}✗${RST} $dep ${DIM}(upgrade failed)${RST}"
+		echo "${RED}󰅖${RST} $dep ${DIM}(upgrade failed)${RST}"
 		printf '%s\n' "$log" | sed 's/^/    /'
 		failed=$((failed + 1))
 	fi
