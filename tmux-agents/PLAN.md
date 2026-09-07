@@ -218,8 +218,8 @@ Single line: `● dotfiles  working  <title>` — dot colored by state, word dim
 | registry `status` | word | dot | ANSI color |
 |---|---|---|---|
 | `busy`, `shell` | working | ● | yellow |
-| `waiting` | blocked | ● | red |
-| `idle` | idle | ○ | green |
+| `waiting` | blocked | ◉ | red |
+| `idle` | idle | ○ | dim, theme fg (green clashed with purple themes) |
 | unknown | ? | ○ | dark gray |
 
 ANSI 16-color palette only, so ghostty-mirror themes carry through. No "done" state: interactive sessions vanish from the registry on exit; revisit via a `Stop` hook if idle proves insufficient.
