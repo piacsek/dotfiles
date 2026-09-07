@@ -42,11 +42,22 @@ impl App {
         if key.modifiers.contains(KeyModifiers::CONTROL) && key.code == KeyCode::Char('c') {
             return Action::Quit;
         }
-        if let Some(query) = &mut self.filter
-            && let KeyCode::Char(c) = key.code
-        {
-            query.push(c);
-            return Action::Continue;
+        if let Some(query) = &mut self.filter {
+            match key.code {
+                KeyCode::Char(c) => {
+                    query.push(c);
+                    return Action::Continue;
+                }
+                KeyCode::Backspace => {
+                    query.pop();
+                    return Action::Continue;
+                }
+                KeyCode::Esc => {
+                    self.filter = None;
+                    return Action::Continue;
+                }
+                _ => {}
+            }
         }
         let pending_g = std::mem::take(&mut self.pending_g);
         match key.code {
@@ -72,14 +83,16 @@ pub fn visible_agents<'a>(agents: &'a [Agent], filter: Option<&str>) -> Vec<&'a 
     let query = filter.unwrap_or("").to_lowercase();
     agents
         .iter()
-        .filter(|agent| {
-            agent.label.to_lowercase().contains(&query)
-                || agent
-                    .title
-                    .as_deref()
-                    .is_some_and(|t| t.to_lowercase().contains(&query))
-        })
+        .filter(|agent| matches(agent, &query))
         .collect()
+}
+
+fn matches(agent: &Agent, query: &str) -> bool {
+    let haystacks = [Some(agent.label.as_str()), agent.title.as_deref()];
+    haystacks
+        .into_iter()
+        .flatten()
+        .any(|text| text.to_lowercase().contains(query))
 }
 
 pub fn run<B, T>(
