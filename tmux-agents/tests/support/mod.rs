@@ -113,6 +113,7 @@ pub fn agent(label: &str, pane: &str) -> Agent {
         session: "main".to_string(),
         window_index: 1,
         title: None,
+        status_age: None,
     }
 }
 

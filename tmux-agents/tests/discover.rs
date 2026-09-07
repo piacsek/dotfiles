@@ -1,4 +1,5 @@
 use std::path::PathBuf;
+use std::time::Duration;
 
 use tmux_agents::agents::{Agent, discover};
 use tmux_agents::registry::{Kind, SessionRecord, Status};
@@ -11,6 +12,7 @@ fn record(pid: i32, cwd: &str, tmux: Option<&str>) -> SessionRecord {
         name: None,
         kind: Kind::Interactive,
         status: Status::Idle,
+        status_updated_at: None,
         tmux: tmux.map(str::to_string),
     }
 }
@@ -26,6 +28,8 @@ fn pane(id: &str, session: &str, window_index: u32, title: &str) -> PaneInfo {
     }
 }
 
+const NOW: u64 = 1_788_804_100_000;
+
 fn alive(_: i32) -> bool {
     true
 }
@@ -35,7 +39,7 @@ fn interactive_record_with_live_pid_and_known_pane_becomes_an_agent() {
     let records = vec![record(42, "/home/me/dotfiles", Some("dotfiles:@7.%53"))];
     let panes = vec![pane("%53", "dotfiles", 2, "✳ Fix the picker")];
 
-    let agents = discover(records, &panes, &alive);
+    let agents = discover(records, &panes, &alive, NOW);
 
     assert_eq!(
         agents,
@@ -48,6 +52,7 @@ fn interactive_record_with_live_pid_and_known_pane_becomes_an_agent() {
             session: "dotfiles".to_string(),
             window_index: 2,
             title: Some("Fix the picker".to_string()),
+            status_age: None,
         }]
     );
 }
@@ -60,7 +65,7 @@ fn non_interactive_records_are_dropped() {
     unknown.kind = Kind::Unknown;
     let panes = vec![pane("%1", "s", 1, ""), pane("%2", "s", 1, "")];
 
-    let agents = discover(vec![bg, unknown], &panes, &alive);
+    let agents = discover(vec![bg, unknown], &panes, &alive, NOW);
 
     assert!(agents.is_empty());
 }
@@ -69,7 +74,7 @@ fn non_interactive_records_are_dropped() {
 fn records_without_tmux_field_are_dropped() {
     let panes = vec![pane("%1", "s", 1, "")];
 
-    let agents = discover(vec![record(1, "/home/me/a", None)], &panes, &alive);
+    let agents = discover(vec![record(1, "/home/me/a", None)], &panes, &alive, NOW);
 
     assert!(agents.is_empty());
 }
@@ -82,6 +87,7 @@ fn records_whose_pane_is_not_in_this_server_are_dropped() {
         vec![record(1, "/home/me/a", Some("s:@1.%99"))],
         &panes,
         &alive,
+        NOW,
     );
 
     assert!(agents.is_empty());
@@ -95,7 +101,7 @@ fn records_with_dead_pids_are_dropped() {
         record(8, "/home/me/b", Some("s:@2.%2")),
     ];
 
-    let agents = discover(records, &panes, &|pid| pid != 7);
+    let agents = discover(records, &panes, &|pid| pid != 7, NOW);
 
     assert_eq!(agents.len(), 1);
     assert_eq!(agents[0].pid, 8);
@@ -114,7 +120,7 @@ fn colliding_labels_get_a_session_window_suffix() {
         record(3, "/c/dotfiles", Some("home:@3.%3")),
     ];
 
-    let labels: Vec<String> = discover(records, &panes, &alive)
+    let labels: Vec<String> = discover(records, &panes, &alive, NOW)
         .into_iter()
         .map(|a| a.label)
         .collect();
@@ -138,7 +144,7 @@ fn agents_are_sorted_by_session_then_window_index() {
         record(3, "/c", Some("work:@3.%3")),
     ];
 
-    let order: Vec<(String, u32)> = discover(records, &panes, &alive)
+    let order: Vec<(String, u32)> = discover(records, &panes, &alive, NOW)
         .into_iter()
         .map(|a| (a.session, a.window_index))
         .collect();
@@ -161,7 +167,7 @@ fn colliding_labels_in_the_same_window_also_get_the_pane_id() {
         record(2, "/b/ws-common", Some("work:@2.%55")),
     ];
 
-    let labels: Vec<String> = discover(records, &panes, &alive)
+    let labels: Vec<String> = discover(records, &panes, &alive, NOW)
         .into_iter()
         .map(|a| a.label)
         .collect();
@@ -189,7 +195,7 @@ fn agents_are_grouped_blocked_then_working_then_idle_before_session_order() {
     let mut shell = record(4, "/shell", Some("b:@4.%4"));
     shell.status = Status::Shell;
 
-    let labels: Vec<String> = discover(vec![idle, working, blocked, shell], &panes, &alive)
+    let labels: Vec<String> = discover(vec![idle, working, blocked, shell], &panes, &alive, NOW)
         .into_iter()
         .map(|a| a.label)
         .collect();
@@ -210,7 +216,7 @@ fn any_leading_glyph_is_stripped_from_the_title_but_plain_titles_are_ignored() {
         record(3, "/c", Some("s:@3.%3")),
     ];
 
-    let titles: Vec<Option<String>> = discover(records, &panes, &alive)
+    let titles: Vec<Option<String>> = discover(records, &panes, &alive, NOW)
         .into_iter()
         .map(|a| a.title)
         .collect();
@@ -223,4 +229,19 @@ fn any_leading_glyph_is_stripped_from_the_title_but_plain_titles_are_ignored() {
             None
         ]
     );
+}
+
+#[test]
+fn status_age_is_now_minus_status_updated_at() {
+    let panes = vec![pane("%1", "s", 1, ""), pane("%2", "s", 2, "")];
+    let mut dated = record(1, "/a", Some("s:@1.%1"));
+    dated.status_updated_at = Some(NOW - 90_000);
+    let undated = record(2, "/b", Some("s:@2.%2"));
+
+    let ages: Vec<Option<Duration>> = discover(vec![dated, undated], &panes, &alive, NOW)
+        .into_iter()
+        .map(|a| a.status_age)
+        .collect();
+
+    assert_eq!(ages, vec![Some(Duration::from_secs(90)), None]);
 }
