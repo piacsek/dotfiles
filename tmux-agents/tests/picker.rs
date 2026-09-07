@@ -635,7 +635,11 @@ fn rows_show_the_state_age_right_aligned() {
     assert!(rows[0].trim_end().ends_with(" 1m"), "{screen}");
     assert!(rows[1].contains("b  Some title"), "{screen}");
     assert!(rows[1].trim_end().ends_with(" 3h"), "{screen}");
-    assert_eq!(rows[0].trim_end().len(), rows[1].trim_end().len(), "{screen}");
+    assert_eq!(
+        rows[0].trim_end().len(),
+        rows[1].trim_end().len(),
+        "{screen}"
+    );
     assert_eq!(rows[2].trim_end(), "  ○ idle     c", "{screen}");
     assert!(picker.cell(57, 0).modifier.contains(Modifier::DIM));
 }
