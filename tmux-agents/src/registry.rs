@@ -1,4 +1,5 @@
-use std::path::PathBuf;
+use std::fs;
+use std::path::{Path, PathBuf};
 
 use serde::Deserialize;
 
@@ -37,4 +38,15 @@ pub struct SessionRecord {
     #[serde(default)]
     pub status: Status,
     pub tmux: Option<String>,
+}
+
+pub fn load(dir: &Path) -> Vec<SessionRecord> {
+    let Ok(entries) = fs::read_dir(dir) else {
+        return Vec::new();
+    };
+    entries
+        .flatten()
+        .filter_map(|entry| fs::read_to_string(entry.path()).ok())
+        .filter_map(|json| serde_json::from_str(&json).ok())
+        .collect()
 }
