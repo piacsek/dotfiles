@@ -304,7 +304,7 @@ Twelve items from the review, each under /tdd:
 6. `1`–`9` focus a row directly.
 7. Age since `statusUpdatedAt` on the right of each row.
 8. Blocked reason from `waitingFor`, red, before the title.
-9. `session:window` location column on every row; collision suffixes removed.
+9. Collision suffixes removed; a `session:window` column was tried and dropped the same day (noise).
 10. `~/cwd` fallback when untitled; ellipsis truncation so the right column always fits (fixed a real overflow found by the snapshot).
 11. Popup 70% × 60%.
 12. Zero-session e2e for `status`.
