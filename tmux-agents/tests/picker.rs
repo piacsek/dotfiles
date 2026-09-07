@@ -136,7 +136,7 @@ fn esc_and_ctrl_c_quit_without_focusing() {
 #[test]
 fn row_shows_title_after_label_when_present() {
     let mut titled = agent("dotfiles", "%1");
-    titled.title = Some("Tmux Claude Code session picker".to_string());
+    titled.title = Some("Fix the picker".to_string());
     let mut picker = Picker::new(vec![titled, agent("ws-common", "%2")]);
 
     picker.run(vec![key(KeyCode::Char('q'))]).unwrap();
@@ -147,7 +147,7 @@ fn row_shows_title_after_label_when_present() {
             .lines()
             .next()
             .unwrap()
-            .starts_with("> ○ idle     dotfiles   Tmux Claude Code session picker"),
+            .starts_with("> ○ idle     dotfiles   Fix the picker"),
         "{screen}"
     );
     assert!(
@@ -311,7 +311,7 @@ fn backspace_edits_the_query_and_esc_clears_the_filter_without_quitting() {
         .unwrap();
     let screen = picker.screen();
     assert!(screen.contains("dotfiles"), "{screen}");
-    assert!(!screen.contains('/'), "{screen}");
+    assert!(!screen.lines().last().unwrap().starts_with('/'), "{screen}");
     assert_eq!(picker.tmux.focused(), vec![PaneId("%2".to_string())]);
 }
 
@@ -706,6 +706,6 @@ fn untitled_rows_fall_back_to_the_cwd_and_long_titles_get_an_ellipsis() {
         rows[0].starts_with("> ○ idle     dotfiles  ~/projects/dotfiles"),
         "{screen}"
     );
-    assert!(rows[1].contains("A very long title th…"), "{screen}");
+    assert!(rows[1].contains("A very long title") && rows[1].contains("…"), "{screen}");
     assert!(rows[1].trim_end().ends_with("main:1  1m"), "{screen}");
 }

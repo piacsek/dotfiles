@@ -131,3 +131,23 @@ fn status_subcommand_prints_tmux_markup_for_the_live_session() {
         "#[fg=white]󰙴#[default]  #[fg=yellow]● 1#[default]\n"
     );
 }
+
+#[test]
+#[ignore = "needs a tmux binary; run with --ignored"]
+fn status_subcommand_prints_none_when_no_session_is_registered() {
+    let server = Server::start("none");
+    let home = tempfile::tempdir().unwrap();
+
+    let out = Command::new(env!("CARGO_BIN_EXE_tmux-agents"))
+        .arg("status")
+        .env("HOME", home.path())
+        .env("TMUX", format!("{},0,0", server.socket_path()))
+        .output()
+        .unwrap();
+
+    assert!(out.status.success(), "{}", String::from_utf8_lossy(&out.stderr));
+    assert_eq!(
+        String::from_utf8_lossy(&out.stdout),
+        "#[fg=white]\u{F0674}#[default]  #[dim]none#[default]\n"
+    );
+}
