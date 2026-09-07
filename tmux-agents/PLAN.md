@@ -255,17 +255,34 @@ By state group (blocked, working, idle, unknown), then session, then window inde
 
 ---
 
-## Phase 3 — tmux status line (plan to be revised after Phase 2 retro)
+## Phase 3 — tmux status line (revised after Phase 2 retro, 2026-09-07)
 
-Goal: `status-right` shows per-state counts, e.g. `⚡2 💤1 ⛔1`, refreshed every second.
+Goal: `status-right` shows per-state counts, refreshed every second.
 
-Proposed:
-- `tmux-agents status` subcommand: reads the same registry module, prints one line, exits. No TUI. Sub-10 ms so a 1 s interval is cheap.
-- `.tmux.conf:119` and `~/.tmux_work.conf`: prepend `#(tmux-agents status)`, set `status-interval 1`.
-- Hide a state when its count is 0; print nothing when no agents, so the segment disappears entirely.
-- Emoji choice and whether counts should be colored instead of emoji: decide at the retro (emoji width in the status line can misalign; colored digits are safer).
+### Decisions
+- Glyphs, not emoji: `●2 ●1 ○3` with tmux markup (`#[fg=yellow]`), same glyphs as the popup, themed by ghostty-mirror. Emoji ignore the theme and misalign by a cell across terminals.
+- Order: blocked (bold), working, idle. Unknown counted as idle-glyph grey only when present. Zero counts hidden; empty output when no agents so the separator vanishes.
+- Output is tmux format markup (parsed by `#()`), never ANSI escapes.
+- `status-interval 1` only after measuring the other `#()` widgets; any widget over ~50 ms gets an internal TTL cache so it stays effectively at 5 s.
+- Both `status-right` definitions get the segment: `.tmux.conf` and the untracked `~/.tmux_work.conf` on this machine.
 
-Open items: whether a 1 s `status-interval` measurably costs battery with the existing `tmux-git-widget`, `kube_status`, `tailscale_status` shell-outs also running every second (today they run every 5 s). Mitigation: cache their output, or move to a 2 s interval.
+### Architecture
+- `cli::Command::Status` → `status::render(&[Agent]) -> String` (pure); main prints and exits.
+- `CliTmux` honors the `TMUX` env var socket implicitly (tmux CLI does), so the e2e harness can drive the subcommand against the scratch server.
+- Reuses `load` + `list_panes` + `discover` unchanged.
+
+### TDD behaviors
+1. `cli::parse(["status"])` → `Command::Status`.
+2. `render` of one working agent → `#[fg=yellow]●1#[default]`.
+3. Order blocked, working, idle; blocked bold.
+4. Zero counts hidden; no agents → empty string.
+5. Unknown status shown as grey `○n`.
+6. E2E: `tmux-agents status` in the scratch server with a fixture prints the expected markup.
+7. Wiring: main dispatch; `.tmux.conf` + `~/.tmux_work.conf` segment; `status-interval 1`; widget caches as measured.
+
+### Verification
+- `time` each widget in status-right before/after.
+- Live: status bar shows counts matching the popup; goes blank with no sessions.
 
 ---
 
