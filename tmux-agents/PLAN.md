@@ -1,0 +1,247 @@
+# tmux-agents: herdr-style Claude Code agent picker for tmux
+
+## Context
+
+You trialed herdr (reverted in `6292e95`) and want its one good idea inside tmux: a popup listing every running coding agent, with state, that jumps to the agent's pane. Three phases; Phases 2 and 3 get re-planned after a retrospective on the phase before. Rust + Ratatui, strict `/tdd`, CI in this repo.
+
+Decisions taken (your answers):
+- Data source: `~/.claude/sessions/<pid>.json` registry.
+- Row label: basename of the session `cwd`, disambiguated by window index on collision.
+- Cadence: run all Phase 1 TDD cycles, pause only for the end-of-phase retrospective.
+
+## Verified facts driving the design
+
+**Registry** (`~/.claude/sessions/<pid>.json`, one per live `claude` process, deleted on exit). Example:
+```json
+{"pid":27756,"sessionId":"dd9b…","cwd":"/Users/piacsek/dotfiles","kind":"interactive","entrypoint":"cli",
+ "tmux":"dotfiles:@7.%53","name":"dotfiles-d8","status":"busy","statusUpdatedAt":1788804089018,"version":"2.1.263"}
+```
+- `status` enum (pulled from the 2.1.263 binary): `busy | shell | idle | waiting`. Claude Code's own agents view maps `busy|shell → working`, `waiting → blocked`, `idle → idle`.
+- `kind` enum: `interactive | bg | daemon | daemon-worker`. Only `interactive` has a pane.
+- `tmux` = `<session>:@<window_id>.%<pane_id>`; absent outside tmux.
+- Format is internal and undocumented. Parse leniently (unknown fields ignored, unknown enum → `Unknown`), filter stale entries by `kill(pid,0)` and by pane existence.
+- `claude agents --json` does not exist in 2.1.263 (`unknown option`), so no official enumeration.
+
+**tmux** (3.7b, `.tmux.conf`):
+- Popup bindings pattern at `.tmux.conf:63-72`; free alt keys include `M-c`.
+- Commands run inside a `display-popup` without `-t` target the client behind the popup, so `switch-client -t %<pane>` then `select-window`/`select-pane` focuses the caller's view. Popup must exit (`-E`) before the switch is visible.
+- `status-right` at `.tmux.conf:119` AND in untracked `~/.tmux_work.conf` on this machine, which fully replaces it. Phase 3 must edit both.
+- `status-interval 5` today; Phase 3 wants 1.
+- Status refresh from a background process: `tmux refresh-client -S -t <client_tty>` per client (pattern in `scripts/tmux-git-flow:14-20`).
+
+**Repo**:
+- No CI, no Rust. Rust 1.98.1 via asdf (`.tool-versions`). `.gitignore` is only `*.log`.
+- fswatch daemon auto-commits every save. `target/` must be gitignored before the first `cargo build`. Expect many small commits during TDD; that is accepted.
+- PATH includes `~/dotfiles/scripts/` and `~/.local/bin`; tmux inherits it.
+- `~/.claude/settings.json` → `dotfiles/claude-settings.json` (tracked). Hooks for Phase 2/3 can live there.
+- `/tdd` skill at `.claude/skills/tdd/SKILL.md`: outside-in, one failing test at a time, refactor mandatory, no code comments, never commit (auto-sync does it).
+
+---
+
+## Phase 1 — barebones picker
+
+### Crate layout (`~/dotfiles/tmux-agents/`)
+
+```
+Cargo.toml, Cargo.lock (committed)
+src/main.rs        glue only: cli::parse → registry::load → discover → ratatui::run
+src/lib.rs         pub mod cli, registry, tmux, agents, app, ui, process
+src/cli.rs         Command::{Tui}; hand-rolled parse (Phase 3 adds Status)
+src/registry.rs    SessionRecord, Status, Kind; load(dir); sessions_dir(config_dir, home)
+src/tmux.rs        Tmux trait, PaneId, PaneInfo, parse_pane_ref, parse_list_panes, CliTmux
+src/agents.rs      Agent; discover(records, panes, alive) → Vec<Agent>  (pure join/filter)
+src/app.rs         App (selection), Action, handle_key, run<B: Backend, T: Tmux>
+src/ui.rs          draw(frame, &mut App)
+src/process.rs     is_alive(pid) via nix kill(pid, None); EPERM counts as alive
+tests/support/mod.rs   FakeTmux (records focus calls), fixture builders
+tests/picker.rs        outside-in: run() + TestBackend + scripted keys + FakeTmux
+tests/discover.rs      pure discovery rules
+tests/registry.rs      tempfile fixtures, incl. a verbatim copy of a real session file
+tests/tmux_live.rs     #[ignore]; real `tmux -L tmux-agents-test` server, CI only
+```
+
+Lib + bin split so `tests/` can drive everything; `main.rs` stays untested glue.
+
+### Key types
+
+```rust
+// registry.rs — lenient serde, unknown → Unknown
+enum Status { Busy, Shell, Idle, Waiting, #[serde(other)] Unknown }
+enum Kind   { Interactive, Bg, Daemon, DaemonWorker, #[serde(other)] Unknown }
+struct SessionRecord { pid: i32, cwd: PathBuf, name: Option<String>,
+                       kind: Kind, status: Status, tmux: Option<String> }
+fn load(dir: &Path) -> Vec<SessionRecord>           // *.json only; skip .key + malformed
+fn sessions_dir(config_dir: Option<PathBuf>, home: &Path) -> PathBuf  // $CLAUDE_CONFIG_DIR or ~/.claude
+
+// tmux.rs
+struct PaneId(String);                              // "%53"
+struct PaneInfo { id, session, window_id, window_index, current_path, title }
+trait Tmux { fn list_panes(&self) -> io::Result<Vec<PaneInfo>>;
+             fn focus(&self, pane: &PaneId) -> io::Result<()>; }
+fn parse_pane_ref("dotfiles:@7.%53") -> Option<PaneId>
+fn parse_list_panes(stdout) -> Vec<PaneInfo>       // tab-separated, title last, splitn
+struct CliTmux { socket_name: Option<String> }      // -L for the live test
+// focus argv = ["switch-client", "-Z", "-t", "%53"]  (tmux 3.7 accepts a pane target: switches session+window+pane in one call)
+
+// agents.rs
+struct Agent { pid, label: String, cwd, status, pane: PaneId, session, window_index, title: Option<String> }
+fn discover(records, panes: &[PaneInfo], alive: &dyn Fn(i32) -> bool) -> Vec<Agent>
+// label = basename(cwd); on collision within the list append " ·<session>:<window_index>"
+
+// app.rs
+enum Action { Continue, Quit, Focus(PaneId) }
+struct App { agents: Vec<Agent>, list: ListState }
+fn run(terminal, app, events: impl Iterator<Item = io::Result<Event>>, tmux: &impl Tmux) -> io::Result<()>
+// the only side effect (focus) lives in run(); App is pure state
+```
+
+Design notes:
+- FS "injection" = pass a directory; tests write fixtures into `tempfile::tempdir()`. No FS trait.
+- Use ratatui's re-exported crossterm (feature default in 0.30) to avoid version skew; `ratatui::run` handles raw mode and restore-on-panic.
+- Pane title shown dim on the row when it starts with `✳ ` (prefix stripped), else nothing.
+
+### Ordered TDD behaviors (one failing test → minimal impl → refactor, each)
+
+Outside-in, `tests/picker.rs` first:
+1. No agents: renders "No Claude Code sessions in this tmux server"; `q` returns.
+2. Two agents: one row each showing `label`; first row highlighted with `> `.
+3. `j` / `Down` moves highlight down.
+4. `k` / `Up` moves up; both clamp at the ends.
+5. `Enter`: `FakeTmux` recorded `focus(%53)` and `run` returned.
+6. `Enter` on empty list: no focus call, does not exit.
+7. `Esc` and `Ctrl-c` return without focusing.
+8. Row shows `label  <title minus ✳>`; no title → label only.
+
+`tests/discover.rs`:
+9. Interactive record with a live pid and a matching pane → one `Agent` with pane, session, window_index, title, cwd.
+10. Drops `kind != Interactive` (incl. Unknown).
+11. Drops records without `tmux`.
+12. Drops records whose pane is not in `panes`.
+13. Drops dead pids.
+14. `label` is basename of cwd; two agents sharing a cwd get the `·session:window` suffix.
+15. Sorted by `(session, window_index)`.
+
+`tests/registry.rs`:
+16. `load` parses the verbatim real sample (extra fields ignored).
+17. Skips `.key` files and malformed JSON.
+18. Missing/unknown `status`/`kind` → Unknown.
+19. `sessions_dir` honors `CLAUDE_CONFIG_DIR`, defaults to `~/.claude/sessions`.
+
+`src/tmux.rs` unit tests:
+20. `parse_pane_ref` happy path; garbage and empty → None.
+21. `parse_list_panes` on a two-line sample with a space-containing title.
+22. `focus_args` == `["switch-client","-Z","-t","%53"]`; `list_panes_args` includes `-L <sock>` only when set, and `-a -F` with the six fields.
+
+`src/cli.rs`, `src/process.rs`:
+23. `parse([])` → Tui; `parse(["bogus"])` → Err mentioning usage.
+24. `is_alive(own pid)` true; reaped child false.
+
+Live, `#[ignore]`:
+25. `tmux -L tmux-agents-test new-session -d`; `CliTmux::list_panes()` returns one pane with `%` id; `kill-server` in a drop guard. Focus can't be live-tested (no attached client in CI), hence test 22.
+
+Then `main.rs` wiring, install, tmux binding, docs.
+
+### Dependencies
+
+Versions verified 2026-09-07 against crates.io and static.rust-lang.org: Rust stable is 1.98.1 (installed; 1.99 still beta), ratatui 0.30.2, nix 0.31.3, tempfile 3.27.
+
+```toml
+[package] name = "tmux-agents"  edition = "2024"  rust-version = "1.98"
+[dependencies]
+ratatui = "0.30"                 # 0.30.2, re-exports crossterm 0.29
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+nix = { version = "0.31", features = ["signal"] }
+[dev-dependencies]
+tempfile = "3"
+```
+No clap, no dirs, no anyhow (not needed through Phase 3). Run `cargo update` at the start of each phase and bump the CI toolchain pin together with `.tool-versions` when a new Rust stable lands.
+
+### Quality gates (save as project memory when implementation starts)
+
+```
+cargo fmt --check
+cargo clippy --all-targets -- -D warnings
+cargo test
+```
+
+### CI: `.github/workflows/tmux-agents.yml`
+
+- Triggers: push to `main` and PRs, path-filtered to `tmux-agents/**` and the workflow file.
+- `concurrency: cancel-in-progress` keyed on ref (auto-sync pushes on every save).
+- ubuntu-latest, `dtolnay/rust-toolchain` pinned to `1.98.1` with `rustfmt, clippy`, `Swatinem/rust-cache`.
+- Steps: fmt check → clippy `-D warnings` → `cargo test` → `apt-get install tmux` → `cargo test --test tmux_live -- --ignored`.
+
+### Repo integration, in order
+
+1. Append `tmux-agents/target/` to `.gitignore` **before** `cargo new` (auto-sync would otherwise commit build output).
+2. Create the crate, run the TDD cycles above.
+3. Install: `cargo install --path ~/dotfiles/tmux-agents --root ~/.local --locked` → `~/.local/bin/tmux-agents` (on the tmux server's PATH). No symlink into `scripts/` (would dangle on fresh machines since `target/` is ignored).
+4. `.tmux.conf`, after line 68:
+   ```
+   # Claude Code session picker: <CR> focuses the selected pane, q/Esc closes.
+   bind -n M-c display-popup -E -w 50% -h 40% "tmux-agents"
+   ```
+5. `SETUP_MACOS.md`: add an install subsection after "Customize tmux sessionizer".
+6. Add the CI workflow.
+
+### Verification
+
+- `cargo test` green locally; CI green on the auto-synced push.
+- `tmux source-file ~/.tmux.conf`, press `M-c` from a pane in another session: popup lists every live Claude Code session (compare with `ls ~/.claude/sessions/*.json`), `Enter` lands on the right pane across sessions, `q` closes.
+- Kill a session's Claude Code process, reopen: row gone. Run `tmux-agents` outside tmux: clear error on stderr, exit 1.
+
+### Risks
+
+- Registry format is internal; a field rename degrades to "no sessions". Guard = verbatim fixture test; re-copy it on Claude Code version bumps.
+- Pane id collision across tmux servers (`-L`): mitigated by pid liveness; match on `(session, pane)` if it bites.
+- Every save triggers a commit, push and CI run during TDD; path filter + cancel-in-progress bound the cost.
+- Edition 2024 with clippy `-D warnings` can break on toolchain bumps; CI pin matches asdf.
+
+---
+
+## Phase 2 — agent state (plan to be revised after Phase 1 retro)
+
+Goal: each row shows a colored dot + one word, herdr-style.
+
+Proposed mapping from registry `status`:
+
+| registry | word | dot |
+|---|---|---|
+| `busy`, `shell` | working | ● yellow |
+| `waiting` | blocked | ◉ red/pink |
+| `idle` | idle | ○ dim green |
+| unknown | ? | ○ grey |
+
+Open items for the retro:
+- "done" has no registry equivalent for interactive sessions (the file vanishes on exit). Options: drop it, or add a `Stop`/`Notification(idle_prompt)` hook writing a "finished, unseen" marker keyed by pane id that clears on focus. Decide after seeing how `idle` feels in practice.
+- Does `waiting` fire for permission prompts and `AskUserQuestion`? Verify against a live session before building on it. Fallback: `PermissionRequest` / `Notification(permission_prompt)` hooks writing to a state file.
+- Sort order: blocked first, then working, then idle (herdr groups). Add `g` to toggle grouping?
+- Refresh: TUI re-reads the registry on a ~500 ms tick so state changes while the popup is open.
+- Theming: use the terminal's ANSI palette (not hardcoded hex) so ghostty-mirror themes carry through.
+
+Work: extend `Agent` with `State`, render a two-line row (name / `state · claude`), add a tick event, tests via `TestBackend` buffer + fake registry.
+
+---
+
+## Phase 3 — tmux status line (plan to be revised after Phase 2 retro)
+
+Goal: `status-right` shows per-state counts, e.g. `⚡2 💤1 ⛔1`, refreshed every second.
+
+Proposed:
+- `tmux-agents status` subcommand: reads the same registry module, prints one line, exits. No TUI. Sub-10 ms so a 1 s interval is cheap.
+- `.tmux.conf:119` and `~/.tmux_work.conf`: prepend `#(tmux-agents status)`, set `status-interval 1`.
+- Hide a state when its count is 0; print nothing when no agents, so the segment disappears entirely.
+- Emoji choice and whether counts should be colored instead of emoji: decide at the retro (emoji width in the status line can misalign; colored digits are safer).
+
+Open items: whether a 1 s `status-interval` measurably costs battery with the existing `tmux-git-widget`, `kube_status`, `tailscale_status` shell-outs also running every second (today they run every 5 s). Mitigation: cache their output, or move to a 2 s interval.
+
+---
+
+## Retrospective checkpoints
+
+After each phase, before planning the next:
+1. Did the registry format hold up? Any missing sessions, stale rows, wrong panes?
+2. TDD friction: which behaviors were awkward to test; adjust seams.
+3. CI signal: flaky tests, runtime.
+4. UX: popup size, keys, naming collisions.
