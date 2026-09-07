@@ -1,7 +1,7 @@
 use std::collections::{HashMap, HashSet};
 use std::path::PathBuf;
 
-use crate::registry::{Kind, SessionRecord};
+use crate::registry::{Kind, SessionRecord, Status};
 use crate::tmux::{PaneId, PaneInfo, parse_pane_ref};
 
 const TITLE_PREFIX: &str = "✳ ";
@@ -10,6 +10,7 @@ const TITLE_PREFIX: &str = "✳ ";
 pub struct Agent {
     pub pid: i32,
     pub label: String,
+    pub status: Status,
     pub cwd: PathBuf,
     pub pane: PaneId,
     pub session: String,
@@ -31,6 +32,7 @@ pub fn discover(
             Some(Agent {
                 pid: record.pid,
                 label: basename(&record.cwd),
+                status: record.status,
                 cwd: record.cwd,
                 pane: pane.id.clone(),
                 session: pane.session.clone(),

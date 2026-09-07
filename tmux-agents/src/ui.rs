@@ -6,6 +6,7 @@ use ratatui::widgets::{List, ListItem, Paragraph};
 
 use crate::agents::Agent;
 use crate::app::{App, visible_agents};
+use crate::state::State;
 
 pub fn draw(frame: &mut Frame, app: &mut App) {
     if app.agents.is_empty() {
@@ -29,10 +30,17 @@ pub fn draw(frame: &mut Frame, app: &mut App) {
 }
 
 fn row(agent: &Agent) -> ListItem<'_> {
-    let mut spans = vec![Span::styled(
-        agent.label.as_str(),
-        Style::default().add_modifier(Modifier::BOLD),
-    )];
+    let state = State::from(agent.status);
+    let mut spans = vec![
+        Span::raw(state.glyph()),
+        Span::raw(" "),
+        Span::styled(
+            agent.label.as_str(),
+            Style::default().add_modifier(Modifier::BOLD),
+        ),
+        Span::raw("  "),
+        Span::styled(state.word(), Style::default().add_modifier(Modifier::DIM)),
+    ];
     if let Some(title) = &agent.title {
         spans.push(Span::raw("  "));
         spans.push(Span::styled(
