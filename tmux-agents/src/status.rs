@@ -6,7 +6,7 @@ const CLAUDE_GLYPH: &str = "#[fg=white]\u{F0674}#[default]";
 
 pub fn render(agents: &[Agent]) -> String {
     if agents.is_empty() {
-        return String::new();
+        return format!("{CLAUDE_GLYPH}  #[dim]none#[default]");
     }
     let segments = ORDER
         .into_iter()
