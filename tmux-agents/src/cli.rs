@@ -26,4 +26,9 @@ mod tests {
         let err = parse(vec!["bogus".to_string()]).unwrap_err();
         assert!(err.contains("usage"), "{err}");
     }
+
+    #[test]
+    fn status_subcommand_is_recognised() {
+        assert_eq!(parse(vec!["status".to_string()]), Ok(Command::Status));
+    }
 }
