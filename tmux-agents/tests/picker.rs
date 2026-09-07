@@ -156,3 +156,31 @@ fn shift_g_jumps_to_the_last_row() {
 
     assert!(picker.screen().lines().nth(2).unwrap().starts_with("> c"));
 }
+
+#[test]
+fn gg_jumps_to_the_first_row_but_a_lone_g_does_nothing() {
+    let three = || vec![agent("a", "%1"), agent("b", "%2"), agent("c", "%3")];
+
+    let mut picker = Picker::new(three());
+    picker
+        .run(vec![
+            key(KeyCode::Char('G')),
+            key(KeyCode::Char('g')),
+            key(KeyCode::Char('g')),
+            key(KeyCode::Char('q')),
+        ])
+        .unwrap();
+    assert!(picker.screen().lines().next().unwrap().starts_with("> a"));
+
+    let mut picker = Picker::new(three());
+    picker
+        .run(vec![
+            key(KeyCode::Char('G')),
+            key(KeyCode::Char('g')),
+            key(KeyCode::Char('j')),
+            key(KeyCode::Char('g')),
+            key(KeyCode::Char('q')),
+        ])
+        .unwrap();
+    assert!(picker.screen().lines().nth(2).unwrap().starts_with("> c"), "{}", picker.screen());
+}
