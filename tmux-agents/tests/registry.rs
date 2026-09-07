@@ -20,6 +20,7 @@ fn load_parses_a_real_session_file_ignoring_unknown_fields() {
             name: Some("dotfiles-d8".to_string()),
             kind: Kind::Interactive,
             status: Status::Busy,
+            status_updated_at: Some(1788804089018),
             tmux: Some("dotfiles:@7.%53".to_string()),
         }]
     );
