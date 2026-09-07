@@ -706,6 +706,9 @@ fn untitled_rows_fall_back_to_the_cwd_and_long_titles_get_an_ellipsis() {
         rows[0].starts_with("> ○ idle     dotfiles  ~/projects/dotfiles"),
         "{screen}"
     );
-    assert!(rows[1].contains("A very long title") && rows[1].contains("…"), "{screen}");
+    assert!(
+        rows[1].contains("A very long title") && rows[1].contains("…"),
+        "{screen}"
+    );
     assert!(rows[1].trim_end().ends_with("main:1  1m"), "{screen}");
 }
