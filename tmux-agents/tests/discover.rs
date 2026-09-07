@@ -151,3 +151,19 @@ fn agents_are_sorted_by_session_then_window_index() {
         ]
     );
 }
+
+#[test]
+fn colliding_labels_in_the_same_window_also_get_the_pane_id() {
+    let panes = vec![pane("%3", "work", 3, ""), pane("%55", "work", 3, "")];
+    let records = vec![
+        record(1, "/a/ws-common", Some("work:@2.%3")),
+        record(2, "/b/ws-common", Some("work:@2.%55")),
+    ];
+
+    let labels: Vec<String> = discover(records, &panes, &alive)
+        .into_iter()
+        .map(|a| a.label)
+        .collect();
+
+    assert_eq!(labels, vec!["ws-common ·work:3.%3", "ws-common ·work:3.%55"]);
+}
