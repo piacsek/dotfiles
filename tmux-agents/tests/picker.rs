@@ -508,7 +508,10 @@ fn empty_list_shows_a_hint_for_starting_a_session() {
     picker.run(Vec::new()).unwrap();
 
     let screen = picker.screen();
-    assert!(screen.contains("No Claude Code sessions in this tmux server"), "{screen}");
+    assert!(
+        screen.contains("No Claude Code sessions in this tmux server"),
+        "{screen}"
+    );
     assert!(screen.contains("n new Claude window  q close"), "{screen}");
 }
 

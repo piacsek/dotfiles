@@ -20,6 +20,7 @@ pub enum Action {
     Continue,
     Quit,
     Focus(PaneId),
+    NewClaudeWindow,
 }
 
 pub struct App {
@@ -82,6 +83,7 @@ impl App {
         match key.code {
             KeyCode::Char('q') | KeyCode::Esc => return Action::Quit,
             KeyCode::Char('/') => self.filter = Some(String::new()),
+            KeyCode::Char('n') => return Action::NewClaudeWindow,
             KeyCode::Char('g') if pending_g => self.list.select_first(),
             KeyCode::Char('g') => self.pending_g = true,
             KeyCode::Enter => {
@@ -150,6 +152,7 @@ where
             Input::Key(key) => match app.handle_key(key) {
                 Action::Quit => return Ok(()),
                 Action::Focus(pane) => return tmux.focus(&pane),
+                Action::NewClaudeWindow => return tmux.new_claude_window(),
                 Action::Continue => {}
             },
         }

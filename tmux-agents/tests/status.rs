@@ -38,10 +38,7 @@ fn zero_counts_are_hidden_and_no_agents_prints_none() {
         render(&only_idle),
         "#[fg=white]󰙴#[default]  #[dim]○ 1#[default]"
     );
-    assert_eq!(
-        render(&[]),
-        "#[fg=white]󰙴#[default]  #[dim]none#[default]"
-    );
+    assert_eq!(render(&[]), "#[fg=white]󰙴#[default]  #[dim]none#[default]");
 }
 
 #[test]
