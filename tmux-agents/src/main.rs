@@ -19,6 +19,7 @@ fn main() -> ExitCode {
             Ok(()) => ExitCode::SUCCESS,
             Err(err) => fail(&err.to_string()),
         },
+        Ok(Command::Status) => ExitCode::SUCCESS,
         Err(err) => fail(&err),
     }
 }
