@@ -225,3 +225,37 @@ fn filter_also_matches_the_title() {
     assert!(screen.contains("> dotfiles  Fix the Picker"), "{screen}");
     assert!(!screen.contains("ws-common"), "{screen}");
 }
+
+#[test]
+fn backspace_edits_the_query_and_esc_clears_the_filter_without_quitting() {
+    let agents = || vec![agent("dotfiles", "%1"), agent("ws-common", "%2")];
+
+    let mut picker = Picker::new(agents());
+    picker
+        .run(vec![
+            key(KeyCode::Char('/')),
+            key(KeyCode::Char('w')),
+            key(KeyCode::Char('x')),
+            key(KeyCode::Backspace),
+        ])
+        .unwrap();
+    let screen = picker.screen();
+    assert!(screen.contains("> ws-common"), "{screen}");
+    assert!(screen.contains("/w"), "{screen}");
+    assert!(!screen.contains("/wx"), "{screen}");
+
+    let mut picker = Picker::new(agents());
+    picker
+        .run(vec![
+            key(KeyCode::Char('/')),
+            key(KeyCode::Char('w')),
+            key(KeyCode::Esc),
+            key(KeyCode::Char('j')),
+            key(KeyCode::Enter),
+        ])
+        .unwrap();
+    let screen = picker.screen();
+    assert!(screen.contains("dotfiles"), "{screen}");
+    assert!(!screen.contains('/'), "{screen}");
+    assert_eq!(picker.tmux.focused(), vec![PaneId("%2".to_string())]);
+}
