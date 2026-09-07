@@ -23,11 +23,18 @@ pub enum Action {
     NewClaudePane,
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
+pub enum Mode {
+    #[default]
+    Normal,
+    Filter(String),
+    Help,
+}
+
 pub struct App {
     pub agents: Vec<Agent>,
     pub list: ListState,
-    pub filter: Option<String>,
-    pub help: bool,
+    pub mode: Mode,
     pending_g: bool,
 }
 
@@ -37,8 +44,7 @@ impl App {
         Self {
             agents,
             list,
-            filter: None,
-            help: false,
+            mode: Mode::Normal,
             pending_g: false,
         }
     }
@@ -58,39 +64,52 @@ impl App {
             .and_then(|i| self.visible().get(i).copied())
     }
 
+    pub fn filter(&self) -> Option<&str> {
+        match &self.mode {
+            Mode::Filter(query) => Some(query),
+            _ => None,
+        }
+    }
+
     pub fn visible(&self) -> Vec<&Agent> {
-        visible_agents(&self.agents, self.filter.as_deref())
+        visible_agents(&self.agents, self.filter())
     }
 
     pub fn handle_key(&mut self, key: KeyEvent) -> Action {
         if key.modifiers.contains(KeyModifiers::CONTROL) && key.code == KeyCode::Char('c') {
             return Action::Quit;
         }
-        if self.help {
-            self.help = false;
-            return Action::Continue;
-        }
-        if self.filter.is_some() {
-            match key.code {
-                KeyCode::Char(c) => return self.edit_filter(|q| q.push(c)),
-                KeyCode::Backspace => {
-                    return self.edit_filter(|q| {
-                        q.pop();
-                    });
-                }
-                KeyCode::Esc => {
-                    self.filter = None;
-                    return Action::Continue;
-                }
-                _ => {}
+        match self.mode {
+            Mode::Help => {
+                self.mode = Mode::Normal;
+                Action::Continue
             }
+            Mode::Filter(_) => self.handle_filter_key(key),
+            Mode::Normal => self.handle_normal_key(key),
         }
+    }
+
+    fn handle_filter_key(&mut self, key: KeyEvent) -> Action {
+        match key.code {
+            KeyCode::Char(c) => self.edit_filter(|q| q.push(c)),
+            KeyCode::Backspace => self.edit_filter(|q| {
+                q.pop();
+            }),
+            KeyCode::Esc => {
+                self.mode = Mode::Normal;
+                Action::Continue
+            }
+            _ => self.handle_normal_key(key),
+        }
+    }
+
+    fn handle_normal_key(&mut self, key: KeyEvent) -> Action {
         let pending_g = std::mem::take(&mut self.pending_g);
         match key.code {
             KeyCode::Char('q') | KeyCode::Esc => return Action::Quit,
-            KeyCode::Char('/') => self.filter = Some(String::new()),
+            KeyCode::Char('/') => self.mode = Mode::Filter(String::new()),
             KeyCode::Char('n') => return Action::NewClaudePane,
-            KeyCode::Char('?') => self.help = true,
+            KeyCode::Char('?') => self.mode = Mode::Help,
             KeyCode::Char('g') if pending_g => self.list.select_first(),
             KeyCode::Char('g') => self.pending_g = true,
             KeyCode::Enter => {
@@ -105,11 +124,9 @@ impl App {
         }
         Action::Continue
     }
-}
 
-impl App {
     fn edit_filter(&mut self, edit: impl FnOnce(&mut String)) -> Action {
-        if let Some(query) = &mut self.filter {
+        if let Mode::Filter(query) = &mut self.mode {
             edit(query);
         }
         self.list.select_first();

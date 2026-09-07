@@ -438,8 +438,14 @@ fn refresh_keeps_row_order_and_the_selected_agent_when_the_source_reorders() {
 
     assert_eq!(picker.tmux.focused(), vec![PaneId("%2".to_string())]);
     let screen = picker.screen();
-    assert!(screen.lines().next().unwrap().starts_with("  ○ idle     a"), "{screen}");
-    assert!(screen.lines().nth(1).unwrap().starts_with("> ○ idle     b"), "{screen}");
+    assert!(
+        screen.lines().next().unwrap().starts_with("  ○ idle     a"),
+        "{screen}"
+    );
+    assert!(
+        screen.lines().nth(1).unwrap().starts_with("> ○ idle     b"),
+        "{screen}"
+    );
 }
 
 #[test]
@@ -586,7 +592,13 @@ fn refresh_appends_new_agents_and_drops_gone_ones_without_moving_the_rest() {
     picker.run(vec![tick()]).unwrap();
 
     let screen = picker.screen();
-    assert!(screen.lines().next().unwrap().starts_with("> ○ idle     a"), "{screen}");
-    assert!(screen.lines().nth(1).unwrap().starts_with("  ○ idle     c"), "{screen}");
-    assert!(!screen.contains("b"), "{screen}");
+    assert!(
+        screen.lines().next().unwrap().starts_with("> ○ idle     a"),
+        "{screen}"
+    );
+    assert!(
+        screen.lines().nth(1).unwrap().starts_with("  ○ idle     c"),
+        "{screen}"
+    );
+    assert!(!screen.contains("idle     b"), "{screen}");
 }
