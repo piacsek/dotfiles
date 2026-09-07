@@ -426,7 +426,7 @@ fn agent_with_pid(label: &str, pane: &str, pid: i32) -> tmux_agents::agents::Age
 }
 
 #[test]
-fn refresh_keeps_the_selected_agent_when_rows_reorder() {
+fn refresh_keeps_row_order_and_the_selected_agent_when_the_source_reorders() {
     let a = agent_with_pid("a", "%1", 1);
     let b = agent_with_pid("b", "%2", 2);
     let mut picker = Picker::new(vec![a.clone(), b.clone()]);
@@ -437,14 +437,9 @@ fn refresh_keeps_the_selected_agent_when_rows_reorder() {
         .unwrap();
 
     assert_eq!(picker.tmux.focused(), vec![PaneId("%2".to_string())]);
-    assert!(
-        picker
-            .screen()
-            .lines()
-            .next()
-            .unwrap()
-            .starts_with("> ○ idle     b")
-    );
+    let screen = picker.screen();
+    assert!(screen.lines().next().unwrap().starts_with("  ○ idle     a"), "{screen}");
+    assert!(screen.lines().nth(1).unwrap().starts_with("> ○ idle     b"), "{screen}");
 }
 
 #[test]
@@ -578,4 +573,20 @@ fn help_view_shows_the_version_on_the_bottom_left() {
     assert!(last.starts_with(&expected), "{screen}");
     assert!(last.ends_with("press ? for keybindings"), "{screen}");
     assert!(picker.cell(0, 7).modifier.contains(Modifier::DIM));
+}
+
+#[test]
+fn refresh_appends_new_agents_and_drops_gone_ones_without_moving_the_rest() {
+    let a = agent_with_pid("a", "%1", 1);
+    let b = agent_with_pid("b", "%2", 2);
+    let c = agent_with_pid("c", "%3", 3);
+    let mut picker = Picker::new(vec![a.clone(), b]);
+    picker.next_refresh_returns(vec![c, a]);
+
+    picker.run(vec![tick()]).unwrap();
+
+    let screen = picker.screen();
+    assert!(screen.lines().next().unwrap().starts_with("> ○ idle     a"), "{screen}");
+    assert!(screen.lines().nth(1).unwrap().starts_with("  ○ idle     c"), "{screen}");
+    assert!(!screen.contains("b"), "{screen}");
 }
