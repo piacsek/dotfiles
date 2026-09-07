@@ -205,3 +205,23 @@ fn slash_filters_rows_by_label_and_shows_the_query() {
     let rows: Vec<&str> = screen.lines().map(str::trim_end).filter(|l| !l.is_empty()).collect();
     assert_eq!(rows, vec!["> ws-common", "/Ws"], "{screen}");
 }
+
+#[test]
+fn filter_also_matches_the_title() {
+    let mut titled = agent("dotfiles", "%1");
+    titled.title = Some("Fix the Picker".to_string());
+    let mut picker = Picker::new(vec![titled, agent("ws-common", "%2")]);
+
+    picker
+        .run(vec![
+            key(KeyCode::Char('/')),
+            key(KeyCode::Char('p')),
+            key(KeyCode::Char('i')),
+            key(KeyCode::Char('c')),
+        ])
+        .unwrap();
+
+    let screen = picker.screen();
+    assert!(screen.contains("> dotfiles  Fix the Picker"), "{screen}");
+    assert!(!screen.contains("ws-common"), "{screen}");
+}

@@ -35,11 +35,7 @@ impl App {
     }
 
     pub fn visible(&self) -> Vec<&Agent> {
-        let query = self.filter.as_deref().unwrap_or("").to_lowercase();
-        self.agents
-            .iter()
-            .filter(|agent| agent.label.to_lowercase().contains(&query))
-            .collect()
+        visible_agents(&self.agents, self.filter.as_deref())
     }
 
     pub fn handle_key(&mut self, key: KeyEvent) -> Action {
@@ -70,6 +66,14 @@ impl App {
         }
         Action::Continue
     }
+}
+
+pub fn visible_agents<'a>(agents: &'a [Agent], filter: Option<&str>) -> Vec<&'a Agent> {
+    let query = filter.unwrap_or("").to_lowercase();
+    agents
+        .iter()
+        .filter(|agent| agent.label.to_lowercase().contains(&query))
+        .collect()
 }
 
 pub fn run<B, T>(
