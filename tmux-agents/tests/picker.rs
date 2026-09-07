@@ -436,3 +436,22 @@ fn filter_still_applies_after_a_refresh() {
     assert!(screen.contains("ws-start"), "{screen}");
     assert!(screen.contains("/w"), "{screen}");
 }
+
+#[test]
+fn state_word_precedes_the_dir_and_dir_and_title_columns_are_aligned() {
+    let mut short = agent_with_status("a", "%1", Status::Idle);
+    short.title = Some("T1".to_string());
+    let mut long = agent_with_status("bb-long", "%2", Status::Busy);
+    long.title = Some("T2".to_string());
+    let mut picker = Picker::new(vec![short, long]);
+
+    picker.run(Vec::new()).unwrap();
+
+    let screen = picker.screen();
+    let rows: Vec<&str> = screen.lines().map(str::trim_end).take(2).collect();
+    assert_eq!(
+        rows,
+        vec!["> ○ idle     a        T1", "  ● working  bb-long  T2"],
+        "{screen}"
+    );
+}
