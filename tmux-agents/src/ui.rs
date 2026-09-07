@@ -5,7 +5,7 @@ use ratatui::text::{Line, Span};
 use ratatui::widgets::{List, ListItem, Paragraph};
 
 use crate::agents::Agent;
-use crate::app::{App, visible_agents};
+use crate::app::{App, Mode, visible_agents};
 use crate::state::{State, WORD_WIDTH};
 
 const HELP_HINT: &str = "press ? for keybindings";
@@ -13,7 +13,7 @@ const HELP_HINT: &str = "press ? for keybindings";
 pub fn draw(frame: &mut Frame, app: &mut App) {
     let [body, footer] =
         Layout::vertical([Constraint::Min(1), Constraint::Length(1)]).areas(frame.area());
-    if app.help {
+    if app.mode == Mode::Help {
         draw_help(frame, body);
     } else if app.agents.is_empty() {
         draw_empty(frame, body);
@@ -65,7 +65,7 @@ fn draw_help(frame: &mut Frame, area: Rect) {
 }
 
 fn draw_list(frame: &mut Frame, area: Rect, app: &mut App) {
-    let visible = visible_agents(&app.agents, app.filter.as_deref());
+    let visible = visible_agents(&app.agents, app.filter());
     let label_width = visible
         .iter()
         .map(|agent| agent.label.chars().count())
@@ -83,11 +83,13 @@ fn draw_footer(frame: &mut Frame, area: Rect, app: &App) {
     let hint_width = HELP_HINT.chars().count() as u16;
     let [left, right] =
         Layout::horizontal([Constraint::Min(1), Constraint::Length(hint_width)]).areas(area);
-    if app.help {
-        let version = format!("tmux-agents v{}", env!("CARGO_PKG_VERSION"));
-        frame.render_widget(Paragraph::new(Span::styled(version, dim())), left);
-    } else if let Some(query) = &app.filter {
-        frame.render_widget(Paragraph::new(format!("/{query}")), left);
+    match &app.mode {
+        Mode::Help => {
+            let version = format!("tmux-agents v{}", env!("CARGO_PKG_VERSION"));
+            frame.render_widget(Paragraph::new(Span::styled(version, dim())), left);
+        }
+        Mode::Filter(query) => frame.render_widget(Paragraph::new(format!("/{query}")), left),
+        Mode::Normal => {}
     }
     frame.render_widget(
         Paragraph::new(Span::styled(HELP_HINT, dim())).right_aligned(),
