@@ -17,9 +17,6 @@ vim.pack.add({
 	gh("sotte/presenting.nvim"),
 	gh("herisetiawan00/jtt.nvim"),
 	gh("christoomey/vim-tmux-navigator"),
-	-- herdr counterpart of vim-tmux-navigator (C-h/j/k/l across herdr panes).
-	-- Lua module only, no plugin/ dir: inert unless setup() runs (herdr-only, below).
-	gh("aimdevlee/herdr-nvim-nav"),
 	gh("mason-org/mason.nvim"),
 	gh("neovim/nvim-lspconfig"),
 	gh("folke/lazydev.nvim"),
@@ -76,29 +73,6 @@ require("markdown_preview").setup({
 	port = 0, -- 0 = auto (8421 for takeover, OS-assigned for multi)
 	open_browser = true,
 	debounce_ms = 300,
-})
-
--- Inside a herdr pane ($HERDR_ENV=1, never set under tmux): let herdr-nvim-nav
--- own C-h/j/k/l and keep vim-tmux-navigator from installing its own maps.
--- Under tmux nothing here runs, so the tmux workflow is unchanged.
-local in_tmux = vim.env.TMUX ~= nil and vim.env.TMUX ~= ""
-if vim.env.HERDR_ENV == "1" and not in_tmux then
-	vim.g.tmux_navigator_no_mappings = 1
-	require("herdr-nvim-nav").setup({ with_tmux = false })
-end
-
--- herdr-nvim (ChmaraX): picker of files the agent touched + code annotations
--- sent to the agent. Installed always (so vim.pack tracks/updates it), but the
--- custom `load` keeps it off the runtimepath outside herdr — `load = false`
--- would still packadd! it and tmux would get a :Herdr command. <leader>a is
--- harpoon, hence the <leader>H prefix.
-vim.pack.add({ gh("ChmaraX/herdr-nvim") }, {
-	load = function(plug)
-		if vim.env.HERDR_ENV == "1" and not in_tmux then
-			vim.cmd.packadd(plug.spec.name)
-			require("herdr-nvim").setup({ prefix = "<leader>H" })
-		end
-	end,
 })
 require("inc_rename").setup({
 	post_hook = function()
@@ -566,13 +540,7 @@ cmp.setup({
 
 -- vim-test
 vim.g["test#filename_modifier"] = ":p"
--- vimux drives tmux; outside tmux it would split panes in whatever tmux server
--- is running. Inside herdr use the "herdr" strategy (core/herdr.lua: a real
--- vimtest pane, like vimux); in a bare terminal fall back to a sticky nvim
--- terminal.
-local herdr = require("core.herdr")
-vim.g["test#custom_strategies"] = { herdr = herdr.run }
-vim.g["test#strategy"] = in_tmux and "vimux" or (herdr.active and "herdr" or "neovim_sticky")
+vim.g["test#strategy"] = "vimux"
 vim.g["VimuxRunnerName"] = "vimtest"
 vim.g["test#preserve_screen"] = 0
 vim.g["test#echo_command"] = 0

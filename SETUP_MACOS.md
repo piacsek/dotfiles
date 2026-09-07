@@ -20,7 +20,6 @@ Executable documentation for setting up a fresh macOS system. Follow sections in
   - [10. Install GH extensions](#10-install-gh-extensions)
   - [11. Customize tmux sessionizer](#11-customize-tmux-sessionizer)
   - [12. Install Neovim LSP servers, formatters and parsers](#12-install-neovim-lsp-servers-formatters-and-parsers)
-  - [13. Install herdr (tmux alternative, side-by-side trial)](#13-install-herdr-tmux-alternative-side-by-side-trial)
 - [Essential Apps](#essential-apps)
   - [Install via Homebrew](#install-via-homebrew)
   - [Manual Installations](#manual-installations)
@@ -267,46 +266,6 @@ nvim --headless -c "TSInstallParsers" -c "qall"
 A missing formatter is silent — conform falls back to LSP formatting because
 `notify_on_error = false` — so run this before wondering why JSON comes out
 indented with tabs.
-
----
-
-### 13. Install herdr (tmux alternative, side-by-side trial)
-
-[herdr](https://herdr.dev) is a tmux-like multiplexer built around coding
-agents (persistent server, workspaces/tabs/panes, agent status sidebar). It is
-configured to mirror `.tmux.conf` (same `ctrl+space` prefix, same `M-*`
-popups) so both can be compared; tmux is untouched. Run `herdr` in its own
-Ghostty tab, never inside a tmux pane. `bun` and `dtach` are build/runtime
-deps of the plugins below (`jq` ships with macOS).
-
-```bash
-brew install herdr bun dtach
-
-mkdir -p $HOME/.config/herdr/plugins/config/sessionizer \
-  $HOME/.config/herdr/plugins/config/cloudmanic.herdr-plus/quick-actions
-ln -sf $HOME/dotfiles/herdr-config.toml $HOME/.config/herdr/config.toml
-ln -sf $HOME/dotfiles/herdr-plugins/sessionizer.toml $HOME/.config/herdr/plugins/config/sessionizer/config.toml
-ln -sf $HOME/dotfiles/herdr-plugins/quick-actions/available-scripts.toml \
-  $HOME/.config/herdr/plugins/config/cloudmanic.herdr-plus/quick-actions/available-scripts.toml
-
-# Plugins referenced by herdr-config.toml keybindings:
-herdr plugin install aimdevlee/herdr-nvim-nav --yes      # C-h/j/k/l nvim<->pane nav
-herdr plugin install andrewchng/herdr-sessionizer --yes  # M-e project picker + layouts
-herdr plugin install cloudmanic/herdr-plus --yes         # M-r quick actions (.available-scripts)
-herdr plugin install Tyru5/herdr-floax --yes             # M-t persistent scratch shell
-herdr plugin install qu8n/herdr-automatic-rename --yes   # tab label = running program (tmux #W)
-herdr plugin install thanhdat77/herdr-navigator --yes    # prefix t fuzzy jump (agents, workspaces, dirs)
-herdr plugin install ChmaraX/herdr-nvim --yes            # prefix C-e nvim sidebar, prefix O agent-touched files
-mkdir -p $HOME/.config/herdr-automatic-rename
-ln -sf $HOME/dotfiles/herdr-plugins/automatic-rename.sh $HOME/.config/herdr-automatic-rename/config.sh
-ln -sf $HOME/dotfiles/herdr-plugins/navigator.toml $HOME/.config/herdr/plugins/config/herdr-navigator/config.toml
-```
-
-The nvim half of `herdr-nvim-nav` is installed by `vim.pack` from
-`nvim/lua/core/plugins.lua` and only activates when `$HERDR_ENV=1`.
-Optional: `herdr integration install claude` adds native Claude session resume
-after a herdr server restart, but it writes hooks into `~/.claude/settings.json`
-(tracked here as `claude-settings.json`) — do it deliberately.
 
 ---
 

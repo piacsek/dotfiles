@@ -1,6 +1,0 @@
-# tmux-script-runner parity: pick a command from the nearest .available-scripts
-# (searching from the launch dir upward), then run it in the launch dir.
-name = "Scripts (.available-scripts)"
-type = "select"
-options_command = "d='{{.WorkDir}}'; while :; do if [ -s \"$d/.available-scripts\" ]; then grep -vE '^[[:space:]]*(#|$)' \"$d/.available-scripts\"; break; fi; [ \"$d\" = / ] && { echo 'no .available-scripts found'; break; }; d=$(dirname \"$d\"); done"
-command = "{{.Value}}"
