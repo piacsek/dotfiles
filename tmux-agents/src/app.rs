@@ -72,7 +72,13 @@ pub fn visible_agents<'a>(agents: &'a [Agent], filter: Option<&str>) -> Vec<&'a 
     let query = filter.unwrap_or("").to_lowercase();
     agents
         .iter()
-        .filter(|agent| agent.label.to_lowercase().contains(&query))
+        .filter(|agent| {
+            agent.label.to_lowercase().contains(&query)
+                || agent
+                    .title
+                    .as_deref()
+                    .is_some_and(|t| t.to_lowercase().contains(&query))
+        })
         .collect()
 }
 
