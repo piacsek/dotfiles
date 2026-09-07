@@ -27,6 +27,7 @@ pub struct App {
     pub agents: Vec<Agent>,
     pub list: ListState,
     pub filter: Option<String>,
+    pub help: bool,
     pending_g: bool,
 }
 
@@ -37,6 +38,7 @@ impl App {
             agents,
             list,
             filter: None,
+            help: false,
             pending_g: false,
         }
     }
@@ -64,6 +66,10 @@ impl App {
         if key.modifiers.contains(KeyModifiers::CONTROL) && key.code == KeyCode::Char('c') {
             return Action::Quit;
         }
+        if self.help {
+            self.help = false;
+            return Action::Continue;
+        }
         if self.filter.is_some() {
             match key.code {
                 KeyCode::Char(c) => return self.edit_filter(|q| q.push(c)),
@@ -84,6 +90,7 @@ impl App {
             KeyCode::Char('q') | KeyCode::Esc => return Action::Quit,
             KeyCode::Char('/') => self.filter = Some(String::new()),
             KeyCode::Char('n') => return Action::NewClaudePane,
+            KeyCode::Char('?') => self.help = true,
             KeyCode::Char('g') if pending_g => self.list.select_first(),
             KeyCode::Char('g') => self.pending_g = true,
             KeyCode::Enter => {
