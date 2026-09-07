@@ -2,6 +2,8 @@ use ratatui::style::Color;
 
 use crate::registry::Status;
 
+pub const WORD_WIDTH: usize = 7;
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum State {
     Blocked,
