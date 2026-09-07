@@ -13,7 +13,9 @@ const HELP_HINT: &str = "press ? for keybindings";
 pub fn draw(frame: &mut Frame, app: &mut App) {
     let [body, footer] =
         Layout::vertical([Constraint::Min(1), Constraint::Length(1)]).areas(frame.area());
-    if app.agents.is_empty() {
+    if app.help {
+        draw_help(frame, body);
+    } else if app.agents.is_empty() {
         draw_empty(frame, body);
     } else {
         draw_list(frame, body, app);
@@ -28,6 +30,38 @@ fn draw_empty(frame: &mut Frame, area: Rect) {
         Line::from(Span::styled("n new Claude pane  q close", dim())),
     ];
     frame.render_widget(Paragraph::new(text), area);
+}
+
+const KEYS: [(&str, &str); 7] = [
+    ("j/k ↓/↑", "move"),
+    ("gg / G", "first / last"),
+    ("/", "filter, Esc clears"),
+    ("Enter", "focus pane"),
+    ("n", "new Claude pane"),
+    ("q / Esc", "close"),
+    ("?", "toggle this help"),
+];
+
+fn draw_help(frame: &mut Frame, area: Rect) {
+    let width = KEYS
+        .iter()
+        .map(|(k, _)| k.chars().count())
+        .max()
+        .unwrap_or(0);
+    let lines: Vec<Line> = KEYS
+        .iter()
+        .map(|(key, what)| {
+            Line::from(vec![
+                Span::styled(
+                    format!("{key:<width$}"),
+                    Style::default().add_modifier(Modifier::BOLD),
+                ),
+                Span::raw("  "),
+                Span::styled(*what, dim()),
+            ])
+        })
+        .collect();
+    frame.render_widget(Paragraph::new(lines), area);
 }
 
 fn draw_list(frame: &mut Frame, area: Rect, app: &mut App) {
