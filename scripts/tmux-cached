@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Run a status-line widget at most once per TTL, serving the cached output in
+# between. Lets status-interval drop to 1s for cheap segments (tmux-agents)
+# while expensive ones (git status, tsh, tailscale) keep their old cadence.
+# Usage: tmux-cached <ttl-seconds> <command> [args...]
+set -uo pipefail
+
+ttl="$1"
+shift
+cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/tmux-cached"
+mkdir -p "$cache_dir"
+key=$(printf '%s\0' "$@" | shasum | cut -c1-16)
+file="$cache_dir/$key"
+
+now=$(date +%s)
+if [[ -f "$file" ]]; then
+	age=$(( now - $(stat -f %m "$file" 2>/dev/null || stat -c %Y "$file") ))
+	if (( age < ttl )); then
+		cat "$file"
+		exit 0
+	fi
+fi
+
+out=$("$@" 2>/dev/null)
+printf '%s' "$out" >"$file.tmp" && mv "$file.tmp" "$file"
+printf '%s\n' "$out"
