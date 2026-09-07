@@ -565,3 +565,17 @@ fn question_mark_toggles_a_help_view_and_types_while_filtering() {
         .unwrap();
     assert!(picker.screen().contains("/?"), "{}", picker.screen());
 }
+
+#[test]
+fn help_view_shows_the_version_on_the_bottom_left() {
+    let mut picker = Picker::new(vec![agent("dotfiles", "%1")]);
+
+    picker.run(vec![key(KeyCode::Char('?'))]).unwrap();
+
+    let screen = picker.screen();
+    let last = screen.lines().last().unwrap();
+    let expected = format!("tmux-agents v{}", env!("CARGO_PKG_VERSION"));
+    assert!(last.starts_with(&expected), "{screen}");
+    assert!(last.ends_with("press ? for keybindings"), "{screen}");
+    assert!(picker.cell(0, 7).modifier.contains(Modifier::DIM));
+}
