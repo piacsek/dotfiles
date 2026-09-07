@@ -1,0 +1,12 @@
+---
+source: tests/snapshots.rs
+expression: picker.screen()
+---
+  ◉ blocked  ws-common       Remove PR comments             
+> ● working  dotfiles        Tmux Claude Code session picker
+  ○ idle     scintilla.nvim                                 
+                                                            
+                                                            
+                                                            
+                                                            
+                                     press ? for keybindings
