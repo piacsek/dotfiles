@@ -298,6 +298,7 @@ herdr plugin install qu8n/herdr-automatic-rename --yes   # tab label = running p
 herdr plugin install thanhdat77/herdr-navigator --yes    # prefix t fuzzy jump (agents, workspaces, dirs)
 mkdir -p $HOME/.config/herdr-automatic-rename
 ln -sf $HOME/dotfiles/herdr-plugins/automatic-rename.sh $HOME/.config/herdr-automatic-rename/config.sh
+ln -sf $HOME/dotfiles/herdr-plugins/navigator.toml $HOME/.config/herdr/plugins/config/herdr-navigator/config.toml
 ```
 
 The nvim half of `herdr-nvim-nav` is installed by `vim.pack` from
