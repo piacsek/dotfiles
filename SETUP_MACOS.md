@@ -19,7 +19,8 @@ Executable documentation for setting up a fresh macOS system. Follow sections in
   - [9. Install asdf plugins and versions](#9-install-asdf-plugins-and-versions)
   - [10. Install GH extensions](#10-install-gh-extensions)
   - [11. Customize tmux sessionizer](#11-customize-tmux-sessionizer)
-  - [12. Install Neovim LSP servers, formatters and parsers](#12-install-neovim-lsp-servers-formatters-and-parsers)
+  - [12. Build tmux-agents](#12-build-tmux-agents)
+  - [13. Install Neovim LSP servers, formatters and parsers](#13-install-neovim-lsp-servers-formatters-and-parsers)
 - [Essential Apps](#essential-apps)
   - [Install via Homebrew](#install-via-homebrew)
   - [Manual Installations](#manual-installations)
@@ -249,7 +250,19 @@ Configure search paths in `~/.config/tmux-sessionizer/tmux-sessionizer.conf`:
 TS_SEARCH_PATHS=($HOME/path/to/dir:0 $HOME/.tmux-sessions:1)
 ```
 
-### 12. Install Neovim LSP servers, formatters and parsers
+### 12. Build tmux-agents
+
+Rust TUI behind `<M-c>` in tmux: lists the Claude Code sessions running in the
+current tmux server and jumps to the selected pane. Needs the asdf Rust
+toolchain from step 9. `~/.local/bin` is on PATH.
+
+```bash
+cargo install --path ~/dotfiles/tmux-agents --root ~/.local --locked
+```
+
+Re-run after pulling changes to `tmux-agents/`. Tests: `cd ~/dotfiles/tmux-agents && cargo test`.
+
+### 13. Install Neovim LSP servers, formatters and parsers
 
 Mason keeps no manifest of what you installed, so the list lives in
 `nvim/lua/core/plugins.lua` (`mason_tools`). Both commands below install only
