@@ -552,9 +552,13 @@ cmp.setup({
 
 -- vim-test
 vim.g["test#filename_modifier"] = ":p"
--- vimux drives tmux; outside tmux (herdr, bare terminal) it would split panes
--- in whatever tmux server is running. Fall back to a sticky nvim terminal.
-vim.g["test#strategy"] = in_tmux and "vimux" or "neovim_sticky"
+-- vimux drives tmux; outside tmux it would split panes in whatever tmux server
+-- is running. Inside herdr use the "herdr" strategy (core/herdr.lua: a real
+-- vimtest pane, like vimux); in a bare terminal fall back to a sticky nvim
+-- terminal.
+local herdr = require("core.herdr")
+vim.g["test#custom_strategies"] = { herdr = herdr.run }
+vim.g["test#strategy"] = in_tmux and "vimux" or (herdr.active and "herdr" or "neovim_sticky")
 vim.g["VimuxRunnerName"] = "vimtest"
 vim.g["test#preserve_screen"] = 0
 vim.g["test#echo_command"] = 0
