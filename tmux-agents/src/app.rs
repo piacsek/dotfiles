@@ -2,7 +2,7 @@ use std::io;
 
 use ratatui::Terminal;
 use ratatui::backend::Backend;
-use ratatui::crossterm::event::{Event, KeyCode, KeyEvent};
+use ratatui::crossterm::event::{Event, KeyCode, KeyEvent, KeyModifiers};
 use ratatui::widgets::ListState;
 
 use crate::agents::Agent;
@@ -28,8 +28,11 @@ impl App {
     }
 
     pub fn handle_key(&mut self, key: KeyEvent) -> Action {
+        if key.modifiers.contains(KeyModifiers::CONTROL) && key.code == KeyCode::Char('c') {
+            return Action::Quit;
+        }
         match key.code {
-            KeyCode::Char('q') => return Action::Quit,
+            KeyCode::Char('q') | KeyCode::Esc => return Action::Quit,
             KeyCode::Enter => {
                 if let Some(agent) = self.list.selected().and_then(|i| self.agents.get(i)) {
                     return Action::Focus(agent.pane.clone());

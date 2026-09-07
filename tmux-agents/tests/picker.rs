@@ -1,7 +1,7 @@
 mod support;
 
 use ratatui::crossterm::event::KeyCode;
-use support::{Picker, agent, key};
+use support::{Picker, agent, ctrl, key};
 use tmux_agents::tmux::PaneId;
 
 #[test]
@@ -83,4 +83,28 @@ fn enter_focuses_selected_pane_and_exits() {
 
     assert_eq!(picker.tmux.focused(), vec![PaneId("%53".to_string())]);
     assert_eq!(picker.app.list.selected(), Some(1));
+}
+
+#[test]
+fn enter_on_empty_list_does_nothing() {
+    let mut picker = Picker::new(Vec::new());
+
+    picker
+        .run(vec![key(KeyCode::Enter), key(KeyCode::Char('q'))])
+        .unwrap();
+
+    assert!(picker.tmux.focused().is_empty());
+}
+
+#[test]
+fn esc_and_ctrl_c_quit_without_focusing() {
+    let mut picker = Picker::new(vec![agent("a", "%1")]);
+    picker
+        .run(vec![key(KeyCode::Esc), key(KeyCode::Enter)])
+        .unwrap();
+    assert!(picker.tmux.focused().is_empty());
+
+    let mut picker = Picker::new(vec![agent("a", "%1")]);
+    picker.run(vec![ctrl('c'), key(KeyCode::Enter)]).unwrap();
+    assert!(picker.tmux.focused().is_empty());
 }
