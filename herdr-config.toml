@@ -173,6 +173,9 @@ description = "navigate right (nvim-aware)"
 [ui]
 tab_bar_position = "top"
 prompt_new_tab_name = false
+# tmux parity: no mouse UI; the terminal handles clicks (Cmd-click URLs etc.).
+# Pane apps that request mouse (lazygit, btop) still get it.
+mouse_capture = false
 # Status right ≈ tmux status-right (~/.tmux_work.conf): kube ctx | tailscale | clock.
 # The git dirty marker is covered by the sidebar's branch + git_status rows.
 tab_bar_right = [
