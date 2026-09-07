@@ -196,3 +196,31 @@ fn agents_are_grouped_blocked_then_working_then_idle_before_session_order() {
 
     assert_eq!(labels, vec!["blocked", "working", "shell", "idle"]);
 }
+
+#[test]
+fn any_leading_glyph_is_stripped_from_the_title_but_plain_titles_are_ignored() {
+    let panes = vec![
+        pane("%1", "s", 1, "◐ Spinning summary"),
+        pane("%2", "s", 2, "✳ Static summary"),
+        pane("%3", "s", 3, "Felipes-MacBook-Pro.local"),
+    ];
+    let records = vec![
+        record(1, "/a", Some("s:@1.%1")),
+        record(2, "/b", Some("s:@2.%2")),
+        record(3, "/c", Some("s:@3.%3")),
+    ];
+
+    let titles: Vec<Option<String>> = discover(records, &panes, &alive)
+        .into_iter()
+        .map(|a| a.title)
+        .collect();
+
+    assert_eq!(
+        titles,
+        vec![
+            Some("Spinning summary".to_string()),
+            Some("Static summary".to_string()),
+            None
+        ]
+    );
+}
