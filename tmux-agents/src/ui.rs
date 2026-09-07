@@ -83,7 +83,10 @@ fn draw_footer(frame: &mut Frame, area: Rect, app: &App) {
     let hint_width = HELP_HINT.chars().count() as u16;
     let [left, right] =
         Layout::horizontal([Constraint::Min(1), Constraint::Length(hint_width)]).areas(area);
-    if let Some(query) = &app.filter {
+    if app.help {
+        let version = format!("tmux-agents v{}", env!("CARGO_PKG_VERSION"));
+        frame.render_widget(Paragraph::new(Span::styled(version, dim())), left);
+    } else if let Some(query) = &app.filter {
         frame.render_widget(Paragraph::new(format!("/{query}")), left);
     }
     frame.render_widget(
