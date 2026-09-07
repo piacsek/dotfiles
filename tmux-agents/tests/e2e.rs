@@ -27,14 +27,18 @@ impl Server {
     }
 
     fn pane_id(&self) -> String {
-        let out = self.tmux(&["list-panes", "-a", "-F", "#{pane_id}"])
+        let out = self
+            .tmux(&["list-panes", "-a", "-F", "#{pane_id}"])
             .output()
             .unwrap();
         String::from_utf8(out.stdout).unwrap().trim().to_string()
     }
 
     fn socket_path(&self) -> String {
-        let out = self.tmux(&["display", "-p", "#{socket_path}"]).output().unwrap();
+        let out = self
+            .tmux(&["display", "-p", "#{socket_path}"])
+            .output()
+            .unwrap();
         String::from_utf8(out.stdout).unwrap().trim().to_string()
     }
 
@@ -117,7 +121,11 @@ fn status_subcommand_prints_tmux_markup_for_the_live_session() {
         .output()
         .unwrap();
 
-    assert!(out.status.success(), "{}", String::from_utf8_lossy(&out.stderr));
+    assert!(
+        out.status.success(),
+        "{}",
+        String::from_utf8_lossy(&out.stderr)
+    );
     assert_eq!(
         String::from_utf8_lossy(&out.stdout),
         "#[fg=yellow]●1#[default]\n"
