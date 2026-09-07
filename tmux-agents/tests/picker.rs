@@ -182,7 +182,11 @@ fn gg_jumps_to_the_first_row_but_a_lone_g_does_nothing() {
             key(KeyCode::Char('q')),
         ])
         .unwrap();
-    assert!(picker.screen().lines().nth(2).unwrap().starts_with("> c"), "{}", picker.screen());
+    assert!(
+        picker.screen().lines().nth(2).unwrap().starts_with("> c"),
+        "{}",
+        picker.screen()
+    );
 }
 
 #[test]
@@ -202,7 +206,11 @@ fn slash_filters_rows_by_label_and_shows_the_query() {
         .unwrap();
 
     let screen = picker.screen();
-    let rows: Vec<&str> = screen.lines().map(str::trim_end).filter(|l| !l.is_empty()).collect();
+    let rows: Vec<&str> = screen
+        .lines()
+        .map(str::trim_end)
+        .filter(|l| !l.is_empty())
+        .collect();
     assert_eq!(rows, vec!["> ws-common", "/Ws"], "{screen}");
 }
 
@@ -278,4 +286,27 @@ fn enter_in_filter_mode_focuses_the_selected_visible_row() {
         .unwrap();
 
     assert_eq!(picker.tmux.focused(), vec![PaneId("%3".to_string())]);
+}
+
+#[test]
+fn starting_a_filter_moves_the_highlight_to_the_first_match() {
+    let mut picker = Picker::new(vec![
+        agent("dotfiles", "%1"),
+        agent("ws-common", "%2"),
+        agent("ws-start", "%3"),
+    ]);
+
+    picker
+        .run(vec![
+            key(KeyCode::Char('G')),
+            key(KeyCode::Char('/')),
+            key(KeyCode::Char('w')),
+        ])
+        .unwrap();
+
+    let screen = picker.screen();
+    assert!(
+        screen.lines().next().unwrap().starts_with("> ws-common"),
+        "{screen}"
+    );
 }

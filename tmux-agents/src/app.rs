@@ -45,9 +45,11 @@ impl App {
         if self.filter.is_some() {
             match key.code {
                 KeyCode::Char(c) => return self.edit_filter(|q| q.push(c)),
-                KeyCode::Backspace => return self.edit_filter(|q| {
-                    q.pop();
-                }),
+                KeyCode::Backspace => {
+                    return self.edit_filter(|q| {
+                        q.pop();
+                    });
+                }
                 KeyCode::Esc => {
                     self.filter = None;
                     return Action::Continue;
@@ -62,7 +64,11 @@ impl App {
             KeyCode::Char('g') if pending_g => self.list.select_first(),
             KeyCode::Char('g') => self.pending_g = true,
             KeyCode::Enter => {
-                if let Some(agent) = self.list.selected().and_then(|i| self.agents.get(i)) {
+                if let Some(agent) = self
+                    .list
+                    .selected()
+                    .and_then(|i| self.visible().get(i).copied())
+                {
                     return Action::Focus(agent.pane.clone());
                 }
             }
