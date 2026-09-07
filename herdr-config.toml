@@ -186,5 +186,8 @@ window_title = "{workspace}"
 [ui.toast]
 delivery = "herdr"
 
+[ui.sound]
+enabled = false
+
 [experimental]
 pane_history = false
