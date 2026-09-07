@@ -8,5 +8,5 @@ AUTO_INDEX_WORKSPACES=0
 AUTO_INDEX_TABS=0
 AUTO_INDEX_AGENTS=0
 TAB_CONTEXT=0
-# 1 would name a claude tab after its current task instead of "claude".
-AGENT_TITLES=0
+# Name an agent tab after the task it reports in its terminal title.
+AGENT_TITLES=1
