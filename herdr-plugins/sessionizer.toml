@@ -1,0 +1,33 @@
+# herdr-sessionizer — counterpart of ~/.config/tmux-sessionizer/tmux-sessionizer.conf
+# Roots: the same curated symlink dir tmux-sessionizer searches (TS_SEARCH_PATHS).
+[projects]
+roots = ["~/.tmux-sessions"]
+git_only = false
+depth = 1
+
+[ui]
+placement = "popup"
+width = "80%"
+height = "80%"
+
+# Default layout for a NEW workspace = the global ~/.tmux-sessionizer hydrate:
+# nvim on the left, claude on the right (50/50). A repo can override it with
+# <repo>/.sessionizer/config.toml (see ~/dotfiles/.sessionizer/config.toml).
+[layout]
+focus = "editor"
+
+[tabs.main]
+label = "main"
+
+[[tabs.main.panes]]
+id = "editor"
+title = "nvim"
+command = "nvim"
+
+[[tabs.main.panes]]
+id = "agent"
+from = "editor"
+title = "claude"
+split = "right"
+ratio = 0.5
+command = "claude"
