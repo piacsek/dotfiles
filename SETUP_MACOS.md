@@ -296,6 +296,7 @@ herdr plugin install cloudmanic/herdr-plus --yes         # M-r quick actions (.a
 herdr plugin install Tyru5/herdr-floax --yes             # M-t persistent scratch shell
 herdr plugin install qu8n/herdr-automatic-rename --yes   # tab label = running program (tmux #W)
 herdr plugin install thanhdat77/herdr-navigator --yes    # prefix t fuzzy jump (agents, workspaces, dirs)
+herdr plugin install ChmaraX/herdr-nvim --yes            # prefix C-e nvim sidebar, prefix O agent-touched files
 mkdir -p $HOME/.config/herdr-automatic-rename
 ln -sf $HOME/dotfiles/herdr-plugins/automatic-rename.sh $HOME/.config/herdr-automatic-rename/config.sh
 ln -sf $HOME/dotfiles/herdr-plugins/navigator.toml $HOME/.config/herdr/plugins/config/herdr-navigator/config.toml

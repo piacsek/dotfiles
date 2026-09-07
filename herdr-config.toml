@@ -89,6 +89,20 @@ type = "plugin_action"
 command = "herdr-navigator.jump-back"
 description = "navigator: last workspace"
 
+# herdr-nvim (ChmaraX): per-tab nvim sidebar + picker of files the agent just
+# touched. prefix e / prefix o stay herdr's scrollback-in-nvim / notification.
+[[keys.command]]
+key = "prefix+ctrl+e"
+type = "plugin_action"
+command = "chmarax.herdr-nvim.toggle"
+description = "herdr-nvim: toggle nvim sidebar"
+
+[[keys.command]]
+key = "prefix+shift+o"
+type = "plugin_action"
+command = "chmarax.herdr-nvim.pick-file"
+description = "herdr-nvim: open file the agent touched"
+
 # M-g — tmux-git-flow: lazygit in a popup; if changes are staged on exit,
 # auto-commit (Claude message via scripts/auto_commit) and push. Runs in the
 # popup (foreground) instead of tmux's background run-shell + status widget.
