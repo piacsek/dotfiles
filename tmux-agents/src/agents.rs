@@ -48,7 +48,11 @@ pub fn discover(
 }
 
 fn sort_key(agent: &Agent) -> (State, &str, u32) {
-    (State::from(agent.status), &agent.session, agent.window_index)
+    (
+        State::from(agent.status),
+        &agent.session,
+        agent.window_index,
+    )
 }
 
 fn disambiguate_labels(agents: &mut [Agent]) {

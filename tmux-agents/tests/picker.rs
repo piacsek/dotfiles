@@ -1,8 +1,8 @@
 mod support;
 
 use ratatui::crossterm::event::KeyCode;
-use support::{Picker, agent, agent_with_status, ctrl, key, tick};
 use ratatui::style::{Color, Modifier};
+use support::{Picker, agent, agent_with_status, ctrl, key, tick};
 use tmux_agents::registry::Status;
 use tmux_agents::tmux::PaneId;
 
@@ -136,7 +136,10 @@ fn row_shows_title_after_label_when_present() {
             .starts_with("> ○ dotfiles  idle  Tmux Claude Code session picker"),
         "{screen}"
     );
-    assert_eq!(screen.lines().nth(1).unwrap().trim_end(), "  ○ ws-common  idle");
+    assert_eq!(
+        screen.lines().nth(1).unwrap().trim_end(),
+        "  ○ ws-common  idle"
+    );
 }
 
 #[test]
@@ -232,7 +235,10 @@ fn filter_also_matches_the_title() {
         .unwrap();
 
     let screen = picker.screen();
-    assert!(screen.contains("> ○ dotfiles  idle  Fix the Picker"), "{screen}");
+    assert!(
+        screen.contains("> ○ dotfiles  idle  Fix the Picker"),
+        "{screen}"
+    );
     assert!(!screen.contains("ws-common"), "{screen}");
 }
 
@@ -418,7 +424,11 @@ fn filter_still_applies_after_a_refresh() {
     ]);
 
     picker
-        .run(vec![key(KeyCode::Char('/')), key(KeyCode::Char('w')), tick()])
+        .run(vec![
+            key(KeyCode::Char('/')),
+            key(KeyCode::Char('w')),
+            tick(),
+        ])
         .unwrap();
 
     let screen = picker.screen();
