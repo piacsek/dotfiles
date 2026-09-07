@@ -27,8 +27,8 @@ fn rows_show_labels_with_first_highlighted() {
 
     let screen = picker.screen();
     let rows: Vec<&str> = screen.lines().collect();
-    assert!(rows[0].starts_with("> dotfiles"), "{screen}");
-    assert!(rows[1].starts_with("  ws-common"), "{screen}");
+    assert!(rows[0].starts_with("> ○ dotfiles"), "{screen}");
+    assert!(rows[1].starts_with("  ○ ws-common"), "{screen}");
 }
 
 #[test]
@@ -39,7 +39,7 @@ fn j_and_down_move_highlight_down() {
     picker
         .run(vec![key(KeyCode::Char('j')), key(KeyCode::Char('q'))])
         .unwrap();
-    assert!(picker.screen().lines().nth(1).unwrap().starts_with("> b"));
+    assert!(picker.screen().lines().nth(1).unwrap().starts_with("> ○ b"));
 
     let mut picker = Picker::new(agents());
     picker
@@ -49,7 +49,7 @@ fn j_and_down_move_highlight_down() {
             key(KeyCode::Char('q')),
         ])
         .unwrap();
-    assert!(picker.screen().lines().nth(2).unwrap().starts_with("> c"));
+    assert!(picker.screen().lines().nth(2).unwrap().starts_with("> ○ c"));
 }
 
 #[test]
@@ -69,11 +69,11 @@ fn k_and_up_move_highlight_up_and_clamp_at_both_ends() {
 
     let screen = picker.screen();
     assert!(
-        screen.lines().next().unwrap().starts_with("> a"),
+        screen.lines().next().unwrap().starts_with("> ○ a"),
         "{screen}"
     );
     assert!(
-        screen.lines().nth(1).unwrap().starts_with("  b"),
+        screen.lines().nth(1).unwrap().starts_with("  ○ b"),
         "{screen}"
     );
 }
@@ -132,10 +132,10 @@ fn row_shows_title_after_label_when_present() {
             .lines()
             .next()
             .unwrap()
-            .starts_with("> dotfiles  Tmux Claude Code session picker"),
+            .starts_with("> ○ dotfiles  idle  Tmux Claude Code session picker"),
         "{screen}"
     );
-    assert_eq!(screen.lines().nth(1).unwrap().trim_end(), "  ws-common");
+    assert_eq!(screen.lines().nth(1).unwrap().trim_end(), "  ○ ws-common  idle");
 }
 
 #[test]
@@ -155,7 +155,7 @@ fn shift_g_jumps_to_the_last_row() {
         .run(vec![key(KeyCode::Char('G')), key(KeyCode::Char('q'))])
         .unwrap();
 
-    assert!(picker.screen().lines().nth(2).unwrap().starts_with("> c"));
+    assert!(picker.screen().lines().nth(2).unwrap().starts_with("> ○ c"));
 }
 
 #[test]
@@ -171,7 +171,7 @@ fn gg_jumps_to_the_first_row_but_a_lone_g_does_nothing() {
             key(KeyCode::Char('q')),
         ])
         .unwrap();
-    assert!(picker.screen().lines().next().unwrap().starts_with("> a"));
+    assert!(picker.screen().lines().next().unwrap().starts_with("> ○ a"));
 
     let mut picker = Picker::new(three());
     picker
@@ -184,7 +184,7 @@ fn gg_jumps_to_the_first_row_but_a_lone_g_does_nothing() {
         ])
         .unwrap();
     assert!(
-        picker.screen().lines().nth(2).unwrap().starts_with("> c"),
+        picker.screen().lines().nth(2).unwrap().starts_with("> ○ c"),
         "{}",
         picker.screen()
     );
@@ -231,7 +231,7 @@ fn filter_also_matches_the_title() {
         .unwrap();
 
     let screen = picker.screen();
-    assert!(screen.contains("> dotfiles  Fix the Picker"), "{screen}");
+    assert!(screen.contains("> ○ dotfiles  idle  Fix the Picker"), "{screen}");
     assert!(!screen.contains("ws-common"), "{screen}");
 }
 
@@ -249,7 +249,7 @@ fn backspace_edits_the_query_and_esc_clears_the_filter_without_quitting() {
         ])
         .unwrap();
     let screen = picker.screen();
-    assert!(screen.contains("> ws-common"), "{screen}");
+    assert!(screen.contains("> ○ ws-common"), "{screen}");
     assert!(screen.contains("/w"), "{screen}");
     assert!(!screen.contains("/wx"), "{screen}");
 
@@ -307,7 +307,7 @@ fn starting_a_filter_moves_the_highlight_to_the_first_match() {
 
     let screen = picker.screen();
     assert!(
-        screen.lines().next().unwrap().starts_with("> ws-common"),
+        screen.lines().next().unwrap().starts_with("> ○ ws-common"),
         "{screen}"
     );
 }
