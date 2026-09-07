@@ -21,6 +21,7 @@ fn load_parses_a_real_session_file_ignoring_unknown_fields() {
             kind: Kind::Interactive,
             status: Status::Busy,
             status_updated_at: Some(1788804089018),
+            waiting_for: None,
             tmux: Some("dotfiles:@7.%53".to_string()),
         }]
     );
@@ -74,4 +75,19 @@ fn sessions_dir_honors_config_dir_and_defaults_to_home_dot_claude() {
         sessions_dir(None, &home),
         PathBuf::from("/home/me/.claude/sessions")
     );
+}
+
+#[test]
+fn waiting_for_is_read_when_present() {
+    let dir = tempfile::tempdir().unwrap();
+    fs::write(
+        dir.path().join("1.json"),
+        r#"{"pid":1,"cwd":"/x","kind":"interactive","status":"waiting","waitingFor":"permission prompt"}"#,
+    )
+    .unwrap();
+
+    let records = load(dir.path());
+
+    assert_eq!(records[0].status, Status::Waiting);
+    assert_eq!(records[0].waiting_for.as_deref(), Some("permission prompt"));
 }

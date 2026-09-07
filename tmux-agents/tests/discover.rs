@@ -13,6 +13,7 @@ fn record(pid: i32, cwd: &str, tmux: Option<&str>) -> SessionRecord {
         kind: Kind::Interactive,
         status: Status::Idle,
         status_updated_at: None,
+        waiting_for: None,
         tmux: tmux.map(str::to_string),
     }
 }
@@ -53,6 +54,7 @@ fn interactive_record_with_live_pid_and_known_pane_becomes_an_agent() {
             window_index: 2,
             title: Some("Fix the picker".to_string()),
             status_age: None,
+            waiting_for: None,
         }]
     );
 }
@@ -244,4 +246,16 @@ fn status_age_is_now_minus_status_updated_at() {
         .collect();
 
     assert_eq!(ages, vec![Some(Duration::from_secs(90)), None]);
+}
+
+#[test]
+fn waiting_for_is_carried_onto_the_agent() {
+    let panes = vec![pane("%1", "s", 1, "")];
+    let mut blocked = record(1, "/a", Some("s:@1.%1"));
+    blocked.status = Status::Waiting;
+    blocked.waiting_for = Some("input needed".to_string());
+
+    let agents = discover(vec![blocked], &panes, &alive, NOW);
+
+    assert_eq!(agents[0].waiting_for.as_deref(), Some("input needed"));
 }
