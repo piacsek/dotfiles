@@ -183,14 +183,15 @@ mod tests {
     }
 
     #[test]
-    fn new_claude_window_argv_mirrors_the_prefix_c_c_binding() {
+    fn new_claude_pane_splits_the_callers_window_running_claude() {
         assert_eq!(
-            CliTmux::default().new_claude_window_args(),
+            CliTmux::default().new_claude_pane_args(),
             vec![
-                "command-prompt",
-                "-p",
-                "claude window name:",
-                "new-window -c '#{pane_current_path}' -n 'claude-%%' 'zsh -ic claude'",
+                "split-window",
+                "-h",
+                "-c",
+                "#{pane_current_path}",
+                "zsh -ic claude",
             ]
         );
     }

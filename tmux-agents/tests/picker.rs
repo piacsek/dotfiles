@@ -512,21 +512,21 @@ fn empty_list_shows_a_hint_for_starting_a_session() {
         screen.contains("No Claude Code sessions in this tmux server"),
         "{screen}"
     );
-    assert!(screen.contains("n new Claude window  q close"), "{screen}");
+    assert!(screen.contains("n new Claude pane  q close"), "{screen}");
 }
 
 #[test]
-fn n_requests_a_new_claude_window_and_closes() {
+fn n_requests_a_new_claude_pane_and_closes() {
     let mut picker = Picker::new(Vec::new());
     picker
         .run(vec![key(KeyCode::Char('n')), key(KeyCode::Enter)])
         .unwrap();
-    assert_eq!(picker.tmux.new_windows_requested(), 1);
+    assert_eq!(picker.tmux.new_panes_requested(), 1);
 
     let mut picker = Picker::new(vec![agent("a", "%1")]);
     picker
         .run(vec![key(KeyCode::Char('n')), key(KeyCode::Enter)])
         .unwrap();
-    assert_eq!(picker.tmux.new_windows_requested(), 1);
+    assert_eq!(picker.tmux.new_panes_requested(), 1);
     assert!(picker.tmux.focused().is_empty());
 }
