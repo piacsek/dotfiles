@@ -18,3 +18,8 @@ pub trait Tmux {
     fn list_panes(&self) -> io::Result<Vec<PaneInfo>>;
     fn focus(&self, pane: &PaneId) -> io::Result<()>;
 }
+
+pub fn parse_pane_ref(s: &str) -> Option<PaneId> {
+    let (_, pane) = s.rsplit_once('.')?;
+    pane.starts_with('%').then(|| PaneId(pane.to_string()))
+}
