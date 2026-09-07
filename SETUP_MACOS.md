@@ -294,6 +294,9 @@ herdr plugin install aimdevlee/herdr-nvim-nav --yes      # C-h/j/k/l nvim<->pane
 herdr plugin install andrewchng/herdr-sessionizer --yes  # M-e project picker + layouts
 herdr plugin install cloudmanic/herdr-plus --yes         # M-r quick actions (.available-scripts)
 herdr plugin install Tyru5/herdr-floax --yes             # M-t persistent scratch shell
+herdr plugin install qu8n/herdr-automatic-rename --yes   # tab label = running program (tmux #W)
+mkdir -p $HOME/.config/herdr-automatic-rename
+ln -sf $HOME/dotfiles/herdr-plugins/automatic-rename.sh $HOME/.config/herdr-automatic-rename/config.sh
 ```
 
 The nvim half of `herdr-nvim-nav` is installed by `vim.pack` from

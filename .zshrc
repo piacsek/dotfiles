@@ -90,6 +90,12 @@ if [ -f $HOME/.zshrc_work ]; then
 	source $HOME/.zshrc_work
 fi
 
+# herdr-automatic-rename: live tab renaming on each command. The hook is a no-op
+# outside a herdr pane (guarded on $HERDR_PANE_ID), so tmux is unaffected.
+for _f in ${HOME}/.config/herdr/plugins/github/herdr-automatic-rename-*/shell/hook.zsh(N); do
+	source $_f; break
+done
+
 # Fzf
 
 source <(fzf --zsh)
