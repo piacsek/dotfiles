@@ -1,4 +1,4 @@
-use ratatui::style::Color;
+use ratatui::style::{Color, Modifier, Style};
 
 use crate::registry::Status;
 
@@ -35,17 +35,18 @@ impl State {
 
     pub fn glyph(self) -> &'static str {
         match self {
-            State::Working | State::Blocked => "●",
+            State::Blocked => "◉",
+            State::Working => "●",
             State::Idle | State::Unknown => "○",
         }
     }
 
-    pub fn color(self) -> Color {
+    pub fn style(self) -> Style {
         match self {
-            State::Working => Color::Yellow,
-            State::Blocked => Color::Red,
-            State::Idle => Color::Green,
-            State::Unknown => Color::DarkGray,
+            State::Working => Style::default().fg(Color::Yellow),
+            State::Blocked => Style::default().fg(Color::Red),
+            State::Idle => Style::default().add_modifier(Modifier::DIM),
+            State::Unknown => Style::default().fg(Color::DarkGray),
         }
     }
 
@@ -53,7 +54,7 @@ impl State {
         match self {
             State::Working => "fg=yellow",
             State::Blocked => "fg=red,bold",
-            State::Idle => "fg=green",
+            State::Idle => "dim",
             State::Unknown => "fg=brightblack",
         }
     }

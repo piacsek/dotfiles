@@ -39,7 +39,7 @@ fn row(agent: &Agent, label_width: usize) -> ListItem<'_> {
     let state = State::from(agent.status);
     let dim = Style::default().add_modifier(Modifier::DIM);
     let mut spans = vec![
-        Span::styled(state.glyph(), Style::default().fg(state.color())),
+        Span::styled(state.glyph(), state.style()),
         Span::raw(" "),
         Span::styled(format!("{:<WORD_WIDTH$}", state.word()), dim),
         Span::raw("  "),
