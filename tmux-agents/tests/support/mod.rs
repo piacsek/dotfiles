@@ -47,7 +47,7 @@ pub struct Picker {
 impl Picker {
     pub fn new(agents: Vec<Agent>) -> Self {
         Self {
-            terminal: Terminal::new(TestBackend::new(40, 6)).unwrap(),
+            terminal: Terminal::new(TestBackend::new(60, 8)).unwrap(),
             app: App::new(agents),
             tmux: FakeTmux::default(),
         }
