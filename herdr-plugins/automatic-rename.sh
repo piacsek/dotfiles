@@ -1,5 +1,5 @@
-# herdr-automatic-rename — tmux `#W` parity: tab label = foreground program name,
-# no "[N]" jump numbers, no directory/branch context. Manual renames
+# herdr-automatic-rename — tab label = "<dir › branch › program>" (or the agent's
+# current task), no "[N]" jump numbers. Manual renames
 # (prefix+, / prefix+shift+t) win, like tmux rename-window. Full option list:
 # https://github.com/qu8n/herdr-automatic-rename/blob/main/config.example.sh
 AUTO_INDEX=0
