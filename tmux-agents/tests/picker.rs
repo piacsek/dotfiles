@@ -702,7 +702,10 @@ fn untitled_rows_fall_back_to_the_cwd_and_long_titles_get_an_ellipsis() {
 
     let screen = picker.screen();
     let rows: Vec<&str> = screen.lines().take(2).collect();
-    assert!(rows[0].starts_with("> ○ idle     dotfiles  ~/projects/dotfiles"), "{screen}");
+    assert!(
+        rows[0].starts_with("> ○ idle     dotfiles  ~/projects/dotfiles"),
+        "{screen}"
+    );
     assert!(rows[1].contains("A very long title th…"), "{screen}");
     assert!(rows[1].trim_end().ends_with("main:1  1m"), "{screen}");
 }

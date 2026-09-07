@@ -111,27 +111,16 @@ fn row(agent: &Agent, label_width: usize, row_width: usize) -> ListItem<'_> {
             format!("{:<label_width$}", agent.label),
             Style::default().add_modifier(Modifier::BOLD),
         ),
+        Span::raw("  "),
     ];
-    if agent.waiting_for.is_some() || agent.title.is_some() {
-        spans.push(Span::raw("  "));
-    }
-    if let Some(reason) = &agent.waiting_for {
-        spans.push(Span::styled(
-            reason.as_str(),
-            Style::default().fg(Color::Red),
-        ));
-        if agent.title.is_some() {
-            spans.push(Span::styled(" · ", dim()));
-        }
-    }
-    if let Some(title) = &agent.title {
-        spans.push(Span::styled(title.as_str(), dim()));
-    }
     let mut right = format!("{}:{}", agent.session, agent.window_index);
     if let Some(age) = agent.status_age {
         right.push_str("  ");
         right.push_str(&format_age(age));
     }
+    let used: usize = spans.iter().map(|s| s.content.chars().count()).sum();
+    let room = row_width.saturating_sub(used + right.chars().count() + 2);
+    spans.extend(middle(agent, room));
     let used: usize = spans.iter().map(|s| s.content.chars().count()).sum();
     let gap = row_width
         .saturating_sub(used + right.chars().count())
@@ -139,6 +128,58 @@ fn row(agent: &Agent, label_width: usize, row_width: usize) -> ListItem<'_> {
     spans.push(Span::raw(" ".repeat(gap)));
     spans.push(Span::styled(right, dim()));
     ListItem::new(Line::from(spans))
+}
+
+fn middle(agent: &Agent, room: usize) -> Vec<Span<'_>> {
+    let mut spans = Vec::new();
+    let mut room = room;
+    if let Some(reason) = &agent.waiting_for {
+        let text = truncate(reason, room);
+        room = room.saturating_sub(text.chars().count());
+        spans.push(Span::styled(text, Style::default().fg(Color::Red)));
+        if agent.title.is_some() && room >= 3 {
+            spans.push(Span::styled(" · ", dim()));
+            room -= 3;
+        }
+    }
+    let detail = match &agent.title {
+        Some(title) => title.clone(),
+        None if agent.waiting_for.is_none() => tilde(&agent.cwd),
+        None => return spans,
+    };
+    spans.push(Span::styled(truncate(&detail, room), dim()));
+    spans
+}
+
+fn truncate(text: &str, room: usize) -> String {
+    let len = text.chars().count();
+    if len <= room {
+        return text.to_string();
+    }
+    if room == 0 {
+        return String::new();
+    }
+    let mut out: String = text.chars().take(room - 1).collect();
+    out.push('…');
+    out
+}
+
+fn tilde(path: &std::path::Path) -> String {
+    let parts: Vec<String> = path
+        .components()
+        .map(|c| c.as_os_str().to_string_lossy().into_owned())
+        .collect();
+    match parts.as_slice() {
+        [root, home, _user, rest @ ..] if root == "/" && (home == "home" || home == "Users") => {
+            let mut out = String::from("~");
+            for part in rest {
+                out.push('/');
+                out.push_str(part);
+            }
+            out
+        }
+        _ => path.display().to_string(),
+    }
 }
 
 fn format_age(age: std::time::Duration) -> String {
