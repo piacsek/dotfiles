@@ -200,27 +200,53 @@ cargo test
 
 ---
 
-## Phase 2 — agent state (plan to be revised after Phase 1 retro)
+## Phase 2 — agent state (revised after Phase 1 retro, 2026-09-07)
 
-Goal: each row shows a colored dot + one word, herdr-style.
+Goal: each row shows a colored dot + one word, herdr-style, refreshed live.
 
-Proposed mapping from registry `status`:
+### Phase 1 learnings applied
+- Manual detached-window check caught a bug 25 tests missed (blank until first key). Phase 2 starts with an automated end-to-end test.
+- Popup is a static snapshot; live state needs a tick-driven loop anyway.
+- Only `busy`/`idle` were observed in the registry; `waiting`/`shell` semantics must be verified before "blocked" is built on them.
+- Two sessions in one window share the `·session:window` suffix.
 
-| registry | word | dot |
-|---|---|---|
-| `busy`, `shell` | working | ● yellow |
-| `waiting` | blocked | ◉ red/pink |
-| `idle` | idle | ○ dim green |
-| unknown | ? | ○ grey |
+### Row shape (decided)
+Single line: `● dotfiles  working  <title>` — dot colored by state, word dim, title dim. Two-line rows would halve a 40% popup to ~7 rows.
 
-Open items for the retro:
-- "done" has no registry equivalent for interactive sessions (the file vanishes on exit). Options: drop it, or add a `Stop`/`Notification(idle_prompt)` hook writing a "finished, unseen" marker keyed by pane id that clears on focus. Decide after seeing how `idle` feels in practice.
-- Does `waiting` fire for permission prompts and `AskUserQuestion`? Verify against a live session before building on it. Fallback: `PermissionRequest` / `Notification(permission_prompt)` hooks writing to a state file.
-- Sort order: blocked first, then working, then idle (herdr groups). Add `g` to toggle grouping?
-- Refresh: TUI re-reads the registry on a ~500 ms tick so state changes while the popup is open.
-- Theming: use the terminal's ANSI palette (not hardcoded hex) so ghostty-mirror themes carry through.
+### State mapping
 
-Work: extend `Agent` with `State`, render a two-line row (name / `state · claude`), add a tick event, tests via `TestBackend` buffer + fake registry.
+| registry `status` | word | dot | ANSI color |
+|---|---|---|---|
+| `busy`, `shell` | working | ● | yellow |
+| `waiting` | blocked | ● | red |
+| `idle` | idle | ○ | green |
+| unknown | ? | ○ | dark gray |
+
+ANSI 16-color palette only, so ghostty-mirror themes carry through. No "done" state: interactive sessions vanish from the registry on exit; revisit via a `Stop` hook if idle proves insufficient.
+
+### Sort
+By state group (blocked, working, idle, unknown), then session, then window index. Selection is kept by pid across refreshes and filter edits.
+
+### Architecture changes
+- `app::run` consumes `Input { Key(KeyEvent), Tick }`; main maps `event::poll(500ms)` timeouts to `Tick`.
+- `App::refresh(Vec<Agent>)` replaces agents, re-sorts, preserves selection by pid (falls back to first).
+- `main` builds a `Source` closure (`load` + `list_panes` + `discover`) called on every `Tick`.
+- Test helper gains `cell(x, y) -> &Cell` for glyph + style assertions.
+
+### TDD behaviors (in order)
+1. E2E (`tests/e2e.rs`, `#[ignore]`): tmux `-L` server, fixture session JSON pointing at its pane with our own pid, run the installed-from-target binary in a window with `HOME`=tempdir, `capture-pane` shows the row. Also asserts the screen is drawn before any key.
+2. Suffix collision: same window → append pane id (`·session:window.%pane`).
+3. Row shows `●`/`○` glyph and state word for each status.
+4. Dot color per state; word and title dim (style assertions via `cell`).
+5. Sort by state group, then session/window.
+6. `Tick` re-reads the source and replaces rows.
+7. Selection preserved by pid across a refresh that reorders.
+8. Selection falls back to first when the selected agent disappears.
+9. Filter re-applies after a refresh.
+10. main wiring: `event::poll` + `Tick`; reinstall; live check.
+
+### Verification
+`waiting` semantics checked empirically before task 3 (permission prompt in another session → `cat ~/.claude/sessions/<pid>.json`). If it does not flip, blocked moves to a `PermissionRequest` hook writing `~/.claude/sessions/<pid>.blocked` and Phase 2 scope is re-discussed.
 
 ---
 
