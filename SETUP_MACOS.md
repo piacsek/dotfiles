@@ -265,7 +265,7 @@ Re-run the install after pulling changes.
 
 The status line runs `tmux-agents status` every second (per-state counts). If a
 machine has `~/.tmux_work.conf`, it replaces `status-right` wholesale, so copy the
-`#(tmux-agents status)` and `#(tmux-cached 5 ...)` segments from `.tmux.conf` into it.
+`#(tmux-agents status)` and `#(tmux-agents cached 5 -- ...)` segments from `.tmux.conf` into it.
 
 ### 13. Install Neovim LSP servers, formatters and parsers
 

@@ -45,9 +45,9 @@ When in doubt, prefer terse and offer to expand ("happy to dig deeper on X") rat
 ## tmux-agents (Claude Code session picker)
 
 - **Lives in its own repo:** `~/projects/tmux-agents` (github.com/piacsek/tmux-agents). Its `AGENTS.md` has the architecture, gates, and gotchas; only the tmux wiring lives here.
-- **Wiring in this repo:** `.tmux.conf` binds `M-c` to `display-popup -E -w 70% -h 60% "tmux-agents"`, and `status-right` runs `#(tmux-agents status)` at `status-interval 1`. Every other `#()` widget is wrapped in `scripts/tmux-cached <ttl> <cmd>` (5s TTL, cache in `~/.cache/tmux-cached/`) so the 1s interval does not rerun `git status`/`tsh`/`tailscale` each second. `~/.tmux_work.conf` overrides `status-right` and must carry the same segments.
+- **Wiring in this repo:** `.tmux.conf` binds `M-c` to `display-popup -E -w 70% -h 60% "tmux-agents"`, and `status-right` runs `#(tmux-agents status)` at `status-interval 1`. Every other `#()` widget is wrapped in `tmux-agents cached <ttl> -- <cmd>` (5s TTL, cache in `~/.cache/tmux-agents/`) so the 1s interval does not rerun `git status`/`tsh`/`tailscale` each second. `~/.tmux_work.conf` overrides `status-right` and must carry the same segments.
 - **Install:** `cargo install --path ~/projects/tmux-agents --root ~/.local --locked` → `~/.local/bin/tmux-agents` (on the tmux server's PATH). Reinstall after pulling changes.
-- **You cannot probe `#()` with `tmux display -p`:** it returns "" for any `#()` (even `#(echo hi)`), including via `#{T:status-right}`. To verify status-line widgets ran, watch `~/.cache/tmux-cached/` mtimes or use `tmux run-shell '<cmd>'`.
+- **You cannot probe `#()` with `tmux display -p`:** it returns "" for any `#()` (even `#(echo hi)`), including via `#{T:status-right}`. To verify status-line widgets ran, watch `~/.cache/tmux-agents/` mtimes or use `tmux run-shell '<cmd>'`.
 
 ## macOS paths
 
