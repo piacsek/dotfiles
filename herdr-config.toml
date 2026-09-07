@@ -163,13 +163,13 @@ command = "$HOME/dotfiles/scripts/herdr-layout toggle"
 description = "layout: toggle even-horizontal/main-horizontal"
 
 [[keys.command]]
-key = ["prefix+alt+1", "prefix+equal"]
+key = ["prefix+alt+1", "prefix+="]
 type = "shell"
 command = "$HOME/dotfiles/scripts/herdr-layout even-horizontal"
 description = "layout: even-horizontal"
 
 [[keys.command]]
-key = ["prefix+alt+2", "prefix+pipe"]
+key = ["prefix+alt+2", "prefix+|"]
 type = "shell"
 command = "$HOME/dotfiles/scripts/herdr-layout even-vertical"
 description = "layout: even-vertical"
