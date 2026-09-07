@@ -200,7 +200,7 @@ cargo test
 
 ---
 
-## Phase 2 — agent state (revised after Phase 1 retro, 2026-09-07)
+## Phase 2 — agent state (revised after Phase 1 retro, 2026-09-07) — DONE 2026-09-07
 
 Goal: each row shows a colored dot + one word, herdr-style, refreshed live.
 
@@ -245,7 +245,12 @@ By state group (blocked, working, idle, unknown), then session, then window inde
 9. Filter re-applies after a refresh.
 10. main wiring: `event::poll` + `Tick`; reinstall; live check.
 
-### Verification
+### Outcome
+- `waiting` verified from the binary: set when a permission dialog, elicitation/AskUserQuestion, sandbox or worker request, or a local command dialog is open. No writer for `shell` found; mapped to working.
+- E2E test proven by mutation: reverting the draw-before-read fix makes it fail.
+- All 10 behaviors shipped; 42 tests + 2 ignored.
+
+### Verification (as planned)
 `waiting` semantics checked empirically before task 3 (permission prompt in another session → `cat ~/.claude/sessions/<pid>.json`). If it does not flip, blocked moves to a `PermissionRequest` hook writing `~/.claude/sessions/<pid>.blocked` and Phase 2 scope is re-discussed.
 
 ---
