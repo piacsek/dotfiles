@@ -375,7 +375,7 @@ fn rows_show_a_state_glyph_and_word() {
         vec![
             "> ● working  a",
             "  ● working  b",
-            "  ● blocked  c",
+            "  ◉ blocked  c",
             "  ○ idle     d",
             "  ○ ?        e",
         ],
@@ -394,11 +394,12 @@ fn state_dots_use_the_ansi_palette_and_words_are_dim() {
 
     picker.run(Vec::new()).unwrap();
 
-    let dot = |y| picker.cell(2, y).fg;
-    assert_eq!(dot(0), Color::Yellow);
-    assert_eq!(dot(1), Color::Red);
-    assert_eq!(dot(2), Color::Green);
-    assert_eq!(dot(3), Color::DarkGray);
+    let dot = |y| picker.cell(2, y);
+    assert_eq!(dot(0).fg, Color::Yellow);
+    assert_eq!(dot(1).fg, Color::Red);
+    assert_eq!(dot(2).fg, Color::Reset);
+    assert!(dot(2).modifier.contains(Modifier::DIM));
+    assert_eq!(dot(3).fg, Color::DarkGray);
     let word_style = picker.cell(4, 0);
     assert_eq!(word_style.symbol(), "w");
     assert!(word_style.modifier.contains(Modifier::DIM));
