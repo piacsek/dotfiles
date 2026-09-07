@@ -168,3 +168,28 @@ fn colliding_labels_in_the_same_window_also_get_the_pane_id() {
 
     assert_eq!(labels, vec!["ws-common ·work:3.%3", "ws-common ·work:3.%55"]);
 }
+
+#[test]
+fn agents_are_grouped_blocked_then_working_then_idle_before_session_order() {
+    let panes = vec![
+        pane("%1", "a", 1, ""),
+        pane("%2", "a", 2, ""),
+        pane("%3", "b", 1, ""),
+        pane("%4", "b", 2, ""),
+    ];
+    let mut idle = record(1, "/idle", Some("a:@1.%1"));
+    idle.status = Status::Idle;
+    let mut working = record(2, "/working", Some("a:@2.%2"));
+    working.status = Status::Busy;
+    let mut blocked = record(3, "/blocked", Some("b:@3.%3"));
+    blocked.status = Status::Waiting;
+    let mut shell = record(4, "/shell", Some("b:@4.%4"));
+    shell.status = Status::Shell;
+
+    let labels: Vec<String> = discover(vec![idle, working, blocked, shell], &panes, &alive)
+        .into_iter()
+        .map(|a| a.label)
+        .collect();
+
+    assert_eq!(labels, vec!["blocked", "working", "shell", "idle"]);
+}
