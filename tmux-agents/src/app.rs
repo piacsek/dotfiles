@@ -3,6 +3,7 @@ use std::io;
 use ratatui::Terminal;
 use ratatui::backend::Backend;
 use ratatui::crossterm::event::{Event, KeyCode, KeyEvent};
+use ratatui::widgets::ListState;
 
 use crate::agents::Agent;
 use crate::tmux::Tmux;
@@ -16,11 +17,13 @@ pub enum Action {
 
 pub struct App {
     pub agents: Vec<Agent>,
+    pub list: ListState,
 }
 
 impl App {
     pub fn new(agents: Vec<Agent>) -> Self {
-        Self { agents }
+        let list = ListState::default().with_selected(Some(0));
+        Self { agents, list }
     }
 
     pub fn handle_key(&mut self, key: KeyEvent) -> Action {
