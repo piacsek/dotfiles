@@ -120,7 +120,7 @@ fn colliding_labels_get_a_session_window_suffix() {
 
     assert_eq!(
         labels,
-        vec!["ws-common ·work:3", "ws-common ·work:5", "dotfiles"]
+        vec!["dotfiles", "ws-common ·work:3", "ws-common ·work:5"]
     );
 }
 
