@@ -145,7 +145,11 @@ fn status_subcommand_prints_none_when_no_session_is_registered() {
         .output()
         .unwrap();
 
-    assert!(out.status.success(), "{}", String::from_utf8_lossy(&out.stderr));
+    assert!(
+        out.status.success(),
+        "{}",
+        String::from_utf8_lossy(&out.stderr)
+    );
     assert_eq!(
         String::from_utf8_lossy(&out.stdout),
         "#[fg=white]\u{F0674}#[default]  #[dim]none#[default]\n"
