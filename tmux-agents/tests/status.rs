@@ -10,7 +10,7 @@ fn one_working_agent_renders_a_yellow_dot_with_its_count() {
 
     assert_eq!(
         render(&agents),
-        "#[fg=white]󰙴#[default] #[fg=yellow]● 1#[default]"
+        "#[fg=white]󰙴#[default]  #[fg=yellow]● 1#[default]"
     );
 }
 
@@ -26,7 +26,7 @@ fn states_are_ordered_blocked_working_idle_and_blocked_is_bold() {
 
     assert_eq!(
         render(&agents),
-        "#[fg=white]󰙴#[default] #[fg=red,bold]◉ 1#[default] #[fg=yellow]● 2#[default] #[dim]○ 2#[default]"
+        "#[fg=white]󰙴#[default]  #[fg=red,bold]◉ 1#[default] #[fg=yellow]● 2#[default] #[dim]○ 2#[default]"
     );
 }
 
@@ -36,7 +36,7 @@ fn zero_counts_are_hidden_and_no_agents_means_empty_output() {
 
     assert_eq!(
         render(&only_idle),
-        "#[fg=white]󰙴#[default] #[dim]○ 1#[default]"
+        "#[fg=white]󰙴#[default]  #[dim]○ 1#[default]"
     );
     assert_eq!(render(&[]), "");
 }
@@ -50,6 +50,6 @@ fn unknown_status_is_a_grey_hollow_dot_after_idle() {
 
     assert_eq!(
         render(&agents),
-        "#[fg=white]󰙴#[default] #[dim]○ 1#[default] #[fg=brightblack]○ 1#[default]"
+        "#[fg=white]󰙴#[default]  #[dim]○ 1#[default] #[fg=brightblack]○ 1#[default]"
     );
 }

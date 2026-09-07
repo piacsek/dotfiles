@@ -128,6 +128,6 @@ fn status_subcommand_prints_tmux_markup_for_the_live_session() {
     );
     assert_eq!(
         String::from_utf8_lossy(&out.stdout),
-        "#[fg=white]󰙴#[default] #[fg=yellow]● 1#[default]\n"
+        "#[fg=white]󰙴#[default]  #[fg=yellow]● 1#[default]\n"
     );
 }
