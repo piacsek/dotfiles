@@ -46,7 +46,9 @@ pub fn load(dir: &Path) -> Vec<SessionRecord> {
     };
     entries
         .flatten()
-        .filter_map(|entry| fs::read_to_string(entry.path()).ok())
+        .map(|entry| entry.path())
+        .filter(|path| path.extension().is_some_and(|ext| ext == "json"))
+        .filter_map(|path| fs::read_to_string(path).ok())
         .filter_map(|json| serde_json::from_str(&json).ok())
         .collect()
 }

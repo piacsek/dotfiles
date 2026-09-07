@@ -24,3 +24,20 @@ fn load_parses_a_real_session_file_ignoring_unknown_fields() {
         }]
     );
 }
+
+#[test]
+fn load_skips_non_json_files_and_malformed_json() {
+    let dir = tempfile::tempdir().unwrap();
+    fs::write(dir.path().join("27756.json.tmp"), REAL_SAMPLE).unwrap();
+    fs::write(
+        dir.path().join("27756.abc.key"),
+        r#"{"peerToken":"x","procStart":"y","pidDomain":"darwin"}"#,
+    )
+    .unwrap();
+    fs::write(dir.path().join("99.json"), "{not json").unwrap();
+    fs::write(dir.path().join("1.json"), REAL_SAMPLE).unwrap();
+
+    let records = load(dir.path());
+
+    assert_eq!(records.len(), 1);
+}
