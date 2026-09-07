@@ -110,15 +110,15 @@ fn records_with_dead_pids_are_dropped() {
 }
 
 #[test]
-fn colliding_labels_get_a_session_window_suffix() {
+fn labels_stay_plain_basenames_even_when_they_collide() {
     let panes = vec![
         pane("%1", "work", 3, ""),
-        pane("%2", "work", 5, ""),
+        pane("%2", "work", 3, ""),
         pane("%3", "home", 1, ""),
     ];
     let records = vec![
         record(1, "/a/ws-common", Some("work:@1.%1")),
-        record(2, "/b/ws-common", Some("work:@2.%2")),
+        record(2, "/b/ws-common", Some("work:@1.%2")),
         record(3, "/c/dotfiles", Some("home:@3.%3")),
     ];
 
@@ -127,10 +127,7 @@ fn colliding_labels_get_a_session_window_suffix() {
         .map(|a| a.label)
         .collect();
 
-    assert_eq!(
-        labels,
-        vec!["dotfiles", "ws-common ·work:3", "ws-common ·work:5"]
-    );
+    assert_eq!(labels, vec!["dotfiles", "ws-common", "ws-common"]);
 }
 
 #[test]
@@ -158,25 +155,6 @@ fn agents_are_sorted_by_session_then_window_index() {
             ("work".to_string(), 1),
             ("work".to_string(), 5)
         ]
-    );
-}
-
-#[test]
-fn colliding_labels_in_the_same_window_also_get_the_pane_id() {
-    let panes = vec![pane("%3", "work", 3, ""), pane("%55", "work", 3, "")];
-    let records = vec![
-        record(1, "/a/ws-common", Some("work:@2.%3")),
-        record(2, "/b/ws-common", Some("work:@2.%55")),
-    ];
-
-    let labels: Vec<String> = discover(records, &panes, &alive, NOW)
-        .into_iter()
-        .map(|a| a.label)
-        .collect();
-
-    assert_eq!(
-        labels,
-        vec!["ws-common ·work:3.%3", "ws-common ·work:3.%55"]
     );
 }
 
