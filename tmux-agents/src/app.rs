@@ -31,14 +31,21 @@ impl App {
     }
 }
 
-pub fn run<B: Backend<Error = io::Error>, T: Tmux>(
+pub fn run<B, T>(
     terminal: &mut Terminal<B>,
     app: &mut App,
     events: impl Iterator<Item = io::Result<Event>>,
     _tmux: &T,
-) -> io::Result<()> {
+) -> io::Result<()>
+where
+    B: Backend,
+    B::Error: Send + Sync + 'static,
+    T: Tmux,
+{
     for event in events {
-        terminal.draw(|frame| ui::draw(frame, app))?;
+        terminal
+            .draw(|frame| ui::draw(frame, app))
+            .map_err(io::Error::other)?;
         if let Event::Key(key) = event? {
             match app.handle_key(key) {
                 Action::Quit => return Ok(()),
