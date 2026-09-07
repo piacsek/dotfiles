@@ -1,7 +1,7 @@
 mod support;
 
 use ratatui::crossterm::event::KeyCode;
-use support::{Picker, agent, agent_with_status, ctrl, key};
+use support::{Picker, agent, agent_with_status, ctrl, key, tick};
 use ratatui::style::{Color, Modifier};
 use tmux_agents::registry::Status;
 use tmux_agents::tmux::PaneId;
@@ -359,4 +359,15 @@ fn state_dots_use_the_ansi_palette_and_words_are_dim() {
     let word_style = picker.cell(7, 0);
     assert_eq!(word_style.symbol(), "w");
     assert!(word_style.modifier.contains(Modifier::DIM));
+}
+
+#[test]
+fn a_tick_refreshes_the_rows_from_the_source() {
+    let mut picker = Picker::new(vec![agent("a", "%1")]);
+    picker.next_refresh_returns(vec![agent("a", "%1"), agent("b", "%2")]);
+
+    picker.run(vec![tick()]).unwrap();
+
+    let screen = picker.screen();
+    assert!(screen.lines().nth(1).unwrap().contains("b"), "{screen}");
 }

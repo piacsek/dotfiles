@@ -2,6 +2,7 @@ use std::collections::{HashMap, HashSet};
 use std::path::PathBuf;
 
 use crate::registry::{Kind, SessionRecord, Status};
+use crate::state::State;
 use crate::tmux::{PaneId, PaneInfo, parse_pane_ref};
 
 const TITLE_PREFIX: &str = "✳ ";
@@ -41,9 +42,13 @@ pub fn discover(
             })
         })
         .collect();
-    agents.sort_by(|a, b| (&a.session, a.window_index).cmp(&(&b.session, b.window_index)));
+    agents.sort_by(|a, b| sort_key(a).cmp(&sort_key(b)));
     disambiguate_labels(&mut agents);
     agents
+}
+
+fn sort_key(agent: &Agent) -> (State, &str, u32) {
+    (State::from(agent.status), &agent.session, agent.window_index)
 }
 
 fn disambiguate_labels(agents: &mut [Agent]) {

@@ -1,12 +1,13 @@
 use std::cell::RefCell;
 use std::io;
+use std::rc::Rc;
 
 use ratatui::Terminal;
 use ratatui::backend::TestBackend;
-use ratatui::crossterm::event::{Event, KeyCode, KeyEvent, KeyModifiers};
+use ratatui::crossterm::event::{KeyCode, KeyEvent, KeyModifiers};
 use tmux_agents::agents::Agent;
 use tmux_agents::registry::Status;
-use tmux_agents::app::{App, run};
+use tmux_agents::app::{App, Input, run};
 use tmux_agents::tmux::{PaneId, PaneInfo, Tmux};
 
 #[derive(Default)]
