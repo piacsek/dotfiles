@@ -1,4 +1,5 @@
 use ratatui::Frame;
+use ratatui::layout::{Constraint, Layout};
 use ratatui::style::{Modifier, Style};
 use ratatui::text::{Line, Span};
 use ratatui::widgets::{List, ListItem, Paragraph};
@@ -14,9 +15,14 @@ pub fn draw(frame: &mut Frame, app: &mut App) {
         );
         return;
     }
-    let items: Vec<ListItem> = app.agents.iter().map(row).collect();
+    let [list_area, footer_area] =
+        Layout::vertical([Constraint::Min(1), Constraint::Length(1)]).areas(frame.area());
+    let items: Vec<ListItem> = app.visible().into_iter().map(row).collect();
     let list = List::new(items).highlight_symbol("> ");
-    frame.render_stateful_widget(list, frame.area(), &mut app.list);
+    frame.render_stateful_widget(list, list_area, &mut app.list);
+    if let Some(query) = &app.filter {
+        frame.render_widget(Paragraph::new(format!("/{query}")), footer_area);
+    }
 }
 
 fn row(agent: &Agent) -> ListItem<'_> {

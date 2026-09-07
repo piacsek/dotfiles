@@ -19,6 +19,7 @@ pub enum Action {
 pub struct App {
     pub agents: Vec<Agent>,
     pub list: ListState,
+    pub filter: Option<String>,
     pending_g: bool,
 }
 
@@ -28,17 +29,33 @@ impl App {
         Self {
             agents,
             list,
+            filter: None,
             pending_g: false,
         }
+    }
+
+    pub fn visible(&self) -> Vec<&Agent> {
+        let query = self.filter.as_deref().unwrap_or("").to_lowercase();
+        self.agents
+            .iter()
+            .filter(|agent| agent.label.to_lowercase().contains(&query))
+            .collect()
     }
 
     pub fn handle_key(&mut self, key: KeyEvent) -> Action {
         if key.modifiers.contains(KeyModifiers::CONTROL) && key.code == KeyCode::Char('c') {
             return Action::Quit;
         }
+        if let Some(query) = &mut self.filter
+            && let KeyCode::Char(c) = key.code
+        {
+            query.push(c);
+            return Action::Continue;
+        }
         let pending_g = std::mem::take(&mut self.pending_g);
         match key.code {
             KeyCode::Char('q') | KeyCode::Esc => return Action::Quit,
+            KeyCode::Char('/') => self.filter = Some(String::new()),
             KeyCode::Char('g') if pending_g => self.list.select_first(),
             KeyCode::Char('g') => self.pending_g = true,
             KeyCode::Enter => {
