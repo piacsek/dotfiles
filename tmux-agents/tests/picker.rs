@@ -150,9 +150,13 @@ fn row_shows_title_after_label_when_present() {
             .starts_with("> ○ idle     dotfiles   Tmux Claude Code session picker"),
         "{screen}"
     );
-    assert_eq!(
-        screen.lines().nth(1).unwrap().trim_end(),
-        "  ○ idle     ws-common"
+    assert!(
+        screen
+            .lines()
+            .nth(1)
+            .unwrap()
+            .starts_with("  ○ idle     ws-common  "),
+        "{screen}"
     );
 }
 
@@ -250,7 +254,7 @@ fn slash_filters_rows_by_label_and_shows_the_query() {
         .filter(|l| !l.is_empty())
         .collect();
     assert_eq!(rows.len(), 2, "{screen}");
-    assert_eq!(rows[0], "> ○ idle     ws-common", "{screen}");
+    assert!(rows[0].starts_with("> ○ idle     ws-common  "), "{screen}");
     assert!(rows[1].starts_with("/Ws"), "{screen}");
 }
 
@@ -371,18 +375,20 @@ fn rows_show_a_state_glyph_and_word() {
     picker.run(Vec::new()).unwrap();
 
     let screen = picker.screen();
-    let rows: Vec<&str> = screen.lines().map(str::trim_end).take(5).collect();
-    assert_eq!(
-        rows,
-        vec![
-            "> ● working  a",
-            "  ● working  b",
-            "  ◉ blocked  c",
-            "  ○ idle     d",
-            "  ○ ?        e",
-        ],
-        "{screen}"
-    );
+    let rows: Vec<&str> = screen.lines().take(5).collect();
+    let expected = [
+        "> ● working  a",
+        "  ● working  b",
+        "  ◉ blocked  c",
+        "  ○ idle     d",
+        "  ○ ?        e",
+    ];
+    for (row, want) in rows.iter().zip(expected) {
+        assert!(
+            row.starts_with(want),
+            "{want:?} not at start of {row:?}\n{screen}"
+        );
+    }
 }
 
 #[test]
@@ -496,12 +502,9 @@ fn state_word_precedes_the_dir_and_dir_and_title_columns_are_aligned() {
     picker.run(Vec::new()).unwrap();
 
     let screen = picker.screen();
-    let rows: Vec<&str> = screen.lines().map(str::trim_end).take(2).collect();
-    assert_eq!(
-        rows,
-        vec!["> ○ idle     a        T1", "  ● working  bb-long  T2"],
-        "{screen}"
-    );
+    let rows: Vec<&str> = screen.lines().take(2).collect();
+    assert!(rows[0].starts_with("> ○ idle     a        T1 "), "{screen}");
+    assert!(rows[1].starts_with("  ● working  bb-long  T2 "), "{screen}");
 }
 
 #[test]
@@ -640,7 +643,8 @@ fn rows_show_the_state_age_right_aligned() {
         rows[1].trim_end().len(),
         "{screen}"
     );
-    assert_eq!(rows[2].trim_end(), "  ○ idle     c", "{screen}");
+    assert!(rows[2].starts_with("  ○ idle     c "), "{screen}");
+    assert!(rows[2].trim_end().ends_with("main:1"), "{screen}");
     assert!(picker.cell(59, 0).modifier.contains(Modifier::DIM));
 }
 
@@ -682,5 +686,5 @@ fn rows_show_session_and_window_before_the_age() {
     let rows: Vec<&str> = screen.lines().take(2).map(str::trim_end).collect();
     assert!(rows[0].ends_with("work:3  2m"), "{screen}");
     assert!(rows[1].ends_with("home:1"), "{screen}");
-    assert_eq!(rows[0].len(), rows[1].len() + 4, "{screen}");
+    assert_eq!(rows[0].len(), rows[1].len(), "{screen}");
 }
