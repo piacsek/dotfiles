@@ -145,3 +145,14 @@ fn screen_is_drawn_before_any_key_arrives() {
 
     assert!(picker.screen().contains("dotfiles"), "{}", picker.screen());
 }
+
+#[test]
+fn shift_g_jumps_to_the_last_row() {
+    let mut picker = Picker::new(vec![agent("a", "%1"), agent("b", "%2"), agent("c", "%3")]);
+
+    picker
+        .run(vec![key(KeyCode::Char('G')), key(KeyCode::Char('q'))])
+        .unwrap();
+
+    assert!(picker.screen().lines().nth(2).unwrap().starts_with("> c"));
+}
