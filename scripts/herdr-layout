@@ -1,0 +1,99 @@
+#!/usr/bin/env bash
+# tmux `select-layout` presets for herdr (prefix M-1..M-5 and the prefix C-t
+# toggle from .tmux.conf). herdr has no layout presets, so every pane but the
+# first is moved out to a temp tab and re-attached with the right split
+# direction and ratio. Processes keep running (same PID); focus is restored.
+#
+#   herdr-layout even-horizontal   panes side by side, equal widths        (M-1)
+#   herdr-layout even-vertical     panes stacked, equal heights            (M-2)
+#   herdr-layout main-horizontal   first pane on top 80%, rest in a row    (M-3)
+#   herdr-layout main-vertical     first pane left 50%, rest in a column   (M-4)
+#   herdr-layout tiled             grid, ceil(sqrt(N)) columns             (M-5)
+#   herdr-layout toggle            even-horizontal ⇄ main-horizontal       (C-t)
+#
+# Pane order = current visual order (top-left first), since herdr has no pane
+# indexes. `--ratio` is the share of the FIRST (top/left) pane of a split.
+set -euo pipefail
+
+HERDR="${HERDR_BIN_PATH:-herdr}"
+STATE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/herdr-layout"
+preset="${1:-}"
+
+caller="${HERDR_ACTIVE_PANE_ID:-${HERDR_PANE_ID:-}}"
+[[ -n "$caller" ]] || { echo "herdr-layout: not inside herdr" >&2; exit 1; }
+
+socket_path() {
+	if [[ -n "${HERDR_SOCKET_PATH:-}" ]]; then printf '%s' "$HERDR_SOCKET_PATH"
+	elif [[ -n "${HERDR_SESSION:-}" ]]; then printf '%s' "$HOME/.config/herdr/sessions/$HERDR_SESSION/herdr.sock"
+	else printf '%s' "$HOME/.config/herdr/herdr.sock"; fi
+}
+# The CLI's `pane focus` is direction-only; focus-by-id needs the raw socket.
+focus_pane() {
+	printf '{"id":"layout","method":"pane.focus","params":{"pane_id":"%s"}}\n' "$1" | nc -U -w 2 "$(socket_path)" >/dev/null
+}
+notify() { "$HERDR" notification show "$1" >/dev/null 2>&1 || true; }
+
+layout=$("$HERDR" pane layout --pane "$caller" | jq '.result.layout')
+tab=$(jq -r '.tab_id' <<<"$layout")
+focused=$(jq -r '.focused_pane_id' <<<"$layout")
+mapfile -t P < <(jq -r '.panes | sort_by(.rect.y, .rect.x) | .[].pane_id' <<<"$layout")
+N=${#P[@]}
+
+mkdir -p "$STATE_DIR"
+state="$STATE_DIR/${tab//[^A-Za-z0-9_]/_}"
+if [[ "$preset" == "toggle" ]]; then
+	# Mirrors .tmux.conf: first press after a fresh window gives even-horizontal.
+	if [[ "$(cat "$state" 2>/dev/null)" == "even-horizontal" ]]; then
+		preset=main-horizontal
+	else
+		preset=even-horizontal
+	fi
+fi
+case "$preset" in
+even-horizontal | even-vertical | main-horizontal | main-vertical | tiled) ;;
+*) echo "usage: herdr-layout even-horizontal|even-vertical|main-horizontal|main-vertical|tiled|toggle" >&2; exit 1 ;;
+esac
+printf '%s\n' "$preset" >"$state"
+[[ "$N" -ge 2 ]] || exit 0
+
+# ratio for attaching one more pane so `n` panes end up equal in the region
+even() { awk -v n="$1" 'BEGIN { printf "%.4f", 1 / n }'; }
+
+# attach <pane> <right|down> <target> <ratio>
+attach() {
+	"$HERDR" pane move "$1" --tab "$tab" --split "$2" --target-pane "$3" --ratio "$4" --no-focus >/dev/null
+}
+
+"$HERDR" pane zoom "$focused" --off >/dev/null 2>&1 || true
+# Park every pane but the first in temp tabs (herdr closes them once emptied).
+for ((k = 1; k < N; k++)); do
+	"$HERDR" pane move "${P[k]}" --new-tab --label layout-tmp --no-focus >/dev/null
+done
+
+case "$preset" in
+even-horizontal | even-vertical)
+	dir=right; [[ "$preset" == even-vertical ]] && dir=down
+	for ((k = 1; k < N; k++)); do attach "${P[k]}" "$dir" "${P[k - 1]}" "$(even $((N - k + 1)))"; done
+	;;
+main-horizontal)
+	attach "${P[1]}" down "${P[0]}" 0.8 # main-pane-height 80%
+	for ((k = 2; k < N; k++)); do attach "${P[k]}" right "${P[k - 1]}" "$(even $((N - k + 1)))"; done
+	;;
+main-vertical)
+	attach "${P[1]}" right "${P[0]}" 0.5 # main-pane-width 50%
+	for ((k = 2; k < N; k++)); do attach "${P[k]}" down "${P[k - 1]}" "$(even $((N - k + 1)))"; done
+	;;
+tiled)
+	C=$(awk -v n="$N" 'BEGIN { c = int(sqrt(n)); if (c * c < n) c++; print c }')
+	R=$(((N + C - 1) / C))
+	# Row leaders stack down, then each row fills to the right.
+	for ((r = 1; r < R; r++)); do attach "${P[r * C]}" down "${P[(r - 1) * C]}" "$(even $((R - r + 1)))"; done
+	for ((r = 0; r < R; r++)); do
+		start=$((r * C)); end=$(((r + 1) * C)); ((end > N)) && end=$N
+		len=$((end - start))
+		for ((m = 1; m < len; m++)); do attach "${P[start + m]}" right "${P[start + m - 1]}" "$(even $((len - m + 1)))"; done
+	done
+	;;
+esac
+
+focus_pane "$focused"
