@@ -1,8 +1,9 @@
-pub const USAGE: &str = "usage: tmux-agents";
+pub const USAGE: &str = "usage: tmux-agents [status]";
 
 #[derive(Debug, PartialEq, Eq)]
 pub enum Command {
     Tui,
+    Status,
 }
 
 pub fn parse<I, S>(args: I) -> Result<Command, String>
@@ -12,6 +13,7 @@ where
 {
     match args.into_iter().next() {
         None => Ok(Command::Tui),
+        Some(arg) if arg.as_ref() == "status" => Ok(Command::Status),
         Some(arg) => Err(format!("unknown argument '{}'\n{USAGE}", arg.as_ref())),
     }
 }
