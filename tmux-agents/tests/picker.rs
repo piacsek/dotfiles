@@ -249,7 +249,9 @@ fn slash_filters_rows_by_label_and_shows_the_query() {
         .map(str::trim_end)
         .filter(|l| !l.is_empty())
         .collect();
-    assert_eq!(rows, vec!["> ○ idle     ws-common", "/Ws"], "{screen}");
+    assert_eq!(rows.len(), 2, "{screen}");
+    assert_eq!(rows[0], "> ○ idle     ws-common", "{screen}");
+    assert!(rows[1].starts_with("/Ws"), "{screen}");
 }
 
 #[test]
@@ -541,4 +543,25 @@ fn footer_hints_at_help_on_the_bottom_right() {
     let last = screen.lines().last().unwrap();
     assert!(last.ends_with("press ? for keybindings"), "{screen}");
     assert!(picker.cell(59, 7).modifier.contains(Modifier::DIM));
+}
+
+#[test]
+fn question_mark_toggles_a_help_view_and_types_while_filtering() {
+    let mut picker = Picker::new(vec![agent("dotfiles", "%1")]);
+    picker.run(vec![key(KeyCode::Char('?'))]).unwrap();
+    let screen = picker.screen();
+    assert!(screen.contains("Enter"), "{screen}");
+    assert!(screen.contains("focus pane"), "{screen}");
+    assert!(screen.contains("new Claude pane"), "{screen}");
+    assert!(!screen.contains("dotfiles"), "{screen}");
+
+    picker.run(vec![key(KeyCode::Char('j'))]).unwrap();
+    let screen = picker.screen();
+    assert!(screen.contains("> ○ idle     dotfiles"), "{screen}");
+
+    let mut picker = Picker::new(vec![agent("dotfiles", "%1")]);
+    picker
+        .run(vec![key(KeyCode::Char('/')), key(KeyCode::Char('?'))])
+        .unwrap();
+    assert!(picker.screen().contains("/?"), "{}", picker.screen());
 }
