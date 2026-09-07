@@ -33,6 +33,10 @@ impl App {
                 self.list.select_next();
                 Action::Continue
             }
+            KeyCode::Char('k') | KeyCode::Up => {
+                self.list.select_previous();
+                Action::Continue
+            }
             _ => Action::Continue,
         }
     }
