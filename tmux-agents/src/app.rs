@@ -2,12 +2,18 @@ use std::io;
 
 use ratatui::Terminal;
 use ratatui::backend::Backend;
-use ratatui::crossterm::event::{Event, KeyCode, KeyEvent, KeyModifiers};
+use ratatui::crossterm::event::{KeyCode, KeyEvent, KeyModifiers};
 use ratatui::widgets::ListState;
 
 use crate::agents::Agent;
 use crate::tmux::{PaneId, Tmux};
 use crate::ui;
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum Input {
+    Key(KeyEvent),
+    Tick,
+}
 
 #[derive(Debug, PartialEq, Eq)]
 pub enum Action {
@@ -32,6 +38,10 @@ impl App {
             filter: None,
             pending_g: false,
         }
+    }
+
+    pub fn refresh(&mut self, agents: Vec<Agent>) {
+        self.agents = agents;
     }
 
     pub fn visible(&self) -> Vec<&Agent> {
@@ -107,31 +117,34 @@ fn matches(agent: &Agent, query: &str) -> bool {
         .any(|text| text.to_lowercase().contains(query))
 }
 
-pub fn run<B, T>(
+pub fn run<B, T, S>(
     terminal: &mut Terminal<B>,
     app: &mut App,
-    events: impl Iterator<Item = io::Result<Event>>,
+    inputs: impl Iterator<Item = io::Result<Input>>,
     tmux: &T,
+    mut source: S,
 ) -> io::Result<()>
 where
     B: Backend,
     B::Error: Send + Sync + 'static,
     T: Tmux,
+    S: FnMut() -> io::Result<Vec<Agent>>,
 {
-    let mut events = events;
+    let mut inputs = inputs;
     loop {
         terminal
             .draw(|frame| ui::draw(frame, app))
             .map_err(io::Error::other)?;
-        let Some(event) = events.next() else {
+        let Some(input) = inputs.next() else {
             return Ok(());
         };
-        if let Event::Key(key) = event? {
-            match app.handle_key(key) {
+        match input? {
+            Input::Tick => app.refresh(source()?),
+            Input::Key(key) => match app.handle_key(key) {
                 Action::Quit => return Ok(()),
                 Action::Focus(pane) => return tmux.focus(&pane),
                 Action::Continue => {}
-            }
+            },
         }
     }
 }
