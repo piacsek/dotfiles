@@ -19,7 +19,7 @@ pub fn render(agents: &[Agent]) -> String {
         })
         .collect::<Vec<_>>()
         .join(" ");
-    format!("{CLAUDE_GLYPH} {segments}")
+    format!("{CLAUDE_GLYPH}  {segments}")
 }
 
 fn segment(state: State, count: usize) -> String {
