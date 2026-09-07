@@ -530,3 +530,15 @@ fn n_requests_a_new_claude_pane_and_closes() {
     assert_eq!(picker.tmux.new_panes_requested(), 1);
     assert!(picker.tmux.focused().is_empty());
 }
+
+#[test]
+fn footer_hints_at_help_on_the_bottom_right() {
+    let mut picker = Picker::new(vec![agent("a", "%1")]);
+
+    picker.run(Vec::new()).unwrap();
+
+    let screen = picker.screen();
+    let last = screen.lines().last().unwrap();
+    assert!(last.ends_with("press ? for keybindings"), "{screen}");
+    assert!(picker.cell(59, 7).modifier.contains(Modifier::DIM));
+}
