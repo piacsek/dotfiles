@@ -15,7 +15,7 @@ use tmux_agents::tmux::{PaneId, PaneInfo, Tmux};
 #[derive(Default)]
 pub struct FakeTmux {
     focused: RefCell<Vec<PaneId>>,
-    new_windows: RefCell<usize>,
+    new_panes: RefCell<usize>,
 }
 
 impl FakeTmux {
@@ -23,8 +23,8 @@ impl FakeTmux {
         self.focused.borrow().clone()
     }
 
-    pub fn new_windows_requested(&self) -> usize {
-        *self.new_windows.borrow()
+    pub fn new_panes_requested(&self) -> usize {
+        *self.new_panes.borrow()
     }
 }
 
@@ -38,8 +38,8 @@ impl Tmux for FakeTmux {
         Ok(())
     }
 
-    fn new_claude_window(&self) -> io::Result<()> {
-        *self.new_windows.borrow_mut() += 1;
+    fn new_claude_pane(&self) -> io::Result<()> {
+        *self.new_panes.borrow_mut() += 1;
         Ok(())
     }
 }
