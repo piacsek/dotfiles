@@ -42,16 +42,12 @@ impl App {
         if key.modifiers.contains(KeyModifiers::CONTROL) && key.code == KeyCode::Char('c') {
             return Action::Quit;
         }
-        if let Some(query) = &mut self.filter {
+        if self.filter.is_some() {
             match key.code {
-                KeyCode::Char(c) => {
-                    query.push(c);
-                    return Action::Continue;
-                }
-                KeyCode::Backspace => {
-                    query.pop();
-                    return Action::Continue;
-                }
+                KeyCode::Char(c) => return self.edit_filter(|q| q.push(c)),
+                KeyCode::Backspace => return self.edit_filter(|q| {
+                    q.pop();
+                }),
                 KeyCode::Esc => {
                     self.filter = None;
                     return Action::Continue;
@@ -75,6 +71,16 @@ impl App {
             KeyCode::Char('G') => self.list.select_last(),
             _ => {}
         }
+        Action::Continue
+    }
+}
+
+impl App {
+    fn edit_filter(&mut self, edit: impl FnOnce(&mut String)) -> Action {
+        if let Some(query) = &mut self.filter {
+            edit(query);
+        }
+        self.list.select_first();
         Action::Continue
     }
 }
