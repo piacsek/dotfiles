@@ -23,6 +23,11 @@ impl Server {
         String::from_utf8(out.stdout).unwrap().trim().to_string()
     }
 
+    fn socket_path(&self) -> String {
+        let out = tmux(&["display", "-p", "#{socket_path}"]).output().unwrap();
+        String::from_utf8(out.stdout).unwrap().trim().to_string()
+    }
+
     fn respawn(&self, env: &[(&str, &str)], command: &str) {
         let mut args = vec!["respawn-pane", "-k"];
         let pairs: Vec<String> = env.iter().map(|(k, v)| format!("{k}={v}")).collect();
@@ -61,16 +66,12 @@ fn tmux(args: &[&str]) -> Command {
     cmd
 }
 
-#[test]
-#[ignore = "needs a tmux binary; run with --ignored"]
-fn binary_lists_a_live_session_without_any_keypress() {
+fn fixture_home(server: &Server) -> tempfile::TempDir {
     let home = tempfile::tempdir().unwrap();
     let sessions = home.path().join(".claude/sessions");
     fs::create_dir_all(&sessions).unwrap();
     let project = home.path().join("fixture-project");
     fs::create_dir_all(&project).unwrap();
-
-    let server = Server::start();
     let pane = server.pane_id();
     let pid = std::process::id();
     fs::write(
@@ -81,6 +82,14 @@ fn binary_lists_a_live_session_without_any_keypress() {
         ),
     )
     .unwrap();
+    home
+}
+
+#[test]
+#[ignore = "needs a tmux binary; run with --ignored"]
+fn binary_lists_a_live_session_without_any_keypress() {
+    let server = Server::start();
+    let home = fixture_home(&server);
 
     server.respawn(
         &[("HOME", home.path().to_str().unwrap())],
@@ -89,4 +98,24 @@ fn binary_lists_a_live_session_without_any_keypress() {
     let screen = server.wait_for_screen("fixture-project");
 
     assert!(screen.contains("> ● working  fixture-project"), "{screen}");
+}
+
+#[test]
+#[ignore = "needs a tmux binary; run with --ignored"]
+fn status_subcommand_prints_tmux_markup_for_the_live_session() {
+    let server = Server::start();
+    let home = fixture_home(&server);
+
+    let out = Command::new(env!("CARGO_BIN_EXE_tmux-agents"))
+        .arg("status")
+        .env("HOME", home.path())
+        .env("TMUX", format!("{},0,0", server.socket_path()))
+        .output()
+        .unwrap();
+
+    assert!(out.status.success(), "{}", String::from_utf8_lossy(&out.stderr));
+    assert_eq!(
+        String::from_utf8_lossy(&out.stdout),
+        "#[fg=yellow]●1#[default]\n"
+    );
 }
