@@ -113,11 +113,7 @@ fn row(agent: &Agent, label_width: usize, row_width: usize) -> ListItem<'_> {
         ),
         Span::raw("  "),
     ];
-    let mut right = format!("{}:{}", agent.session, agent.window_index);
-    if let Some(age) = agent.status_age {
-        right.push_str("  ");
-        right.push_str(&format_age(age));
-    }
+    let right = agent.status_age.map(format_age).unwrap_or_default();
     let used: usize = spans.iter().map(|s| s.content.chars().count()).sum();
     let room = row_width.saturating_sub(used + right.chars().count() + 2);
     spans.extend(middle(agent, room));
