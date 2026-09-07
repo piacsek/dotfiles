@@ -28,8 +28,8 @@ fn rows_show_labels_with_first_highlighted() {
 
     let screen = picker.screen();
     let rows: Vec<&str> = screen.lines().collect();
-    assert!(rows[0].starts_with("> ○ dotfiles"), "{screen}");
-    assert!(rows[1].starts_with("  ○ ws-common"), "{screen}");
+    assert!(rows[0].starts_with("> ○ idle     dotfiles"), "{screen}");
+    assert!(rows[1].starts_with("  ○ idle     ws-common"), "{screen}");
 }
 
 #[test]
@@ -40,7 +40,14 @@ fn j_and_down_move_highlight_down() {
     picker
         .run(vec![key(KeyCode::Char('j')), key(KeyCode::Char('q'))])
         .unwrap();
-    assert!(picker.screen().lines().nth(1).unwrap().starts_with("> ○ b"));
+    assert!(
+        picker
+            .screen()
+            .lines()
+            .nth(1)
+            .unwrap()
+            .starts_with("> ○ idle     b")
+    );
 
     let mut picker = Picker::new(agents());
     picker
@@ -50,7 +57,14 @@ fn j_and_down_move_highlight_down() {
             key(KeyCode::Char('q')),
         ])
         .unwrap();
-    assert!(picker.screen().lines().nth(2).unwrap().starts_with("> ○ c"));
+    assert!(
+        picker
+            .screen()
+            .lines()
+            .nth(2)
+            .unwrap()
+            .starts_with("> ○ idle     c")
+    );
 }
 
 #[test]
@@ -70,11 +84,11 @@ fn k_and_up_move_highlight_up_and_clamp_at_both_ends() {
 
     let screen = picker.screen();
     assert!(
-        screen.lines().next().unwrap().starts_with("> ○ a"),
+        screen.lines().next().unwrap().starts_with("> ○ idle     a"),
         "{screen}"
     );
     assert!(
-        screen.lines().nth(1).unwrap().starts_with("  ○ b"),
+        screen.lines().nth(1).unwrap().starts_with("  ○ idle     b"),
         "{screen}"
     );
 }
@@ -133,12 +147,12 @@ fn row_shows_title_after_label_when_present() {
             .lines()
             .next()
             .unwrap()
-            .starts_with("> ○ dotfiles  idle  Tmux Claude Code session picker"),
+            .starts_with("> ○ idle     dotfiles   Tmux Claude Code session picker"),
         "{screen}"
     );
     assert_eq!(
         screen.lines().nth(1).unwrap().trim_end(),
-        "  ○ ws-common  idle"
+        "  ○ idle     ws-common"
     );
 }
 
@@ -159,7 +173,14 @@ fn shift_g_jumps_to_the_last_row() {
         .run(vec![key(KeyCode::Char('G')), key(KeyCode::Char('q'))])
         .unwrap();
 
-    assert!(picker.screen().lines().nth(2).unwrap().starts_with("> ○ c"));
+    assert!(
+        picker
+            .screen()
+            .lines()
+            .nth(2)
+            .unwrap()
+            .starts_with("> ○ idle     c")
+    );
 }
 
 #[test]
@@ -175,7 +196,14 @@ fn gg_jumps_to_the_first_row_but_a_lone_g_does_nothing() {
             key(KeyCode::Char('q')),
         ])
         .unwrap();
-    assert!(picker.screen().lines().next().unwrap().starts_with("> ○ a"));
+    assert!(
+        picker
+            .screen()
+            .lines()
+            .next()
+            .unwrap()
+            .starts_with("> ○ idle     a")
+    );
 
     let mut picker = Picker::new(three());
     picker
@@ -188,7 +216,12 @@ fn gg_jumps_to_the_first_row_but_a_lone_g_does_nothing() {
         ])
         .unwrap();
     assert!(
-        picker.screen().lines().nth(2).unwrap().starts_with("> ○ c"),
+        picker
+            .screen()
+            .lines()
+            .nth(2)
+            .unwrap()
+            .starts_with("> ○ idle     c"),
         "{}",
         picker.screen()
     );
@@ -216,7 +249,7 @@ fn slash_filters_rows_by_label_and_shows_the_query() {
         .map(str::trim_end)
         .filter(|l| !l.is_empty())
         .collect();
-    assert_eq!(rows, vec!["> ○ ws-common  idle", "/Ws"], "{screen}");
+    assert_eq!(rows, vec!["> ○ idle     ws-common", "/Ws"], "{screen}");
 }
 
 #[test]
@@ -236,7 +269,7 @@ fn filter_also_matches_the_title() {
 
     let screen = picker.screen();
     assert!(
-        screen.contains("> ○ dotfiles  idle  Fix the Picker"),
+        screen.contains("> ○ idle     dotfiles  Fix the Picker"),
         "{screen}"
     );
     assert!(!screen.contains("ws-common"), "{screen}");
@@ -256,7 +289,7 @@ fn backspace_edits_the_query_and_esc_clears_the_filter_without_quitting() {
         ])
         .unwrap();
     let screen = picker.screen();
-    assert!(screen.contains("> ○ ws-common"), "{screen}");
+    assert!(screen.contains("> ○ idle     ws-common"), "{screen}");
     assert!(screen.contains("/w"), "{screen}");
     assert!(!screen.contains("/wx"), "{screen}");
 
@@ -314,7 +347,11 @@ fn starting_a_filter_moves_the_highlight_to_the_first_match() {
 
     let screen = picker.screen();
     assert!(
-        screen.lines().next().unwrap().starts_with("> ○ ws-common"),
+        screen
+            .lines()
+            .next()
+            .unwrap()
+            .starts_with("> ○ idle     ws-common"),
         "{screen}"
     );
 }
@@ -336,11 +373,11 @@ fn rows_show_a_state_glyph_and_word() {
     assert_eq!(
         rows,
         vec![
-            "> ● a  working",
-            "  ● b  working",
-            "  ● c  blocked",
-            "  ○ d  idle",
-            "  ○ e  ?",
+            "> ● working  a",
+            "  ● working  b",
+            "  ● blocked  c",
+            "  ○ idle     d",
+            "  ○ ?        e",
         ],
         "{screen}"
     );
@@ -362,7 +399,7 @@ fn state_dots_use_the_ansi_palette_and_words_are_dim() {
     assert_eq!(dot(1), Color::Red);
     assert_eq!(dot(2), Color::Green);
     assert_eq!(dot(3), Color::DarkGray);
-    let word_style = picker.cell(7, 0);
+    let word_style = picker.cell(4, 0);
     assert_eq!(word_style.symbol(), "w");
     assert!(word_style.modifier.contains(Modifier::DIM));
 }
@@ -397,7 +434,14 @@ fn refresh_keeps_the_selected_agent_when_rows_reorder() {
         .unwrap();
 
     assert_eq!(picker.tmux.focused(), vec![PaneId("%2".to_string())]);
-    assert!(picker.screen().lines().next().unwrap().starts_with("> ○ b"));
+    assert!(
+        picker
+            .screen()
+            .lines()
+            .next()
+            .unwrap()
+            .starts_with("> ○ idle     b")
+    );
 }
 
 #[test]
