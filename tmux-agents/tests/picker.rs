@@ -32,13 +32,7 @@ fn rows_show_labels_with_first_highlighted() {
 
 #[test]
 fn j_and_down_move_highlight_down() {
-    let agents = || {
-        vec![
-            agent("a", "%1"),
-            agent("b", "%2"),
-            agent("c", "%3"),
-        ]
-    };
+    let agents = || vec![agent("a", "%1"), agent("b", "%2"), agent("c", "%3")];
 
     let mut picker = Picker::new(agents());
     picker
@@ -48,7 +42,11 @@ fn j_and_down_move_highlight_down() {
 
     let mut picker = Picker::new(agents());
     picker
-        .run(vec![key(KeyCode::Down), key(KeyCode::Down), key(KeyCode::Char('q'))])
+        .run(vec![
+            key(KeyCode::Down),
+            key(KeyCode::Down),
+            key(KeyCode::Char('q')),
+        ])
         .unwrap();
     assert!(picker.screen().lines().nth(2).unwrap().starts_with("> c"));
 }
@@ -69,8 +67,14 @@ fn k_and_up_move_highlight_up_and_clamp_at_both_ends() {
         .unwrap();
 
     let screen = picker.screen();
-    assert!(screen.lines().next().unwrap().starts_with("> a"), "{screen}");
-    assert!(screen.lines().nth(1).unwrap().starts_with("  b"), "{screen}");
+    assert!(
+        screen.lines().next().unwrap().starts_with("> a"),
+        "{screen}"
+    );
+    assert!(
+        screen.lines().nth(1).unwrap().starts_with("  b"),
+        "{screen}"
+    );
 }
 
 #[test]
@@ -78,7 +82,11 @@ fn enter_focuses_selected_pane_and_exits() {
     let mut picker = Picker::new(vec![agent("a", "%1"), agent("b", "%53")]);
 
     picker
-        .run(vec![key(KeyCode::Char('j')), key(KeyCode::Enter), key(KeyCode::Char('j'))])
+        .run(vec![
+            key(KeyCode::Char('j')),
+            key(KeyCode::Enter),
+            key(KeyCode::Char('j')),
+        ])
         .unwrap();
 
     assert_eq!(picker.tmux.focused(), vec![PaneId("%53".to_string())]);

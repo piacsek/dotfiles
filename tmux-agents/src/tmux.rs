@@ -20,8 +20,7 @@ pub trait Tmux {
     fn focus(&self, pane: &PaneId) -> io::Result<()>;
 }
 
-const PANE_FORMAT: &str =
-    "#{pane_id}\t#{session_name}\t#{window_id}\t#{window_index}\t#{pane_current_path}\t#{pane_title}";
+const PANE_FORMAT: &str = "#{pane_id}\t#{session_name}\t#{window_id}\t#{window_index}\t#{pane_current_path}\t#{pane_title}";
 
 #[derive(Debug, Default, Clone)]
 pub struct CliTmux {
@@ -163,6 +162,9 @@ mod tests {
 
         let scoped = CliTmux::with_socket("ci");
         assert_eq!(&scoped.list_panes_args()[..2], &["-L", "ci"]);
-        assert_eq!(&scoped.focus_args(&PaneId("%1".to_string()))[..2], &["-L", "ci"]);
+        assert_eq!(
+            &scoped.focus_args(&PaneId("%1".to_string()))[..2],
+            &["-L", "ci"]
+        );
     }
 }
