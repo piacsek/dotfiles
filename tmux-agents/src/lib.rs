@@ -4,5 +4,6 @@ pub mod cli;
 pub mod process;
 pub mod registry;
 pub mod state;
+pub mod status;
 pub mod tmux;
 pub mod ui;
