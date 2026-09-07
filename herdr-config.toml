@@ -74,6 +74,21 @@ type = "plugin_action"
 command = "sessionizer.open"
 description = "sessionizer: open project workspace"
 
+# prefix t — herdr-navigator: one fuzzy picker over workspaces, agents (@idle,
+# !claude), zoxide dirs, sessions, remotes and plugin actions. prefix L jumps
+# back to the previous workspace (tmux `L` = last session).
+[[keys.command]]
+key = "prefix+t"
+type = "plugin_action"
+command = "herdr-navigator.open"
+description = "navigator: jump to anything"
+
+[[keys.command]]
+key = "prefix+shift+l"
+type = "plugin_action"
+command = "herdr-navigator.jump-back"
+description = "navigator: last workspace"
+
 # M-g — tmux-git-flow: lazygit in a popup; if changes are staged on exit,
 # auto-commit (Claude message via scripts/auto_commit) and push. Runs in the
 # popup (foreground) instead of tmux's background run-shell + status widget.
