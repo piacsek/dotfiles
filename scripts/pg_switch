@@ -13,7 +13,7 @@ set -euo pipefail
 ASDF_POSTGRES_DIR="${HOME}/.asdf/installs/postgres"
 PORT=5432
 
-die() { echo "❌ $*" >&2; exit 1; }
+die() { echo "󰀨 $*" >&2; exit 1; }
 info() { echo "➜ $*"; }
 
 data_dir_for() {
