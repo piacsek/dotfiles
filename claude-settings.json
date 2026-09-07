@@ -100,5 +100,10 @@
       "routine under ws-common/ prefix: mix, npx, elixir test/build commands scoped to this repo"
     ]
   },
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "modelSettings": {
+    "claude-fable-5-1": {
+      "effortLevel": "high"
+    }
+  }
 }
