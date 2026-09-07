@@ -57,10 +57,14 @@ where
     B::Error: Send + Sync + 'static,
     T: Tmux,
 {
-    for event in events {
+    let mut events = events;
+    loop {
         terminal
             .draw(|frame| ui::draw(frame, app))
             .map_err(io::Error::other)?;
+        let Some(event) = events.next() else {
+            return Ok(());
+        };
         if let Event::Key(key) = event? {
             match app.handle_key(key) {
                 Action::Quit => return Ok(()),
@@ -69,5 +73,4 @@ where
             }
         }
     }
-    Ok(())
 }
