@@ -212,7 +212,7 @@ fn slash_filters_rows_by_label_and_shows_the_query() {
         .map(str::trim_end)
         .filter(|l| !l.is_empty())
         .collect();
-    assert_eq!(rows, vec!["> ws-common", "/Ws"], "{screen}");
+    assert_eq!(rows, vec!["> ○ ws-common  idle", "/Ws"], "{screen}");
 }
 
 #[test]
