@@ -500,3 +500,30 @@ fn state_word_precedes_the_dir_and_dir_and_title_columns_are_aligned() {
         "{screen}"
     );
 }
+
+#[test]
+fn empty_list_shows_a_hint_for_starting_a_session() {
+    let mut picker = Picker::new(Vec::new());
+
+    picker.run(Vec::new()).unwrap();
+
+    let screen = picker.screen();
+    assert!(screen.contains("No Claude Code sessions in this tmux server"), "{screen}");
+    assert!(screen.contains("n new Claude window  q close"), "{screen}");
+}
+
+#[test]
+fn n_requests_a_new_claude_window_and_closes() {
+    let mut picker = Picker::new(Vec::new());
+    picker
+        .run(vec![key(KeyCode::Char('n')), key(KeyCode::Enter)])
+        .unwrap();
+    assert_eq!(picker.tmux.new_windows_requested(), 1);
+
+    let mut picker = Picker::new(vec![agent("a", "%1")]);
+    picker
+        .run(vec![key(KeyCode::Char('n')), key(KeyCode::Enter)])
+        .unwrap();
+    assert_eq!(picker.tmux.new_windows_requested(), 1);
+    assert!(picker.tmux.focused().is_empty());
+}

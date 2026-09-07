@@ -31,7 +31,7 @@ fn states_are_ordered_blocked_working_idle_and_blocked_is_bold() {
 }
 
 #[test]
-fn zero_counts_are_hidden_and_no_agents_means_empty_output() {
+fn zero_counts_are_hidden_and_no_agents_prints_none() {
     let only_idle = vec![agent_with_status("a", "%1", Status::Idle)];
 
     assert_eq!(
