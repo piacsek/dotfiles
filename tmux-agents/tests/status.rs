@@ -8,7 +8,7 @@ use tmux_agents::status::render;
 fn one_working_agent_renders_a_yellow_dot_with_its_count() {
     let agents = vec![agent_with_status("a", "%1", Status::Busy)];
 
-    assert_eq!(render(&agents), "#[fg=yellow]●1#[default]");
+    assert_eq!(render(&agents), "#[dim]✳#[default] #[fg=yellow]●1#[default]");
 }
 
 #[test]
@@ -23,7 +23,7 @@ fn states_are_ordered_blocked_working_idle_and_blocked_is_bold() {
 
     assert_eq!(
         render(&agents),
-        "#[fg=red,bold]◉1#[default] #[fg=yellow]●2#[default] #[dim]○2#[default]"
+        "#[dim]✳#[default] #[fg=red,bold]◉1#[default] #[fg=yellow]●2#[default] #[dim]○2#[default]"
     );
 }
 
@@ -31,7 +31,7 @@ fn states_are_ordered_blocked_working_idle_and_blocked_is_bold() {
 fn zero_counts_are_hidden_and_no_agents_means_empty_output() {
     let only_idle = vec![agent_with_status("a", "%1", Status::Idle)];
 
-    assert_eq!(render(&only_idle), "#[dim]○1#[default]");
+    assert_eq!(render(&only_idle), "#[dim]✳#[default] #[dim]○1#[default]");
     assert_eq!(render(&[]), "");
 }
 
@@ -44,6 +44,6 @@ fn unknown_status_is_a_grey_hollow_dot_after_idle() {
 
     assert_eq!(
         render(&agents),
-        "#[dim]○1#[default] #[fg=brightblack]○1#[default]"
+        "#[dim]✳#[default] #[dim]○1#[default] #[fg=brightblack]○1#[default]"
     );
 }
