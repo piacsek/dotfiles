@@ -88,5 +88,5 @@ fn binary_lists_a_live_session_without_any_keypress() {
     );
     let screen = server.wait_for_screen("fixture-project");
 
-    assert!(screen.contains("> fixture-project"), "{screen}");
+    assert!(screen.contains("> ● fixture-project  working"), "{screen}");
 }
