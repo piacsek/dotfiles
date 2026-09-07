@@ -38,6 +38,7 @@ pub struct SessionRecord {
     #[serde(default)]
     pub status: Status,
     pub status_updated_at: Option<u64>,
+    pub waiting_for: Option<String>,
     pub tmux: Option<String>,
 }
 

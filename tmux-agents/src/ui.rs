@@ -1,6 +1,6 @@
 use ratatui::Frame;
 use ratatui::layout::{Constraint, Layout, Rect};
-use ratatui::style::{Modifier, Style};
+use ratatui::style::{Color, Modifier, Style};
 use ratatui::text::{Line, Span};
 use ratatui::widgets::{List, ListItem, Paragraph};
 
@@ -112,8 +112,19 @@ fn row(agent: &Agent, label_width: usize, row_width: usize) -> ListItem<'_> {
             Style::default().add_modifier(Modifier::BOLD),
         ),
     ];
-    if let Some(title) = &agent.title {
+    if agent.waiting_for.is_some() || agent.title.is_some() {
         spans.push(Span::raw("  "));
+    }
+    if let Some(reason) = &agent.waiting_for {
+        spans.push(Span::styled(
+            reason.as_str(),
+            Style::default().fg(Color::Red),
+        ));
+        if agent.title.is_some() {
+            spans.push(Span::styled(" · ", dim()));
+        }
+    }
+    if let Some(title) = &agent.title {
         spans.push(Span::styled(title.as_str(), dim()));
     }
     if let Some(age) = agent.status_age {

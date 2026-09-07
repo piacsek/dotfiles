@@ -17,6 +17,7 @@ pub struct Agent {
     pub window_index: u32,
     pub title: Option<String>,
     pub status_age: Option<Duration>,
+    pub waiting_for: Option<String>,
 }
 
 pub fn discover(
@@ -43,6 +44,7 @@ pub fn discover(
                 status_age: record
                     .status_updated_at
                     .map(|at| Duration::from_millis(now_ms.saturating_sub(at))),
+                waiting_for: record.waiting_for,
             })
         })
         .collect();
