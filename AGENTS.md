@@ -45,8 +45,9 @@ When in doubt, prefer terse and offer to expand ("happy to dig deeper on X") rat
 ## tmux-agents (Rust TUI, `tmux-agents/`)
 
 - **Data source is Claude Code's own registry** `~/.claude/sessions/<pid>.json` (undocumented, internal): has `tmux: "<session>:@<win>.%<pane>"`, `status` (`busy|shell|idle|waiting`), `kind` (`interactive|bg|daemon|daemon-worker`). Files vanish on exit; `.key` sidecars sit next to them. Parse leniently, filter by `kill(pid,0)` + pane existence. `tests/registry.rs` holds a verbatim sample — refresh it when the format changes.
-- **Gates:** `cargo fmt --check`, `cargo clippy --all-targets -- -D warnings`, `cargo test`, plus `cargo test --test tmux_live -- --ignored` (spawns a `tmux -L tmux-agents-test` server). CI: `.github/workflows/tmux-agents.yml`, toolchain pinned to `.tool-versions`.
+- **Gates:** `cargo fmt --check`, `cargo clippy --all-targets -- -D warnings`, `cargo test`, plus `cargo test -- --ignored` (spawns `tmux -L` servers; the e2e test runs the real binary with a fixture `HOME` and `capture-pane`s the result — it is the only test that catches render/loop bugs like drawing after the first key). CI: `.github/workflows/tmux-agents.yml`, toolchain pinned to `.tool-versions`.
 - **Install** is `cargo install --path tmux-agents --root ~/.local --locked` → `~/.local/bin/tmux-agents`. Not symlinked from `scripts/` because `tmux-agents/target/` is gitignored (auto-sync would otherwise commit build output).
+- **State comes from the registry `status`:** `busy|shell`→working (yellow ●), `waiting`→blocked (red ●; set for permission dialogs, AskUserQuestion, sandbox/worker requests), `idle`→idle (green ○). ANSI palette only so ghostty-mirror themes apply. The popup re-reads the registry every 500 ms (`Input::Tick`) and keeps the selection by pid.
 - **Focus from a popup:** `tmux switch-client -Z -t %<pane>` with no `-t` client resolves to the client behind the popup; one command switches session, window and pane.
 
 ## macOS paths

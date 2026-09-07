@@ -35,4 +35,4 @@ jobs:
       - run: cargo clippy --all-targets -- -D warnings
       - run: cargo test
       - run: sudo apt-get update && sudo apt-get install -y tmux
-      - run: cargo test --test tmux_live -- --ignored
+      - run: cargo test -- --ignored
