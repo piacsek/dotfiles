@@ -50,3 +50,16 @@ fn interactive_record_with_live_pid_and_known_pane_becomes_an_agent() {
         }]
     );
 }
+
+#[test]
+fn non_interactive_records_are_dropped() {
+    let mut bg = record(1, "/home/me/a", Some("s:@1.%1"));
+    bg.kind = Kind::Bg;
+    let mut unknown = record(2, "/home/me/b", Some("s:@1.%2"));
+    unknown.kind = Kind::Unknown;
+    let panes = vec![pane("%1", "s", 1, ""), pane("%2", "s", 1, "")];
+
+    let agents = discover(vec![bg, unknown], &panes, &alive);
+
+    assert!(agents.is_empty());
+}
