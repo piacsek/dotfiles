@@ -52,3 +52,9 @@ pub fn load(dir: &Path) -> Vec<SessionRecord> {
         .filter_map(|json| serde_json::from_str(&json).ok())
         .collect()
 }
+
+pub fn sessions_dir(config_dir: Option<PathBuf>, home: &Path) -> PathBuf {
+    config_dir
+        .unwrap_or_else(|| home.join(".claude"))
+        .join("sessions")
+}
