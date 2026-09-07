@@ -144,6 +144,22 @@ type = "shell"
 command = "id=$(herdr tab create --cwd \"$HERDR_ACTIVE_PANE_CWD\" --label claude --focus | jq -r .result.root_pane.pane_id) && herdr pane run \"$id\" claude"
 description = "new claude tab"
 
+# prefix C-f — tmux-focus-test: focus + zoom the "vimtest" runner pane created
+# by nvim's vim-test "herdr" strategy (scripts/herdr-vimtest); again to go back.
+# Copy mode has no API: press prefix+[ (or prefix C-o) once zoomed.
+[[keys.command]]
+key = "prefix+ctrl+f"
+type = "shell"
+command = "$HOME/dotfiles/scripts/herdr-vimtest focus"
+description = "focus/zoom vimtest pane"
+
+# prefix C-t — layout toggle for a 2-pane tab: side-by-side ⇄ top 80% / bottom 20%.
+[[keys.command]]
+key = "prefix+ctrl+t"
+type = "shell"
+command = "$HOME/dotfiles/scripts/herdr-layout-toggle"
+description = "toggle 2-pane layout"
+
 # ---- vim-tmux-navigator → herdr-nvim-nav (C-h/j/k/l across nvim splits and panes) ----
 [[keys.command]]
 key = "ctrl+h"

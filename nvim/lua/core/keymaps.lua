@@ -380,8 +380,14 @@ end, { desc = "[T]est [M]odified (vs main)" })
 -- g:VimuxLastCommand. Any run outside vim-test must clear the same way, or
 -- output stacks up in the pane.
 local function vimux_run_clearing(cmd)
-	-- No tmux around (herdr, bare terminal): vimux would target a foreign tmux
-	-- server. Use vim-test's sticky nvim terminal, same as test#strategy does.
+	-- No tmux around: vimux would target a foreign tmux server. In herdr use
+	-- the vimtest runner pane (core/herdr.lua); in a bare terminal use vim-test's
+	-- sticky nvim terminal, same as test#strategy does.
+	local herdr = require("core.herdr")
+	if herdr.active then
+		herdr.run(cmd)
+		return
+	end
 	if not vim.env.TMUX or vim.env.TMUX == "" then
 		vim.g.VimuxLastCommand = cmd
 		vim.fn["test#strategy#neovim_sticky"](cmd)
