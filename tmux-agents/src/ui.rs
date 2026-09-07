@@ -127,13 +127,17 @@ fn row(agent: &Agent, label_width: usize, row_width: usize) -> ListItem<'_> {
     if let Some(title) = &agent.title {
         spans.push(Span::styled(title.as_str(), dim()));
     }
+    let mut right = format!("{}:{}", agent.session, agent.window_index);
     if let Some(age) = agent.status_age {
-        let age = format_age(age);
-        let used: usize = spans.iter().map(|s| s.content.chars().count()).sum();
-        let gap = row_width.saturating_sub(used + age.chars().count()).max(1);
-        spans.push(Span::raw(" ".repeat(gap)));
-        spans.push(Span::styled(age, dim()));
+        right.push_str("  ");
+        right.push_str(&format_age(age));
     }
+    let used: usize = spans.iter().map(|s| s.content.chars().count()).sum();
+    let gap = row_width
+        .saturating_sub(used + right.chars().count())
+        .max(1);
+    spans.push(Span::raw(" ".repeat(gap)));
+    spans.push(Span::styled(right, dim()));
     ListItem::new(Line::from(spans))
 }
 

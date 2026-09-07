@@ -664,3 +664,23 @@ fn blocked_rows_show_the_reason_in_red_before_the_title() {
     assert_eq!(picker.cell(16, 0).symbol(), "p");
     assert_eq!(picker.cell(16, 0).fg, Color::Red);
 }
+
+#[test]
+fn rows_show_session_and_window_before_the_age() {
+    let mut a = agent("a", "%1");
+    a.session = "work".to_string();
+    a.window_index = 3;
+    a.status_age = Some(std::time::Duration::from_secs(120));
+    let mut b = agent("b", "%2");
+    b.session = "home".to_string();
+    b.window_index = 1;
+    let mut picker = Picker::new(vec![a, b]);
+
+    picker.run(Vec::new()).unwrap();
+
+    let screen = picker.screen();
+    let rows: Vec<&str> = screen.lines().take(2).map(str::trim_end).collect();
+    assert!(rows[0].ends_with("work:3  2m"), "{screen}");
+    assert!(rows[1].ends_with("home:1"), "{screen}");
+    assert_eq!(rows[0].len(), rows[1].len() + 4, "{screen}");
+}
