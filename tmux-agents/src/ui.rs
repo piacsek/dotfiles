@@ -120,3 +120,17 @@ fn row(agent: &Agent, label_width: usize) -> ListItem<'_> {
 fn dim() -> Style {
     Style::default().add_modifier(Modifier::DIM)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::time::Duration;
+
+    #[test]
+    fn age_is_rendered_in_the_largest_whole_unit() {
+        assert_eq!(format_age(Duration::from_secs(45)), "45s");
+        assert_eq!(format_age(Duration::from_secs(90)), "1m");
+        assert_eq!(format_age(Duration::from_secs(3 * 3600 + 59 * 60)), "3h");
+        assert_eq!(format_age(Duration::from_secs(2 * 86_400)), "2d");
+    }
+}
