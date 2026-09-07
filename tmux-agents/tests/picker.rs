@@ -2,6 +2,7 @@ mod support;
 
 use ratatui::crossterm::event::KeyCode;
 use support::{Picker, agent, agent_with_status, ctrl, key};
+use ratatui::style::{Color, Modifier};
 use tmux_agents::registry::Status;
 use tmux_agents::tmux::PaneId;
 
@@ -337,4 +338,25 @@ fn rows_show_a_state_glyph_and_word() {
         ],
         "{screen}"
     );
+}
+
+#[test]
+fn state_dots_use_the_ansi_palette_and_words_are_dim() {
+    let mut picker = Picker::new(vec![
+        agent_with_status("a", "%1", Status::Busy),
+        agent_with_status("b", "%2", Status::Waiting),
+        agent_with_status("c", "%3", Status::Idle),
+        agent_with_status("d", "%4", Status::Unknown),
+    ]);
+
+    picker.run(Vec::new()).unwrap();
+
+    let dot = |y| picker.cell(2, y).fg;
+    assert_eq!(dot(0), Color::Yellow);
+    assert_eq!(dot(1), Color::Red);
+    assert_eq!(dot(2), Color::Green);
+    assert_eq!(dot(3), Color::DarkGray);
+    let word_style = picker.cell(7, 0);
+    assert_eq!(word_style.symbol(), "w");
+    assert!(word_style.modifier.contains(Modifier::DIM));
 }

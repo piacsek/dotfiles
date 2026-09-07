@@ -97,3 +97,9 @@ pub fn agent_with_status(label: &str, pane: &str, status: Status) -> Agent {
         ..agent(label, pane)
     }
 }
+
+impl Picker {
+    pub fn cell(&self, x: u16, y: u16) -> &ratatui::buffer::Cell {
+        &self.terminal.backend().buffer()[(x, y)]
+    }
+}

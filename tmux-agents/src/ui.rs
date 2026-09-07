@@ -32,7 +32,7 @@ pub fn draw(frame: &mut Frame, app: &mut App) {
 fn row(agent: &Agent) -> ListItem<'_> {
     let state = State::from(agent.status);
     let mut spans = vec![
-        Span::raw(state.glyph()),
+        Span::styled(state.glyph(), Style::default().fg(state.color())),
         Span::raw(" "),
         Span::styled(
             agent.label.as_str(),
