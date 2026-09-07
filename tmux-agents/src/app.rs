@@ -19,20 +19,28 @@ pub enum Action {
 pub struct App {
     pub agents: Vec<Agent>,
     pub list: ListState,
+    pending_g: bool,
 }
 
 impl App {
     pub fn new(agents: Vec<Agent>) -> Self {
         let list = ListState::default().with_selected(Some(0));
-        Self { agents, list }
+        Self {
+            agents,
+            list,
+            pending_g: false,
+        }
     }
 
     pub fn handle_key(&mut self, key: KeyEvent) -> Action {
         if key.modifiers.contains(KeyModifiers::CONTROL) && key.code == KeyCode::Char('c') {
             return Action::Quit;
         }
+        let pending_g = std::mem::take(&mut self.pending_g);
         match key.code {
             KeyCode::Char('q') | KeyCode::Esc => return Action::Quit,
+            KeyCode::Char('g') if pending_g => self.list.select_first(),
+            KeyCode::Char('g') => self.pending_g = true,
             KeyCode::Enter => {
                 if let Some(agent) = self.list.selected().and_then(|i| self.agents.get(i)) {
                     return Action::Focus(agent.pane.clone());
