@@ -109,6 +109,33 @@ type = "shell"
 command = "if tailscale status --json 2>/dev/null | grep -q '\"BackendState\": \"Running\"'; then tailscale down && herdr notification show 'tailscale: down'; else tailscale up && herdr notification show 'tailscale: up'; fi"
 description = "toggle tailscale"
 
+# M-j / M-k / M-l / M-; — tmux-switch-slot 1..4 → focus the Nth workspace in
+# sidebar order (workspace list order; slots shift when a workspace closes,
+# same as tmux's creation-order slots).
+[[keys.command]]
+key = "alt+j"
+type = "shell"
+command = "herdr workspace focus \"$(herdr workspace list | jq -r '.result.workspaces[0].id')\""
+description = "workspace slot 1"
+
+[[keys.command]]
+key = "alt+k"
+type = "shell"
+command = "herdr workspace focus \"$(herdr workspace list | jq -r '.result.workspaces[1].id')\""
+description = "workspace slot 2"
+
+[[keys.command]]
+key = "alt+l"
+type = "shell"
+command = "herdr workspace focus \"$(herdr workspace list | jq -r '.result.workspaces[2].id')\""
+description = "workspace slot 3"
+
+[[keys.command]]
+key = "alt+semicolon"
+type = "shell"
+command = "herdr workspace focus \"$(herdr workspace list | jq -r '.result.workspaces[3].id')\""
+description = "workspace slot 4"
+
 # prefix C-c — new window running claude → new tab in the pane's cwd running
 # `claude` through the interactive zsh so the --add-dir alias expands.
 [[keys.command]]
