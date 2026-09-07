@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# herdr counterpart of .tmux.conf's prefix C-t: flip a two-pane tab between
+# side-by-side (tmux even-horizontal) and main-horizontal (top pane 80%, bottom
+# 20% — the nvim + vimtest runner shape). herdr has no layout presets, so the
+# second pane is moved out to a temp tab and back in with the other split
+# direction; the process inside keeps running (same PID). Focus is restored.
+set -euo pipefail
+
+HERDR="${HERDR_BIN_PATH:-herdr}"
+caller="${HERDR_ACTIVE_PANE_ID:-${HERDR_PANE_ID:-}}"
+[[ -n "$caller" ]] || { echo "herdr-layout-toggle: not inside herdr" >&2; exit 1; }
+
+socket_path() {
+	if [[ -n "${HERDR_SOCKET_PATH:-}" ]]; then printf '%s' "$HERDR_SOCKET_PATH"
+	elif [[ -n "${HERDR_SESSION:-}" ]]; then printf '%s' "$HOME/.config/herdr/sessions/$HERDR_SESSION/herdr.sock"
+	else printf '%s' "$HOME/.config/herdr/herdr.sock"; fi
+}
+focus_pane() {
+	printf '{"id":"layout","method":"pane.focus","params":{"pane_id":"%s"}}\n' "$1" | nc -U -w 2 "$(socket_path)" >/dev/null
+}
+
+layout=$("$HERDR" pane layout --pane "$caller" | jq '.result.layout')
+count=$(jq '.panes | length' <<<"$layout")
+if [[ "$count" -ne 2 ]]; then
+	"$HERDR" notification show "layout toggle: needs exactly 2 panes (have $count)" >/dev/null 2>&1 || true
+	exit 0
+fi
+
+tab=$(jq -r '.tab_id' <<<"$layout")
+focused=$(jq -r '.focused_pane_id' <<<"$layout")
+direction=$(jq -r '.splits[0].direction' <<<"$layout")
+# Keep visual order: the top/left pane stays first, the other is re-attached to it.
+first=$(jq -r '.panes | sort_by(.rect.y, .rect.x) | .[0].pane_id' <<<"$layout")
+second=$(jq -r '.panes | sort_by(.rect.y, .rect.x) | .[1].pane_id' <<<"$layout")
+
+if [[ "$direction" == "down" ]]; then
+	new_dir=right; ratio=0.5   # even-horizontal
+else
+	new_dir=down; ratio=0.8    # main-horizontal (main-pane-height 80%)
+fi
+
+"$HERDR" pane zoom "$focused" --off >/dev/null 2>&1 || true
+"$HERDR" pane move "$second" --new-tab --label layout-tmp --no-focus >/dev/null
+"$HERDR" pane move "$second" --tab "$tab" --split "$new_dir" --target-pane "$first" --ratio "$ratio" --no-focus >/dev/null
+focus_pane "$focused"
