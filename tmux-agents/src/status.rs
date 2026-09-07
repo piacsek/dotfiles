@@ -24,7 +24,7 @@ pub fn render(agents: &[Agent]) -> String {
 
 fn segment(state: State, count: usize) -> String {
     format!(
-        "#[{}]{}{count}#[default]",
+        "#[{}]{} {count}#[default]",
         state.tmux_style(),
         state.glyph()
     )
