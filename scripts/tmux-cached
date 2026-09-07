@@ -22,5 +22,5 @@ if [[ -f "$file" ]]; then
 fi
 
 out=$("$@" 2>/dev/null)
-printf '%s' "$out" >"$file.tmp" && mv "$file.tmp" "$file"
-printf '%s\n' "$out"
+printf '%s\n' "$out" >"$file.tmp" && mv "$file.tmp" "$file"
+cat "$file"

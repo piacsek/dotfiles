@@ -262,6 +262,10 @@ cargo install --path ~/dotfiles/tmux-agents --root ~/.local --locked
 
 Re-run after pulling changes to `tmux-agents/`. Tests: `cd ~/dotfiles/tmux-agents && cargo test`.
 
+The status line runs `tmux-agents status` every second (per-state counts). If a
+machine has `~/.tmux_work.conf`, it replaces `status-right` wholesale, so copy the
+`#(tmux-agents status)` and `#(tmux-cached 5 ...)` segments from `.tmux.conf` into it.
+
 ### 13. Install Neovim LSP servers, formatters and parsers
 
 Mason keeps no manifest of what you installed, so the list lives in
