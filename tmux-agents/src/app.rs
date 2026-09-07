@@ -40,6 +40,7 @@ impl App {
             }
             KeyCode::Char('j') | KeyCode::Down => self.list.select_next(),
             KeyCode::Char('k') | KeyCode::Up => self.list.select_previous(),
+            KeyCode::Char('G') => self.list.select_last(),
             _ => {}
         }
         Action::Continue
