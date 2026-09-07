@@ -1,3 +1,21 @@
+pub const USAGE: &str = "usage: tmux-agents";
+
+#[derive(Debug, PartialEq, Eq)]
+pub enum Command {
+    Tui,
+}
+
+pub fn parse<I, S>(args: I) -> Result<Command, String>
+where
+    I: IntoIterator<Item = S>,
+    S: AsRef<str>,
+{
+    match args.into_iter().next() {
+        None => Ok(Command::Tui),
+        Some(arg) => Err(format!("unknown argument '{}'\n{USAGE}", arg.as_ref())),
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
