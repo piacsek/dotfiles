@@ -68,3 +68,15 @@ impl Picker {
             .join("\n")
     }
 }
+
+pub fn agent(label: &str, pane: &str) -> Agent {
+    Agent {
+        pid: 1,
+        label: label.to_string(),
+        cwd: format!("/home/me/{label}").into(),
+        pane: PaneId(pane.to_string()),
+        session: "main".to_string(),
+        window_index: 1,
+        title: None,
+    }
+}
