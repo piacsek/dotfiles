@@ -45,20 +45,30 @@ pub fn discover(
 }
 
 fn disambiguate_labels(agents: &mut [Agent]) {
+    let suffixes: [fn(&Agent) -> String; 2] = [
+        |a| format!("{} ·{}:{}", a.label, a.session, a.window_index),
+        |a| format!("{}.{}", a.label, a.pane.0),
+    ];
+    for suffix in suffixes {
+        let duplicated = duplicated_labels(agents);
+        for agent in agents.iter_mut() {
+            if duplicated.contains(&agent.label) {
+                agent.label = suffix(agent);
+            }
+        }
+    }
+}
+
+fn duplicated_labels(agents: &[Agent]) -> HashSet<String> {
     let mut counts: HashMap<&str, usize> = HashMap::new();
-    for agent in agents.iter() {
+    for agent in agents {
         *counts.entry(agent.label.as_str()).or_default() += 1;
     }
-    let duplicated: HashSet<String> = counts
+    counts
         .into_iter()
         .filter(|(_, n)| *n > 1)
         .map(|(label, _)| label.to_string())
-        .collect();
-    for agent in agents.iter_mut() {
-        if duplicated.contains(&agent.label) {
-            agent.label = format!("{} ·{}:{}", agent.label, agent.session, agent.window_index);
-        }
-    }
+        .collect()
 }
 
 fn basename(path: &std::path::Path) -> String {

@@ -5,6 +5,7 @@ use ratatui::Terminal;
 use ratatui::backend::TestBackend;
 use ratatui::crossterm::event::{Event, KeyCode, KeyEvent, KeyModifiers};
 use tmux_agents::agents::Agent;
+use tmux_agents::registry::Status;
 use tmux_agents::app::{App, run};
 use tmux_agents::tmux::{PaneId, PaneInfo, Tmux};
 
@@ -81,10 +82,18 @@ pub fn agent(label: &str, pane: &str) -> Agent {
     Agent {
         pid: 1,
         label: label.to_string(),
+        status: Status::Idle,
         cwd: format!("/home/me/{label}").into(),
         pane: PaneId(pane.to_string()),
         session: "main".to_string(),
         window_index: 1,
         title: None,
+    }
+}
+
+pub fn agent_with_status(label: &str, pane: &str, status: Status) -> Agent {
+    Agent {
+        status,
+        ..agent(label, pane)
     }
 }
