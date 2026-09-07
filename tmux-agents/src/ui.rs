@@ -32,8 +32,9 @@ fn draw_empty(frame: &mut Frame, area: Rect) {
     frame.render_widget(Paragraph::new(text), area);
 }
 
-const KEYS: [(&str, &str); 7] = [
+const KEYS: [(&str, &str); 8] = [
     ("j/k ↓/↑", "move"),
+    ("1-9", "focus row directly"),
     ("gg / G", "first / last"),
     ("/", "filter, Esc clears"),
     ("Enter", "focus pane"),

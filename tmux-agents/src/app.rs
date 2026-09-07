@@ -117,6 +117,12 @@ impl App {
                     return Action::Focus(agent.pane.clone());
                 }
             }
+            KeyCode::Char(digit @ '1'..='9') => {
+                let index = digit.to_digit(10).unwrap_or(1) as usize - 1;
+                if let Some(agent) = self.visible().get(index) {
+                    return Action::Focus(agent.pane.clone());
+                }
+            }
             KeyCode::Char('j') | KeyCode::Down => self.list.select_next(),
             KeyCode::Char('k') | KeyCode::Up => self.list.select_previous(),
             KeyCode::Char('G') => self.list.select_last(),
