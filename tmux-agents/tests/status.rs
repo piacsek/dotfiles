@@ -8,7 +8,10 @@ use tmux_agents::status::render;
 fn one_working_agent_renders_a_yellow_dot_with_its_count() {
     let agents = vec![agent_with_status("a", "%1", Status::Busy)];
 
-    assert_eq!(render(&agents), "#[dim]✳#[default] #[fg=yellow]●1#[default]");
+    assert_eq!(
+        render(&agents),
+        "#[dim]✳#[default] #[fg=yellow]●1#[default]"
+    );
 }
 
 #[test]

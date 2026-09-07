@@ -2,9 +2,13 @@ use crate::agents::Agent;
 use crate::state::State;
 
 const ORDER: [State; 4] = [State::Blocked, State::Working, State::Idle, State::Unknown];
+const CLAUDE_GLYPH: &str = "#[dim]✳#[default]";
 
 pub fn render(agents: &[Agent]) -> String {
-    ORDER
+    if agents.is_empty() {
+        return String::new();
+    }
+    let segments = ORDER
         .into_iter()
         .filter_map(|state| {
             let count = agents
@@ -14,7 +18,8 @@ pub fn render(agents: &[Agent]) -> String {
             (count > 0).then(|| segment(state, count))
         })
         .collect::<Vec<_>>()
-        .join(" ")
+        .join(" ");
+    format!("{CLAUDE_GLYPH} {segments}")
 }
 
 fn segment(state: State, count: usize) -> String {
