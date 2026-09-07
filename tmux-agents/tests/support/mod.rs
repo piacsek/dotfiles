@@ -35,7 +35,10 @@ pub fn key(code: KeyCode) -> io::Result<Event> {
 }
 
 pub fn ctrl(c: char) -> io::Result<Event> {
-    Ok(Event::Key(KeyEvent::new(KeyCode::Char(c), KeyModifiers::CONTROL)))
+    Ok(Event::Key(KeyEvent::new(
+        KeyCode::Char(c),
+        KeyModifiers::CONTROL,
+    )))
 }
 
 pub struct Picker {
@@ -54,7 +57,12 @@ impl Picker {
     }
 
     pub fn run(&mut self, keys: Vec<io::Result<Event>>) -> io::Result<()> {
-        run(&mut self.terminal, &mut self.app, keys.into_iter(), &self.tmux)
+        run(
+            &mut self.terminal,
+            &mut self.app,
+            keys.into_iter(),
+            &self.tmux,
+        )
     }
 
     pub fn screen(&self) -> String {
