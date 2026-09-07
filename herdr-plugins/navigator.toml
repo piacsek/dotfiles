@@ -6,6 +6,8 @@
 [picker]
 # Plain workspace labels instead of "project:"/"dir:" prefixes, like tmux sessions.
 prefix_workspace_labels = false
+# Normal-mode j/k, source keys, and / to search; i or / enters typing.
+vim_mode = true
 
 [notifications]
 audio = false
