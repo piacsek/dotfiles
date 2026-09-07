@@ -51,3 +51,23 @@ fn j_and_down_move_highlight_down() {
         .unwrap();
     assert!(picker.screen().lines().nth(2).unwrap().starts_with("> c"));
 }
+
+#[test]
+fn k_and_up_move_highlight_up_and_clamp_at_both_ends() {
+    let mut picker = Picker::new(vec![agent("a", "%1"), agent("b", "%2")]);
+
+    picker
+        .run(vec![
+            key(KeyCode::Up),
+            key(KeyCode::Char('j')),
+            key(KeyCode::Char('j')),
+            key(KeyCode::Char('j')),
+            key(KeyCode::Char('k')),
+            key(KeyCode::Char('q')),
+        ])
+        .unwrap();
+
+    let screen = picker.screen();
+    assert!(screen.lines().next().unwrap().starts_with("> a"), "{screen}");
+    assert!(screen.lines().nth(1).unwrap().starts_with("  b"), "{screen}");
+}

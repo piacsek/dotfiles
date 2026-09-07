@@ -29,6 +29,10 @@ impl App {
     pub fn handle_key(&mut self, key: KeyEvent) -> Action {
         match key.code {
             KeyCode::Char('q') => Action::Quit,
+            KeyCode::Char('j') | KeyCode::Down => {
+                self.list.select_next();
+                Action::Continue
+            }
             _ => Action::Continue,
         }
     }
