@@ -17,6 +17,9 @@ vim.pack.add({
 	gh("sotte/presenting.nvim"),
 	gh("herisetiawan00/jtt.nvim"),
 	gh("christoomey/vim-tmux-navigator"),
+	-- herdr counterpart of vim-tmux-navigator (C-h/j/k/l across herdr panes).
+	-- Lua module only, no plugin/ dir: inert unless setup() runs (herdr-only, below).
+	gh("aimdevlee/herdr-nvim-nav"),
 	gh("mason-org/mason.nvim"),
 	gh("neovim/nvim-lspconfig"),
 	gh("folke/lazydev.nvim"),
@@ -74,6 +77,15 @@ require("markdown_preview").setup({
 	open_browser = true,
 	debounce_ms = 300,
 })
+
+-- Inside a herdr pane ($HERDR_ENV=1, never set under tmux): let herdr-nvim-nav
+-- own C-h/j/k/l and keep vim-tmux-navigator from installing its own maps.
+-- Under tmux nothing here runs, so the tmux workflow is unchanged.
+local in_tmux = vim.env.TMUX ~= nil and vim.env.TMUX ~= ""
+if vim.env.HERDR_ENV == "1" and not in_tmux then
+	vim.g.tmux_navigator_no_mappings = 1
+	require("herdr-nvim-nav").setup({ with_tmux = false })
+end
 require("inc_rename").setup({
 	post_hook = function()
 		vim.cmd("silent! wall")
@@ -540,7 +552,9 @@ cmp.setup({
 
 -- vim-test
 vim.g["test#filename_modifier"] = ":p"
-vim.g["test#strategy"] = "vimux"
+-- vimux drives tmux; outside tmux (herdr, bare terminal) it would split panes
+-- in whatever tmux server is running. Fall back to a sticky nvim terminal.
+vim.g["test#strategy"] = in_tmux and "vimux" or "neovim_sticky"
 vim.g["VimuxRunnerName"] = "vimtest"
 vim.g["test#preserve_screen"] = 0
 vim.g["test#echo_command"] = 0
