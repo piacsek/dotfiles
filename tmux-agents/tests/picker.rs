@@ -617,3 +617,25 @@ fn digits_focus_the_nth_visible_row_directly() {
         .unwrap();
     assert!(picker.tmux.focused().is_empty());
 }
+
+#[test]
+fn rows_show_the_state_age_right_aligned() {
+    let mut aged = agent("a", "%1");
+    aged.status_age = Some(std::time::Duration::from_secs(90));
+    let mut titled = agent("b", "%2");
+    titled.title = Some("Some title".to_string());
+    titled.status_age = Some(std::time::Duration::from_secs(3 * 3600));
+    let mut picker = Picker::new(vec![aged, titled, agent("c", "%3")]);
+
+    picker.run(Vec::new()).unwrap();
+
+    let screen = picker.screen();
+    let rows: Vec<&str> = screen.lines().take(3).collect();
+    assert!(rows[0].starts_with("> ○ idle     a"), "{screen}");
+    assert!(rows[0].trim_end().ends_with(" 1m"), "{screen}");
+    assert!(rows[1].contains("b  Some title"), "{screen}");
+    assert!(rows[1].trim_end().ends_with(" 3h"), "{screen}");
+    assert_eq!(rows[0].trim_end().len(), rows[1].trim_end().len(), "{screen}");
+    assert_eq!(rows[2].trim_end(), "  ○ idle     c", "{screen}");
+    assert!(picker.cell(57, 0).modifier.contains(Modifier::DIM));
+}
