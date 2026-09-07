@@ -1,7 +1,7 @@
 # herdr-navigator — prefix t. Every option with docs:
 # https://github.com/thanhdat77/herdr-navigator/blob/main/examples/default-config.toml
-# Defaults are kept (type-to-search, nucleo engine, zoxide + open workspaces +
-# agents). Only the project roots are set, matching tmux-sessionizer's list.
+# Defaults are kept (nucleo engine, zoxide + open workspaces + agents) except
+# the labels, vim_mode and the project roots (same list as tmux-sessionizer).
 
 [picker]
 # Plain workspace labels instead of "project:"/"dir:" prefixes, like tmux sessions.
