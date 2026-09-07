@@ -5,8 +5,6 @@ use crate::registry::{Kind, SessionRecord, Status};
 use crate::state::State;
 use crate::tmux::{PaneId, PaneInfo, parse_pane_ref};
 
-const TITLE_PREFIX: &str = "✳ ";
-
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Agent {
     pub pid: i32,
@@ -38,7 +36,7 @@ pub fn discover(
                 pane: pane.id.clone(),
                 session: pane.session.clone(),
                 window_index: pane.window_index,
-                title: pane.title.strip_prefix(TITLE_PREFIX).map(str::to_string),
+                title: summary(&pane.title),
             })
         })
         .collect();
@@ -80,6 +78,13 @@ fn duplicated_labels(agents: &[Agent]) -> HashSet<String> {
         .filter(|(_, n)| *n > 1)
         .map(|(label, _)| label.to_string())
         .collect()
+}
+
+fn summary(title: &str) -> Option<String> {
+    let mut chars = title.chars();
+    let glyph = chars.next()?;
+    let space = chars.next()?;
+    (!glyph.is_alphanumeric() && space == ' ').then(|| chars.as_str().to_string())
 }
 
 fn basename(path: &std::path::Path) -> String {
