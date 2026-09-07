@@ -50,7 +50,7 @@ last_pane = "prefix+semicolon"
 resize_mode = "prefix+r"
 resize_pane_right = "prefix+ctrl+period"
 resize_pane_left = "prefix+ctrl+comma"
-resize_pane_up = "prefix+ctrl+apostrophe"
+resize_pane_up = "prefix+ctrl+quote"
 resize_pane_down = "prefix+ctrl+semicolon"
 
 # ---- workspaces (tmux sessions) ----
