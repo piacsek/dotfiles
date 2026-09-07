@@ -10,10 +10,13 @@ use crate::state::{State, WORD_WIDTH};
 
 pub fn draw(frame: &mut Frame, app: &mut App) {
     if app.agents.is_empty() {
-        frame.render_widget(
-            Paragraph::new("No Claude Code sessions in this tmux server"),
-            frame.area(),
-        );
+        let dim = Style::default().add_modifier(Modifier::DIM);
+        let text = vec![
+            Line::from("No Claude Code sessions in this tmux server"),
+            Line::from(""),
+            Line::from(Span::styled("n new Claude window  q close", dim)),
+        ];
+        frame.render_widget(Paragraph::new(text), frame.area());
         return;
     }
     let [list_area, footer_area] =
