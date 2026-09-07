@@ -602,3 +602,18 @@ fn refresh_appends_new_agents_and_drops_gone_ones_without_moving_the_rest() {
     );
     assert!(!screen.contains("idle     b"), "{screen}");
 }
+
+#[test]
+fn digits_focus_the_nth_visible_row_directly() {
+    let mut picker = Picker::new(vec![agent("a", "%1"), agent("b", "%2"), agent("c", "%3")]);
+    picker
+        .run(vec![key(KeyCode::Char('2')), key(KeyCode::Enter)])
+        .unwrap();
+    assert_eq!(picker.tmux.focused(), vec![PaneId("%2".to_string())]);
+
+    let mut picker = Picker::new(vec![agent("a", "%1")]);
+    picker
+        .run(vec![key(KeyCode::Char('9')), key(KeyCode::Char('q'))])
+        .unwrap();
+    assert!(picker.tmux.focused().is_empty());
+}
