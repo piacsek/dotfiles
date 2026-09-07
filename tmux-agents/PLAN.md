@@ -293,6 +293,22 @@ Goal: `status-right` shows per-state counts, refreshed every second.
 
 ---
 
+## Post-phase review (2026-09-07)
+
+Twelve items from the review, each under /tdd:
+1. Title strip generalised to any leading glyph (spinner-safe).
+2. Stable row order across refreshes; append new, drop gone.
+3. `Mode { Normal, Filter, Help }` replaces two booleans.
+4. Release profile: lto, codegen-units=1, strip (981 → 719 KB).
+5. `insta` snapshot tests for the four layouts.
+6. `1`–`9` focus a row directly.
+7. Age since `statusUpdatedAt` on the right of each row.
+8. Blocked reason from `waitingFor`, red, before the title.
+9. `session:window` location column on every row; collision suffixes removed.
+10. `~/cwd` fallback when untitled; ellipsis truncation so the right column always fits (fixed a real overflow found by the snapshot).
+11. Popup 70% × 60%.
+12. Zero-session e2e for `status`.
+
 ## Retrospective checkpoints
 
 After each phase, before planning the next:
