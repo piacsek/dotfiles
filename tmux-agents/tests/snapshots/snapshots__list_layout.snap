@@ -2,9 +2,9 @@
 source: tests/snapshots.rs
 expression: picker.screen()
 ---
-  ◉ blocked  ws-common       Remove PR comments             
+  ◉ blocked  ws-common       Remove PR comments       main:1
 > ● working  dotfiles        Tmux Claude Code session picker
-  ○ idle     scintilla.nvim                                 
+  ○ idle     scintilla.nvim                           main:1
                                                             
                                                             
                                                             

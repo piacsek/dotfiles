@@ -688,3 +688,21 @@ fn rows_show_session_and_window_before_the_age() {
     assert!(rows[1].ends_with("home:1"), "{screen}");
     assert_eq!(rows[0].len(), rows[1].len(), "{screen}");
 }
+
+#[test]
+fn untitled_rows_fall_back_to_the_cwd_and_long_titles_get_an_ellipsis() {
+    let mut untitled = agent("dotfiles", "%1");
+    untitled.cwd = "/home/me/projects/dotfiles".into();
+    let mut long = agent("ws", "%2");
+    long.title = Some("A very long title that will certainly not fit in the row".to_string());
+    long.status_age = Some(std::time::Duration::from_secs(60));
+    let mut picker = Picker::new(vec![untitled, long]);
+
+    picker.run(Vec::new()).unwrap();
+
+    let screen = picker.screen();
+    let rows: Vec<&str> = screen.lines().take(2).collect();
+    assert!(rows[0].starts_with("> ○ idle     dotfiles  ~/projects/dotfiles"), "{screen}");
+    assert!(rows[1].contains("A very long title th…"), "{screen}");
+    assert!(rows[1].trim_end().ends_with("main:1  1m"), "{screen}");
+}
