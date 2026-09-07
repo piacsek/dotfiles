@@ -643,7 +643,10 @@ fn rows_show_the_state_age_right_aligned() {
         rows[1].trim_end().len(),
         "{screen}"
     );
-    assert!(rows[2].trim_end().ends_with("○ idle     c  ~/c"), "{screen}");
+    assert!(
+        rows[2].trim_end().ends_with("○ idle     c  ~/c"),
+        "{screen}"
+    );
     assert!(picker.cell(59, 0).modifier.contains(Modifier::DIM));
 }
 
