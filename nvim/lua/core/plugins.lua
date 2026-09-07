@@ -86,6 +86,15 @@ if vim.env.HERDR_ENV == "1" and not in_tmux then
 	vim.g.tmux_navigator_no_mappings = 1
 	require("herdr-nvim-nav").setup({ with_tmux = false })
 end
+
+-- herdr-nvim (ChmaraX): picker of files the agent touched + code annotations
+-- sent to the agent. Installed always, loaded only inside herdr so tmux sees no
+-- :Herdr command or <leader>H maps. (<leader>a is harpoon, hence the prefix.)
+vim.pack.add({ gh("ChmaraX/herdr-nvim") }, { load = false })
+if vim.env.HERDR_ENV == "1" and not in_tmux then
+	vim.cmd.packadd("herdr-nvim")
+	require("herdr-nvim").setup({ prefix = "<leader>H" })
+end
 require("inc_rename").setup({
 	post_hook = function()
 		vim.cmd("silent! wall")
