@@ -1,5 +1,6 @@
 use std::io;
 use std::path::PathBuf;
+use std::process::Command;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct PaneId(pub String);
@@ -17,6 +18,60 @@ pub struct PaneInfo {
 pub trait Tmux {
     fn list_panes(&self) -> io::Result<Vec<PaneInfo>>;
     fn focus(&self, pane: &PaneId) -> io::Result<()>;
+}
+
+const PANE_FORMAT: &str =
+    "#{pane_id}\t#{session_name}\t#{window_id}\t#{window_index}\t#{pane_current_path}\t#{pane_title}";
+
+#[derive(Debug, Default, Clone)]
+pub struct CliTmux {
+    socket_name: Option<String>,
+}
+
+impl CliTmux {
+    pub fn with_socket(name: &str) -> Self {
+        Self {
+            socket_name: Some(name.to_string()),
+        }
+    }
+
+    pub fn list_panes_args(&self) -> Vec<String> {
+        self.args(&["list-panes", "-a", "-F", PANE_FORMAT])
+    }
+
+    pub fn focus_args(&self, pane: &PaneId) -> Vec<String> {
+        self.args(&["switch-client", "-Z", "-t", &pane.0])
+    }
+
+    fn args(&self, command: &[&str]) -> Vec<String> {
+        let mut args = Vec::new();
+        if let Some(socket) = &self.socket_name {
+            args.push("-L".to_string());
+            args.push(socket.clone());
+        }
+        args.extend(command.iter().map(|s| s.to_string()));
+        args
+    }
+
+    fn run(&self, args: &[String]) -> io::Result<String> {
+        let output = Command::new("tmux").args(args).output()?;
+        if !output.status.success() {
+            return Err(io::Error::other(
+                String::from_utf8_lossy(&output.stderr).trim().to_string(),
+            ));
+        }
+        Ok(String::from_utf8_lossy(&output.stdout).into_owned())
+    }
+}
+
+impl Tmux for CliTmux {
+    fn list_panes(&self) -> io::Result<Vec<PaneInfo>> {
+        Ok(parse_list_panes(&self.run(&self.list_panes_args())?))
+    }
+
+    fn focus(&self, pane: &PaneId) -> io::Result<()> {
+        self.run(&self.focus_args(pane)).map(drop)
+    }
 }
 
 pub fn parse_pane_ref(s: &str) -> Option<PaneId> {
