@@ -2,5 +2,13 @@
 name = "tmux-agents"
 version = "0.1.0"
 edition = "2024"
+rust-version = "1.98"
 
 [dependencies]
+ratatui = "0.30"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+nix = { version = "0.31", features = ["signal"] }
+
+[dev-dependencies]
+tempfile = "3"
