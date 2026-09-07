@@ -259,3 +259,23 @@ fn backspace_edits_the_query_and_esc_clears_the_filter_without_quitting() {
     assert!(!screen.contains('/'), "{screen}");
     assert_eq!(picker.tmux.focused(), vec![PaneId("%2".to_string())]);
 }
+
+#[test]
+fn enter_in_filter_mode_focuses_the_selected_visible_row() {
+    let mut picker = Picker::new(vec![
+        agent("dotfiles", "%1"),
+        agent("ws-common", "%2"),
+        agent("ws-start", "%3"),
+    ]);
+
+    picker
+        .run(vec![
+            key(KeyCode::Char('/')),
+            key(KeyCode::Char('w')),
+            key(KeyCode::Down),
+            key(KeyCode::Enter),
+        ])
+        .unwrap();
+
+    assert_eq!(picker.tmux.focused(), vec![PaneId("%3".to_string())]);
+}
