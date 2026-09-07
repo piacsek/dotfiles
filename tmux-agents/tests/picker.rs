@@ -1,7 +1,8 @@
 mod support;
 
 use ratatui::crossterm::event::KeyCode;
-use support::{Picker, agent, ctrl, key};
+use support::{Picker, agent, agent_with_status, ctrl, key};
+use tmux_agents::registry::Status;
 use tmux_agents::tmux::PaneId;
 
 #[test]
@@ -307,6 +308,33 @@ fn starting_a_filter_moves_the_highlight_to_the_first_match() {
     let screen = picker.screen();
     assert!(
         screen.lines().next().unwrap().starts_with("> ws-common"),
+        "{screen}"
+    );
+}
+
+#[test]
+fn rows_show_a_state_glyph_and_word() {
+    let mut picker = Picker::new(vec![
+        agent_with_status("a", "%1", Status::Busy),
+        agent_with_status("b", "%2", Status::Shell),
+        agent_with_status("c", "%3", Status::Waiting),
+        agent_with_status("d", "%4", Status::Idle),
+        agent_with_status("e", "%5", Status::Unknown),
+    ]);
+
+    picker.run(Vec::new()).unwrap();
+
+    let screen = picker.screen();
+    let rows: Vec<&str> = screen.lines().map(str::trim_end).take(5).collect();
+    assert_eq!(
+        rows,
+        vec![
+            "> ● a  working",
+            "  ● b  working",
+            "  ● c  blocked",
+            "  ○ d  idle",
+            "  ○ e  ?",
+        ],
         "{screen}"
     );
 }

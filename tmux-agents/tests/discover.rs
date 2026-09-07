@@ -42,6 +42,7 @@ fn interactive_record_with_live_pid_and_known_pane_becomes_an_agent() {
         vec![Agent {
             pid: 42,
             label: "dotfiles".to_string(),
+            status: Status::Idle,
             cwd: PathBuf::from("/home/me/dotfiles"),
             pane: PaneId("%53".to_string()),
             session: "dotfiles".to_string(),
