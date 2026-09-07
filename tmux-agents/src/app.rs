@@ -6,13 +6,14 @@ use ratatui::crossterm::event::{Event, KeyCode, KeyEvent};
 use ratatui::widgets::ListState;
 
 use crate::agents::Agent;
-use crate::tmux::Tmux;
+use crate::tmux::{PaneId, Tmux};
 use crate::ui;
 
 #[derive(Debug, PartialEq, Eq)]
 pub enum Action {
     Continue,
     Quit,
+    Focus(PaneId),
 }
 
 pub struct App {
@@ -28,17 +29,17 @@ impl App {
 
     pub fn handle_key(&mut self, key: KeyEvent) -> Action {
         match key.code {
-            KeyCode::Char('q') => Action::Quit,
-            KeyCode::Char('j') | KeyCode::Down => {
-                self.list.select_next();
-                Action::Continue
+            KeyCode::Char('q') => return Action::Quit,
+            KeyCode::Enter => {
+                if let Some(agent) = self.list.selected().and_then(|i| self.agents.get(i)) {
+                    return Action::Focus(agent.pane.clone());
+                }
             }
-            KeyCode::Char('k') | KeyCode::Up => {
-                self.list.select_previous();
-                Action::Continue
-            }
-            _ => Action::Continue,
+            KeyCode::Char('j') | KeyCode::Down => self.list.select_next(),
+            KeyCode::Char('k') | KeyCode::Up => self.list.select_previous(),
+            _ => {}
         }
+        Action::Continue
     }
 }
 
@@ -46,7 +47,7 @@ pub fn run<B, T>(
     terminal: &mut Terminal<B>,
     app: &mut App,
     events: impl Iterator<Item = io::Result<Event>>,
-    _tmux: &T,
+    tmux: &T,
 ) -> io::Result<()>
 where
     B: Backend,
@@ -60,6 +61,7 @@ where
         if let Event::Key(key) = event? {
             match app.handle_key(key) {
                 Action::Quit => return Ok(()),
+                Action::Focus(pane) => return tmux.focus(&pane),
                 Action::Continue => {}
             }
         }
