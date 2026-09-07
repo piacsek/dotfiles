@@ -9,6 +9,7 @@ use crate::app::{App, Mode, visible_agents};
 use crate::state::{State, WORD_WIDTH};
 
 const HELP_HINT: &str = "press ? for keybindings";
+const HIGHLIGHT: &str = "> ";
 
 pub fn draw(frame: &mut Frame, app: &mut App) {
     let [body, footer] =
@@ -72,11 +73,12 @@ fn draw_list(frame: &mut Frame, area: Rect, app: &mut App) {
         .map(|agent| agent.label.chars().count())
         .max()
         .unwrap_or(0);
+    let row_width = area.width.saturating_sub(HIGHLIGHT.chars().count() as u16) as usize;
     let items: Vec<ListItem> = visible
         .into_iter()
-        .map(|agent| row(agent, label_width))
+        .map(|agent| row(agent, label_width, row_width))
         .collect();
-    let list = List::new(items).highlight_symbol("> ");
+    let list = List::new(items).highlight_symbol(HIGHLIGHT);
     frame.render_stateful_widget(list, area, &mut app.list);
 }
 
@@ -98,7 +100,7 @@ fn draw_footer(frame: &mut Frame, area: Rect, app: &App) {
     );
 }
 
-fn row(agent: &Agent, label_width: usize) -> ListItem<'_> {
+fn row(agent: &Agent, label_width: usize, row_width: usize) -> ListItem<'_> {
     let state = State::from(agent.status);
     let mut spans = vec![
         Span::styled(state.glyph(), state.style()),
@@ -114,7 +116,24 @@ fn row(agent: &Agent, label_width: usize) -> ListItem<'_> {
         spans.push(Span::raw("  "));
         spans.push(Span::styled(title.as_str(), dim()));
     }
+    if let Some(age) = agent.status_age {
+        let age = format_age(age);
+        let used: usize = spans.iter().map(|s| s.content.chars().count()).sum();
+        let gap = row_width.saturating_sub(used + age.chars().count()).max(1);
+        spans.push(Span::raw(" ".repeat(gap)));
+        spans.push(Span::styled(age, dim()));
+    }
     ListItem::new(Line::from(spans))
+}
+
+fn format_age(age: std::time::Duration) -> String {
+    let secs = age.as_secs();
+    match secs {
+        s if s < 60 => format!("{s}s"),
+        s if s < 3600 => format!("{}m", s / 60),
+        s if s < 86_400 => format!("{}h", s / 3600),
+        s => format!("{}d", s / 86_400),
+    }
 }
 
 fn dim() -> Style {
