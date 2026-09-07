@@ -63,3 +63,39 @@ fn non_interactive_records_are_dropped() {
 
     assert!(agents.is_empty());
 }
+
+#[test]
+fn records_without_tmux_field_are_dropped() {
+    let panes = vec![pane("%1", "s", 1, "")];
+
+    let agents = discover(vec![record(1, "/home/me/a", None)], &panes, &alive);
+
+    assert!(agents.is_empty());
+}
+
+#[test]
+fn records_whose_pane_is_not_in_this_server_are_dropped() {
+    let panes = vec![pane("%1", "s", 1, "")];
+
+    let agents = discover(
+        vec![record(1, "/home/me/a", Some("s:@1.%99"))],
+        &panes,
+        &alive,
+    );
+
+    assert!(agents.is_empty());
+}
+
+#[test]
+fn records_with_dead_pids_are_dropped() {
+    let panes = vec![pane("%1", "s", 1, ""), pane("%2", "s", 2, "")];
+    let records = vec![
+        record(7, "/home/me/a", Some("s:@1.%1")),
+        record(8, "/home/me/b", Some("s:@2.%2")),
+    ];
+
+    let agents = discover(records, &panes, &|pid| pid != 7);
+
+    assert_eq!(agents.len(), 1);
+    assert_eq!(agents[0].pid, 8);
+}
