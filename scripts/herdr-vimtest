@@ -1,0 +1,106 @@
+#!/usr/bin/env bash
+# herdr counterpart of the vimux runner pane + scripts/tmux-focus-test.
+#
+#   herdr-vimtest run <cmd...>  ensure a "vimtest" pane below the caller's pane
+#                               (20% tall, like VimuxHeight), clear it, run cmd.
+#                               Used by the vim-test "herdr" strategy and
+#                               <leader>r / <leader>R / <leader><BS> in nvim.
+#   herdr-vimtest focus         toggle: focus + zoom the vimtest pane; from the
+#                               vimtest pane, unzoom and go back (prefix C-f).
+#                               Copy mode has no API — press prefix+[ after.
+#
+# Caller context: HERDR_ACTIVE_PANE_ID when run from a [[keys.command]],
+# HERDR_PANE_ID when run from inside a pane (nvim). herdr's CLI has no
+# focus-by-id, so that one call goes to the socket directly (nc -U).
+set -euo pipefail
+
+MARKER="vimtest"
+STATE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/herdr-vimtest"
+HERDR="${HERDR_BIN_PATH:-herdr}"
+
+socket_path() {
+	if [[ -n "${HERDR_SOCKET_PATH:-}" ]]; then
+		printf '%s' "$HERDR_SOCKET_PATH"
+	elif [[ -n "${HERDR_SESSION:-}" ]]; then
+		printf '%s' "$HOME/.config/herdr/sessions/$HERDR_SESSION/herdr.sock"
+	else
+		printf '%s' "$HOME/.config/herdr/herdr.sock"
+	fi
+}
+
+# Raw socket call for methods the CLI lacks (pane.focus by id).
+api() { # api <method> <params-json>
+	printf '{"id":"vimtest","method":"%s","params":%s}\n' "$1" "$2" | nc -U -w 2 "$(socket_path)"
+}
+
+focus_pane() { api pane.focus "{\"pane_id\":\"$1\"}" >/dev/null; }
+
+caller_pane() {
+	local p="${HERDR_ACTIVE_PANE_ID:-${HERDR_PANE_ID:-}}"
+	[[ -n "$p" ]] || { echo "herdr-vimtest: not inside herdr (no pane id)" >&2; exit 1; }
+	printf '%s' "$p"
+}
+
+tab_of() { "$HERDR" pane get "$1" | jq -r '.result.pane.tab_id'; }
+
+# Pane labels are only exposed in the snapshot, not in `pane list`.
+runner_in_tab() { # runner_in_tab <tab_id> -> pane id or empty
+	"$HERDR" api snapshot | jq -r --arg tab "$1" --arg m "$MARKER" \
+		'[.. | objects | select(has("pane_id") and .tab_id == $tab and .label == $m)][0].pane_id // empty'
+}
+
+ensure_runner() { # ensure_runner <caller_pane> -> runner pane id
+	local caller="$1" tab runner cwd
+	tab=$(tab_of "$caller")
+	runner=$(runner_in_tab "$tab")
+	if [[ -z "$runner" ]]; then
+		cwd=$("$HERDR" pane get "$caller" | jq -r '.result.pane.foreground_cwd // .result.pane.cwd')
+		# ratio is the share of the FIRST (top) pane: 0.8 leaves the runner 20%.
+		runner=$("$HERDR" pane split "$caller" --direction down --ratio 0.8 --cwd "$cwd" --no-focus \
+			| jq -r '.result.pane.pane_id')
+		"$HERDR" pane rename "$runner" "$MARKER" >/dev/null
+		sleep 0.3 # let the shell come up before typing into it
+	fi
+	printf '%s' "$runner"
+}
+
+cmd_run() {
+	[[ $# -gt 0 ]] || { echo "usage: herdr-vimtest run <cmd...>" >&2; exit 1; }
+	local caller runner
+	caller=$(caller_pane)
+	runner=$(ensure_runner "$caller")
+	# vimux with test#preserve_screen=0 clears the pane before each run.
+	"$HERDR" pane run "$runner" "clear; $*" >/dev/null
+}
+
+cmd_focus() {
+	local caller tab runner focused layout
+	caller=$(caller_pane)
+	tab=$(tab_of "$caller")
+	runner=$(runner_in_tab "$tab")
+	[[ -n "$runner" ]] || exit 0
+	layout=$("$HERDR" pane layout --pane "$caller")
+	focused=$(jq -r '.result.layout.focused_pane_id' <<<"$layout")
+	mkdir -p "$STATE_DIR"
+	local state="$STATE_DIR/last-${tab//[^A-Za-z0-9_]/_}"
+	if [[ "$focused" == "$runner" ]]; then
+		"$HERDR" pane zoom "$runner" --off >/dev/null
+		local back=""
+		[[ -f "$state" ]] && back=$(cat "$state")
+		# Fall back to the first other pane in the tab if the remembered one is gone.
+		if [[ -z "$back" ]] || ! jq -e --arg p "$back" '.result.layout.panes[] | select(.pane_id == $p)' <<<"$layout" >/dev/null; then
+			back=$(jq -r --arg r "$runner" '[.result.layout.panes[] | select(.pane_id != $r)][0].pane_id // empty' <<<"$layout")
+		fi
+		[[ -n "$back" ]] && focus_pane "$back"
+	else
+		printf '%s\n' "$focused" >"$state"
+		focus_pane "$runner"
+		"$HERDR" pane zoom "$runner" --on >/dev/null
+	fi
+}
+
+case "${1:-}" in
+run) shift; cmd_run "$@" ;;
+focus) cmd_focus ;;
+*) echo "usage: herdr-vimtest run <cmd...> | focus" >&2; exit 1 ;;
+esac
