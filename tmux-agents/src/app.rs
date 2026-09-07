@@ -31,7 +31,7 @@ impl App {
     }
 }
 
-pub fn run<B: Backend, T: Tmux>(
+pub fn run<B: Backend<Error = io::Error>, T: Tmux>(
     terminal: &mut Terminal<B>,
     app: &mut App,
     events: impl Iterator<Item = io::Result<Event>>,
