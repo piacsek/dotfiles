@@ -99,3 +99,27 @@ fn records_with_dead_pids_are_dropped() {
     assert_eq!(agents.len(), 1);
     assert_eq!(agents[0].pid, 8);
 }
+
+#[test]
+fn colliding_labels_get_a_session_window_suffix() {
+    let panes = vec![
+        pane("%1", "work", 3, ""),
+        pane("%2", "work", 5, ""),
+        pane("%3", "home", 1, ""),
+    ];
+    let records = vec![
+        record(1, "/a/ws-common", Some("work:@1.%1")),
+        record(2, "/b/ws-common", Some("work:@2.%2")),
+        record(3, "/c/dotfiles", Some("home:@3.%3")),
+    ];
+
+    let labels: Vec<String> = discover(records, &panes, &alive)
+        .into_iter()
+        .map(|a| a.label)
+        .collect();
+
+    assert_eq!(
+        labels,
+        vec!["ws-common ·work:3", "ws-common ·work:5", "dotfiles"]
+    );
+}

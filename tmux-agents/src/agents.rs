@@ -1,3 +1,4 @@
+use std::collections::{HashMap, HashSet};
 use std::path::PathBuf;
 
 use crate::registry::{Kind, SessionRecord};
@@ -21,7 +22,7 @@ pub fn discover(
     panes: &[PaneInfo],
     alive: &dyn Fn(i32) -> bool,
 ) -> Vec<Agent> {
-    records
+    let mut agents: Vec<Agent> = records
         .into_iter()
         .filter(|record| record.kind == Kind::Interactive && alive(record.pid))
         .filter_map(|record| {
@@ -37,7 +38,26 @@ pub fn discover(
                 title: pane.title.strip_prefix(TITLE_PREFIX).map(str::to_string),
             })
         })
-        .collect()
+        .collect();
+    disambiguate_labels(&mut agents);
+    agents
+}
+
+fn disambiguate_labels(agents: &mut [Agent]) {
+    let mut counts: HashMap<&str, usize> = HashMap::new();
+    for agent in agents.iter() {
+        *counts.entry(agent.label.as_str()).or_default() += 1;
+    }
+    let duplicated: HashSet<String> = counts
+        .into_iter()
+        .filter(|(_, n)| *n > 1)
+        .map(|(label, _)| label.to_string())
+        .collect();
+    for agent in agents.iter_mut() {
+        if duplicated.contains(&agent.label) {
+            agent.label = format!("{} ·{}:{}", agent.label, agent.session, agent.window_index);
+        }
+    }
 }
 
 fn basename(path: &std::path::Path) -> String {
