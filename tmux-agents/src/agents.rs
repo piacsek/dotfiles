@@ -39,6 +39,7 @@ pub fn discover(
             })
         })
         .collect();
+    agents.sort_by(|a, b| (&a.session, a.window_index).cmp(&(&b.session, b.window_index)));
     disambiguate_labels(&mut agents);
     agents
 }
