@@ -90,4 +90,24 @@ mod tests {
             ]
         );
     }
+
+    #[test]
+    fn cli_tmux_builds_focus_and_list_panes_argv() {
+        let default = CliTmux::default();
+        assert_eq!(
+            default.focus_args(&PaneId("%53".to_string())),
+            vec!["switch-client", "-Z", "-t", "%53"]
+        );
+        let list = default.list_panes_args();
+        assert_eq!(list[0], "list-panes");
+        assert!(list.contains(&"-a".to_string()));
+        assert_eq!(
+            list.last().unwrap(),
+            "#{pane_id}\t#{session_name}\t#{window_id}\t#{window_index}\t#{pane_current_path}\t#{pane_title}"
+        );
+
+        let scoped = CliTmux::with_socket("ci");
+        assert_eq!(&scoped.list_panes_args()[..2], &["-L", "ci"]);
+        assert_eq!(&scoped.focus_args(&PaneId("%1".to_string()))[..2], &["-L", "ci"]);
+    }
 }
