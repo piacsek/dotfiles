@@ -641,5 +641,5 @@ fn rows_show_the_state_age_right_aligned() {
         "{screen}"
     );
     assert_eq!(rows[2].trim_end(), "  ○ idle     c", "{screen}");
-    assert!(picker.cell(57, 0).modifier.contains(Modifier::DIM));
+    assert!(picker.cell(59, 0).modifier.contains(Modifier::DIM));
 }
