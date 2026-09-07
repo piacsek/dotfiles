@@ -3,28 +3,38 @@ use std::process::Command;
 use std::thread::sleep;
 use std::time::{Duration, Instant};
 
-const SOCKET: &str = "tmux-agents-e2e";
-
-struct Server;
+struct Server {
+    socket: String,
+}
 
 impl Server {
-    fn start() -> Self {
-        let status = tmux(&["new-session", "-d", "-s", "live", "-x", "80", "-y", "12"])
+    fn start(name: &str) -> Self {
+        let server = Self {
+            socket: format!("tmux-agents-e2e-{name}"),
+        };
+        let status = server
+            .tmux(&["new-session", "-d", "-s", "live", "-x", "80", "-y", "12"])
             .status()
             .expect("tmux binary on PATH");
         assert!(status.success(), "could not start tmux e2e server");
-        Self
+        server
+    }
+
+    fn tmux(&self, args: &[&str]) -> Command {
+        let mut cmd = Command::new("tmux");
+        cmd.arg("-L").arg(&self.socket).args(args);
+        cmd
     }
 
     fn pane_id(&self) -> String {
-        let out = tmux(&["list-panes", "-a", "-F", "#{pane_id}"])
+        let out = self.tmux(&["list-panes", "-a", "-F", "#{pane_id}"])
             .output()
             .unwrap();
         String::from_utf8(out.stdout).unwrap().trim().to_string()
     }
 
     fn socket_path(&self) -> String {
-        let out = tmux(&["display", "-p", "#{socket_path}"]).output().unwrap();
+        let out = self.tmux(&["display", "-p", "#{socket_path}"]).output().unwrap();
         String::from_utf8(out.stdout).unwrap().trim().to_string()
     }
 
@@ -36,14 +46,14 @@ impl Server {
             args.push(pair);
         }
         args.push(command);
-        assert!(tmux(&args).status().unwrap().success());
+        assert!(self.tmux(&args).status().unwrap().success());
     }
 
     fn wait_for_screen(&self, needle: &str) -> String {
         let deadline = Instant::now() + Duration::from_secs(5);
         let mut screen = String::new();
         while Instant::now() < deadline {
-            let out = tmux(&["capture-pane", "-p"]).output().unwrap();
+            let out = self.tmux(&["capture-pane", "-p"]).output().unwrap();
             screen = String::from_utf8_lossy(&out.stdout).into_owned();
             if screen.contains(needle) {
                 return screen;
@@ -56,14 +66,8 @@ impl Server {
 
 impl Drop for Server {
     fn drop(&mut self) {
-        let _ = tmux(&["kill-server"]).status();
+        let _ = self.tmux(&["kill-server"]).status();
     }
-}
-
-fn tmux(args: &[&str]) -> Command {
-    let mut cmd = Command::new("tmux");
-    cmd.arg("-L").arg(SOCKET).args(args);
-    cmd
 }
 
 fn fixture_home(server: &Server) -> tempfile::TempDir {
@@ -88,7 +92,7 @@ fn fixture_home(server: &Server) -> tempfile::TempDir {
 #[test]
 #[ignore = "needs a tmux binary; run with --ignored"]
 fn binary_lists_a_live_session_without_any_keypress() {
-    let server = Server::start();
+    let server = Server::start("tui");
     let home = fixture_home(&server);
 
     server.respawn(
@@ -103,7 +107,7 @@ fn binary_lists_a_live_session_without_any_keypress() {
 #[test]
 #[ignore = "needs a tmux binary; run with --ignored"]
 fn status_subcommand_prints_tmux_markup_for_the_live_session() {
-    let server = Server::start();
+    let server = Server::start("status");
     let home = fixture_home(&server);
 
     let out = Command::new(env!("CARGO_BIN_EXE_tmux-agents"))
