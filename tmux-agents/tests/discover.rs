@@ -166,7 +166,10 @@ fn colliding_labels_in_the_same_window_also_get_the_pane_id() {
         .map(|a| a.label)
         .collect();
 
-    assert_eq!(labels, vec!["ws-common ·work:3.%3", "ws-common ·work:3.%55"]);
+    assert_eq!(
+        labels,
+        vec!["ws-common ·work:3.%3", "ws-common ·work:3.%55"]
+    );
 }
 
 #[test]

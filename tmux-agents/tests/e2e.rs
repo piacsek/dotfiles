@@ -17,7 +17,9 @@ impl Server {
     }
 
     fn pane_id(&self) -> String {
-        let out = tmux(&["list-panes", "-a", "-F", "#{pane_id}"]).output().unwrap();
+        let out = tmux(&["list-panes", "-a", "-F", "#{pane_id}"])
+            .output()
+            .unwrap();
         String::from_utf8(out.stdout).unwrap().trim().to_string()
     }
 
