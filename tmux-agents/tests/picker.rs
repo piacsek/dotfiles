@@ -661,6 +661,6 @@ fn blocked_rows_show_the_reason_in_red_before_the_title() {
         "{screen}"
     );
     assert!(screen.contains("◉ blocked  b  input needed"), "{screen}");
-    assert_eq!(picker.cell(17, 0).symbol(), "p");
-    assert_eq!(picker.cell(17, 0).fg, Color::Red);
+    assert_eq!(picker.cell(16, 0).symbol(), "p");
+    assert_eq!(picker.cell(16, 0).fg, Color::Red);
 }
