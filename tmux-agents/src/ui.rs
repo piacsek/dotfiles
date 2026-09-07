@@ -14,7 +14,7 @@ pub fn draw(frame: &mut Frame, app: &mut App) {
         let text = vec![
             Line::from("No Claude Code sessions in this tmux server"),
             Line::from(""),
-            Line::from(Span::styled("n new Claude window  q close", dim)),
+            Line::from(Span::styled("n new Claude pane  q close", dim)),
         ];
         frame.render_widget(Paragraph::new(text), frame.area());
         return;
