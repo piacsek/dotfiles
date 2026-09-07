@@ -285,6 +285,7 @@ Goal: `status-right` shows per-state counts, refreshed every second.
 - e2e harness bug found: both e2e tests shared one socket name and killed each other's server when run in parallel. Sockets are now per test.
 - `tmux display -p` cannot evaluate `#()`; verification is by cache-file mtimes advancing and by eye.
 - 6 render/cli tests + 1 e2e; 51 tests total, 3 ignored live.
+- Zero-session handling (later the same day): `status` prints `none` after the sparkle so the config-level `|` never dangles; the empty popup shows a hint and `n` prompts for a new claude window via `command-prompt`.
 
 ### Verification (as planned)
 - `time` each widget in status-right before/after.
