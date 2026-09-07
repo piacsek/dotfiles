@@ -18,7 +18,7 @@ pub struct PaneInfo {
 pub trait Tmux {
     fn list_panes(&self) -> io::Result<Vec<PaneInfo>>;
     fn focus(&self, pane: &PaneId) -> io::Result<()>;
-    fn new_claude_window(&self) -> io::Result<()>;
+    fn new_claude_pane(&self) -> io::Result<()>;
 }
 
 const PANE_FORMAT: &str = "#{pane_id}\t#{session_name}\t#{window_id}\t#{window_index}\t#{pane_current_path}\t#{pane_title}";
@@ -43,12 +43,13 @@ impl CliTmux {
         self.args(&["switch-client", "-Z", "-t", &pane.0])
     }
 
-    pub fn new_claude_window_args(&self) -> Vec<String> {
+    pub fn new_claude_pane_args(&self) -> Vec<String> {
         self.args(&[
-            "command-prompt",
-            "-p",
-            "claude window name:",
-            "new-window -c '#{pane_current_path}' -n 'claude-%%' 'zsh -ic claude'",
+            "split-window",
+            "-h",
+            "-c",
+            "#{pane_current_path}",
+            "zsh -ic claude",
         ])
     }
 
@@ -82,8 +83,8 @@ impl Tmux for CliTmux {
         self.run(&self.focus_args(pane)).map(drop)
     }
 
-    fn new_claude_window(&self) -> io::Result<()> {
-        self.run(&self.new_claude_window_args()).map(drop)
+    fn new_claude_pane(&self) -> io::Result<()> {
+        self.run(&self.new_claude_pane_args()).map(drop)
     }
 }
 
