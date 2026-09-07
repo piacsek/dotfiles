@@ -255,7 +255,7 @@ By state group (blocked, working, idle, unknown), then session, then window inde
 
 ---
 
-## Phase 3 — tmux status line (revised after Phase 2 retro, 2026-09-07)
+## Phase 3 — tmux status line (revised after Phase 2 retro, 2026-09-07) — DONE 2026-09-07
 
 Goal: `status-right` shows per-state counts, refreshed every second.
 
@@ -280,7 +280,13 @@ Goal: `status-right` shows per-state counts, refreshed every second.
 6. E2E: `tmux-agents status` in the scratch server with a fixture prints the expected markup.
 7. Wiring: main dispatch; `.tmux.conf` + `~/.tmux_work.conf` segment; `status-interval 1`; widget caches as measured.
 
-### Verification
+### Outcome
+- Widgets measured before: git-widget 180 ms, kube_status 90 ms, tailscale_status 110 ms. All wrapped in `scripts/tmux-cached 5`, so at `status-interval 1` they still run every 5 s. `tmux-agents status` is 10–30 ms warm.
+- e2e harness bug found: both e2e tests shared one socket name and killed each other's server when run in parallel. Sockets are now per test.
+- `tmux display -p` cannot evaluate `#()`; verification is by cache-file mtimes advancing and by eye.
+- 6 render/cli tests + 1 e2e; 51 tests total, 3 ignored live.
+
+### Verification (as planned)
 - `time` each widget in status-right before/after.
 - Live: status bar shows counts matching the popup; goes blank with no sessions.
 
