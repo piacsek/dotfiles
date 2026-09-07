@@ -1,0 +1,38 @@
+name: tmux-agents
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "tmux-agents/**"
+      - ".github/workflows/tmux-agents.yml"
+  pull_request:
+    paths:
+      - "tmux-agents/**"
+      - ".github/workflows/tmux-agents.yml"
+
+concurrency:
+  group: tmux-agents-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    working-directory: tmux-agents
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: 1.98.1
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: tmux-agents
+      - run: cargo fmt --check
+      - run: cargo clippy --all-targets -- -D warnings
+      - run: cargo test
+      - run: sudo apt-get update && sudo apt-get install -y tmux
+      - run: cargo test --test tmux_live -- --ignored
