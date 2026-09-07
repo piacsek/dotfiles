@@ -1,7 +1,7 @@
 use std::env;
 use std::path::PathBuf;
 use std::process::ExitCode;
-use std::time::Duration;
+use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
 use ratatui::crossterm::event::{self, Event};
 use tmux_agents::agents::{Agent, discover};
@@ -61,8 +61,15 @@ fn agent_source(tmux: &CliTmux) -> impl FnMut() -> std::io::Result<Vec<Agent>> +
     let sessions = sessions_dir(config_dir, &home);
     move || {
         let panes: Vec<PaneInfo> = tmux.list_panes()?;
-        Ok(discover(load(&sessions), &panes, &is_alive))
+        Ok(discover(load(&sessions), &panes, &is_alive, now_ms()))
     }
+}
+
+fn now_ms() -> u64 {
+    SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .map(|d| d.as_millis() as u64)
+        .unwrap_or(0)
 }
 
 fn next_input() -> std::io::Result<Input> {

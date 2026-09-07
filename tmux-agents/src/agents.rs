@@ -1,5 +1,6 @@
 use std::collections::{HashMap, HashSet};
 use std::path::PathBuf;
+use std::time::Duration;
 
 use crate::registry::{Kind, SessionRecord, Status};
 use crate::state::State;
@@ -15,12 +16,14 @@ pub struct Agent {
     pub session: String,
     pub window_index: u32,
     pub title: Option<String>,
+    pub status_age: Option<Duration>,
 }
 
 pub fn discover(
     records: Vec<SessionRecord>,
     panes: &[PaneInfo],
     alive: &dyn Fn(i32) -> bool,
+    now_ms: u64,
 ) -> Vec<Agent> {
     let mut agents: Vec<Agent> = records
         .into_iter()
@@ -37,6 +40,9 @@ pub fn discover(
                 session: pane.session.clone(),
                 window_index: pane.window_index,
                 title: summary(&pane.title),
+                status_age: record
+                    .status_updated_at
+                    .map(|at| Duration::from_millis(now_ms.saturating_sub(at))),
             })
         })
         .collect();
