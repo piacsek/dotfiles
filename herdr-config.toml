@@ -153,12 +153,44 @@ type = "shell"
 command = "$HOME/dotfiles/scripts/herdr-vimtest focus"
 description = "focus/zoom vimtest pane"
 
-# prefix C-t — layout toggle for a 2-pane tab: side-by-side ⇄ top 80% / bottom 20%.
+# Layouts (tmux select-layout via scripts/herdr-layout): prefix C-t toggles
+# even-horizontal ⇄ main-horizontal like .tmux.conf; prefix M-1..M-5 and
+# prefix = | \ are the tmux presets. Panes are re-attached in visual order.
 [[keys.command]]
 key = "prefix+ctrl+t"
 type = "shell"
-command = "$HOME/dotfiles/scripts/herdr-layout-toggle"
-description = "toggle 2-pane layout"
+command = "$HOME/dotfiles/scripts/herdr-layout toggle"
+description = "layout: toggle even-horizontal/main-horizontal"
+
+[[keys.command]]
+key = ["prefix+alt+1", "prefix+equal"]
+type = "shell"
+command = "$HOME/dotfiles/scripts/herdr-layout even-horizontal"
+description = "layout: even-horizontal"
+
+[[keys.command]]
+key = ["prefix+alt+2", "prefix+pipe"]
+type = "shell"
+command = "$HOME/dotfiles/scripts/herdr-layout even-vertical"
+description = "layout: even-vertical"
+
+[[keys.command]]
+key = "prefix+alt+3"
+type = "shell"
+command = "$HOME/dotfiles/scripts/herdr-layout main-horizontal"
+description = "layout: main-horizontal"
+
+[[keys.command]]
+key = ["prefix+alt+4", "prefix+backslash"]
+type = "shell"
+command = "$HOME/dotfiles/scripts/herdr-layout main-vertical"
+description = "layout: main-vertical"
+
+[[keys.command]]
+key = "prefix+alt+5"
+type = "shell"
+command = "$HOME/dotfiles/scripts/herdr-layout tiled"
+description = "layout: tiled"
 
 # ---- vim-tmux-navigator → herdr-nvim-nav (C-h/j/k/l across nvim splits and panes) ----
 [[keys.command]]
