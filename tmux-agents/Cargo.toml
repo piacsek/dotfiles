@@ -11,6 +11,7 @@ serde_json = "1"
 nix = { version = "0.31", features = ["signal"] }
 
 [dev-dependencies]
+insta = "1.48.0"
 tempfile = "3"
 
 [profile.release]
