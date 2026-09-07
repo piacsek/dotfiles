@@ -123,3 +123,31 @@ fn colliding_labels_get_a_session_window_suffix() {
         vec!["ws-common ·work:3", "ws-common ·work:5", "dotfiles"]
     );
 }
+
+#[test]
+fn agents_are_sorted_by_session_then_window_index() {
+    let panes = vec![
+        pane("%1", "work", 5, ""),
+        pane("%2", "home", 2, ""),
+        pane("%3", "work", 1, ""),
+    ];
+    let records = vec![
+        record(1, "/a", Some("work:@1.%1")),
+        record(2, "/b", Some("home:@2.%2")),
+        record(3, "/c", Some("work:@3.%3")),
+    ];
+
+    let order: Vec<(String, u32)> = discover(records, &panes, &alive)
+        .into_iter()
+        .map(|a| (a.session, a.window_index))
+        .collect();
+
+    assert_eq!(
+        order,
+        vec![
+            ("home".to_string(), 2),
+            ("work".to_string(), 1),
+            ("work".to_string(), 5)
+        ]
+    );
+}
