@@ -57,6 +57,10 @@
       "rev": "600896c302fb9232559b93200ed2caab8bd8e28e",
       "src": "https://github.com/axkirillov/hbac.nvim"
     },
+    "herdr-nvim": {
+      "rev": "e652ebf7b3d6713992e68a30aec588822e69fae5",
+      "src": "https://github.com/ChmaraX/herdr-nvim"
+    },
     "herdr-nvim-nav": {
       "rev": "ec047fd6d8d0269d54a34e9405af28d8aad4c8f0",
       "src": "https://github.com/aimdevlee/herdr-nvim-nav"
