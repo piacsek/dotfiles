@@ -1,6 +1,6 @@
 use std::path::PathBuf;
 
-use crate::registry::SessionRecord;
+use crate::registry::{Kind, SessionRecord};
 use crate::tmux::{PaneId, PaneInfo, parse_pane_ref};
 
 const TITLE_PREFIX: &str = "✳ ";
@@ -23,6 +23,7 @@ pub fn discover(
 ) -> Vec<Agent> {
     records
         .into_iter()
+        .filter(|record| record.kind == Kind::Interactive)
         .filter_map(|record| {
             let pane_id = parse_pane_ref(record.tmux.as_deref()?)?;
             let pane = panes.iter().find(|p| p.id == pane_id)?;
