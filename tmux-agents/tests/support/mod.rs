@@ -32,38 +32,50 @@ impl Tmux for FakeTmux {
     }
 }
 
-pub fn key(code: KeyCode) -> io::Result<Event> {
-    Ok(Event::Key(KeyEvent::new(code, KeyModifiers::NONE)))
+pub fn key(code: KeyCode) -> io::Result<Input> {
+    Ok(Input::Key(KeyEvent::new(code, KeyModifiers::NONE)))
 }
 
-pub fn ctrl(c: char) -> io::Result<Event> {
-    Ok(Event::Key(KeyEvent::new(
+pub fn ctrl(c: char) -> io::Result<Input> {
+    Ok(Input::Key(KeyEvent::new(
         KeyCode::Char(c),
         KeyModifiers::CONTROL,
     )))
+}
+
+pub fn tick() -> io::Result<Input> {
+    Ok(Input::Tick)
 }
 
 pub struct Picker {
     pub terminal: Terminal<TestBackend>,
     pub app: App,
     pub tmux: FakeTmux,
+    pub source: Rc<RefCell<Vec<Agent>>>,
 }
 
 impl Picker {
     pub fn new(agents: Vec<Agent>) -> Self {
         Self {
             terminal: Terminal::new(TestBackend::new(60, 8)).unwrap(),
-            app: App::new(agents),
+            app: App::new(agents.clone()),
             tmux: FakeTmux::default(),
+            source: Rc::new(RefCell::new(agents)),
         }
     }
 
-    pub fn run(&mut self, keys: Vec<io::Result<Event>>) -> io::Result<()> {
+    pub fn next_refresh_returns(&self, agents: Vec<Agent>) {
+        *self.source.borrow_mut() = agents;
+    }
+
+    pub fn run(&mut self, inputs: Vec<io::Result<Input>>) -> io::Result<()> {
+        let source = Rc::clone(&self.source);
         run(
             &mut self.terminal,
             &mut self.app,
-            keys.into_iter(),
+            inputs.into_iter(),
             &self.tmux,
+            || Ok(source.borrow().clone()),
         )
     }
 
