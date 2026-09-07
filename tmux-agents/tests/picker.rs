@@ -371,3 +371,58 @@ fn a_tick_refreshes_the_rows_from_the_source() {
     let screen = picker.screen();
     assert!(screen.lines().nth(1).unwrap().contains("b"), "{screen}");
 }
+
+fn agent_with_pid(label: &str, pane: &str, pid: i32) -> tmux_agents::agents::Agent {
+    tmux_agents::agents::Agent {
+        pid,
+        ..agent(label, pane)
+    }
+}
+
+#[test]
+fn refresh_keeps_the_selected_agent_when_rows_reorder() {
+    let a = agent_with_pid("a", "%1", 1);
+    let b = agent_with_pid("b", "%2", 2);
+    let mut picker = Picker::new(vec![a.clone(), b.clone()]);
+    picker.next_refresh_returns(vec![b, a]);
+
+    picker
+        .run(vec![key(KeyCode::Char('j')), tick(), key(KeyCode::Enter)])
+        .unwrap();
+
+    assert_eq!(picker.tmux.focused(), vec![PaneId("%2".to_string())]);
+    assert!(picker.screen().lines().next().unwrap().starts_with("> ○ b"));
+}
+
+#[test]
+fn refresh_falls_back_to_the_first_row_when_the_selected_agent_is_gone() {
+    let a = agent_with_pid("a", "%1", 1);
+    let b = agent_with_pid("b", "%2", 2);
+    let mut picker = Picker::new(vec![a.clone(), b]);
+    picker.next_refresh_returns(vec![a]);
+
+    picker
+        .run(vec![key(KeyCode::Char('j')), tick(), key(KeyCode::Enter)])
+        .unwrap();
+
+    assert_eq!(picker.tmux.focused(), vec![PaneId("%1".to_string())]);
+}
+
+#[test]
+fn filter_still_applies_after_a_refresh() {
+    let mut picker = Picker::new(vec![agent("dotfiles", "%1"), agent("ws-common", "%2")]);
+    picker.next_refresh_returns(vec![
+        agent("dotfiles", "%1"),
+        agent("ws-common", "%2"),
+        agent("ws-start", "%3"),
+    ]);
+
+    picker
+        .run(vec![key(KeyCode::Char('/')), key(KeyCode::Char('w')), tick()])
+        .unwrap();
+
+    let screen = picker.screen();
+    assert!(!screen.contains("dotfiles"), "{screen}");
+    assert!(screen.contains("ws-start"), "{screen}");
+    assert!(screen.contains("/w"), "{screen}");
+}
