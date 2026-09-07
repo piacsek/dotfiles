@@ -253,14 +253,15 @@ TS_SEARCH_PATHS=($HOME/path/to/dir:0 $HOME/.tmux-sessions:1)
 ### 12. Build tmux-agents
 
 Rust TUI behind `<M-c>` in tmux: lists the Claude Code sessions running in the
-current tmux server and jumps to the selected pane. Needs the asdf Rust
-toolchain from step 9. `~/.local/bin` is on PATH.
+current tmux server and jumps to the selected pane. Lives in its own repo. Needs
+the asdf Rust toolchain from step 9. `~/.local/bin` is on PATH.
 
 ```bash
-cargo install --path ~/dotfiles/tmux-agents --root ~/.local --locked
+git clone git@github.com:piacsek/tmux-agents.git ~/projects/tmux-agents
+cargo install --path ~/projects/tmux-agents --root ~/.local --locked
 ```
 
-Re-run after pulling changes to `tmux-agents/`. Tests: `cd ~/dotfiles/tmux-agents && cargo test`.
+Re-run the install after pulling changes.
 
 The status line runs `tmux-agents status` every second (per-state counts). If a
 machine has `~/.tmux_work.conf`, it replaces `status-right` wholesale, so copy the
