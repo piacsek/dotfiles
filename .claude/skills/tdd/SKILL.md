@@ -1,6 +1,7 @@
 ---
 name: tdd
-description: Follow strict Test Driven Development with small incremental steps
+description: Follow strict Test Driven Development with small incremental steps. Pass "autonomous" (/tdd autonomous) to let the agent commit, push, and open a draft PR on the user's behalf after each completed Red-Green-Refactor cycle.
+argument-hint: "[autonomous]"
 ---
 
 Follow Test Driven Development (TDD) strictly for all code changes. Work in the smallest possible increments.
@@ -10,6 +11,19 @@ Follow Test Driven Development (TDD) strictly for all code changes. Work in the 
 - If working from a Linear ticket (or any multi-step task), create a tasklist before writing any code. Break the ticket into the smallest testable behaviors, each one a discrete task.
 - Each task should be small enough to complete in one Red-Green-Refactor cycle.
 - Surface the tasklist to the user before acting on it.
+
+## Autonomous mode
+
+Autonomous mode is OFF unless the user invokes the skill with the literal argument `autonomous` (`/tdd autonomous`) or says so explicitly in the same message. Outside autonomous mode, never commit, push, or open a PR; that is the user's responsibility and standing grants from earlier sessions do not carry forward.
+
+In autonomous mode:
+
+- Still surface the tasklist before acting. Once the user says go, work through the tasks without pausing for review between them.
+- Commit and push only after a task's full Red -> Green -> Refactor cycle is complete and every quality gate below has passed. Never commit mid-cycle, never commit a red test, never commit with a failing gate.
+- One commit per task, conventional-commit message, author is the user only (no AI co-author trailers). Push to the current branch after each commit.
+- After the first task is pushed, open a draft PR assigned to the user (`gh pr create --draft --assignee @me`). Follow the repository's PR conventions and template; fill only what the template asks for and keep it short.
+- After all tasks are done, re-fetch the PR title and description immediately before editing them, review both against what actually shipped, and update anything stale or missing. Preserve every edit the user made along the way: change only text you wrote that is now inaccurate, and never rewrite or reorder the user's words.
+- Before any push, check the branch: never push to the default branch, and never force-push.
 
 ## The TDD Cycle
 
@@ -39,16 +53,16 @@ Do NOT mark a task complete until the quality gates for this project have passed
 3. Run every applicable gate. If one fails, fix it before moving on — do not defer.
 4. Only then mark the task done.
 
-After a task is marked done, stop and wait for the user to review the output before starting the next task. This applies even in auto-accept or "accept edits" mode — never chain tasks without an explicit go-ahead from the user.
+After a task is marked done, stop and wait for the user to review the output before starting the next task. This applies even in auto-accept or "accept edits" mode — never chain tasks without an explicit go-ahead from the user. The one exception is autonomous mode (see above), where you commit, push, and continue to the next task.
 
-Once the user approves, they will commit the changes manually to create a checkpoint. Do not commit on their behalf.
+Once the user approves, they will commit the changes manually to create a checkpoint. Do not commit on their behalf unless in autonomous mode.
 
 Before starting the next task, explicitly assess refactoring opportunities against the just-committed checkpoint: duplication introduced, naming that no longer fits, abstractions that want to emerge, dead scaffolding. Surface what you'd refactor (or state that nothing warrants it) before moving on. With a clean checkpoint behind you, refactors are cheap to try and easy to roll back.
 
 ## Rules
 
 - Never write production code without a failing test first
-- Never commit - that is the user's responsibility
+- Never commit or push unless in autonomous mode; otherwise that is the user's responsibility
 - Never write code comments
 - Write only one test at a time
 - Make the smallest possible change to pass each test
