@@ -34,7 +34,7 @@
       "mcp__claude_ai_Linear__search_documentation"
     ]
   },
-  "model": "claude-fable-5-1[1m]",
+  "model": "claude-opus-5[1m]",
   "hooks": {
     "SessionEnd": [
       {
@@ -57,14 +57,14 @@
     "typescript-lsp@claude-plugins-official": true
   },
   "effortLevel": "medium",
-  "tui": "default",
-  "theme": "auto",
-  "agentPushNotifEnabled": true,
-  "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true,
   "modelSettings": {
     "claude-fable-5-1": {
       "effortLevel": "high"
     }
-  }
+  },
+  "tui": "default",
+  "theme": "auto",
+  "agentPushNotifEnabled": true,
+  "skipAutoPermissionPrompt": true,
+  "voiceEnabled": true
 }
