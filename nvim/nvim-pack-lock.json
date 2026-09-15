@@ -191,7 +191,7 @@
       "src": "https://github.com/folke/snacks.nvim"
     },
     "stargum.nvim": {
-      "rev": "5a1f64a168b7b666ccbd4a7eb83a90b2113be27a",
+      "rev": "95ac6612d54aa7cb812ce30f28ee0689b94b6114",
       "src": "https://github.com/piacsek/stargum.nvim"
     },
     "trouble.nvim": {
