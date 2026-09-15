@@ -2,6 +2,10 @@ vim.api.nvim_create_user_command("R", function()
 	vim.cmd("restart")
 end, { desc = "Restart nvim" })
 
+vim.api.nvim_create_user_command("E", function()
+	vim.cmd("e!")
+end, { desc = "Reload the buffer discarding current changes" })
+
 -- Muscle-memory alias for the 0.12 builtin `:lsp restart` (a proper
 -- stop-then-start — the old hand-rolled enable(false)/enable(true) same-tick
 -- version could orphan clients). LspInfo/LspLog have no builtin command form.
