@@ -34,7 +34,7 @@
       "mcp__claude_ai_Linear__search_documentation"
     ]
   },
-  "model": "claude-fable-5-1[1m]",
+  "model": "opus[1m]",
   "hooks": {
     "SessionEnd": [
       {
@@ -63,6 +63,7 @@
     }
   },
   "tui": "default",
+  "skipWorkflowUsageWarning": true,
   "theme": "auto",
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
@@ -105,6 +106,5 @@
       "routine under ws-common/ prefix: mix, npx, elixir test/build commands scoped to this repo"
     ]
   },
-  "voiceEnabled": true,
-  "skipWorkflowUsageWarning": true
+  "voiceEnabled": true
 }
