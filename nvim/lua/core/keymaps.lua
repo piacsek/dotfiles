@@ -268,6 +268,14 @@ vim.keymap.set("n", "<leader>gd", function()
 		win = { style = "float", width = 0.9, height = 0.9 },
 	})
 end, { desc = "Diff current file vs origin/main" })
+-- Toggle the gitsigns diff base between the index and origin/main, so `{` / `}`
+-- navigate hunks relative to the branch point instead of the last commit.
+local gitsigns_base_is_main = false
+vim.keymap.set("n", "<leader>gm", function()
+	gitsigns_base_is_main = not gitsigns_base_is_main
+	require("gitsigns").change_base(gitsigns_base_is_main and "origin/main" or nil, true)
+	vim.notify("Gitsigns base: " .. (gitsigns_base_is_main and "origin/main" or "index"), vim.log.levels.INFO)
+end, { desc = "Toggle git hunk base (index <-> origin/main)" })
 vim.keymap.set("n", "<leader>N", function()
 	Snacks.win({
 		file = vim.api.nvim_get_runtime_file("doc/news.txt", false)[1],
