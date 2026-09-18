@@ -62,10 +62,10 @@ vim.pack.add({
 	gh("oxidescheme/oxide.nvim"),
 	gh("dmkc/underwater-vim-theme"),
 	gh("bluz71/vim-moonfly-colors"),
-	gh("DRoma82/add-subtract-ex.nvim"),
+	-- gh("DRoma82/add-subtract-ex.nvim"),
 }, { load = true })
 
-require("add-subtract-ex").setup({})
+-- require("add-subtract-ex").setup({})
 -- Dev plugins
 -- vim.opt.rtp:prepend(vim.fn.expand("~/projects/nvim-plugins/buddy.nvim")) Plugin setup
 require("markdown_preview").setup({
