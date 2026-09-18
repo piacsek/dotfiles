@@ -37,8 +37,7 @@ vim.lsp.config["emmet_ls"] = {
 	},
 }
 
--- Formatting only for now — strip the completion capability so cmp-nvim-lsp
--- never offers rust-analyzer as a completion source.
+-- Disabling completion for languages I'm learning;
 vim.lsp.config["rust_analyzer"] = {
 	on_attach = function(client)
 		client.server_capabilities.completionProvider = nil
@@ -46,6 +45,9 @@ vim.lsp.config["rust_analyzer"] = {
 }
 
 vim.lsp.config["ts_ls"] = {
+	on_attach = function(client)
+		client.server_capabilities.completionProvider = nil
+	end,
 	init_options = {
 		preferences = {
 			importModuleSpecifierPreference = "relative",
@@ -99,7 +101,10 @@ vim.api.nvim_create_autocmd("FileType", {
 			-- No piacsek/lsp.lua at all → project doesn't use tailwind, stay quiet.
 			-- One exists but lacks tailwind_root → likely an oversight, nudge once.
 			if has_project_lsp_config then
-				vim.notify_once("tailwindlsp unavailable: define tailwind_root in piacsek/lsp.lua.", vim.log.levels.WARN)
+				vim.notify_once(
+					"tailwindlsp unavailable: define tailwind_root in piacsek/lsp.lua.",
+					vim.log.levels.WARN
+				)
 			end
 			return
 		end
