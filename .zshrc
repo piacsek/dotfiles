@@ -1,5 +1,6 @@
 # Exports
 export ZSH="$HOME/.oh-my-zsh"
+export XDG_CONFIG_HOME="$HOME/.config/"
 export PATH=/opt/homebrew/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:$HOME/dotfiles/scripts/:$HOME/scripts/:$HOME/.tmux-sessionizer/:$HOME/.opencode/bin:$HOME/.local/share/nvim/mason/bin
 export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl/lib/pkgconfig"
 export LDFLAGS="-L/opt/homebrew/opt/openssl/lib"
@@ -85,6 +86,10 @@ gh() {
 	fi
 }
 bindkey -r '^[d'
+
+if [ -f $XDG_CONFIG_HOME/op/plugins.sh ]; then
+	source $XDG_CONFIG_HOME/op/plugins.sh
+fi
 
 if [ -f $HOME/.zshrc_work ]; then
 	source $HOME/.zshrc_work
