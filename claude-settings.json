@@ -35,19 +35,7 @@
     ]
   },
   "model": "opus[1m]",
-  "hooks": {
-    "SessionEnd": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 /Users/piacsek/.claude/ws-session-capture/ws-claude-session-capture.py",
-            "timeout": 10000
-          }
-        ]
-      }
-    ]
-  },
+  "hooks": {},
   "statusLine": {
     "type": "command",
     "command": "bash /Users/piacsek/.claude/statusline-command.sh"
