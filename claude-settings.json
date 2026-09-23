@@ -41,8 +41,8 @@
     "command": "bash /Users/piacsek/.claude/statusline-command.sh"
   },
   "enabledPlugins": {
-    "lua-lsp@claude-plugins-official": true,
-    "typescript-lsp@claude-plugins-official": true
+    "lua-lsp@claude-plugins-official": false,
+    "typescript-lsp@claude-plugins-official": false
   },
   "effortLevel": "medium",
   "modelSettings": {
