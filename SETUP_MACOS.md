@@ -121,39 +121,20 @@ After cloning the repo you can use the local file instead:
 
 ### 7. Clone and Link Dotfiles
 
-Clone the dotfiles repository and set up symlinks:
+Clone the dotfiles repository and link its configs. The linking script backs up
+any existing destination as `<name>.pre-dotfiles.<timestamp>` and leaves an
+already-correct link alone, so it is safe to rerun:
 
 ```bash
-cd $HOME
+mkdir -p "$HOME/.tmux/plugins"
+if [ ! -d "$HOME/dotfiles/.git" ]; then
+  git clone git@github.com:piacsek/dotfiles.git "$HOME/dotfiles"
+fi
+if [ ! -d "$HOME/.tmux/plugins/tpm/.git" ]; then
+  git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
+fi
 
-git clone git@github.com:piacsek/dotfiles.git
-git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
-
-rm -rf $HOME/.config/nvim
-rm -rf $HOME/.config/ghostty
-
-mkdir -p $HOME/.config/ghostty
-mkdir -p $HOME/.config/gh-dash
-mkdir -p "$HOME/Library/Application Support/lazygit"
-mkdir -p $HOME/.config/tmux-sessionizer
-mkdir -p $HOME/.config/tmux
-mkdir -p $HOME/.config/opencode
-touch -p $HOME/.config/tmux-sessionizer/tmux-sessionizer.conf
-mkdir $HOME/scratch.nvim
-
-ln -sf $HOME/dotfiles/nvim $HOME/.config/nvim
-ln -sf $HOME/dotfiles/lazygit-config.yml "$HOME/Library/Application Support/lazygit/config.yml"
-ln -sf $HOME/dotfiles/.claude/skills $HOME/.claude/skills
-ln -sf $HOME/dotfiles/.claude/output-styles/ $HOME/.claude/output-styles
-ln -sf $HOME/dotfiles/.claude/statusline-command.sh $HOME/.claude/statusline-command.sh
-ln -sf $HOME/dotfiles/claude-settings.json $HOME/.claude/settings.json
-ln -sf $HOME/dotfiles/.ideavimrc $HOME/.ideavimrc
-ln -sf $HOME/dotfiles/.tmux.conf $HOME/.tmux.conf
-ln -sf $HOME/dotfiles/opencode.json $HOME/opencode.json
-ln -sf $HOME/dotfiles/.zshrc $HOME/.zshrc
-ln -sf $HOME/dotfiles/.ghosttyrc $HOME/.config/ghostty/config
-ln -sf $HOME/dotfiles/opencode.json $HOME/.config/opencode/
-ln -sf $HOME/dotfiles/.tool-versions $HOME/.tool-versions
+"$HOME/dotfiles/scripts/link_dotfiles.sh"
 ```
 
 ### 8. Set Up Dotfiles Auto-Sync
@@ -208,27 +189,16 @@ reconnecting the headset without a restart.
 
 ### 9. Install asdf plugins and versions
 
-Install common language plugins and their versions (from $HOME/.tool-versions):
+Install the plugins and versions listed in `$HOME/.tool-versions`. Reading the
+file keeps this list current when a tool is added, including Lua and Rust:
 
 ```bash
-source $HOME/.zshrc
-
-asdf plugin add elixir
-asdf plugin add erlang
-asdf plugin add nodejs
-asdf plugin add python
-asdf plugin add ruby
-asdf plugin add postgres
-asdf plugin add yarn
-asdf plugin add java
-asdf plugin add gradle
-asdf plugin add k9s
-asdf plugin add vault
-asdf plugin add gcloud
-asdf plugin add rebar
-asdf plugin add teleport-community
-asdf plugin add zig
-
+cd "$HOME"
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$HOME/.local/bin:$PATH"
+while read -r plugin version; do
+  case "$plugin" in ''|\#*) continue ;; esac
+  asdf plugin list | grep -Fxq "$plugin" || asdf plugin add "$plugin"
+done < "$HOME/.tool-versions"
 asdf install
 ```
 
@@ -258,7 +228,10 @@ current tmux server and jumps to the selected pane. Lives in its own repo. Needs
 the asdf Rust toolchain from step 9. `~/.local/bin` is on PATH.
 
 ```bash
-git clone git@github.com:piacsek/tmux-agents.git ~/projects/tmux-agents
+mkdir -p "$HOME/projects"
+if [ ! -d "$HOME/projects/tmux-agents/.git" ]; then
+  git clone git@github.com:piacsek/tmux-agents.git "$HOME/projects/tmux-agents"
+fi
 cargo install --path ~/projects/tmux-agents --root ~/.local --locked
 ```
 
@@ -381,7 +354,7 @@ open -a Pasty
 ```bash
 brew list --cask
 
-which git zsh fzf rg fd bat eza
+which git zsh fzf rg fd bat tmux-agents cargo
 ```
 
 ---
