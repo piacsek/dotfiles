@@ -42,8 +42,18 @@
   },
   "enabledPlugins": {
     "lua-lsp@claude-plugins-official": false,
-    "typescript-lsp@claude-plugins-official": false
+    "typescript-lsp@claude-plugins-official": false,
+    "codex@openai-codex": true
   },
+  "extraKnownMarketplaces": {
+    "openai-codex": {
+      "source": {
+        "source": "github",
+        "repo": "openai/codex-plugin-cc"
+      }
+    }
+  },
+  "outputStyle": "ELI5",
   "effortLevel": "medium",
   "modelSettings": {
     "claude-fable-5-1": {
@@ -58,6 +68,5 @@
   "theme": "auto",
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true,
-  "outputStyle": "ELI5"
+  "voiceEnabled": true
 }
