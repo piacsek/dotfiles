@@ -2,6 +2,7 @@
 # Consumed by SETUP_MACOS.md (section 6) and scripts/macos_core_deps_update.
 # One formula per line. Blank lines and #-comments are ignored.
 claude
+codex
 btop
 tmux
 1password-cli
