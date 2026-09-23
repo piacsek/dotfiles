@@ -42,8 +42,18 @@
   },
   "enabledPlugins": {
     "lua-lsp@claude-plugins-official": false,
-    "typescript-lsp@claude-plugins-official": false
+    "typescript-lsp@claude-plugins-official": false,
+    "codex@openai-codex": true
   },
+  "extraKnownMarketplaces": {
+    "openai-codex": {
+      "source": {
+        "source": "github",
+        "repo": "openai/codex-plugin-cc"
+      }
+    }
+  },
+  "outputStyle": "ELI5",
   "effortLevel": "medium",
   "modelSettings": {
     "claude-fable-5-1": {
@@ -74,15 +84,15 @@
       "### Org-wide",
       "**Organization**: Wonderschool (github.com/wonderschool)",
       "**Cloud provider(s)**: Google Cloud (GCLOUD_PROJECT=moxit-wonderschool-dev seen in .env.example); Firebase",
-      "**Repository visibility**: private (confirmed via gh) \u2014 github.com/wonderschool/ws-common",
-      "**Internal sharing / snippet hosting**: None configured \u2014 treat public paste/gist services as outside the trust boundary",
+      "**Repository visibility**: private (confirmed via gh) — github.com/wonderschool/ws-common",
+      "**Internal sharing / snippet hosting**: None configured — treat public paste/gist services as outside the trust boundary",
       "**Secrets management**: 1Password (referenced in .env.example for Stripe/LaunchDarkly credentials); CI secrets managed via GitHub Actions secrets (see CI secret names)",
       "**Default / protected branches**: `main` (protected, via gh); no rulesets listed",
       "**CI/CD deploy targets**: GitHub Actions workflows deploying Provider API, CCMS Website, Engineering guide (per README badges); ARGOCD_AUTH_TOKEN present in CI secrets suggesting ArgoCD-based deploys",
       "**Network posture**: None configured",
       "**Source control**: github.com/wonderschool/ws-common and its remote(s) only",
       "**Trusted internal domains**: wonderschool.dev, wonderschool.io (seen in PROVIDER_API_CORS_ORIGINS: ccms.wonderschool.dev, provider.wonderschool.io)",
-      "**Trusted cloud buckets**: idec-licensing-files (config-derived \u2014 not a confirmed upload destination; uploads of local data still require confirmation)",
+      "**Trusted cloud buckets**: idec-licensing-files (config-derived — not a confirmed upload destination; uploads of local data still require confirmation)",
       "**Key internal services**: Nexus API, Lego API, Parent API, Internal API, Payments API, Auth API (all localhost-scoped per .env.example; no confirmed remote hosts)",
       "**Internal package registry**: npm.pkg.github.com",
       "**Sensitive data locations & audiences**: .env* files (DB passwords, Stripe keys, Sendgrid key, LaunchDarkly client IDs, Google credentials); CI secret names (ANTHROPIC_API_KEY, ARGOCD_AUTH_TOKEN, STRIPE_SECRET_KEY_TEST, NPM_TOKEN, GITHUB_TOKEN, ROLLBAR_ACCESS_TOKEN, Slack webhook URLs, Oban license keys, app private keys); share only with engineers cleared for Wonderschool infra credentials",
@@ -97,6 +107,5 @@
       "routine under ws-common/ prefix: mix, npx, elixir test/build commands scoped to this repo"
     ]
   },
-  "voiceEnabled": true,
-  "outputStyle": "ELI5"
+  "voiceEnabled": true
 }
