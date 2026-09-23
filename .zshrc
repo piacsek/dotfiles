@@ -10,6 +10,7 @@ export EDITOR=nvim
 export VISUAL=nvim
 # Syntax-highlighted man pages via bat
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export CLAUDE_CODE_ENABLE_TODO_TOOLS=1
 
 # ZSH customization
 # Enable prompt substitution
