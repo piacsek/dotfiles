@@ -68,5 +68,6 @@
   "theme": "auto",
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "feedbackDrafts": "off"
 }
