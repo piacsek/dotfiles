@@ -66,6 +66,29 @@ local function workspace_diagnostics()
 	return "%*[" .. table.concat(parts, " ") .. "%*]"
 end
 
+-- Oil buffers are named oil:///abs/path/, so the stock filename component is
+-- useless there. Show the directory instead: relative to cwd like the filename
+-- (":~:." falls back to ~-relative outside cwd), "./" at the cwd itself.
+-- get_current_dir() is nil for non-local adapters (oil-ssh), hence the guard.
+local function oil_dir()
+	local ok, oil = pcall(require, "oil")
+	local dir = ok and oil.get_current_dir() or nil
+	if not dir then
+		return ""
+	end
+	local rel = vim.fn.fnamemodify(dir, ":~:.")
+	return rel == "" and "./" or rel
+end
+
+local oil_extension = {
+	filetypes = { "oil" },
+	sections = {
+		lualine_a = { { "mode", color = "lualine_a_normal" } },
+		lualine_c = { { oil_dir, color = "lualine_c_normal" } },
+		lualine_z = { { "location", color = "lualine_z_normal" } },
+	},
+}
+
 -- theme = "auto" derives colors from the active colorscheme and re-derives on
 -- ColorScheme, so it follows the ghostty-mirror theme switching for free.
 require("lualine").setup({
@@ -75,7 +98,7 @@ require("lualine").setup({
 		component_separators = "",
 		section_separators = "",
 		globalstatus = true,
-		disabled_filetypes = { statusline = { "oil", "aerial", "dap-repl", "trouble" } },
+		disabled_filetypes = { statusline = { "aerial", "dap-repl", "trouble" } },
 	},
 	sections = {
 		-- Pinned to the normal-mode highlight so the section doesn't repaint on
@@ -121,6 +144,7 @@ require("lualine").setup({
 		lualine_y = {},
 		lualine_z = { { "location", color = "lualine_z_normal" } },
 	},
+	extensions = { oil_extension },
 	-- Inactive windows get the filename only; anything more is noise you can't
 	-- act on without focusing the window first.
 	inactive_sections = {
