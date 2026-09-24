@@ -104,7 +104,6 @@ vim.keymap.set("n", "g<Enter>", "gF", { desc = "Go to file with line number supp
 vim.keymap.set("n", "gO", function()
 	require("aerial.fzf-lua").pick_symbol()
 end, { desc = "Outline (aerial, fuzzy picker)" })
-vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
 
 -- Plugin keymaps
 
@@ -118,11 +117,16 @@ local grep_winopts = {
 
 -- LSP pickers via fzf-lua (override default grr/gri/grt)
 vim.keymap.set("n", "grr", function()
-	fzf.lsp_references({ winopts = grep_winopts, jump1 = false })
+	fzf.lsp_references({ winopts = grep_winopts, jump1 = true })
 end, { desc = "LSP references" })
 vim.keymap.set("n", "gri", function()
-	fzf.lsp_implementations({ winopts = grep_winopts, jump1 = false })
+	fzf.lsp_implementations({ winopts = grep_winopts, jump1 = true })
 end, { desc = "LSP implementations" })
+-- gd: jump straight there on one result; a picker (closes on pick) on many.
+-- Not a 0.11+ LSP default — keep this mapping.
+vim.keymap.set("n", "gd", function()
+	fzf.lsp_definitions({ winopts = grep_winopts, jump1 = true })
+end, { desc = "Go to definition" })
 vim.keymap.set("n", "grd", function()
 	fzf.lsp_definitions({ winopts = grep_winopts, jump1 = false })
 end, { desc = "LSP definitions" })
