@@ -107,5 +107,6 @@
       "routine under ws-common/ prefix: mix, npx, elixir test/build commands scoped to this repo"
     ]
   },
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "feedbackDrafts": "off"
 }
