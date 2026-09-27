@@ -549,6 +549,8 @@ vim.g["test#neovim_sticky#kill_previous"] = 1
 -- playwright-bdd (.feature) runner, defined in autoload/test/javascript/playwrightbdd.vim
 vim.g["test#custom_runners"] = { JavaScript = { "PlaywrightBdd" } }
 
+vim.g["test#javascript#runner"] = "jest"
+
 -- Snacks
 --
 
