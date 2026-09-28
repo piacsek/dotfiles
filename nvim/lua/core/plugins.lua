@@ -557,6 +557,15 @@ vim.g["test#javascript#runner"] = "jest"
 require("snacks").setup({
 	notifier = {},
 	picker = {
+		-- Render git diffs (git_log_file, git_show, git_diff…) with the same
+		-- delta wrapper lazygit uses, instead of Snacks' "fancy" diff.
+		-- "terminal" style drops --no-pager, so git runs core.pager.
+		previewers = {
+			diff = { style = "terminal", cmd = { "delta" } },
+			git = {
+				args = { "-c", "core.pager=" .. vim.fn.expand("~/dotfiles/scripts/delta-themed.sh") .. " --paging=never" },
+			},
+		},
 		sources = {
 			explorer = {
 				actions = {
