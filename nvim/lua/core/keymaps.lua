@@ -392,7 +392,7 @@ end, { desc = "[T]est [M]odified (vs main)" })
 -- g:VimuxLastCommand. Any run outside vim-test must clear the same way, or
 -- output stacks up in the pane.
 local function vimux_run_clearing(cmd)
-	require("core.vimux_runner").open()
+	vim.fn.VimuxOpenRunner()
 	vim.fn.VimuxClearTerminalScreen()
 	vim.fn.VimuxClearRunnerHistory()
 	vim.fn.VimuxRunCommand(cmd)
