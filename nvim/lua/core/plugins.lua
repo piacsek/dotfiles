@@ -540,8 +540,16 @@ cmp.setup({
 
 -- vim-test
 vim.g["test#filename_modifier"] = ":p"
-vim.g["test#strategy"] = "vimux"
 vim.g["VimuxRunnerName"] = "vimtest"
+-- Stock vimux strategy, but the runner pane's title is locked first (see
+-- core/vimux_runner.lua).
+vim.g["test#custom_strategies"] = {
+	vimux_locked = function(cmd)
+		require("core.vimux_runner").open()
+		vim.fn["test#strategy#vimux"](cmd)
+	end,
+}
+vim.g["test#strategy"] = "vimux_locked"
 vim.g["test#preserve_screen"] = 0
 vim.g["test#echo_command"] = 0
 vim.g["test#neovim#term_position"] = "topleft vsplit"
