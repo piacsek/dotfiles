@@ -330,6 +330,11 @@ echo "Docker settings configured. Launch Docker to apply."
 # Enable auto-hide
 defaults write com.apple.dock autohide -bool true && killall Dock
 defaults write -g ApplePressAndHoldEnabled -bool false
+# Fast key repeat (arrows, hjkl): 2 = 30ms between repeats, 15 = 225ms
+# before repeat starts. Both are the fastest the Keyboard settings UI allows.
+# Takes effect after logout/login.
+defaults write -g KeyRepeat -int 2
+defaults write -g InitialKeyRepeat -int 15
 ```
 
 #### Manual Settings
