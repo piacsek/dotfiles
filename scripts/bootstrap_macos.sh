@@ -26,7 +26,17 @@ try() {
 	local name=$1
 	shift
 	say "$name"
-	if ! "$@"; then
+	# Subshell with its own `set -e`: bash ignores -e inside a function called
+	# from an `if`, so `if ! "$@"` would miss failures mid-step.
+	local rc
+	set +e
+	(
+		set -e
+		"$@"
+	)
+	rc=$?
+	set -e
+	if ((rc != 0)); then
 		warn "$name failed — continuing"
 		FAILED="$FAILED\n  - $name"
 	fi
