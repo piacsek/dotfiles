@@ -214,10 +214,11 @@ launch_agents() {
 	local plist
 	for plist in com.dotfiles.sync com.gh-dash.theme-refresh com.dotfiles.audio-input-fix; do
 		ln -sf "$DOTFILES/$plist.plist" "$HOME/Library/LaunchAgents/$plist.plist"
-		launchctl list "$plist" >/dev/null 2>&1 ||
+		if ! launchctl list "$plist" >/dev/null 2>&1; then
 			launchctl load "$HOME/Library/LaunchAgents/$plist.plist"
+			[[ $plist == com.dotfiles.sync ]] && launchctl start "$plist"
+		fi
 	done
-	launchctl start com.dotfiles.sync
 }
 try "Launch agents (auto-sync, gh-dash theme, audio fix)" launch_agents
 
@@ -255,6 +256,9 @@ tmux_agents() {
 	mkdir -p "$HOME/projects"
 	[[ -d "$HOME/projects/tmux-agents/.git" ]] ||
 		git clone git@github.com:piacsek/tmux-agents.git "$HOME/projects/tmux-agents"
+	# Skip the rebuild when already installed. After pulling changes, rerun
+	# the cargo command below by hand.
+	[[ -x "$HOME/.local/bin/tmux-agents" ]] && return
 	cargo install --path "$HOME/projects/tmux-agents" --root "$HOME/.local" --locked
 }
 try "Build tmux-agents" tmux_agents
@@ -303,7 +307,7 @@ docker_settings() {
 	mkdir -p "$dir"
 	cp "$DOTFILES/docker-settings.json" "$dir/settings.json"
 }
-try "Docker settings" docker_settings
+try "Docker settings" once docker-settings docker_settings
 
 rectangle_settings() {
 	# Rectangle imports this file automatically on its next launch.
@@ -311,15 +315,15 @@ rectangle_settings() {
 	mkdir -p "$dir"
 	cp "$DOTFILES/RectangleConfig.json" "$dir/RectangleConfig.json"
 }
-try "Rectangle settings" rectangle_settings
+try "Rectangle settings" once rectangle-settings rectangle_settings
 
 macos_defaults() {
-	defaults write com.apple.dock autohide -bool true
-	killall Dock
-	defaults write -g ApplePressAndHoldEnabled -bool false
+	# Restart the Dock only when its setting changed.
+	if set_default com.apple.dock autohide -bool true; then killall Dock; fi
+	set_default -g ApplePressAndHoldEnabled -bool false || true
 	# Fastest key repeat the Keyboard settings UI allows. Needs logout/login.
-	defaults write -g KeyRepeat -int 2
-	defaults write -g InitialKeyRepeat -int 15
+	set_default -g KeyRepeat -int 2 || true
+	set_default -g InitialKeyRepeat -int 15 || true
 }
 try "macOS settings" macos_defaults
 
@@ -332,7 +336,13 @@ login_items() {
 }
 try "Login items" login_items
 
-try "Launch apps" bash -c 'open -a rcmd; open -a Stats; open -a Pasty; open -a Rectangle'
+launch_apps() {
+	local app
+	for app in rcmd Stats Pasty Rectangle; do
+		pgrep -xq "$app" || open -a "$app"
+	done
+}
+try "Launch apps" launch_apps
 
 # --- Summary -----------------------------------------------------------------
 say "Done"
