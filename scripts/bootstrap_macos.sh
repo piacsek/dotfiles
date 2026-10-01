@@ -63,10 +63,14 @@ once() {
 
 # Write a macOS default only when it differs. Returns 1 if nothing changed.
 set_default() {
-	local domain=$1 key=$2 type=$3 value=$4 current
+	local domain=$1 key=$2 type=$3 value=$4 current expected=$4
 	current=$(defaults read "$domain" "$key" 2>/dev/null || true)
-	[[ $type == -bool ]] && value=$([[ $value == true ]] && echo 1 || echo 0)
-	[[ "$current" == "$value" ]] && return 1
+	# `defaults read` prints booleans as 1/0.
+	if [[ $type == -bool ]]; then
+		expected=0
+		[[ $value == true ]] && expected=1
+	fi
+	[[ "$current" == "$expected" ]] && return 1
 	defaults write "$domain" "$key" "$type" "$value"
 }
 
@@ -111,8 +115,8 @@ if [[ ! -x /opt/homebrew/bin/brew ]]; then
 	NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 eval "$(/opt/homebrew/bin/brew shellenv)"
+# No `brew upgrade`: upgrading is not setup, and would change a rerun's result.
 brew update
-brew upgrade
 
 # --- Core CLI tools (core-deps.txt is the single source of truth) ------------
 say "Core CLI tools"
@@ -121,8 +125,18 @@ if [[ -f "$DOTFILES/core-deps.txt" ]]; then
 else
 	deps=$(curl -fsSL "$DOTFILES_RAW/core-deps.txt" | sed 's/#.*//' | tr -d ' ' | grep .)
 fi
-# shellcheck disable=SC2086
-brew install $deps fswatch mas
+# Some entries (1password-cli) are casks, so check both lists.
+installed=$(brew list --formula -1; brew list --cask -1)
+missing=""
+for dep in $deps fswatch mas; do
+	grep -Fxq "$dep" <<<"$installed" || missing="$missing $dep"
+done
+if [[ -n "$missing" ]]; then
+	# shellcheck disable=SC2086
+	brew install $missing
+else
+	echo "All core CLI tools already installed"
+fi
 
 # --- Git ---------------------------------------------------------------------
 say "Git config"
@@ -154,8 +168,12 @@ Host *
   IdentityFile $HOME/.ssh/id_ed25519
 EOF
 fi
-eval "$(ssh-agent -s)" >/dev/null
-ssh-add --apple-use-keychain "$HOME/.ssh/id_ed25519"
+# macOS runs an ssh-agent per login (SSH_AUTH_SOCK). Start one only if it is
+# missing, and add the key only if it is not loaded yet.
+[[ -n "${SSH_AUTH_SOCK:-}" ]] || eval "$(ssh-agent -s)" >/dev/null
+key_fp=$(ssh-keygen -lf "$HOME/.ssh/id_ed25519.pub" | awk '{print $2}')
+ssh-add -l 2>/dev/null | grep -Fq "$key_fp" ||
+	ssh-add --apple-use-keychain "$HOME/.ssh/id_ed25519"
 # Trust github.com's host key up front, so the first clone does not prompt.
 ssh-keygen -F github.com >/dev/null 2>&1 || ssh-keyscan github.com >>"$HOME/.ssh/known_hosts" 2>/dev/null
 
