@@ -125,11 +125,10 @@ if [[ -f "$DOTFILES/core-deps.txt" ]]; then
 else
 	deps=$(curl -fsSL "$DOTFILES_RAW/core-deps.txt" | sed 's/#.*//' | tr -d ' ' | grep .)
 fi
-# Some entries (1password-cli) are casks, so check both lists.
-installed=$(brew list --formula -1; brew list --cask -1)
+# `brew list <name>` resolves aliases (gpg → gnupg) and casks (1password-cli).
 missing=""
 for dep in $deps fswatch mas; do
-	grep -Fxq "$dep" <<<"$installed" || missing="$missing $dep"
+	brew list "$dep" >/dev/null 2>&1 || missing="$missing $dep"
 done
 if [[ -n "$missing" ]]; then
 	# shellcheck disable=SC2086
