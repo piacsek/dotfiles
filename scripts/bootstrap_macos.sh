@@ -7,7 +7,9 @@
 #
 #   bash -c "$(curl -fsSL https://raw.githubusercontent.com/piacsek/dotfiles/main/scripts/bootstrap_macos.sh)"
 #
-# Safe to rerun: every step skips work that is already done. Non-critical
+# Idempotent: a rerun only does what is still missing. It never upgrades
+# installed packages, and one-shot seeds (Docker/Rectangle settings) never
+# overwrite later changes — their markers live in $STATE_DIR. Non-critical
 # steps that fail are listed at the end instead of stopping the run.
 #
 # Still interactive: your password (sudo), git email, SSH key passphrase, the
@@ -16,7 +18,10 @@ set -euo pipefail
 
 DOTFILES="$HOME/dotfiles"
 DOTFILES_RAW="https://raw.githubusercontent.com/piacsek/dotfiles/main"
+STATE_DIR="$HOME/.local/state/dotfiles-bootstrap"
 FAILED=""
+# `brew install` upgrades an outdated formula by default; a rerun must not.
+export HOMEBREW_NO_INSTALL_UPGRADE=1 HOMEBREW_NO_AUTO_UPDATE=1
 
 say() { printf '\n\033[1;34m==> %s\033[0m\n' "$*"; }
 warn() { printf '\033[1;33m!! %s\033[0m\n' "$*" >&2; }
@@ -40,6 +45,29 @@ try() {
 		warn "$name failed — continuing"
 		FAILED="$FAILED\n  - $name"
 	fi
+}
+
+# Run a step only once per machine, so a rerun cannot reset later changes.
+# Delete "$STATE_DIR/<marker>" to run it again.
+once() {
+	local marker=$1
+	shift
+	if [[ -e "$STATE_DIR/$marker" ]]; then
+		echo "Already done (marker: $STATE_DIR/$marker)"
+		return
+	fi
+	"$@"
+	mkdir -p "$STATE_DIR"
+	touch "$STATE_DIR/$marker"
+}
+
+# Write a macOS default only when it differs. Returns 1 if nothing changed.
+set_default() {
+	local domain=$1 key=$2 type=$3 value=$4 current
+	current=$(defaults read "$domain" "$key" 2>/dev/null || true)
+	[[ $type == -bool ]] && value=$([[ $value == true ]] && echo 1 || echo 0)
+	[[ "$current" == "$value" ]] && return 1
+	defaults write "$domain" "$key" "$type" "$value"
 }
 
 [[ $(uname -s) == Darwin ]] || { echo "macOS only" >&2; exit 1; }
