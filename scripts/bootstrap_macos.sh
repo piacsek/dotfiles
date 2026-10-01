@@ -216,7 +216,7 @@ launch_agents() {
 		ln -sf "$DOTFILES/$plist.plist" "$HOME/Library/LaunchAgents/$plist.plist"
 		if ! launchctl list "$plist" >/dev/null 2>&1; then
 			launchctl load "$HOME/Library/LaunchAgents/$plist.plist"
-			[[ $plist == com.dotfiles.sync ]] && launchctl start "$plist"
+			if [[ $plist == com.dotfiles.sync ]]; then launchctl start "$plist"; fi
 		fi
 	done
 }
