@@ -30,6 +30,10 @@ PROMPT='%F{blue}%~%f - %F{magenta}${vcs_info_msg_0_}%f
 
 plugins=(git)
 
+# Keep pane titles that tmux sets (vimux's "vimtest" runner, which
+# scripts/tmux-focus-test finds by title). OMZ would overwrite them per command.
+DISABLE_AUTO_TITLE="true"
+
 source $ZSH/oh-my-zsh.sh
 
 # Init ASDF
