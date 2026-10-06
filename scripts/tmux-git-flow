@@ -21,6 +21,8 @@ refresh_status() {
 
 set_state() {
 	printf '%s\n' "$1" >"$STATE_FILE"
+	# Timestamp each step in the log to see which one is slow.
+	printf '[%s] %s\n' "$(date +%T)" "$1" >>"$LOG_FILE"
 	refresh_status
 }
 
