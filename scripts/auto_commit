@@ -32,7 +32,9 @@ Please respond with ONLY the commit message in the format 'WORD: summary', nothi
 
 # Call Claude CLI to generate commit message (non-persistent to avoid cluttering history).
 # Haiku keeps this fast — message generation doesn't need a bigger model.
-COMMIT_MSG=$(echo "$PROMPT" | claude --print --no-session-persistence --model haiku | tr -d '\n\r' | sed 's/[[:space:]]\+/ /g' | xargs)
+# perl alarm = 30s hard cap (macOS has no `timeout`); on timeout the fallback
+# message below kicks in. --strict-mcp-config skips MCP server startup.
+COMMIT_MSG=$(echo "$PROMPT" | perl -e 'alarm 30; exec @ARGV' claude --print --no-session-persistence --model haiku --strict-mcp-config | tr -d '\n\r' | sed 's/[[:space:]]\+/ /g' | xargs)
 
 # Fallback if Claude fails or returns empty
 if [[ -z "$COMMIT_MSG" ]]; then
