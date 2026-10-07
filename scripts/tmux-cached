@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# Run a status-line widget at most once per TTL, serving the cached output in
+# between. status-interval is 1s for tmux-agents; expensive widgets (git
+# status, kube, tailscale) wrap themselves in this to keep a slower cadence.
+# Usage: tmux-cached <ttl-seconds> [--] <command> [args...]
+# A ttl of 0 always reruns and refreshes the entry (see tmux-toggle-tailscale).
+set -uo pipefail
+
+ttl="$1"
+shift
+[[ "${1:-}" == "--" ]] && shift
+
+cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/tmux-cached"
+mkdir -p -m 700 "$cache_dir"
+key=$(printf '%s\0' "$@" | shasum | cut -c1-16)
+file="$cache_dir/$key"
+
+if [[ -f "$file" ]] && (($(date +%s) - $(stat -f %m "$file") < ttl)); then
+	cat "$file"
+	exit 0
+fi
+
+out=$("$@" 2>/dev/null)
+status=$?
+printf '%s\n' "$out"
+# A failure is shown but not stored, so it is retried on the next tick.
+((status == 0)) || exit 0
+# Write a sibling then rename, so a concurrent tick never reads half a file.
+printf '%s\n' "$out" >"$file.tmp$$" && mv "$file.tmp$$" "$file"
+# Per-path widgets (git) leave one entry per directory; drop day-old ones.
+find "$cache_dir" -type f -mtime +1 -delete 2>/dev/null
