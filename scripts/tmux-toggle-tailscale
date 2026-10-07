@@ -14,7 +14,7 @@ fi
 
 # Refresh the status-line widget now instead of waiting out its 5s cache: the
 # cache key is the command, so a ttl-0 run overwrites the same entry.
-tmux-agents cached 0 -- tailscale_status >/dev/null || true
+"$HOME/dotfiles/scripts/tmux-cached" 0 -- tailscale_status >/dev/null || true
 # Run in the background (run-shell -b) there is no current client, so redraw
 # every attached one.
 tmux list-clients -F '#{client_tty}' | while read -r tty; do
