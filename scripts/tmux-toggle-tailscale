@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Toggle tailscale up/down, bound to tmux prefix + M-v.
+# Toggle tailscale up/down, bound to tmux M-v (no prefix).
 set -euo pipefail
 
 state=$(tailscale status --json | /usr/bin/python3 -c 'import json,sys; print(json.load(sys.stdin)["BackendState"])')
@@ -11,3 +11,12 @@ else
   tailscale up
   tmux display-message "tailscale: up"
 fi
+
+# Refresh the status-line widget now instead of waiting out its 5s cache: the
+# cache key is the command, so a ttl-0 run overwrites the same entry.
+tmux-agents cached 0 -- tailscale_status >/dev/null || true
+# Run in the background (run-shell -b) there is no current client, so redraw
+# every attached one.
+tmux list-clients -F '#{client_tty}' | while read -r tty; do
+  tmux refresh-client -S -t "$tty"
+done
