@@ -51,7 +51,7 @@ When in doubt, prefer terse and offer to expand ("happy to dig deeper on X") rat
 
 ## tmux popups
 
-- **Every `display-popup` binding must be wrapped in `scripts/tmux-popup-freeze`** (`run "tmux-popup-freeze freeze #{window_id}" \; display-popup ... \; run "tmux-popup-freeze thaw"`). Any busy pane under a popup (Claude Code) makes tmux repaint the whole popup on each pane update (~23x the bytes) → blinking. Copy mode stops pane repaints (measured 0 bytes). tmux has no popup open/close hook (`after-display-popup` is `invalid option`), so the wrap is per binding; it works because `display-popup` holds the command list until close. Enabling Ghostty `sync` terminal-feature alone did not fix it.
+- **Every `display-popup` binding must be wrapped in `scripts/tmux-popup-freeze`** (`run "tmux-popup-freeze freeze #{window_id}" \; display-popup ... \; run "tmux-popup-freeze thaw"`). Any busy pane under a popup (Claude Code) makes tmux repaint the whole popup on each pane update (~23x the bytes) → blinking. Copy mode stops pane repaints (measured 0 bytes). tmux has no popup open/close hook (`after-display-popup` is `invalid option`), so the wrap is per binding; it works because `display-popup` holds the command list until close. Enabling Ghostty `sync` terminal-feature alone did not fix it. Second source: with an overlay up, every `status-interval` tick repaints the whole popup even when the status text is unchanged (1s interval → once-per-second blink), so the script also sets `status-interval 0` while open and restores the saved value on thaw.
 
 ## macOS paths
 
