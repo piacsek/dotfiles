@@ -13,8 +13,16 @@ fi
 
 echo "Generating commit message with Claude..."
 
-# Get git diff and recent commits for context
-DIFF=$(git diff --cached)
+# Get git diff and recent commits for context. Cap the diff: lockfiles or
+# structure.sql dumps otherwise blow past the 30s timeout and hit the fallback.
+# The --stat summary still lists every touched file.
+MAX_DIFF_LINES=1500
+STAT=$(git diff --cached --stat)
+DIFF=$(git diff --cached | head -n "$MAX_DIFF_LINES")
+if (( $(git diff --cached | wc -l) > MAX_DIFF_LINES )); then
+    DIFF="$DIFF
+[diff truncated after $MAX_DIFF_LINES lines — see the summary above for all files]"
+fi
 LOG=$(git log --oneline -5)
 
 # Create a prompt for Claude
@@ -25,6 +33,9 @@ The MOST_MEANINGFUL_WORD should be a single word (like 'feat', 'fix', 'refactor'
 Recent commits for style reference:
 $LOG
 
+Staged files:
+$STAT
+
 Staged changes:
 $DIFF
 
@@ -34,12 +45,27 @@ Please respond with ONLY the commit message in the format 'WORD: summary', nothi
 # Haiku keeps this fast — message generation doesn't need a bigger model.
 # perl alarm = 30s hard cap (macOS has no `timeout`); on timeout the fallback
 # message below kicks in. --strict-mcp-config skips MCP server startup.
-COMMIT_MSG=$(echo "$PROMPT" | perl -e 'alarm 30; exec @ARGV' claude --print --no-session-persistence --model haiku --strict-mcp-config | tr -d '\n\r' | sed 's/[[:space:]]\+/ /g' | xargs)
+COMMIT_MSG=$(echo "$PROMPT" | perl -e 'alarm 30; exec @ARGV' claude --print --no-session-persistence --model haiku --strict-mcp-config | tr -d '\n\r' | sed -E 's/[[:space:]]+/ /g; s/^ +//; s/ +$//')
 
 # Fallback if Claude fails or returns empty
 if [[ -z "$COMMIT_MSG" ]]; then
     echo "Claude failed to generate commit message, using fallback"
     COMMIT_MSG="chore: manual commit - $(date '+%Y-%m-%d %H:%M:%S')"
+fi
+
+# Linear ticket from the branch name (MP-6837/slug -> MP-6837), folded in as
+# the conventional-commit scope: "fix: x" -> "fix(MP-6837): x". Messages that
+# don't match "word: summary" get a "[MP-6837] " prefix instead.
+BRANCH=$(git branch --show-current)
+if [[ "$BRANCH" =~ ^([A-Za-z]+-[0-9]+) ]]; then
+    TICKET=$(printf '%s' "${BASH_REMATCH[1]}" | tr '[:lower:]' '[:upper:]')
+    if [[ "$COMMIT_MSG" != *"$TICKET"* ]]; then
+        if [[ "$COMMIT_MSG" =~ ^([A-Za-z]+):\ (.*)$ ]]; then
+            COMMIT_MSG="${BASH_REMATCH[1]}($TICKET): ${BASH_REMATCH[2]}"
+        else
+            COMMIT_MSG="[$TICKET] $COMMIT_MSG"
+        fi
+    fi
 fi
 
 echo ""
@@ -52,4 +78,3 @@ git commit -m "$COMMIT_MSG"
 
 echo ""
 echo "󰄬 Commit completed successfully!"
-echo "Run 'git-push' task to push changes."
