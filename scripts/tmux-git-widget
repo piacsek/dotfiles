@@ -4,9 +4,25 @@
 # has uncommitted changes. Prints nothing (no separator) when clean or
 # outside a repo, so the segment disappears entirely.
 # Usage: tmux-git-widget '#{pane_current_path}'
+#
+# Call it uncached from status-right: the state check is one `cat`, so flow
+# progress shows on the next 1s tick. Only the `git status` part goes through
+# tmux-cached (re-invoking this script with --dirty).
 set -uo pipefail
 
 STATE_FILE="$HOME/.cache/tmux-git-flow/state"
+
+if [[ "${1:-}" == "--dirty" ]]; then
+	dir="${2:-}"
+	[[ -d "$dir" ]] || exit 0
+	if git -C "$dir" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+		count=$(git -C "$dir" status --porcelain | wc -l | tr -d ' ')
+		if [[ "$count" -gt 0 ]]; then
+			echo "󰏫 $count |"
+		fi
+	fi
+	exit 0
+fi
 
 case "$(cat "$STATE_FILE" 2>/dev/null)" in
 committing) echo "󰚩 committing |" && exit 0 ;;
@@ -15,11 +31,4 @@ done) echo "󰗠 pushed |" && exit 0 ;;
 error) echo "󰀦 flow failed |" && exit 0 ;;
 esac
 
-dir="${1:-}"
-[[ -d "$dir" ]] || exit 0
-if git -C "$dir" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-	count=$(git -C "$dir" status --porcelain | wc -l | tr -d ' ')
-	if [[ "$count" -gt 0 ]]; then
-		echo "󰏫 $count |"
-	fi
-fi
+exec "$(dirname "$0")/tmux-cached" 5 -- "$0" --dirty "${1:-}"
