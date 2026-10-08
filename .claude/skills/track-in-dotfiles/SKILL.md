@@ -5,7 +5,7 @@ description: Move a config file into the ~/dotfiles repo, symlink it back to its
 
 # Track a config file in the dotfiles repo
 
-The dotfiles repo at `~/dotfiles/` holds tracked configs as plain files at the repo root (e.g. `gh-dash-config.yml`, `opencode.json`, `claude-settings.json`). The original system location holds a symlink. `SETUP_MACOS.md` is the bootstrap script for a fresh machine — every tracked file MUST have a `ln -sf` line there or it won't survive a reinstall.
+The dotfiles repo at `~/dotfiles/` holds tracked configs as plain files at the repo root (e.g. `gh-dash-config.yml`, `claude-settings.json`). The original system location holds a symlink. `SETUP_MACOS.md` is the bootstrap script for a fresh machine — every tracked file MUST have a `ln -sf` line there or it won't survive a reinstall.
 
 ## Steps
 
