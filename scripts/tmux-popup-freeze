@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# Freeze the panes behind a tmux popup by putting them in copy mode, so busy
+# panes (Claude Code redraws constantly) stop repainting under the popup —
+# every repaint redraws the whole popup too, which shows up as blinking.
+#
+#   tmux-popup-freeze freeze <window-id>   copy-mode every idle pane in the window
+#   tmux-popup-freeze thaw                 leave copy mode on every pane we froze
+#
+# Panes already in a mode (copy mode you entered yourself, tree mode, ...) are
+# left alone. Frozen panes carry @popup_frozen, so thaw finds them server-wide
+# even if the popup switched session (M-e sessionizer).
+# Wired around every display-popup binding in .tmux.conf:
+#   run "tmux-popup-freeze freeze #{window_id}" \; display-popup ... \; run "tmux-popup-freeze thaw"
+set -uo pipefail
+
+case "${1:-}" in
+freeze)
+	window="${2:?usage: tmux-popup-freeze freeze <window-id>}"
+	tmux list-panes -t "$window" -F '#{pane_id} #{pane_in_mode}' |
+		while read -r pane in_mode; do
+			[[ "$in_mode" == 1 ]] && continue
+			tmux copy-mode -t "$pane" \; set -p -t "$pane" @popup_frozen 1
+		done
+	;;
+thaw)
+	tmux list-panes -a -F '#{pane_id} #{@popup_frozen} #{pane_in_mode}' |
+		while read -r pane frozen in_mode; do
+			[[ "$frozen" == 1 ]] || continue
+			[[ "$in_mode" == 1 ]] && tmux send-keys -t "$pane" -X cancel
+			tmux set -pu -t "$pane" @popup_frozen
+		done
+	;;
+*)
+	echo "usage: tmux-popup-freeze freeze <window-id> | thaw" >&2
+	exit 2
+	;;
+esac
