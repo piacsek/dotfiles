@@ -6,6 +6,10 @@
 #   tmux-popup-freeze freeze <window-id>   copy-mode every idle pane in the window
 #   tmux-popup-freeze thaw                 leave copy mode on every pane we froze
 #
+# Also pauses the status line (status-interval 0) while the popup is open:
+# with an overlay up, every status refresh repaints the whole popup even when
+# the status text is unchanged — a once-per-second blink. Thaw restores it.
+#
 # Panes already in a mode (copy mode you entered yourself, tree mode, ...) are
 # left alone. Frozen panes carry @popup_frozen, so thaw finds them server-wide
 # even if the popup switched session (M-e sessionizer).
@@ -16,6 +20,11 @@ set -uo pipefail
 case "${1:-}" in
 freeze)
 	window="${2:?usage: tmux-popup-freeze freeze <window-id>}"
+	# Only save once, so a nested freeze doesn't save the paused 0.
+	if [[ -z "$(tmux show -gv @popup_saved_status_interval 2>/dev/null)" ]]; then
+		tmux set -g @popup_saved_status_interval "$(tmux show -gv status-interval)" \; \
+			set -g status-interval 0
+	fi
 	tmux list-panes -t "$window" -F '#{pane_id} #{pane_in_mode}' |
 		while read -r pane in_mode; do
 			[[ "$in_mode" == 1 ]] && continue
@@ -23,6 +32,10 @@ freeze)
 		done
 	;;
 thaw)
+	saved=$(tmux show -gv @popup_saved_status_interval 2>/dev/null)
+	if [[ -n "$saved" ]]; then
+		tmux set -g status-interval "$saved" \; set -gu @popup_saved_status_interval
+	fi
 	tmux list-panes -a -F '#{pane_id} #{@popup_frozen} #{pane_in_mode}' |
 		while read -r pane frozen in_mode; do
 			[[ "$frozen" == 1 ]] || continue
