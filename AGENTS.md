@@ -49,6 +49,10 @@ When in doubt, prefer terse and offer to expand ("happy to dig deeper on X") rat
 - **Install:** `cargo install --path ~/projects/tmux-agents --root ~/.local --locked` → `~/.local/bin/tmux-agents` (on the tmux server's PATH). Reinstall after pulling changes.
 - **You cannot probe `#()` with `tmux display -p`:** it returns "" for any `#()` (even `#(echo hi)`), including via `#{T:status-right}`. To verify status-line widgets ran, watch `~/.cache/tmux-cached/` mtimes or use `tmux run-shell '<cmd>'`.
 
+## tmux popups
+
+- **Every `display-popup` binding must be wrapped in `scripts/tmux-popup-freeze`** (`run "tmux-popup-freeze freeze #{window_id}" \; display-popup ... \; run "tmux-popup-freeze thaw"`). Any busy pane under a popup (Claude Code) makes tmux repaint the whole popup on each pane update (~23x the bytes) → blinking. Copy mode stops pane repaints (measured 0 bytes). tmux has no popup open/close hook (`after-display-popup` is `invalid option`), so the wrap is per binding; it works because `display-popup` holds the command list until close. Enabling Ghostty `sync` terminal-feature alone did not fix it.
+
 ## macOS paths
 
 - **lazygit config** lives at `~/Library/Application Support/lazygit/config.yml`, NOT `~/.config/lazygit/`. Confirm with `lazygit -cd`. A pre-existing empty file there silently overrides `~/.config`. Dotfiles symlink it to `~/dotfiles/lazygit-config.yml`.
