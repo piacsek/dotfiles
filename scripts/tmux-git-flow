@@ -26,6 +26,18 @@ set_state() {
 	refresh_status
 }
 
+# Stop with the error state and flash the log's last line in every client,
+# so the reason is visible without opening the log.
+fail() {
+	set_state error
+	local reason
+	reason=$(grep -v '^[[:space:]]*$' "$LOG_FILE" | grep -v '^\[[0-9:]*\] ' | tail -n 1)
+	tmux list-clients -F '#{client_tty}' 2>/dev/null | while read -r tty; do
+		tmux display-message -d 10000 -c "$tty" "󰀦 git flow failed: ${reason:-see log} (log: $LOG_FILE)" 2>/dev/null
+	done
+	exit 1
+}
+
 clear_state() {
 	rm -f "$STATE_FILE"
 	refresh_status
@@ -34,8 +46,7 @@ clear_state() {
 run_flow() {
 	set_state committing
 	if ! "$HOME/dotfiles/scripts/auto_commit" >>"$LOG_FILE" 2>&1; then
-		set_state error
-		exit 1
+		fail
 	fi
 
 	set_state pushing
@@ -46,12 +57,10 @@ run_flow() {
 		# --autostash because the working tree may hold unstaged changes.
 		if ! git pull --rebase --autostash >>"$LOG_FILE" 2>&1; then
 			git rebase --abort >>"$LOG_FILE" 2>&1
-			set_state error
-			exit 1
+			fail
 		fi
 		if ! git push -u origin HEAD >>"$LOG_FILE" 2>&1; then
-			set_state error
-			exit 1
+			fail
 		fi
 	fi
 
