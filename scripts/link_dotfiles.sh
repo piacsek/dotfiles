@@ -43,8 +43,6 @@ link_dotfile "$dotfiles_dir/.claude/statusline-command.sh" "$HOME/.claude/status
 link_dotfile "$dotfiles_dir/claude-settings.json" "$HOME/.claude/settings.json"
 link_dotfile "$dotfiles_dir/.ideavimrc" "$HOME/.ideavimrc"
 link_dotfile "$dotfiles_dir/.tmux.conf" "$HOME/.tmux.conf"
-link_dotfile "$dotfiles_dir/opencode.json" "$HOME/opencode.json"
 link_dotfile "$dotfiles_dir/.zshrc" "$HOME/.zshrc"
 link_dotfile "$dotfiles_dir/.ghosttyrc" "$HOME/.config/ghostty/config"
-link_dotfile "$dotfiles_dir/opencode.json" "$HOME/.config/opencode/opencode.json"
 link_dotfile "$dotfiles_dir/.tool-versions" "$HOME/.tool-versions"
