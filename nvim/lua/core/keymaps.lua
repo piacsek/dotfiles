@@ -373,10 +373,10 @@ vim.keymap.set("n", "<leader>td", function()
 end, { desc = "Test directories" })
 vim.keymap.set("n", "<leader>tm", function()
 	local test_root = vim.g._root_test_dir or "test"
-	local output = vim.fn.systemlist("git diff --relative --name-only main -- " .. test_root)
+	local output = vim.fn.systemlist("git diff --relative --name-only origin/main -- " .. test_root)
 
 	if vim.v.shell_error ~= 0 or #output == 0 then
-		vim.notify("No modified test files found vs main", vim.log.levels.WARN)
+		vim.notify("No modified test files found vs origin/main", vim.log.levels.WARN)
 		return
 	end
 
@@ -386,7 +386,7 @@ vim.keymap.set("n", "<leader>tm", function()
 	end
 
 	vim.cmd("TestSuite " .. table.concat(paths, " "))
-end, { desc = "[T]est [M]odified (vs main)" })
+end, { desc = "[T]est [M]odified (vs origin/main)" })
 -- With test#preserve_screen=0, vim-test clears the runner pane via separate
 -- VimuxClear* calls before VimuxRunCommand — the clear is never part of
 -- g:VimuxLastCommand. Any run outside vim-test must clear the same way, or
