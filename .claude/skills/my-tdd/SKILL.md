@@ -1,6 +1,6 @@
 ---
 name: tdd
-description: Follow strict Test Driven Development with small incremental steps. Pass "autonomous" (/tdd autonomous) to let the agent commit, push, and open a draft PR on the user's behalf after each completed Red-Green-Refactor cycle.
+description: Follow strict Test Driven Development with small incremental steps. Pass "autonomous" (/tdd autonomous) to let the agent commit, push, and open a draft PR on the user's behalf after each completed Red-Green-Refactor cycle, then loop the project's PR review skill and fix its 🔴/🟡 findings until none remain (max 5 rounds).
 argument-hint: "[autonomous]"
 ---
 
@@ -22,8 +22,17 @@ In autonomous mode:
 - Commit and push only after a task's full Red -> Green -> Refactor cycle is complete and every quality gate below has passed. Never commit mid-cycle, never commit a red test, never commit with a failing gate.
 - One commit per task, conventional-commit message, author is the user only (no AI co-author trailers). Push to the current branch after each commit.
 - After the first task is pushed, open a draft PR assigned to the user (`gh pr create --draft --assignee @me`). Follow the repository's PR conventions and template; fill only what the template asks for and keep it short.
-- After all tasks are done, re-fetch the PR title and description immediately before editing them, review both against what actually shipped, and update anything stale or missing. Preserve every edit the user made along the way: change only text you wrote that is now inaccurate, and never rewrite or reorder the user's words.
+- After all tasks are done, run the review loop below before touching the PR title and description.
+- After the review loop ends, re-fetch the PR title and description immediately before editing them, review both against what actually shipped, and update anything stale or missing. Preserve every edit the user made along the way: change only text you wrote that is now inaccurate, and never rewrite or reorder the user's words.
 - Before any push, check the branch: never push to the default branch, and never force-push.
+
+### Review loop (autonomous mode only)
+
+1. Run the project's PR review skill on the draft PR (prefer a multi-reviewer one when the project has it). If no review skill is available in this session, stop and tell the user.
+2. Take the 🔴 and 🟡 findings from its report. Ignore 🟢 notes. Before acting on a finding, check its premise in the code (read the config or caller it relies on) and check that the PR's supported scenario reaches it. Drop any finding that fails either check, list it for the user with the reason, and never add defensive code for states the code never meets in real use.
+3. Handle one finding at a time. Use the full Red -> Green -> Refactor cycle when the finding changes behavior; otherwise make the change directly. Pass every quality gate, then commit and push, one commit per finding.
+4. When every finding from this report is handled, go back to step 1.
+5. Stop when a report has no 🔴 or 🟡 findings, or after 5 review rounds. If the cap is hit, list the open findings for the user.
 
 ## The TDD Cycle
 
@@ -79,7 +88,7 @@ Before starting the next task, explicitly assess refactoring opportunities again
 
 ## Elixir / ExUnit
 
-- New test files default to `use <Case>, async: true`. Keep a file synchronous only for global state: `Mock`/`with_mock`, `FunWithFlags` writes, DB access inside `on_exit` (the handler process has no sandbox allowance), `Application.put_env`-style global config, Elasticsearch/Redis, `Mix.Task` state, raw DDL, or hardcoded unique values shared across files.
+- New test files default to `use <Case>, async: true`; a sync file serializes a whole suite lane. Keep a file synchronous only for global state: `Mock`/`with_mock`, `FunWithFlags` writes, DB access inside `on_exit` (the handler process has no sandbox allowance), `Application.put_env`-style global config, Elasticsearch/Redis, `Mix.Task` state, raw DDL, or hardcoded unique values shared across files.
 - Do not add `on_exit` cleanup for sandboxed DB state (including feature flags) — the SQL sandbox rolls it back, and under `async: true` the cleanup itself crashes with `DBConnection.OwnershipError`.
 
 ## TypeScript
