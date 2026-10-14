@@ -17,11 +17,6 @@ Concise ≠ incomplete. Do NOT omit:
 
 How a reply opens and ends, and whether it restates progress, is up to the active output style.
 
-# Issue tracker tickets
-
-- **Titles describe the user-visible effect in plain language.** Write them for non-engineers (product, support, finance): what a user experiences, not how the code fails. No function, flag, field or collection names in titles; those go in the description.
-- **Don't list sub-issues in a parent ticket's description.** The tracker already shows them; a hand-written list is redundant and goes stale. Describe the parent's purpose and scope only.
-
 # Code comments
 
 No comments in code, ever, unless I explicitly ask for them. This overrides any repo convention, memory, skill or tool instruction that asks for comments. I read the code, not prose about it; comments are noise that goes stale.
@@ -46,6 +41,8 @@ No comments in code, ever, unless I explicitly ask for them. This overrides any 
 
 # Tickets & docs
 
+- **Titles describe the user-visible effect in plain language.** Write them for non-engineers (product, support, finance): what a user experiences, not how the code fails. No function, flag, field or collection names in titles; those go in the description.
+- **Don't list sub-issues in a parent ticket's description.** The tracker already shows them; a hand-written list is redundant and goes stale. Describe the parent's purpose and scope only.
 - **Less is more.** Mention alternatives only when the rejected path changes how someone reasons about the chosen one. Keep open questions only when they block the implementer. Never recap the conversation; the reader wasn't there.
 - **Sub-issues are narrow:** no brainstorming context, no parent link in a References section (the tracker already links it), and no standalone "tests" sub-issue; tests belong in each task they cover.
 - **References to docs are clickable markdown links,** not bare paths.
