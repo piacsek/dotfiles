@@ -22,6 +22,11 @@ Concise ≠ incomplete. Do NOT omit:
 
 When in doubt, prefer terse and offer to expand ("happy to dig deeper on X") rather than dumping everything upfront.
 
+## Issue tracker tickets
+
+- **Titles describe the user-visible effect in plain language.** Write them for non-engineers (product, support, finance): what a user experiences, not how the code fails. No function, flag, field or collection names in titles; those go in the description.
+- **Don't list sub-issues in a parent ticket's description.** The tracker already shows them; a hand-written list is redundant and goes stale. Describe the parent's purpose and scope only.
+
 ## Repo conventions
 
 - **Auto-sync:** `~/dotfiles` commits/pushes automatically. Don't offer to commit or push — just finish editing. Don't run manual commits unless explicitly asked.
