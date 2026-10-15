@@ -1,11 +1,11 @@
 ---
 name: the-lay-of-the-land
-description: Read a ticket (Linear, GitHub, Jira, or pasted text) and map it onto the current repo as an ordered table of the files to read before starting, with a two-sentence "why" per file. Also verifies that the ticket's dependencies really landed in code, not just in the tracker. Use when the user runs /the-lay-of-the-land, pastes a ticket and asks "which files do I need to look at", "lay the land", "where do I start on this", or asks to refresh that map after something merged.
+description: Read a ticket (Linear, GitHub, Jira, or pasted text) and map it onto the current repo as an ordered table of the files the change will edit, with a two-sentence "why" per file. Also verifies that the ticket's dependencies really landed in code, not just in the tracker. Use when the user runs /the-lay-of-the-land, pastes a ticket and asks "which files do I need to look at", "lay the land", "where do I start on this", or asks to refresh that map after something merged.
 ---
 
 # The lay of the land
 
-Turn a ticket into a reading list for this repo: which files to read, in what order, and why. The output is orientation, not a plan or a diff. Don't edit code in this skill.
+Turn a ticket into a reading list for this repo: which files the change will edit, in what order, and why. Files that are only context stay out of the table. The output is orientation, not a plan or a diff. Don't edit code in this skill.
 
 ## Input
 
@@ -28,7 +28,7 @@ Turn a ticket into a reading list for this repo: which files to read, in what or
 3. Record current line numbers. If the ticket's line numbers drifted, say so.
 4. Find the tests that cover each file (`__tests__/`, `*.test.*`, `*_test.*`) and the locale or translation files if user-facing copy changes.
 5. Mark new files the ticket implies as *(new)*.
-6. Mark read-only context files, the ones to understand but not change, as such in the "why".
+6. Leave out read-only context files, the ones to understand but not change. If one holds a fact that changes the plan, put that fact under the table with its `path:line`.
 
 ## 3. Verify dependencies in code
 
@@ -43,11 +43,11 @@ The tracker status of a blocking ticket isn't proof. For each dependency the wor
 
 Lead with the first action, usually "read row 1" or a prerequisite like pulling `main`.
 
-Then the table, ordered as the reader should read it: entry point first, then shared code, consumers, read-only context, tests, copy.
+Then the table, ordered as the reader should read it: entry point first, then shared code, consumers, tests, copy.
 
 | # | File | Why |
 |---|------|-----|
-| 1 | `relative/path.ext:start-end` | At most two sentences: what lives here, and which ticket change touches it. |
+| 1 | `relative/path.ext:start-end` | At most two sentences: what lives here, and what the ticket changes in it. |
 
 After the table, a short list of only what changes the plan:
 
@@ -71,4 +71,4 @@ When the user asks to refresh after something merged or changed:
 
 - Read-only. No edits, commits, tracker updates or comments unless the user asks separately.
 - Don't trust ticket line numbers or tracker statuses without checking the code.
-- The table holds files only. Put caveats below it, not in the "why" column.
+- The table holds only files the change will edit. Put caveats below it, not in the "why" column.
