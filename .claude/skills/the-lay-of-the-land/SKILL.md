@@ -67,6 +67,15 @@ When the user asks to refresh after something merged or changed:
 2. Re-derive line numbers from the new `origin/main`.
 3. Open with a "what changed since the last pass" list, then print the full table again rather than a diff of it.
 
+## Scratch review
+
+When the user shares a scratch of the change (a working-tree diff or pasted code) and asks for an assessment, check whether they understand the change correctly. It is not a code review.
+
+1. Ignore syntax, formatting, lint and style. Don't mention them, even as an aside.
+2. Check the ideas: is the change in the right place, using the right data (fields, ids, units), with the behavior the ticket and its acceptance criteria ask for?
+3. Flag a leftover or missing piece only when it shows a misunderstanding, such as a half-removed old path, and say what goes wrong at runtime.
+4. Lead with the verdict: either the approach is right, or the misunderstanding in one sentence. Then list each issue with the `path:line` and the fix.
+
 ## Rules
 
 - Read-only. No edits, commits, tracker updates or comments unless the user asks separately.
