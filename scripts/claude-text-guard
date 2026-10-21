@@ -5,7 +5,8 @@ import shlex
 import sys
 
 PUBLISH_CMD = re.compile(
-    r"\bgit\s+commit\b|\bgh\s+(pr|issue)\s+(create|edit|comment|review)\b"
+    r"\bgit(\s+-\S+(\s+[^-\s]\S*)?)*\s+commit\b"
+    r"|\bgh(\s+-\S+(\s+[^-\s]\S*)?)*\s+(pr|issue)\s+(create|edit|comment|review)\b"
 )
 FILE_FLAGS = {"-F", "--file", "--body-file"}
 RULES = [

@@ -35,7 +35,25 @@
     ]
   },
   "model": "opus[1m]",
-  "hooks": {},
+  "attribution": {
+    "commit": "",
+    "pr": "",
+    "sessionUrl": false
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|mcp__claude_ai_Linear__.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/piacsek/dotfiles/scripts/claude-text-guard",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
   "statusLine": {
     "type": "command",
     "command": "bash /Users/piacsek/.claude/statusline-command.sh"
