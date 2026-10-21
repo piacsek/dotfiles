@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# Link tracked configs into HOME, preserving anything already at a destination.
 set -euo pipefail
 
 dotfiles_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)
@@ -47,3 +46,4 @@ link_dotfile "$dotfiles_dir/.tmux.conf" "$HOME/.tmux.conf"
 link_dotfile "$dotfiles_dir/.zshrc" "$HOME/.zshrc"
 link_dotfile "$dotfiles_dir/.ghosttyrc" "$HOME/.config/ghostty/config"
 link_dotfile "$dotfiles_dir/.tool-versions" "$HOME/.tool-versions"
+link_dotfile "$dotfiles_dir/available-scripts" "$HOME/.available-scripts"
