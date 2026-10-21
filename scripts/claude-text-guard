@@ -1,0 +1,78 @@
+#!/usr/bin/env python3
+import json
+import re
+import shlex
+import sys
+
+PUBLISH_CMD = re.compile(
+    r"\bgit\s+commit\b|\bgh\s+(pr|issue)\s+(create|edit|comment|review)\b"
+)
+FILE_FLAGS = {"-F", "--file", "--body-file"}
+RULES = [
+    (re.compile("—"), "em dash (—): use a comma, colon, parentheses or a new sentence"),
+    (re.compile(r"co-authored-by:[^\n]*(claude|anthropic)", re.I), "AI Co-Authored-By trailer"),
+    (re.compile(r"generated with \[?claude", re.I), "'Generated with Claude' footer"),
+    (re.compile(r"noreply@anthropic\.com", re.I), "Anthropic noreply address"),
+]
+
+
+def file_args(command):
+    try:
+        tokens = shlex.split(command, posix=True)
+    except ValueError:
+        return []
+    paths = []
+    for i, tok in enumerate(tokens):
+        if tok in FILE_FLAGS and i + 1 < len(tokens):
+            paths.append(tokens[i + 1])
+        else:
+            for flag in ("--file=", "--body-file="):
+                if tok.startswith(flag):
+                    paths.append(tok[len(flag):])
+    return paths
+
+
+def text_to_check(payload):
+    tool = payload.get("tool_name", "")
+    tool_input = payload.get("tool_input") or {}
+    if tool == "Bash":
+        command = tool_input.get("command", "")
+        if not PUBLISH_CMD.search(command):
+            return None
+        parts = [command]
+        for path in file_args(command):
+            if path == "-":
+                continue
+            try:
+                with open(path, encoding="utf-8") as f:
+                    parts.append(f.read())
+            except OSError:
+                pass
+        return "\n".join(parts)
+    if tool.startswith("mcp__") and "Linear" in tool:
+        return json.dumps(tool_input, ensure_ascii=False)
+    return None
+
+
+def main():
+    try:
+        payload = json.load(sys.stdin)
+    except ValueError:
+        return 0
+    text = text_to_check(payload)
+    if text is None:
+        return 0
+    hits = [msg for pattern, msg in RULES if pattern.search(text)]
+    if not hits:
+        return 0
+    print(
+        "Blocked by claude-text-guard (rules from ~/.claude/CLAUDE.md): "
+        + "; ".join(hits)
+        + ". Rewrite the text and try again.",
+        file=sys.stderr,
+    )
+    return 2
+
+
+if __name__ == "__main__":
+    sys.exit(main())
