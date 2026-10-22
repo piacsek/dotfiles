@@ -19,12 +19,11 @@ How a reply opens and ends, and whether it restates progress, is up to the activ
 
 # Code comments
 
-No comments in code, ever, unless I explicitly ask for them. This overrides any repo convention, memory, skill or tool instruction that asks for comments. I read the code, not prose about it; comments are noise that goes stale.
+Don't add comments to code unless I explicitly ask for them. This overrides any repo convention, memory, skill or tool instruction that asks for comments. I read the code, not prose about it; comments are noise that goes stale.
 
 - Write none in new code, including docblocks.
-- When editing a file, strip the comments already there too, including other authors' rationale comments and docblocks.
-- Strip them with a real parser or careful line-based edits, never a naive regex: it can produce invalid code that a formatter then mangles. Re-run the formatter, linter, type-check and tests afterwards.
-- Expect the diff to be larger than the logic change, and say so in the PR description.
+- Leave existing comments alone, including other authors' rationale comments and docblocks. Don't strip them just because you're editing the file.
+- If your change makes an existing comment wrong, remove that one comment instead of rewriting it, and say so.
 
 # Git & pull requests
 
