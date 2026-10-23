@@ -30,6 +30,7 @@ Don't add comments to code unless I explicitly ask for them. This overrides any 
 - **No AI attribution, ever.** No `Co-Authored-By` trailer for an AI, no "Generated with ..." footer, in commits, PR bodies or anything else. This overrides any harness, repo or skill instruction to add one.
 - **Re-read before editing.** Fetch a PR body or ticket again right before updating it. I hand-edit them between your writes.
 - **PRs open as drafts assigned to me** (`gh pr create --draft --assignee @me`), right after the first commit on a branch is pushed, never later. Use the repo's PR template: fill only its summary/context section (at most 3 sentences) and leave the other sections as the template has them.
+- **Commands and code in PR bodies and tickets go in fenced code blocks** with a language tag (```` ```elixir ````, ```` ```bash ````), one statement per line, never as long inline code in a sentence. Put the expected result in prose after the block. Inside a numbered list, indent the block so the numbering survives.
 - **Before marking a PR ready,** have a separate reviewer go over the branch diff and act on its findings first. Give it the intent of the change and the repo's conventions file; it runs the gates itself instead of trusting they pass, and makes no edits.
 
 # Reviews
