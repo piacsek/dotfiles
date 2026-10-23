@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+# Move the copy-mode cursor to the next/prev URL or file path.
+# Usage (from a copy-mode binding):
+#   tmux-jump-link next|prev <pane_id> <copy_cursor_y> <copy_cursor_x> <scroll_position> <history_size> <pane_height>
+# Only LIMIT lines above and below the cursor are scanned.
+
+LIMIT=200
+
+find_match() {
+  perl -CSD -e '
+    my ($dir, $crow, $ccol) = @ARGV;
+    my $re = qr{
+      https?://[^\s"'"'"'<>]+
+      | (?: [\w.~-]*/[\w./~-]*\w[\w./~-]*
+          | (?<![\w.])\w[\w-]+\.[A-Za-z][A-Za-z0-9]{0,4}\b
+        ) (?::\d+){0,2}
+    }x;
+    my ($row, $best) = (0, undef);
+    while (my $line = <STDIN>) {
+      chomp $line;
+      while ($line =~ /$re/g) {
+        my $col = $-[0];
+        my $after = $row > $crow || ($row == $crow && $col > $ccol);
+        my $before = $row < $crow || ($row == $crow && $col < $ccol);
+        if ($dir eq "next" && $after) { print "$row $col\n"; exit }
+        $best = "$row $col" if $dir eq "prev" && $before;
+      }
+      $row++;
+    }
+    print "$best\n" if defined $best;
+  ' "$@"
+}
+
+if [ "$1" = "--find" ]; then
+  shift
+  find_match "$@"
+  exit
+fi
+
+dir=$1 pane=$2 cy=$3 cx=$4 scroll=$5 hsize=$6 height=$7
+
+cur=$((cy - scroll))
+start=$((cur - LIMIT)); [ "$start" -lt "-$hsize" ] && start=-$hsize
+end=$((cur + LIMIT)); [ "$end" -gt $((height - 1)) ] && end=$((height - 1))
+
+target=$(tmux capture-pane -p -t "$pane" -S "$start" -E "$end" \
+  | find_match "$dir" $((cur - start)) "$cx")
+[ -z "$target" ] && exit 0
+
+read -r row col <<< "$target"
+delta=$((row - (cur - start)))
+if [ "$delta" -gt 0 ]; then
+  tmux send -t "$pane" -X -N "$delta" cursor-down
+elif [ "$delta" -lt 0 ]; then
+  tmux send -t "$pane" -X -N $((-delta)) cursor-up
+fi
+tmux send -t "$pane" -X start-of-line
+[ "$col" -gt 0 ] && tmux send -t "$pane" -X -N "$col" cursor-right
+exit 0
