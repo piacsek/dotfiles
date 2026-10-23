@@ -1,8 +1,4 @@
 #!/usr/bin/env bash
-# Move the copy-mode cursor to the next/prev URL or file path.
-# Usage (from a copy-mode binding):
-#   tmux-jump-link next|prev <pane_id> <copy_cursor_y> <copy_cursor_x> <scroll_position> <history_size> <pane_height>
-# Only LIMIT lines above and below the cursor are scanned.
 
 LIMIT=200
 
