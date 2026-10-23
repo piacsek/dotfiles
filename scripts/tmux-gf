@@ -7,7 +7,8 @@ raw=$(cat)
 # containing a '/' or a '.', optionally followed by :line:col.
 token=$(printf '%s\n' "$raw" \
   | grep -oE '[A-Za-z0-9_./~-]*[/.][A-Za-z0-9_./~-]+(:[0-9]+){0,2}' \
-  | awk '{ print length, $0 }' | sort -nr | head -1 | cut -d' ' -f2-)
+  | awk '{ print length, $0 }' | sort -nr | head -1 | cut -d' ' -f2- \
+  | sed -E 's/[.,;:!?]+$//')
 [ -z "$token" ] && exit 0
 
 path="${token%%:*}"
