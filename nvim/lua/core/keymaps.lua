@@ -422,6 +422,14 @@ local run_file_cmd = {
 	elixir = "elixir",
 	ruby = "ruby",
 	go = "go run",
+	rust = function()
+		local root = vim.fs.root(0, "Cargo.toml")
+		if not root then
+			vim.notify("No Cargo.toml found", vim.log.levels.WARN)
+			return nil
+		end
+		return "cd " .. vim.fn.shellescape(root) .. " && cargo run"
+	end,
 }
 
 vim.keymap.set("n", "<leader>r", function()
@@ -432,6 +440,13 @@ vim.keymap.set("n", "<leader>r", function()
 	end
 	if vim.bo.buftype ~= "" then
 		vim.notify("Not a file buffer", vim.log.levels.WARN)
+		return
+	end
+	if type(runner) == "function" then
+		local cmd = runner()
+		if cmd then
+			vimux_run_clearing(cmd)
+		end
 		return
 	end
 	vimux_run_clearing(runner .. " " .. vim.fn.shellescape(vim.fn.expand("%:p")))
