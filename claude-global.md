@@ -57,6 +57,7 @@ Don't add comments to code unless I explicitly ask for them. This overrides any 
 - **Before creating a test file, check it doesn't already exist;** add to existing suites where possible.
 - **Run only the tests related to the change locally,** not whole suites; after pushing, watch CI.
 - **"Done" means format, lint, type-check and the related tests all pass,** not just the tests.
+- **One assertion per line.** Write each expected value as its own `assert`/`refute`/`expect` line. Don't map records or flags into a list and compare it to a list of expected values, and don't wrap assertions in a loop (`for`, `Enum.each`, `forEach`). When one line breaks, the failure names exactly what was wrong.
 
 # Working style
 
