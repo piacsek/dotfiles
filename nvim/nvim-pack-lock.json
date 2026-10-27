@@ -178,6 +178,10 @@
       "rev": "51ad878f8da7cc7ba795bd73fe28dcbfbe55dddd",
       "src": "https://github.com/0Risotto/rainbow12"
     },
+    "redpill.nvim": {
+      "rev": "24e7be33270577014520589dc24a39272c054df2",
+      "src": "https://github.com/piacsek/redpill.nvim"
+    },
     "scintilla.nvim": {
       "rev": "79d6ccee4bc60622bbf92b777f39bcfda67b673f",
       "src": "https://github.com/piacsek/scintilla.nvim"
