@@ -179,7 +179,7 @@
       "src": "https://github.com/0Risotto/rainbow12"
     },
     "scintilla.nvim": {
-      "rev": "7226f18bca1d675dc538e14e2456ba1bd585d1aa",
+      "rev": "79d6ccee4bc60622bbf92b777f39bcfda67b673f",
       "src": "https://github.com/piacsek/scintilla.nvim"
     },
     "scratch.nvim": {
