@@ -152,6 +152,7 @@ require("ghostty-mirror").setup({
 			["scintilla-diamond-light"] = { accent = "#1840d8", bar = "#fbfcff" },
 			["high-contrast"] = { accent = "#8547ff", bar_blend = 0.3 },
 			["scintilla-sapphire"] = { accent = "#2e4eb2", bar_blend = 0.4 },
+			["scintilla-onyx"] = { accent = "#3d6a99", bar = "#222222" },
 			blue = { accent = "#5ff" },
 		},
 	},
