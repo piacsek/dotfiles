@@ -18,6 +18,5 @@
       "Read(//Users/piacsek/.local/share/nvim/**)",
       "Bash(log show *)"
     ]
-  },
-  "outputStyle": "ELI5"
+  }
 }
