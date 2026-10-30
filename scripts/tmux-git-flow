@@ -77,7 +77,7 @@ fi
 
 clear_state    # a new run clears any stale done/error state
 rm -f "$ABORT_FILE" # and any stale abort sentinel from a prior run
-lazygit
+TMUX_GIT_FLOW=1 lazygit
 lg_status=$?
 
 # <C-q> aborts the flow: it drops the abort sentinel and quits lazygit via
