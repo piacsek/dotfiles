@@ -15,8 +15,8 @@
 > post it on the PR. Posts only on a clear yes. Nothing is posted on a no, an
 > unclear answer, or no answer at all.
 > 
-> Use when the user says "sids review", "sids-pr-review", "review this PR",
-> "check my PR before I send it", runs `/sids-pr-review`, or pastes a GitHub PR
+> Use when the user says "sids review", "pr-review", "review this PR",
+> "check my PR before I send it", runs `/pr-review`, or pastes a GitHub PR
 > link — or a Slack message link containing one — and wants feedback on the PR.
 > 
 > Not for deep architectural debate (that is `pr-review-debate`), not for reading
@@ -103,7 +103,7 @@ description and the diff disagree, the diff wins and that disagreement is a find
 ## 2. Prep once, share with both reviewers
 
 ```bash
-S="$SCRATCHPAD/sids-pr-review/$REPO-$PR"; mkdir -p "$S"
+S="$SCRATCHPAD/pr-review/$REPO-$PR"; mkdir -p "$S"
 gh pr view  "$PR" --json title,baseRefName,headRefName,additions,deletions,changedFiles,url > "$S/meta.json"
 gh pr diff  "$PR" > "$S/diff.patch"
 git fetch origin "$(jq -r .headRefName "$S/meta.json")" "$(jq -r .baseRefName "$S/meta.json")"
@@ -370,7 +370,7 @@ cannot be quietly un-sent. Treat it that way.
 ## Scratchpad layout
 
 ```
-$SCRATCHPAD/sids-pr-review/<repo>-<pr>/
+$SCRATCHPAD/pr-review/<repo>-<pr>/
 ├── meta.json     # gh pr view --json output
 ├── diff.patch    # gh pr diff
 ├── brief.md        # the shared review brief
@@ -397,6 +397,6 @@ gets challenged.
 ## Files
 
 ```
-sids-pr-review/
+pr-review/
 └── SKILL.md (401 lines)
 ```
