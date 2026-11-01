@@ -1,30 +1,22 @@
-# pr-review
+---
+name: pr-review
+description: |
+  Dual-model PR review that lands as ONE short, plain review. Runs a Claude
+  reviewer and a Codex reviewer in parallel over the same diff and merges their
+  findings (agreement leads, single-model findings get verified first) into a
+  ~150-250 word verdict: "Worth fixing", optional "Minor".
 
-| | |
-|---|---|
-| **Invoke** | `/pr-review` |
-| **Type** | Slash command |
-| **Description** | Dual-model PR review that lands as ONE short, plain review. |
+  Always prints the review in the terminal first, then asks once whether to
+  post it on the PR. Posts only on a clear yes. Nothing is posted on a no, an
+  unclear answer, or no answer at all.
 
-> Dual-model PR review that lands as ONE short, plain review. Runs a Claude
-> reviewer and a Codex reviewer in parallel over the same diff and merges their
-> findings (agreement leads, single-model findings get verified first) into a
-> ~150-250 word verdict: "Worth fixing", optional "Minor".
-> 
-> Always prints the review in the terminal first, then asks once whether to
-> post it on the PR. Posts only on a clear yes. Nothing is posted on a no, an
-> unclear answer, or no answer at all.
-> 
-> Use when the user says "pr-review", "review this PR",
-> "check my PR before I send it", runs `/pr-review`, or pastes a GitHub PR
-> link — or a Slack message link containing one — and wants feedback on the PR.
-> 
-> Not for deep architectural debate (that is `pr-review-debate`), not for reading
-> existing comments on your own branch (`pr-comments`), not for risk scoring
-> (`pr-risk-score`).
-> argument-hint: "[PR URL, number, or Slack message link]"
-> allowed-tools: Read, Bash, Grep, Task, mcp__claude_ai_Slack__slack_read_thread
+  Use when the user says "pr-review", "review this PR",
+  "check my PR before I send it", runs `/pr-review`, or pastes a GitHub PR
+  link and wants feedback on the PR.
 
+  Not for reading existing comments on your own branch (`pr-comments`).
+argument-hint: "[PR URL or number]"
+allowed-tools: Read, Bash, Grep, Task
 ---
 
 # PR Review
@@ -257,7 +249,6 @@ the comment — see the next section.
 
 Draft it using the **`i-have-adhd`** skill's output rules: verdict first, no preamble,
 no praise padding, no closing pleasantries, numbered items, capped list, plain words.
-This is simpler than the `slack-technical-voice` skill — shorter sentences, fewer words.
 
 Shape, ~150-250 words total:
 
@@ -284,7 +275,7 @@ Shape, ~150-250 words total:
 
 **Every blocker ships with its unblock path.** A finding without a way out
 reads as a complaint. One clause is enough: `add expected_sha256: :string to
-the strict list`, `preload(:child)`, `id={"...-#{parent.id}"}`. If you cannot
+the strict list`, `preload(:customer)`, `id={"...-#{parent.id}"}`. If you cannot
 name the fix, say what you would need to know to name it.
 
 **Genuine follow-ups become tickets, not bullets.** When the review surfaces
@@ -318,15 +309,15 @@ count-weighted sums isolates the marginal contributor" does not.
 ### Voice rules
 
 **Before:** "Great work on this refactor! One small thing I noticed is that in
-`lib/nova/schools/school.ex` the changeset does not appear to validate `capacity`,
+`lib/app/inventory/item.ex` the changeset does not appear to validate `capacity`,
 which could potentially allow negative values to be persisted."
-**After:** "`school.ex:88` — changeset lets `capacity` go negative. Add
+**After:** "`item.ex:88` — changeset lets `capacity` go negative. Add
 `validate_number(greater_than_or_equal_to: 0)`."
 
 **Before:** "I wonder if it would make sense to consider whether this query could
-potentially suffer from an N+1 problem in cases where there are many enrollments?"
-**After:** "`enrollments.ex:142` — N+1, one query per enrollment in the loop.
-`preload(:child)` fixes it."
+potentially suffer from an N+1 problem in cases where there are many orders?"
+**After:** "`orders.ex:142` — N+1, one query per order in the loop.
+`preload(:customer)` fixes it."
 
 **Before:** "There is a potential race condition concern here that may warrant further
 investigation, as two concurrent processes could theoretically both read the same
@@ -385,18 +376,6 @@ gets challenged.
 
 ## When NOT to use this
 
-- **Deep architectural review, adversarial personas, unresolved-finding routing** →
-  `pr-review-debate`.
 - **Pulling existing review comments on your own branch to refresh context** →
   `pr-comments`.
-- **Risk/impact score or a merge-autonomy decision** → `pr-risk-score`.
-- **Announcing a review-ready PR to the team in Slack** → `slack-pr-review`.
 
----
-
-## Files
-
-```
-pr-review/
-└── SKILL.md (401 lines)
-```
