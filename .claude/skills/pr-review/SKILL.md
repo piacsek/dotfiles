@@ -15,7 +15,7 @@
 > post it on the PR. Posts only on a clear yes. Nothing is posted on a no, an
 > unclear answer, or no answer at all.
 > 
-> Use when the user says "sids review", "pr-review", "review this PR",
+> Use when the user says "pr-review", "review this PR",
 > "check my PR before I send it", runs `/pr-review`, or pastes a GitHub PR
 > link — or a Slack message link containing one — and wants feedback on the PR.
 > 
