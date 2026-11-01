@@ -27,7 +27,7 @@
 
 ---
 
-# Sid's PR Review
+# PR Review
 
 Two models review the PR independently. You merge their findings into one dead-simple
 review. Read-only throughout — never check out a branch or touch the working tree.
