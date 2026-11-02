@@ -337,6 +337,17 @@ defaults write -g KeyRepeat -int 2
 defaults write -g InitialKeyRepeat -int 15
 ```
 
+#### Spotlight exclusions
+
+Keep Spotlight from indexing `~/projects`. Builds (`_build`, `node_modules`) otherwise trigger heavy `mds_stores` indexing on every compile. The script adds the path to Spotlight's privacy list (same as System Settings > Spotlight > Search Privacy) and restarts `mds`. It is idempotent.
+
+```bash
+mkdir -p "$HOME/projects"
+sudo "$HOME/dotfiles/scripts/spotlight-exclude" "$HOME/projects"
+```
+
+If it fails with `Operation not permitted`, grant your terminal Full Disk Access (System Settings > Privacy & Security > Full Disk Access) and rerun.
+
 #### Manual Settings
 
 Configure these settings manually:
