@@ -1,4 +1,9 @@
 {
+  "attribution": {
+    "commit": "",
+    "pr": "",
+    "sessionUrl": false
+  },
   "permissions": {
     "allow": [
       "Bash(gh pr view:*)",
@@ -35,11 +40,6 @@
     ]
   },
   "model": "opus[1m]",
-  "attribution": {
-    "commit": "",
-    "pr": "",
-    "sessionUrl": false
-  },
   "hooks": {
     "PreToolUse": [
       {
@@ -62,7 +62,8 @@
     "lua-lsp@claude-plugins-official": false,
     "typescript-lsp@claude-plugins-official": false,
     "codex@openai-codex": true,
-    "cc-plugin-you-should-know@builtin": true
+    "cc-plugin-you-should-know@builtin": true,
+    "rust-analyzer-lsp@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "openai-codex": {
