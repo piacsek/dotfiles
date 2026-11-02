@@ -327,6 +327,12 @@ macos_defaults() {
 }
 try "macOS settings" macos_defaults
 
+spotlight_exclusions() {
+	mkdir -p "$HOME/projects"
+	sudo "$DOTFILES/scripts/spotlight-exclude" "$HOME/projects"
+}
+try "Spotlight exclusions" spotlight_exclusions
+
 login_items() {
 	local app
 	for app in Stats CleanShot\ X Docker rcmd Pasty; do
