@@ -28,5 +28,5 @@ for path in "$@"; do
 done
 
 if ((changed)) && [[ -z ${SPOTLIGHT_NO_RESTART:-} ]]; then
-	launchctl kickstart -k system/com.apple.metadata.mds
+	killall mds
 fi
