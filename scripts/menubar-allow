@@ -3,7 +3,8 @@ set -euo pipefail
 
 plist=${MENUBAR_PLIST:-$HOME/Library/Group Containers/group.com.apple.controlcenter/Library/Preferences/group.com.apple.controlcenter.plist}
 
-hex=$(python3 -I - "$plist" "$@" <<'PY'
+hex=$(
+	python3 -I - "$plist" "$@" <<'PY'
 import plistlib, sys
 
 path, allowed = sys.argv[1], set(sys.argv[2:])
@@ -17,7 +18,7 @@ for key, value in zip(tracked[0::2], tracked[1::2]):
     if value["isAllowed"] != want:
         value["isAllowed"] = want
         changed = True
-    print(f"{'shown ' if want else 'hidden'}  {bundle}", file=sys.stderr)
+        print(f"{'shown ' if want else 'hidden'}  {bundle}", file=sys.stderr)
 
 if changed:
     print(plistlib.dumps(tracked, fmt=plistlib.FMT_BINARY).hex())
