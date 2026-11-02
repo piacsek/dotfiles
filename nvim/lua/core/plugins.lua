@@ -312,6 +312,13 @@ require("conform").setup({
 		-- `lsp_format = "prefer"` and ran mix on every save.
 		return { timeout_ms = 3000 }
 	end,
+	formatters = {
+		mix = {
+			cwd = function(self, ctx)
+				return require("conform.util").root_file({ "mix.exs" })(self, ctx) or vim.fs.dirname(ctx.filename)
+			end,
+		},
+	},
 	formatters_by_ft = {
 		lua = { "stylua" },
 		-- dexter formats over LSP in-process; `mix format` pays Elixir/Mix
