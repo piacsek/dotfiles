@@ -337,6 +337,25 @@ defaults write -g KeyRepeat -int 2
 defaults write -g InitialKeyRepeat -int 15
 ```
 
+#### Menu bar
+
+Show only brain.fm, Control Center and the clock. Hide the built-in items:
+
+```bash
+for item in WiFi Battery Sound FocusModes NowPlaying Display ScreenMirroring; do
+  defaults write com.apple.controlcenter "NSStatusItem VisibleCC $item" -bool false
+done
+defaults write "$HOME/Library/Group Containers/group.com.apple.controlcenter/Library/Preferences/group.com.apple.controlcenter" showSpotlight -bool false
+```
+
+Hide every third-party icon except brain.fm. Run this after each app has launched once, because macOS only lists an app after it first adds a menu bar icon:
+
+```bash
+~/dotfiles/scripts/menubar-allow com.electron.brain.fm
+```
+
+It prints each app it changes and restarts Control Center. Pass more bundle ids to allow more apps. The list it edits is the one in System Settings > Menu Bar > Allow in the Menu Bar.
+
 #### Spotlight exclusions
 
 Keep Spotlight from indexing `~/projects`. Builds (`_build`, `node_modules`) otherwise trigger heavy `mds_stores` indexing on every compile. The script adds the path to Spotlight's privacy list (same as System Settings > Spotlight > Search Privacy) and restarts `mds`. It is idempotent.

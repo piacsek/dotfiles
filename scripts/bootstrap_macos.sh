@@ -350,6 +350,16 @@ launch_apps() {
 }
 try "Launch apps" launch_apps
 
+menu_bar() {
+	local item
+	for item in WiFi Battery Sound FocusModes NowPlaying Display ScreenMirroring; do
+		set_default com.apple.controlcenter "NSStatusItem VisibleCC $item" -bool false || true
+	done
+	set_default "$HOME/Library/Group Containers/group.com.apple.controlcenter/Library/Preferences/group.com.apple.controlcenter" showSpotlight -bool false || true
+	"$DOTFILES/scripts/menubar-allow" com.electron.brain.fm
+}
+try "Menu bar" menu_bar
+
 # --- Summary -----------------------------------------------------------------
 say "Done"
 if [[ -n "$FAILED" ]]; then
@@ -362,4 +372,5 @@ Still manual:
   - rcmd: import ~/dotfiles/rcmd.json in its settings.
   - Add license keys: rcmd, CleanShot, Pasty.
   - Log out and log in, so the key repeat settings apply.
+  - Once every app has run once: ~/dotfiles/scripts/menubar-allow com.electron.brain.fm
 EOF
