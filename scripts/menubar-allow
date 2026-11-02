@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+plist=${MENUBAR_PLIST:-$HOME/Library/Group Containers/group.com.apple.controlcenter/Library/Preferences/group.com.apple.controlcenter.plist}
+
+hex=$(python3 -I - "$plist" "$@" <<'PY'
+import plistlib, sys
+
+path, allowed = sys.argv[1], set(sys.argv[2:])
+with open(path, "rb") as f:
+    tracked = plistlib.loads(plistlib.load(f)["trackedApplications"])
+
+changed = False
+for key, value in zip(tracked[0::2], tracked[1::2]):
+    bundle = key["bundle"]["_0"]
+    want = bundle in allowed
+    if value["isAllowed"] != want:
+        value["isAllowed"] = want
+        changed = True
+    print(f"{'shown ' if want else 'hidden'}  {bundle}", file=sys.stderr)
+
+if changed:
+    print(plistlib.dumps(tracked, fmt=plistlib.FMT_BINARY).hex())
+PY
+)
+
+if [[ -z $hex ]]; then
+	echo "menu bar already matches"
+	exit 0
+fi
+
+defaults write "${plist%.plist}" trackedApplications -data "$hex"
+echo "menu bar updated"
+[[ -n ${MENUBAR_NO_RESTART:-} ]] || killall ControlCenter
