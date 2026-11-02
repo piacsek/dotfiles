@@ -4,13 +4,19 @@ set -euo pipefail
 plist=${SPOTLIGHT_PLIST:-/System/Volumes/Data/.Spotlight-V100/VolumeConfiguration.plist}
 pb=/usr/libexec/PlistBuddy
 
-(($# > 0)) || { echo "usage: sudo spotlight-exclude /abs/path [...]" >&2; exit 2; }
+(($# > 0)) || {
+	echo "usage: sudo spotlight-exclude /abs/path [...]" >&2
+	exit 2
+}
 
 $pb -c "Print :Exclusions" "$plist" >/dev/null 2>&1 || $pb -c "Add :Exclusions array" "$plist"
 
 changed=0
 for path in "$@"; do
-	[[ $path == /* ]] || { echo "not an absolute path: $path" >&2; exit 2; }
+	[[ $path == /* ]] || {
+		echo "not an absolute path: $path" >&2
+		exit 2
+	}
 	path=${path%/}
 	if $pb -c "Print :Exclusions" "$plist" | grep -qxF "    $path"; then
 		echo "already excluded: $path"
