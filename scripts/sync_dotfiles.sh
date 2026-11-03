@@ -23,15 +23,19 @@ generate_commit_message() {
     fi
     
     # Use Claude to analyze the diff and generate a commit message
-    local claude_prompt="Generate ONLY a git commit message (max 50 chars) for this diff. No explanation, no analysis, just the commit message. Use format like 'config: brief description of change':
+    local claude_prompt="Generate ONLY a git commit message (max 50 chars) for this diff. No explanation, no analysis, just the commit message. Use format like 'config: brief description of change', with a lowercase first word:
 
 $diff_output"
     
     local commit_msg
-    commit_msg=$(echo "$claude_prompt" | claude --print --no-session-persistence 2>/dev/null | tr -d '\n\r' | sed 's/[[:space:]]\+/ /g' | xargs)
+    commit_msg=$(echo "$claude_prompt" | claude --print --no-session-persistence \
+        --system-prompt "You write git commit messages. Output only the message line." 2>/dev/null \
+        | tr -d '\r' | grep -E '^[[:space:]]*[A-Za-z]+: .+' | tail -n 1 \
+        | sed -E 's/[[:space:]]+/ /g; s/^ +//; s/ +$//' \
+        | awk '{ i = index($0, ":"); print tolower(substr($0, 1, i)) substr($0, i + 1) }')
     
     # Fallback if Claude fails or returns empty
-    if [[ -z "$commit_msg" || "$commit_msg" == *"error"* ]]; then
+    if [[ -z "$commit_msg" ]]; then
         log_message "Claude failed to generate commit message, using fallback"
         echo "Auto-sync dotfiles - $(date '+%Y-%m-%d %H:%M:%S')"
     else
