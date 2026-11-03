@@ -375,6 +375,8 @@ Configure these settings manually:
   - Add Stats
   - Add Cleanshot
   - Add Docker
+- **Accessibility**: System Settings > Privacy & Security > Accessibility
+  - Allow Ghostty. The tmux `<M-m>` Brain.fm toggle (`scripts/brainfm-toggle`) needs it to press Brain.fm's play/pause and restart-timer buttons. macOS also prompts on the first `<M-m>`.
 
 ### Launch and Configure Apps
 
