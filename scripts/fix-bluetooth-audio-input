@@ -31,3 +31,5 @@ if [[ "$is_bt" == "bt" ]]; then
 else
   echo "audio input is \"$current\"; no change"
 fi
+
+exit
