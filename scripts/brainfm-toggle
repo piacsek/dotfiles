@@ -6,7 +6,7 @@ if ! pgrep -qx Brain.fm; then
 	exit 0
 fi
 
-osascript -l JavaScript <<'EOF'
+osascript -l JavaScript >/dev/null <<'EOF'
 const se = Application("System Events");
 const prev = se.processes.whose({ frontmost: true })[0].bundleIdentifier();
 Application("com.electron.brain.fm").activate();
