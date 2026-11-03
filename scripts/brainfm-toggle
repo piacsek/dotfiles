@@ -6,7 +6,12 @@ if ! pgrep -qx Brain.fm; then
 	exit 0
 fi
 
-osascript -l JavaScript >/dev/null <<'EOF'
+playing=0
+pmset -g assertions | grep -q 'Brain.fm.*Playing audio' && playing=1
+
+BRAINFM_PLAYING=$playing osascript -l JavaScript >/dev/null <<'EOF'
+ObjC.import("stdlib");
+const playing = $.getenv("BRAINFM_PLAYING") === "1";
 const se = Application("System Events");
 const prev = se.processes.whose({ frontmost: true })[0].bundleIdentifier();
 Application("com.electron.brain.fm").activate();
@@ -28,7 +33,7 @@ function findRestart(el, depth) {
   return null;
 }
 
-const restart = p.windows.length ? findRestart(p.windows[0], 0) : null;
+const restart = !playing && p.windows.length ? findRestart(p.windows[0], 0) : null;
 if (restart) {
   restart.actions.byName("AXPress").perform();
 } else {
