@@ -6,38 +6,40 @@ if ! pgrep -qx Brain.fm; then
 	exit 0
 fi
 
-playing=0
-pmset -g assertions | grep -q 'Brain.fm.*Playing audio' && playing=1
+prev=$(osascript -e 'tell application "System Events" to get bundle identifier of first process whose frontmost is true')
+open -b com.electron.brain.fm
 
-BRAINFM_PLAYING=$playing osascript -l JavaScript >/dev/null <<'EOF'
-ObjC.import("stdlib");
-const playing = $.getenv("BRAINFM_PLAYING") === "1";
+result=$(osascript -l JavaScript <<'EOF'
 const se = Application("System Events");
-const prev = se.processes.whose({ frontmost: true })[0].bundleIdentifier();
-Application("com.electron.brain.fm").activate();
-delay(0.3);
 const p = se.processes.whose({ bundleIdentifier: "com.electron.brain.fm" })[0];
 try { p.attributes.byName("AXManualAccessibility").value = true; } catch (e) {}
 
-function findRestart(el, depth) {
-  if (depth > 15) return null;
+let restart = null;
+let toggle = null;
+function walk(el, depth) {
+  if (depth > 20 || restart) return;
   let kids = [];
-  try { kids = el.uiElements(); } catch (e) { return null; }
+  try { kids = el.uiElements(); } catch (e) { return; }
   for (const k of kids) {
     try {
-      if (k.role() === "AXButton" && /^RESTART TIMER/i.test(k.name() || "")) return k;
+      if (k.role() === "AXButton") {
+        const name = k.name() || "";
+        if (/^RESTART TIMER/i.test(name)) { restart = k; return; }
+        if (!toggle && (name === "Play" || name === "Pause")) toggle = k;
+      }
     } catch (e) {}
-    const hit = findRestart(k, depth + 1);
-    if (hit) return hit;
+    walk(k, depth + 1);
   }
-  return null;
 }
 
-const restart = !playing && p.windows.length ? findRestart(p.windows[0], 0) : null;
-if (restart) {
-  restart.actions.byName("AXPress").perform();
-} else {
-  se.keyCode(49);
-}
-Application(prev).activate();
+for (let i = 0; i < 10 && p.windows.length === 0; i++) delay(0.1);
+if (p.windows.length) walk(p.windows[0], 0);
+
+if (restart) { restart.actions.byName("AXPress").perform(); "restarted timer"; }
+else if (toggle) { const n = toggle.name(); toggle.actions.byName("AXPress").perform(); n === "Pause" ? "paused" : "playing"; }
+else "no player button found";
 EOF
+)
+
+open -b "$prev"
+tmux display-message "Brain.fm: $result"
