@@ -3,6 +3,14 @@ set -euo pipefail
 
 if media-control get 2>/dev/null | grep -q '"bundleIdentifier":"com.electron.brain.fm"'; then
 	media-control toggle-play-pause
+elif pgrep -qx Brain.fm; then
+	osascript <<-'EOF'
+		tell application "System Events" to set prev to bundle identifier of first process whose frontmost is true
+		tell application id "com.electron.brain.fm" to activate
+		delay 0.2
+		tell application "System Events" to key code 49
+		tell application id prev to activate
+	EOF
 else
-	tmux display-message "Brain.fm is not the active player"
+	tmux display-message "Brain.fm is not running"
 fi
