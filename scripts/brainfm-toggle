@@ -7,7 +7,8 @@ if ! pgrep -qx Brain.fm; then
 fi
 
 prev=$(osascript -e 'tell application "System Events" to get bundle identifier of first process whose frontmost is true')
-open -b com.electron.brain.fm
+windows=$(osascript -e 'tell application "System Events" to count windows of (first process whose bundle identifier is "com.electron.brain.fm")')
+[[ "$windows" == 0 ]] && open -b com.electron.brain.fm
 
 result=$(osascript -l JavaScript <<'EOF'
 const se = Application("System Events");
