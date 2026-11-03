@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if media-control get 2>/dev/null | grep -q '"bundleIdentifier":"com.electron.brain.fm"'; then
+	media-control toggle-play-pause
+else
+	tmux display-message "Brain.fm is not the active player"
+fi
