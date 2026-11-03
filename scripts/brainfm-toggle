@@ -1,16 +1,38 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if media-control get 2>/dev/null | grep -q '"bundleIdentifier":"com.electron.brain.fm"'; then
-	media-control toggle-play-pause
-elif pgrep -qx Brain.fm; then
-	osascript <<-'EOF'
-		tell application "System Events" to set prev to bundle identifier of first process whose frontmost is true
-		tell application id "com.electron.brain.fm" to activate
-		delay 0.2
-		tell application "System Events" to key code 49
-		tell application id prev to activate
-	EOF
-else
+if ! pgrep -qx Brain.fm; then
 	tmux display-message "Brain.fm is not running"
+	exit 0
 fi
+
+osascript -l JavaScript <<'EOF'
+const se = Application("System Events");
+const prev = se.processes.whose({ frontmost: true })[0].bundleIdentifier();
+Application("com.electron.brain.fm").activate();
+delay(0.3);
+const p = se.processes.whose({ bundleIdentifier: "com.electron.brain.fm" })[0];
+try { p.attributes.byName("AXManualAccessibility").value = true; } catch (e) {}
+
+function findRestart(el, depth) {
+  if (depth > 15) return null;
+  let kids = [];
+  try { kids = el.uiElements(); } catch (e) { return null; }
+  for (const k of kids) {
+    try {
+      if (k.role() === "AXButton" && /^RESTART TIMER/i.test(k.name() || "")) return k;
+    } catch (e) {}
+    const hit = findRestart(k, depth + 1);
+    if (hit) return hit;
+  }
+  return null;
+}
+
+const restart = p.windows.length ? findRestart(p.windows[0], 0) : null;
+if (restart) {
+  restart.actions.byName("AXPress").perform();
+} else {
+  se.keyCode(49);
+}
+Application(prev).activate();
+EOF
