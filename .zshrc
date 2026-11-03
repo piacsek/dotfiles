@@ -60,6 +60,7 @@ function __zoxide_z_complete() {
 }
 
 # Aliases
+alias c='claude'
 alias vim='nvim'
 alias cat='bat -pp' # plain style, no pager — safe drop-in for cat
 alias dotfiles='cd $HOME/dotfiles/'
