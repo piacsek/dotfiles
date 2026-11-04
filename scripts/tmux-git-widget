@@ -25,7 +25,7 @@ if [[ "${1:-}" == "--dirty" ]]; then
 fi
 
 case "$(cat "$STATE_FILE" 2>/dev/null)" in
-committing) echo "󰚩 committing |" && exit 0 ;;
+committing) echo "󰇮 committing |" && exit 0 ;;
 pushing) echo "󰅧 pushing |" && exit 0 ;;
 done) echo "󰗠 pushed |" && exit 0 ;;
 error) echo "󰀦 flow failed |" && exit 0 ;;
