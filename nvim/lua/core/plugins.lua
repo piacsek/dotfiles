@@ -483,7 +483,7 @@ require("scratch").setup({
 	scratch_file_dir = "~/scratch.nvim",
 	window_cmd = "edit",
 	file_picker = "fzflua",
-	filetypes = { "ex", "lua", "js", "sh", "ts", "json", "heex", "html", "sql", "md" },
+	filetypes = { "ex", "lua", "js", "sh", "ts", "json", "heex", "html", "css", "sql", "md" },
 })
 
 -- nvim-cmp
