@@ -19,6 +19,11 @@ set -euo pipefail
 DOTFILES="$HOME/dotfiles"
 DOTFILES_RAW="https://raw.githubusercontent.com/piacsek/dotfiles/main"
 STATE_DIR="$HOME/.local/state/dotfiles-bootstrap"
+GH_EXTENSIONS=(
+	dlvhdr/gh-dash
+	dlvhdr/gh-enhance
+	github/gh-stack
+)
 FAILED=""
 # `brew install` upgrades an outdated formula by default; a rerun must not.
 export HOMEBREW_NO_INSTALL_UPGRADE=1 HOMEBREW_NO_AUTO_UPDATE=1
@@ -239,7 +244,7 @@ gh_extras() {
 	brew list --cask font-fira-code-nerd-font >/dev/null 2>&1 ||
 		brew install --cask font-fira-code-nerd-font
 	local ext
-	for ext in dlvhdr/gh-dash dlvhdr/gh-enhance github/gh-stack; do
+	for ext in "${GH_EXTENSIONS[@]}"; do
 		gh extension list | grep -q "${ext#*/}" || gh extension install "$ext"
 	done
 }
