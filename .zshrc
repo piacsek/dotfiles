@@ -38,6 +38,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Init ASDF
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+export CLOUDSDK_PYTHON=/opt/homebrew/bin/python3.14
 
 # Init direnv
 eval "$(direnv hook zsh)"
