@@ -239,7 +239,7 @@ gh_extras() {
 	brew list --cask font-fira-code-nerd-font >/dev/null 2>&1 ||
 		brew install --cask font-fira-code-nerd-font
 	local ext
-	for ext in dlvhdr/gh-dash dlvhdr/gh-enhance; do
+	for ext in dlvhdr/gh-dash dlvhdr/gh-enhance github/gh-stack; do
 		gh extension list | grep -q "${ext#*/}" || gh extension install "$ext"
 	done
 }
