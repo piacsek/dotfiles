@@ -272,7 +272,7 @@ local mason_tools = {
 
 vim.api.nvim_create_user_command("MasonInstallTools", function()
 	-- snacks' notifier draws nothing without a UI, so fall back to print under
-	-- `nvim --headless` (how SETUP_MACOS.md drives this).
+	-- `nvim --headless`.
 	local report = function(msg)
 		if #vim.api.nvim_list_uis() == 0 then
 			print(msg)

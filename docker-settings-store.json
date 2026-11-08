@@ -1,0 +1,7 @@
+{
+  "AutoStart": true,
+  "Cpus": 3,
+  "MemoryMiB": 3072,
+  "DiskSizeMiB": 65536,
+  "UseContainerdSnapshotter": true
+}

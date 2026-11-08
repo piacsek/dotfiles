@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Update core Homebrew dependencies — ~/dotfiles/core-deps.txt is the single
-# source of truth (also consumed by SETUP_MACOS.md section 6).
+# source of truth.
 #
 #   macos_core_deps_update --all              update every core dep
 #   macos_core_deps_update nvim fzf ripgrep   update only the named deps
@@ -21,7 +21,7 @@ usage() {
 	cat >&2 <<-EOF
 	usage: macos_core_deps_update --all | <dep>...
 
-	Updates core Homebrew deps listed in SETUP_MACOS.md (section 6).
+	Updates core Homebrew deps listed in ~/dotfiles/core-deps.txt.
 	  --all, -a   update all core deps
 	  <dep>...    update only the named deps (must be in the core list)
 	EOF

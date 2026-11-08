@@ -1,11 +1,11 @@
 ---
 name: track-in-dotfiles
-description: Move a config file into the ~/dotfiles repo, symlink it back to its original location, and update SETUP_MACOS.md so a fresh machine reproduces the setup. Use when the user says "port this to dotfiles", "track X in dotfiles", "let's save these settings to the dotfiles repo", or after editing a config that isn't yet under `~/dotfiles/`.
+description: Move a config file into the ~/dotfiles repo, symlink it back to its original location, and add it to scripts/link_dotfiles.sh so a fresh machine reproduces the setup. Use when the user says "port this to dotfiles", "track X in dotfiles", "let's save these settings to the dotfiles repo", or after editing a config that isn't yet under `~/dotfiles/`.
 ---
 
 # Track a config file in the dotfiles repo
 
-The dotfiles repo at `~/dotfiles/` holds tracked configs as plain files at the repo root (e.g. `gh-dash-config.yml`, `claude-settings.json`). The original system location holds a symlink. `SETUP_MACOS.md` is the bootstrap script for a fresh machine — every tracked file MUST have a `ln -sf` line there or it won't survive a reinstall.
+The dotfiles repo at `~/dotfiles/` holds tracked configs as plain files at the repo root (e.g. `gh-dash-config.yml`, `claude-settings.json`). The original system location holds a symlink. `scripts/link_dotfiles.sh` creates those symlinks on a fresh machine (the bootstrap runs it) — every tracked file MUST have a `link_dotfile` line there or it won't survive a reinstall.
 
 ## Steps
 
@@ -21,11 +21,11 @@ The dotfiles repo at `~/dotfiles/` holds tracked configs as plain files at the r
    ```
    Then `ls -la <source>` to verify the symlink resolves correctly.
 
-4. **Update `~/dotfiles/SETUP_MACOS.md`.** Find the block of `ln -sf $HOME/dotfiles/...` lines (around line 150). Add a new line, grouped near related entries (e.g. claude-related lines stay together):
+4. **Add a line to `~/dotfiles/scripts/link_dotfiles.sh`**, grouped near related entries (e.g. claude-related lines stay together):
    ```
-   ln -sf $HOME/dotfiles/<target> <source-with-$HOME>
+   link_dotfile "$dotfiles_dir/<target>" "$HOME/<source-relative-to-home>"
    ```
-   Use `$HOME` (not `~`) and absolute-ish paths to match the existing style. If the source's parent directory isn't already `mkdir -p`'d earlier in the file, add that too.
+   `link_dotfile` creates the parent directory and backs up anything already there.
 
 5. **Don't commit.** Leave the working tree dirty; the user commits dotfiles changes themselves.
 

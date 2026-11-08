@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Set up a brand-new Mac end to end: Command Line Tools, Homebrew, CLI tools,
 # git + SSH + gh auth, dotfiles clone/link, launch agents, asdf, nvim tools,
-# apps and macOS settings. Scripted twin of SETUP_MACOS.md — keep both in sync.
+# apps and macOS settings.
 #
 # Only prerequisite: Ghostty (downloaded by hand). From Ghostty, run:
 #
@@ -281,7 +281,7 @@ try "Neovim plugins, mason tools, treesitter parsers" nvim_tools
 
 apps() {
 	local cask rc=0
-	for cask in 1password rectangle google-chrome stats cleanshot docker slack \
+	for cask in 1password rectangle google-chrome stats cleanshot docker-desktop slack \
 		spotify whatsapp brainfm zoom loom rcmd ghostty; do
 		brew list --cask "$cask" >/dev/null 2>&1 && continue
 		# Ghostty (and anything else) installed by hand outside brew: leave it.
@@ -304,16 +304,22 @@ pasty() {
 try "Pasty (App Store)" pasty
 
 docker_settings() {
-	local dir="$HOME/Library/Group Containers/group.com.docker"
-	if [[ ! -d "$dir" ]]; then
+	local store="$HOME/Library/Group Containers/group.com.docker/settings-store.json" i
+	if [[ ! -f "$store" ]]; then
 		open -a Docker
-		sleep 5
-		osascript -e 'quit app "Docker"'
+		for ((i = 0; i < 60; i++)); do
+			[[ -f "$store" ]] && break
+			sleep 1
+		done
 	fi
-	mkdir -p "$dir"
-	cp "$DOTFILES/docker-settings.json" "$dir/settings.json"
+	osascript -e 'quit app "Docker"'
+	sleep 3
+	mkdir -p "$(dirname "$store")"
+	[[ -f "$store" ]] || echo '{}' >"$store"
+	jq -s '.[0] * .[1]' "$store" "$DOTFILES/docker-settings-store.json" >"$store.tmp"
+	mv "$store.tmp" "$store"
 }
-try "Docker settings" once docker-settings docker_settings
+try "Docker settings" once docker-settings-store docker_settings
 
 rectangle_settings() {
 	# Rectangle imports this file automatically on its next launch.
@@ -369,6 +375,11 @@ menu_bar() {
 }
 try "Menu bar" menu_bar
 
+accessibility_pane() {
+	open "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"
+}
+try "Open Accessibility settings" once accessibility-pane accessibility_pane
+
 # --- Summary -----------------------------------------------------------------
 say "Done"
 if [[ -n "$FAILED" ]]; then
@@ -378,6 +389,8 @@ fi
 cat <<'EOF'
 
 Still manual:
+  - Accessibility (System Settings > Privacy & Security): allow Ghostty, for the <M-m> Brain.fm toggle.
+  - If "Spotlight exclusions" failed: give Ghostty Full Disk Access, then rerun.
   - rcmd: import ~/dotfiles/rcmd.json in its settings.
   - Add license keys: rcmd, CleanShot, Pasty.
   - Log out and log in, so the key repeat settings apply.
