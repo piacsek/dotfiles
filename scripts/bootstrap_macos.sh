@@ -132,7 +132,7 @@ else
 fi
 # `brew list <name>` resolves aliases (gpg → gnupg) and casks (1password-cli).
 missing=""
-for dep in $deps fswatch mas; do
+for dep in $deps mas; do
 	brew list "$dep" >/dev/null 2>&1 || missing="$missing $dep"
 done
 if [[ -n "$missing" ]]; then
@@ -140,6 +140,11 @@ if [[ -n "$missing" ]]; then
 	brew install $missing
 else
 	echo "All core CLI tools already installed"
+fi
+
+say "Claude Code"
+if [[ ! -x "$HOME/.local/bin/claude" ]]; then
+	curl -fsSL https://claude.ai/install.sh | bash
 fi
 
 # --- Git ---------------------------------------------------------------------
@@ -217,15 +222,14 @@ launch_agents() {
 	fi
 	mkdir -p "$HOME/Library/LaunchAgents"
 	local plist
-	for plist in com.dotfiles.sync com.gh-dash.theme-refresh com.dotfiles.audio-input-fix; do
+	for plist in com.gh-dash.theme-refresh com.dotfiles.audio-input-fix; do
 		ln -sf "$DOTFILES/$plist.plist" "$HOME/Library/LaunchAgents/$plist.plist"
 		if ! launchctl list "$plist" >/dev/null 2>&1; then
 			launchctl load "$HOME/Library/LaunchAgents/$plist.plist"
-			if [[ $plist == com.dotfiles.sync ]]; then launchctl start "$plist"; fi
 		fi
 	done
 }
-try "Launch agents (auto-sync, gh-dash theme, audio fix)" launch_agents
+try "Launch agents (gh-dash theme, audio fix)" launch_agents
 
 asdf_tools() {
 	cd "$HOME"
@@ -239,6 +243,14 @@ asdf_tools() {
 }
 try "asdf plugins and versions" asdf_tools
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$HOME/.local/bin:$PATH"
+
+rust_toolchain() {
+	export PATH="/opt/homebrew/opt/rustup/bin:$HOME/.cargo/bin:$PATH"
+	rustup default >/dev/null 2>&1 || rustup default stable
+}
+try "Rust toolchain (rustup)" rust_toolchain
+
+try "Tailscale daemon" sudo brew services start tailscale
 
 gh_extras() {
 	brew list --cask font-fira-code-nerd-font >/dev/null 2>&1 ||
@@ -256,17 +268,6 @@ sessionizer() {
 	[[ -s "$conf" ]] || echo 'TS_SEARCH_PATHS=(~/.tmux-sessions:1)' >"$conf"
 }
 try "tmux sessionizer config" sessionizer
-
-tmux_agents() {
-	mkdir -p "$HOME/projects"
-	[[ -d "$HOME/projects/tmux-agents/.git" ]] ||
-		git clone git@github.com:piacsek/tmux-agents.git "$HOME/projects/tmux-agents"
-	# Skip the rebuild when already installed. After pulling changes, rerun
-	# the cargo command below by hand.
-	[[ -x "$HOME/.local/bin/tmux-agents" ]] && return
-	cargo install --path "$HOME/projects/tmux-agents" --root "$HOME/.local" --locked
-}
-try "Build tmux-agents" tmux_agents
 
 try "tmux plugins (tpm)" "$HOME/.tmux/plugins/tpm/bin/install_plugins"
 
@@ -324,7 +325,10 @@ try "Rectangle settings" once rectangle-settings rectangle_settings
 
 macos_defaults() {
 	# Restart the Dock only when its setting changed.
-	if set_default com.apple.dock autohide -bool true; then killall Dock; fi
+	local dock_changed=false
+	set_default com.apple.dock autohide -bool true && dock_changed=true
+	set_default com.apple.dock wvous-br-corner -int 1 && dock_changed=true
+	if $dock_changed; then killall Dock; fi
 	set_default -g ApplePressAndHoldEnabled -bool false || true
 	# Fastest key repeat the Keyboard settings UI allows. Needs logout/login.
 	set_default -g KeyRepeat -int 2 || true

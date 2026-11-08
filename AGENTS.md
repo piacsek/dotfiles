@@ -4,7 +4,7 @@ Notes and gotchas for working in this dotfiles repo. Each item is a hard-won fac
 
 ## Repo conventions
 
-- **Auto-sync:** `~/dotfiles` commits/pushes automatically. Don't offer to commit or push — just finish editing. Don't run manual commits unless explicitly asked.
+- **No auto-sync:** two Macs share this repo, so nothing commits or pushes automatically. Pull before editing on a machine; commit or push only when asked.
 
 ## Neovim
 
@@ -26,7 +26,7 @@ Notes and gotchas for working in this dotfiles repo. Each item is a hard-won fac
 
 - **Lives in its own repo:** `~/projects/tmux-agents` (github.com/piacsek/tmux-agents). Its `AGENTS.md` has the architecture, gates, and gotchas; only the tmux wiring lives here.
 - **Wiring in this repo:** `.tmux.conf` binds `M-c` to `display-popup -E -w 70% -h 60% "tmux-agents"`, and `status-right` runs `#(tmux-agents status)` at `status-interval 1`. Every other `#()` widget is wrapped in `scripts/tmux-cached <ttl> -- <cmd>` (except `tmux-git-widget`, which is called uncached so <M-g> flow state shows within 1s, and caches only its own `git status` part internally) (5s TTL, cache in `~/.cache/tmux-cached/`; was a `tmux-agents cached` subcommand until 2026-10-07, moved back because it is unrelated to agents) so the 1s interval does not rerun `git status`/`tsh`/`tailscale` each second. `~/.tmux_work.conf` overrides `status-right` and must carry the same segments.
-- **Install:** `cargo install --path ~/projects/tmux-agents --root ~/.local --locked` → `~/.local/bin/tmux-agents` (on the tmux server's PATH). Reinstall after pulling changes.
+- **Install:** Homebrew tap `piacsek/tap/tmux-agents` (listed in `core-deps.txt`, prebuilt release binary in `/opt/homebrew/bin`). Update with `macos_core_deps_update tmux-agents`; a new version needs a GitHub release plus a tap formula bump.
 - **You cannot probe `#()` with `tmux display -p`:** it returns "" for any `#()` (even `#(echo hi)`), including via `#{T:status-right}`. To verify status-line widgets ran, watch `~/.cache/tmux-cached/` mtimes or use `tmux run-shell '<cmd>'`.
 
 ## tmux popups

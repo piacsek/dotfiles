@@ -27,11 +27,10 @@ The dotfiles repo at `~/dotfiles/` holds tracked configs as plain files at the r
    ```
    Use `$HOME` (not `~`) and absolute-ish paths to match the existing style. If the source's parent directory isn't already `mkdir -p`'d earlier in the file, add that too.
 
-5. **Don't commit.** The repo has an auto-sync watcher (`scripts/dotfiles-sync.sh` via `com.dotfiles.sync.plist`) that picks up changes and commits with a Claude-generated message. Just leave the working tree dirty.
+5. **Don't commit.** Leave the working tree dirty; the user commits dotfiles changes themselves.
 
 ## Gotchas
 
 - `~/dotfiles/.claude/` is **project-scoped** for Claude Code (only loads when running claude inside `~/dotfiles`). User-global Claude settings belong at `~/dotfiles/claude-settings.json` symlinked to `~/.claude/settings.json`, NOT inside `.claude/`.
 - If the source is a directory, use `ln -sf` on the directory itself, not its contents.
 - Don't track GENERATED files (e.g. ghostty-mirror.nvim's theme output in `~/.config/ghostty/themes/`) — track the config that generates them instead.
-- Don't `git add` files inside `~/dotfiles/.claude/skills/` of unrelated changes; the auto-sync handles staging.

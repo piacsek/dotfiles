@@ -54,6 +54,7 @@ alias_formula() {
 	nvim) echo neovim ;;
 	rg) echo ripgrep ;;
 	delta) echo git-delta ;;
+	tmux-agents) echo piacsek/tap/tmux-agents ;;
 	*) echo "$1" ;;
 	esac
 }
@@ -92,7 +93,7 @@ for dep in "${TARGETS[@]}"; do
 		missing=$((missing + 1))
 		continue
 	fi
-	if [[ "$OUTDATED" != *" $dep "* ]]; then
+	if [[ "$OUTDATED" != *" $dep "* && "$OUTDATED" != *" ${dep##*/} "* ]]; then
 		echo "${GREEN}󰄬${RST} $dep ${DIM}(up to date)${RST}"
 		current=$((current + 1))
 		continue
