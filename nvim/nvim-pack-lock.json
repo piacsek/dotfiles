@@ -37,7 +37,7 @@
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "ghostty-mirror.nvim": {
-      "rev": "15062af0463585e41930ec78bb6ed5f242f9cc20",
+      "rev": "3379a1c5f3552c2277c96c5912e8a7e1afe9244f",
       "src": "https://github.com/piacsek/ghostty-mirror.nvim"
     },
     "gitsigns.nvim": {
