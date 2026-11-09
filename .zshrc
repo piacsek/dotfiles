@@ -64,7 +64,6 @@ alias c='claude'
 alias cl='clear'
 alias vim='nvim'
 alias cat='bat -pp' # plain style, no pager — safe drop-in for cat
-alias dotfiles='cd $HOME/dotfiles/'
 alias lz='lazygit'
 alias tx='tmux-sessionizer'
 # alias lazysql='op run --env-file="$HOME/projects/wonderschool/.db_env" -- lazysql'
