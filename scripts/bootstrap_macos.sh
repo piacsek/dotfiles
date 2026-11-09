@@ -390,7 +390,7 @@ cat <<'EOF'
 
 Still manual:
   - Accessibility (System Settings > Privacy & Security): allow Ghostty, for the <M-m> Brain.fm toggle.
-  - If "Spotlight exclusions" failed: give Ghostty Full Disk Access, then rerun.
+  - If "Spotlight exclusions" or "Menu bar" failed: give Ghostty Full Disk Access, quit and reopen Ghostty, then rerun.
   - rcmd: import ~/dotfiles/rcmd.json in its settings.
   - Add license keys: rcmd, CleanShot, Pasty.
   - Log out and log in, so the key repeat settings apply.
