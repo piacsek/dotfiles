@@ -281,7 +281,7 @@ try "Neovim plugins, mason tools, treesitter parsers" nvim_tools
 
 apps() {
 	local cask rc=0
-	for cask in 1password rectangle google-chrome stats cleanshot docker-desktop slack \
+	for cask in 1password rectangle google-chrome cleanshot docker-desktop slack \
 		spotify whatsapp brainfm zoom loom rcmd ghostty; do
 		brew list --cask "$cask" >/dev/null 2>&1 && continue
 		# Ghostty (and anything else) installed by hand outside brew: leave it.
@@ -350,7 +350,7 @@ try "Spotlight exclusions" spotlight_exclusions
 
 login_items() {
 	local app
-	for app in Stats CleanShot\ X Docker rcmd Pasty; do
+	for app in CleanShot\ X Docker rcmd Pasty; do
 		[[ -d "/Applications/$app.app" ]] || { warn "$app.app not found"; continue; }
 		osascript -e "tell application \"System Events\" to if not (exists login item \"$app\") then make login item at end with properties {path:\"/Applications/$app.app\", hidden:false}"
 	done
@@ -359,7 +359,7 @@ try "Login items" login_items
 
 launch_apps() {
 	local app
-	for app in rcmd Stats Pasty Rectangle; do
+	for app in rcmd Pasty Rectangle; do
 		pgrep -xq "$app" || open -a "$app"
 	done
 }

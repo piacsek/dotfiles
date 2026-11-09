@@ -35,7 +35,7 @@ if [[ ! -e "$sessionizer_config" && ! -L "$sessionizer_config" ]]; then
 fi
 
 link_dotfile "$dotfiles_dir/nvim" "$HOME/.config/nvim"
-link_dotfile "$dotfiles_dir/lazygit-config.yml" "$HOME/Library/Application Support/lazygit/config.yml"
+link_dotfile "$dotfiles_dir/lazygit-config.yml" "$HOME/.config/lazygit/config.yml"
 link_dotfile "$dotfiles_dir/.claude/skills" "$HOME/.claude/skills"
 link_dotfile "$dotfiles_dir/.claude/output-styles" "$HOME/.claude/output-styles"
 link_dotfile "$dotfiles_dir/.claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
