@@ -4,9 +4,9 @@ git:
   autoFetch: true
   log:
     order: default
-  pagers:
+  diffRenderers:
     - colorArg: always
-      pager: $HOME/dotfiles/scripts/delta-themed.sh --paging=never
+      command: $HOME/dotfiles/scripts/delta-themed.sh --paging=never
 customCommands:
   - key: "<c-q>"
     context: "global"

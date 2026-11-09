@@ -35,7 +35,7 @@ Notes and gotchas for working in this dotfiles repo. Each item is a hard-won fac
 
 ## macOS paths
 
-- **lazygit config** lives at `~/Library/Application Support/lazygit/config.yml`, NOT `~/.config/lazygit/`. Confirm with `lazygit -cd`. A pre-existing empty file there silently overrides `~/.config`. Dotfiles symlink it to `~/dotfiles/lazygit-config.yml`.
+- **lazygit config** lives at `~/.config/lazygit/config.yml`, because `.zshrc` exports `XDG_CONFIG_HOME`. Without that variable lazygit uses `~/Library/Application Support/lazygit/`. Confirm with `lazygit -cd`. A pre-existing empty file there silently overrides the dotfiles one. Dotfiles symlink it to `~/dotfiles/lazygit-config.yml`.
 
 ## ws-common (referenced from this repo's `.nvim.lua`)
 
