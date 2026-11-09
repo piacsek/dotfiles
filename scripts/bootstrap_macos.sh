@@ -281,7 +281,7 @@ try "Neovim plugins, mason tools, treesitter parsers" nvim_tools
 
 apps() {
 	local cask rc=0
-	for cask in 1password rectangle google-chrome cleanshot docker-desktop slack \
+	for cask in 1password rectangle google-chrome cleanshot docker-desktop \
 		spotify whatsapp brainfm zoom loom rcmd ghostty; do
 		brew list --cask "$cask" >/dev/null 2>&1 && continue
 		# Ghostty (and anything else) installed by hand outside brew: leave it.

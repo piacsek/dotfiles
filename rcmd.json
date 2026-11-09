@@ -84,18 +84,6 @@
 		{
 			"whenAlreadyFocusedAction": 2,
 			"app": {
-				"originalName": "Slack",
-				"switchCount": 0,
-				"identifier": "com.tinyspeck.slackmacgap:12803",
-				"path": "/Applications/Slack.app",
-				"useCount": 201
-			},
-			"index": 0,
-			"key": "s"
-		},
-		{
-			"whenAlreadyFocusedAction": 2,
-			"app": {
 				"path": "/Applications/WhatsApp.app",
 				"useCount": 5,
 				"identifier": "net.whatsapp.WhatsApp:44696",
