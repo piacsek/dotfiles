@@ -62,6 +62,7 @@ function __zoxide_z_complete() {
 # Aliases
 alias c='claude'
 alias cl='clear'
+alias clc='clear && c'
 alias vim='nvim'
 alias cat='bat -pp' # plain style, no pager — safe drop-in for cat
 alias lz='lazygit'
