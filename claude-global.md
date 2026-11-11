@@ -43,6 +43,7 @@ Don't add comments to code unless I explicitly ask for them. This overrides any 
 
 - **Titles describe the user-visible effect in plain language.** Write them for non-engineers (product, support, finance): what a user experiences, not how the code fails. No function, flag, field or collection names in titles; those go in the description.
 - **Don't list sub-issues in a parent ticket's description.** The tracker already shows them; a hand-written list is redundant and goes stale. Describe the parent's purpose and scope only.
+- **Exception: parents with more than 3 sub-issues end with an order diagram.** At the bottom of the description, add a markdown drawing of the order to tackle the sub-issues in (what blocks what, what can run in parallel). Redraw it whenever sub-issues are added, removed, renamed or reordered.
 - **Less is more.** Mention alternatives only when the rejected path changes how someone reasons about the chosen one. Keep open questions only when they block the implementer. Never recap the conversation; the reader wasn't there.
 - **Sub-issues are narrow:** no brainstorming context, no parent link in a References section (the tracker already links it), and no standalone "tests" sub-issue; tests belong in each task they cover.
 - **References to docs are clickable markdown links,** not bare paths.
@@ -59,7 +60,7 @@ Don't add comments to code unless I explicitly ask for them. This overrides any 
 - **"Done" means format, lint, type-check and the related tests all pass,** not just the tests.
 - **One assertion per line.** Write each expected value as its own `assert`/`refute`/`expect` line. Don't map records or flags into a list and compare it to a list of expected values, and don't wrap assertions in a loop (`for`, `Enum.each`, `forEach`). When one line breaks, the failure names exactly what was wrong.
 - **Test helpers go at the bottom of the test file,** after every `describe`/test block. Setup blocks stay at the top.
-- **`cpg` in a TDD session means "committed/pushed, go":** I've checkpointed the last task; start the next one.
+- **`cpg` (or its alias `ccc`) in a TDD session means "committed/pushed, go":** I've checkpointed the last task; start the next one.
 
 # Working style
 
