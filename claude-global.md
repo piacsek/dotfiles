@@ -66,3 +66,4 @@ Don't add comments to code unless I explicitly ask for them. This overrides any 
 
 - **Prefer the smallest fix:** a one-line config setting over new wrapper code. Propose new code only when no setting can do it, and say why.
 - **Multi-step plans go in the task list tool,** not only in chat.
+- **Latest Fable orchestrates, latest Opus executes.** The main session runs on the newest Fable and plans, delegates and reviews. Subagents and workflow agents that do the work run on the newest Opus (`model: "opus"`).
