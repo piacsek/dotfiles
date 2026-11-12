@@ -30,7 +30,7 @@ cmd=$(printf '%s\n' "$out" | sed -n '2p')
 [[ -z "$cmd" ]] && exit 0
 
 script_file=$(command -v "${cmd%% *}" 2>/dev/null || printf '%s' "${cmd%% *}")
-if [[ -f "$script_file" ]] && grep -qE 'tmux[[:space:]]+(new-window|new-session)' "$script_file" 2>/dev/null; then
+if [[ -f "$script_file" ]] && grep -qE 'tmux[[:space:]]+(new-window|new-session|display-message)' "$script_file" 2>/dev/null; then
 	exec sh -c "$cmd"
 fi
 

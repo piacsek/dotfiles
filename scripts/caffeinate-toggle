@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -uo pipefail
+
+pattern='^caffeinate -dims$'
+self="$HOME/dotfiles/scripts/caffeinate-toggle"
+
+if [[ "${1:-}" == "status" ]]; then
+	pgrep -f "$pattern" >/dev/null && echo "  ON |"
+	exit 0
+fi
+
+if pgrep -f "$pattern" >/dev/null; then
+	pkill -f "$pattern"
+	msg="caffeinate: off"
+else
+	nohup caffeinate -dims >/dev/null 2>&1 &
+	disown
+	msg=" caffeinate: on"
+fi
+
+echo "$msg"
+[[ -n "${TMUX:-}" ]] || exit 0
+tmux display-message "$msg"
+"$HOME/dotfiles/scripts/tmux-cached" 0 -- "$self" status >/dev/null || true
+tmux list-clients -F '#{client_tty}' | while read -r tty; do
+	tmux refresh-client -S -t "$tty"
+done
