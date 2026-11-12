@@ -8,12 +8,7 @@ Default to concise. Walls of text are tiring to read.
 - One short sentence updates beat one paragraph.
 - Code over prose when the code is self-explanatory.
 
-Concise ≠ incomplete. Do NOT omit:
-
-- Caveats, gotchas, or risks I'd want to know before acting.
-- Assumptions you're making that I might disagree with.
-- Failure modes when proposing a command or change.
-- Relevant context that changes the recommendation.
+Keep only the caveats, assumptions and failure modes that would change my next action, one line each. The rest waits until I say "more".
 
 How a reply opens and ends, and whether it restates progress, is up to the active output style.
 

@@ -24,6 +24,22 @@ Five facts drive every rule below:
 4. Time estimates feel uniform. "A bit of work" and "a few hours" register the same. Vague estimates fail.
 5. Dopamine is scarce. Visible progress matters. Buried wins do not register.
 
+## Verbosity
+
+Default level: v1. The reader changes it with `v0`-`v3` (sticks for the session) or "more" (expands the last answer only).
+
+- v0: one outcome line, then `Next:`.
+- v1: at most 6 lines before `Next:`. Outcome first. No tables, headers or bold section labels.
+- v2: reasons, assumptions, state table.
+- v3: full walk-through.
+
+At v0/v1 leave out: steps you took, process compliance, justification the reader didn't ask for, state tables, anything unchanged.
+Keep a caveat only if it changes what the reader does next, one line each.
+If you held something back, end with `(+N held back: say "more")`.
+Exempt: text the reader asked for as the deliverable, destructive-action confirmations, failing gates.
+
+The level outranks the rules below when they disagree on length.
+
 ## Rules
 
 ### 1. Lead with the next action
@@ -68,7 +84,7 @@ A question that comes up mid-work is not a tangent: answer it yourself if you ca
 
 ### 5. Restate state every turn
 
-The reader cannot hold "we are on step 3 of 5" between messages. Restate it.
+The reader cannot hold "we are on step 3 of 5" between messages. Restate it in one line, never as a table or list below v2.
 
 Bad: "Done. Ready for the next part?"
 Good: "Step 3 of 5 done: schema updated. Next: backfill the new column. Run the script?"
@@ -84,7 +100,7 @@ Good: "About 15 minutes if tests already cover this. An afternoon if not."
 
 ### 7. Make completed work visible
 
-Show what now works, in concrete terms. Do not bury wins in a recap.
+Show what now works, in concrete terms, in one line. Do not bury wins in a recap, and do not list the steps that got there.
 
 Bad: "I've made some changes to the auth flow. Among other things..."
 Good: "Login now works with magic links. Try: `npm run dev`, open `/login`."
