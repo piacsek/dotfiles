@@ -39,7 +39,7 @@
       "mcp__claude_ai_Linear__search_documentation"
     ]
   },
-  "model": "opus[1m]",
+  "model": "fable",
   "hooks": {
     "PreToolUse": [
       {
@@ -88,7 +88,7 @@
       "autoCompactWindow": 1000000
     }
   },
-  "tui": "default",
+  "tui": "fullscreen",
   "skipWorkflowUsageWarning": true,
   "theme": "auto",
   "agentPushNotifEnabled": true,
