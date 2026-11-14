@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+set -uo pipefail
+
+cache="$HOME/.cache/claude-usage.json"
+mode="${1:-view}"
+[[ $# -gt 0 ]] && shift
+
+threshold_for() {
+	local key="$1" default="$2" v
+	v=$(tmux show -gqv "@claude_usage_threshold_$key" 2>/dev/null)
+	[[ "$v" =~ ^[0-9]+$ ]] || v="$default"
+	printf '%s' "$v"
+}
+
+[[ -s "$cache" ]] || exit 0
+
+fmt_reset() {
+	local ts="$1"
+	[[ "$ts" =~ ^[0-9]+$ ]] || return 0
+	if (($(date -j -f %s "$ts" +%Y%m%d) == $(date +%Y%m%d))); then
+		date -j -f %s "$ts" "+%-I:%M%p"
+	else
+		date -j -f %s "$ts" "+%b %-d %-I:%M%p"
+	fi
+}
+
+bar() {
+	local pct="$1" width=30 filled i out=""
+	filled=$((pct * width / 100))
+	for ((i = 0; i < width; i++)); do
+		if ((i < filled)); then out+="█"; else out+="░"; fi
+	done
+	printf '%s' "$out"
+}
+
+read_limits() {
+	jq -r '
+		[["Current session","5h",.five_hour],["Current week","7d",.seven_day]]
+		| .[] | select(.[2] != null)
+		| [.[0], .[1], (.[2].used_percentage | floor), (.[2].resets_at // "")] | @tsv
+	' "$cache"
+}
+
+case "$mode" in
+status)
+	out=""
+	t5=$(threshold_for 5h 80)
+	t7=$(threshold_for 7d 50)
+	while IFS=$'\t' read -r _ short pct _; do
+		limit=$t5
+		[[ "$short" == "7d" ]] && limit=$t7
+		if ((pct >= limit)); then
+			out+="${out:+ }$short $pct%"
+		fi
+	done < <(read_limits)
+	if [[ -n "$out" ]]; then
+		printf '#[fg=#ffd479]◔ %s#[default]' "$out"
+	fi
+	;;
+view)
+	printf '\n'
+	while IFS=$'\t' read -r label _ pct reset; do
+		printf '  %s\n  %s %s%% used\n' "$label" "$(bar "$pct")" "$pct"
+		[[ -n "$reset" ]] && printf '  Resets %s\n' "$(fmt_reset "$reset")"
+		printf '\n'
+	done < <(read_limits)
+	read -rsn1 -p "  q to close "
+	;;
+*)
+	echo "usage: tmux-claude-usage [view|status]" >&2
+	exit 2
+	;;
+esac

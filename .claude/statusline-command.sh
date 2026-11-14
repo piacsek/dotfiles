@@ -1,5 +1,10 @@
 #!/bin/sh
 input=$(cat)
+rl=$(echo "$input" | jq -c '.rate_limits // empty')
+if [ -n "$rl" ]; then
+  mkdir -p "$HOME/.cache"
+  printf '%s\n' "$rl" > "$HOME/.cache/claude-usage.json.tmp$$" && mv "$HOME/.cache/claude-usage.json.tmp$$" "$HOME/.cache/claude-usage.json"
+fi
 
 cwd=$(echo "$input" | jq -r '.workspace.current_dir // .cwd // ""')
 # Shorten path to last 2 directory components
