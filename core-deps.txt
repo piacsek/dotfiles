@@ -2,6 +2,7 @@
 # One formula per line. Blank lines and #-comments are ignored.
 codex
 btop
+htop
 tmux
 1password-cli
 neovim
