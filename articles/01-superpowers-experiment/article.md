@@ -24,7 +24,7 @@ I used my agentic hobby project, [conveyor](https://github.com/piacsek/conveyor/
 
 To keep it simple, this iteration focused on adding tabs just for the PRs column. 
 
-I gave two distinct Claude Code sessions running Opus 5.5 on `medium` the same initial prompt:
+I gave two distinct Claude Code sessions running Sonnet 5.5 on `medium` the same initial prompt:
 
 > Let's plan a feature: tabs. Right now each column shows a fixed view based on its config. I would like to add the ability of having multiple configs for each column, and you'd cycle through them by pressing a key that defaults to <Tab>. I'm ok breaking the current tab behaviour. I envision these tabs appearing at the top of the column. The currently selected one gets a visible highlight.
 
