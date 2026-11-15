@@ -81,14 +81,14 @@
   "effortLevel": "medium",
   "modelSettings": {
     "claude-fable-5-2": {
-      "effortLevel": "high"
+      "effortLevel": "medium"
     },
     "claude-opus-5": {
       "effortLevel": "high"
     },
     "claude-opus-5-5": {
       "effortLevel": "medium",
-      "autoCompactWindow": 1000000
+      "autoCompactWindow": 200000
     },
     "claude-sonnet-5-5": {
       "effortLevel": "medium"
