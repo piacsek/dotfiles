@@ -1,11 +1,10 @@
 ---
 title: A stab at superpowers
-published: false
+published: true
 description: A small experiment comparing my current bespoke AI workflow against an industry-wide used methodology
 tags: ai, claude, superpowers, rust, tui
-# cover_image: https://direct_url_to_image.jpg
-# Use a ratio of 100:42 for best results.
-# published_at: 2026-11-15 01:22 +0000
+cover_image: https://github.com/piacsek/dotfiles/blob/main/articles/01-superpowers-experiment/cover.png?raw=true
+published_at: 2026-11-15 03:15 +0000
 ---
 
 I've been using AI workflows to build applications for a little over one year now and. I decided, for the first time, to use a pre-baked industry methodology: [superpowers](https://github.com/obra/superpowers).
