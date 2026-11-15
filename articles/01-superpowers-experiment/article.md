@@ -7,7 +7,7 @@ cover_image: https://github.com/piacsek/dotfiles/blob/main/articles/01-superpowe
 published_at: 2026-11-15 03:15 +0000
 ---
 
-I've been using AI workflows to build applications for a little over one year now and. I decided, for the first time, to use a pre-baked industry methodology: [superpowers](https://github.com/obra/superpowers).
+I've been using AI workflows to build applications for a little over one year now. I decided, for the first time, to use a pre-baked industry methodology: [superpowers](https://github.com/obra/superpowers).
 
 Superpowers caught my attention because it resembles how I currently work with AI. I plan my work and chunk it down into smaller deliverables, which I execute through tdd.
 
