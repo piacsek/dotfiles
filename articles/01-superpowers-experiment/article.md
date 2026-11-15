@@ -42,9 +42,9 @@ Both got the PR through the automatic review cycle without any further interacti
 | Cost                      | Current workflow   | Superpowers |
 |:---                       | :---               | :---        |
 | Build wall time           | 41min              | 42min       |
-| Token cost - main session | 196.7k             | 104.9k      |
-| Token cost - subagents    | 1.28M              | 483k        |
-| Token cost - total        | 1.477M             | 587.9k      |
+| Token cost - main session | 104.9k             | 196.7k      |
+| Token cost - subagents    | 483k               | 1.28M       |
+| Token cost - total        | 587.9k             | 1.477M      |
 
 ### My thoughts
 
