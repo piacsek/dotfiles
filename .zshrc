@@ -11,6 +11,8 @@ export VISUAL=nvim
 # Syntax-highlighted man pages via bat
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export CLAUDE_CODE_ENABLE_TODO_TOOLS=1
+# Speeding up elixir/erlang compilation
+export ERL_COMPILER_OPTIONS='[no_ssa_opt]'
 
 # ZSH customization
 # Enable prompt substitution
