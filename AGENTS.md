@@ -6,6 +6,8 @@ Notes and gotchas for working in this dotfiles repo. Each item is a hard-won fac
 
 - **No auto-sync:** two Macs share this repo, so nothing commits or pushes automatically. Pull before editing on a machine; commit or push only when asked.
 
+- **Script names use `_`, never `-`:** everything in `scripts/` is snake_case (`tmux_popup_freeze`, `delta_themed.sh`). The only exception is `.tmux-sessionizer.example`, which mirrors the per-project `.tmux-sessionizer` file name that `tmux_sessionizer` looks up.
+
 ## Neovim
 
 - **`<M-r>` restart is unreliable.** When testing config changes (plugin setup, autocmds, highlight groups, treesitter query overrides), prefer a full `:qa!` + shell relaunch. Stale state from session restore leaks through `<M-r>` and makes working code look broken.
