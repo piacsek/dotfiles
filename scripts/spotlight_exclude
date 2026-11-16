@@ -5,7 +5,7 @@ plist=${SPOTLIGHT_PLIST:-/System/Volumes/Data/.Spotlight-V100/VolumeConfiguratio
 pb=/usr/libexec/PlistBuddy
 
 (($# > 0)) || {
-	echo "usage: sudo spotlight-exclude /abs/path [...]" >&2
+	echo "usage: sudo spotlight_exclude /abs/path [...]" >&2
 	exit 2
 }
 

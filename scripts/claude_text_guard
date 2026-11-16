@@ -67,7 +67,7 @@ def main():
     if not hits:
         return 0
     print(
-        "Blocked by claude-text-guard (rules from ~/.claude/CLAUDE.md): "
+        "Blocked by claude_text_guard (rules from ~/.claude/CLAUDE.md): "
         + "; ".join(hits)
         + ". Rewrite the text and try again.",
         file=sys.stderr,

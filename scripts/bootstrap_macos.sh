@@ -344,7 +344,7 @@ try "macOS settings" macos_defaults
 
 spotlight_exclusions() {
 	mkdir -p "$HOME/projects"
-	sudo "$DOTFILES/scripts/spotlight-exclude" "$HOME/projects"
+	sudo "$DOTFILES/scripts/spotlight_exclude" "$HOME/projects"
 }
 try "Spotlight exclusions" spotlight_exclusions
 
@@ -371,7 +371,7 @@ menu_bar() {
 		set_default com.apple.controlcenter "NSStatusItem VisibleCC $item" -bool false || true
 	done
 	set_default "$HOME/Library/Group Containers/group.com.apple.controlcenter/Library/Preferences/group.com.apple.controlcenter" showSpotlight -bool false || true
-	"$DOTFILES/scripts/menubar-allow" com.electron.brain.fm
+	"$DOTFILES/scripts/menubar_allow" com.electron.brain.fm
 }
 try "Menu bar" menu_bar
 
@@ -394,5 +394,5 @@ Still manual:
   - rcmd: import ~/dotfiles/rcmd.json in its settings.
   - Add license keys: rcmd, CleanShot, Pasty.
   - Log out and log in, so the key repeat settings apply.
-  - Once every app has run once: ~/dotfiles/scripts/menubar-allow com.electron.brain.fm
+  - Once every app has run once: ~/dotfiles/scripts/menubar_allow com.electron.brain.fm
 EOF

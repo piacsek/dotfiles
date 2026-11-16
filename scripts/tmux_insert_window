@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-idx="${1:?usage: tmux-insert-window <index> [name]}"
+idx="${1:?usage: tmux_insert_window <index> [name]}"
 name="${2:-}"
 
 args=()

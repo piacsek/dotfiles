@@ -2,7 +2,7 @@
 set -uo pipefail
 
 pattern='^caffeinate -dims$'
-self="$HOME/dotfiles/scripts/caffeinate-toggle"
+self="$HOME/dotfiles/scripts/caffeinate_toggle"
 
 if [[ "${1:-}" == "status" ]]; then
 	pgrep -f "$pattern" >/dev/null && echo "  ON |"
@@ -21,7 +21,7 @@ fi
 echo "$msg"
 [[ -n "${TMUX:-}" ]] || exit 0
 tmux display-message "$msg"
-"$HOME/dotfiles/scripts/tmux-cached" 0 -- "$self" status >/dev/null || true
+"$HOME/dotfiles/scripts/tmux_cached" 0 -- "$self" status >/dev/null || true
 tmux list-clients -F '#{client_tty}' | while read -r tty; do
 	tmux refresh-client -S -t "$tty"
 done

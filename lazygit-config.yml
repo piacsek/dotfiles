@@ -6,12 +6,12 @@ git:
     order: default
   diffRenderers:
     - colorArg: always
-      command: $HOME/dotfiles/scripts/delta-themed.sh --paging=never
+      command: $HOME/dotfiles/scripts/delta_themed.sh --paging=never
 customCommands:
   - key: "<c-q>"
     context: "global"
     description: "Quit without triggering auto-commit/push"
-    # Drop an abort sentinel the tmux-git-flow wrapper checks, then quit
+    # Drop an abort sentinel the tmux_git_flow wrapper checks, then quit
     # lazygit by signalling its process (the custom command's parent).
     # lazygit returns non-zero (143), which also gates the flow.
     command: '[ -n "$TMUX_GIT_FLOW" ] || exit 0; touch "$HOME/.cache/tmux-git-flow/abort"; kill -TERM $PPID'
@@ -19,23 +19,23 @@ customCommands:
   - key: "O"
     context: "files"
     description: "Open file in nvim on tmux window 1"
-    command: "$HOME/dotfiles/scripts/lazygit-open-in-nvim.sh '{{.SelectedFile.Name}}'"
+    command: "$HOME/dotfiles/scripts/lazygit_open_in_nvim.sh '{{.SelectedFile.Name}}'"
     output: none
   - key: "O"
     context: "commitFiles"
     description: "Open file in nvim on tmux window 1"
-    command: "$HOME/dotfiles/scripts/lazygit-open-in-nvim.sh '{{.SelectedCommitFile.Name}}'"
+    command: "$HOME/dotfiles/scripts/lazygit_open_in_nvim.sh '{{.SelectedCommitFile.Name}}'"
     output: none
   - key: "<c-f>"
     context: "localBranches"
     description: "Fast-forward all branches with upstreams"
-    command: "$HOME/dotfiles/scripts/lazygit-sync-branches.sh sync"
+    command: "$HOME/dotfiles/scripts/lazygit_sync_branches.sh sync"
     output: log
     loadingText: "Syncing branches..."
   - key: "<c-x>"
     context: "localBranches"
     description: "Delete all branches merged into main"
-    command: "$HOME/dotfiles/scripts/lazygit-sync-branches.sh delete"
+    command: "$HOME/dotfiles/scripts/lazygit_sync_branches.sh delete"
     output: log
     loadingText: "Deleting merged branches..."
     prompts:

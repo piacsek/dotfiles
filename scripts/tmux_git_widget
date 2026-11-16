@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
-# Git segment for the tmux status line. While a tmux-git-flow run is in
+# Git segment for the tmux status line. While a tmux_git_flow run is in
 # flight its state wins; otherwise show whether the current pane's repo
 # has uncommitted changes. Prints nothing (no separator) when clean or
 # outside a repo, so the segment disappears entirely.
-# Usage: tmux-git-widget '#{pane_current_path}'
+# Usage: tmux_git_widget '#{pane_current_path}'
 #
 # Call it uncached from status-right: the state check is one `cat`, so flow
 # progress shows on the next 1s tick. Only the `git status` part goes through
-# tmux-cached (re-invoking this script with --dirty).
+# tmux_cached (re-invoking this script with --dirty).
 set -uo pipefail
 
 STATE_FILE="$HOME/.cache/tmux-git-flow/state"
@@ -31,4 +31,4 @@ done) echo "󰗠 pushed |" && exit 0 ;;
 error) echo "󰀦 flow failed |" && exit 0 ;;
 esac
 
-exec "$(dirname "$0")/tmux-cached" 5 -- "$0" --dirty "${1:-}"
+exec "$(dirname "$0")/tmux_cached" 5 -- "$0" --dirty "${1:-}"

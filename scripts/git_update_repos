@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Update one or more git repos: fetch, stash if dirty, pull --ff-only, pop stash.
-# Usage: git-update-repos PATH [PATH ...]
+# Usage: git_update_repos PATH [PATH ...]
 
 set -u
 
@@ -21,7 +21,7 @@ update_repo() {
   fi
 
   if ! git -C "$repo" diff --quiet || ! git -C "$repo" diff --cached --quiet; then
-    if git -C "$repo" stash push -u -m "git-update-repos auto-stash" >/dev/null 2>&1; then
+    if git -C "$repo" stash push -u -m "git_update_repos auto-stash" >/dev/null 2>&1; then
       stashed=1
       log "STASH $repo ($branch)"
     else

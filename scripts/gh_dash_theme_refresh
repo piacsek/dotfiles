@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Restart gh-dash inside tmux when the Ghostty theme changes, so it relaunches
 # through the gh() wrapper in .zshrc and picks up the regenerated theme overlay
-# (scripts/gh-dash-theme). gh-dash reads its config once at startup and has no
+# (scripts/gh_dash_theme). gh-dash reads its config once at startup and has no
 # reload signal, so a restart is the only refresh path.
 # Triggered by launchd (com.gh-dash.theme-refresh) watching
 # ~/.config/ghostty/theme-current. No-op when tmux or gh-dash isn't running.

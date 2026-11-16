@@ -31,7 +31,7 @@ PROMPT='%F{blue}%~%f - %F{magenta}${vcs_info_msg_0_}%f
 plugins=(git)
 
 # Keep pane titles that tmux sets (vimux's "vimtest" runner, which
-# scripts/tmux-focus-test finds by title). OMZ would overwrite them per command.
+# scripts/tmux_focus_test finds by title). OMZ would overwrite them per command.
 DISABLE_AUTO_TITLE="true"
 
 source $ZSH/oh-my-zsh.sh
@@ -66,11 +66,11 @@ alias clc='clear && c'
 alias vim='nvim'
 alias cat='bat -pp' # plain style, no pager — safe drop-in for cat
 alias lz='lazygit'
-alias tx='tmux-sessionizer'
+alias tx='tmux_sessionizer'
 # alias lazysql='op run --env-file="$HOME/projects/wonderschool/.db_env" -- lazysql'
 
 # gh dash: merge checked-in base config with a theme overlay derived from the
-# current Ghostty theme (scripts/gh-dash-theme) and an optional local override
+# current Ghostty theme (scripts/gh_dash_theme) and an optional local override
 # (~/gh-dash-config.yml — kept out of dotfiles for work-specific sections).
 # Deep-merges maps (e.g. repoPaths); arrays are replaced. To append arrays
 # instead, change `. * $item` to `. *+ $item`.
@@ -81,7 +81,7 @@ gh() {
 		local override="$HOME/gh-dash-config.yml"
 		local theme="$HOME/.config/gh-dash/theme.generated.yml"
 		local merged="$HOME/.config/gh-dash/config.merged.yml"
-		"$HOME/dotfiles/scripts/gh-dash-theme" > "$theme" 2>/dev/null || echo '{}' > "$theme"
+		"$HOME/dotfiles/scripts/gh_dash_theme" > "$theme" 2>/dev/null || echo '{}' > "$theme"
 		if [[ -f "$override" ]]; then
 			yq eval-all '. as $item ireduce ({}; . * $item)' "$base" "$theme" "$override" > "$merged"
 		else

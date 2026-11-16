@@ -7,7 +7,7 @@
 #   delete           -- delete every local branch already integrated into main,
 #                        including squash/rebase merges.
 #
-# Usage: lazygit-sync-branches.sh [sync|delete]
+# Usage: lazygit_sync_branches.sh [sync|delete]
 set -uo pipefail
 
 mode="${1:-sync}"

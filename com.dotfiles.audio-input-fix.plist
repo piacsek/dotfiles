@@ -7,7 +7,7 @@
 
     <key>ProgramArguments</key>
     <array>
-        <string>/Users/piacsek/dotfiles/scripts/fix-bluetooth-audio-input</string>
+        <string>/Users/piacsek/dotfiles/scripts/fix_bluetooth_audio_input</string>
     </array>
 
     <key>RunAtLoad</key>

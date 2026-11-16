@@ -67,7 +67,7 @@ view)
 	read -rsn1 -p "  q to close "
 	;;
 *)
-	echo "usage: tmux-claude-usage [view|status]" >&2
+	echo "usage: tmux_claude_usage [view|status]" >&2
 	exit 2
 	;;
 esac

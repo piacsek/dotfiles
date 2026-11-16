@@ -3,8 +3,8 @@
 # panes (Claude Code redraws constantly) stop repainting under the popup —
 # every repaint redraws the whole popup too, which shows up as blinking.
 #
-#   tmux-popup-freeze freeze <window-id>   copy-mode every idle pane in the window
-#   tmux-popup-freeze thaw                 leave copy mode on every pane we froze
+#   tmux_popup_freeze freeze <window-id>   copy-mode every idle pane in the window
+#   tmux_popup_freeze thaw                 leave copy mode on every pane we froze
 #
 # Also pauses the status line (status-interval 0) while the popup is open:
 # with an overlay up, every status refresh repaints the whole popup even when
@@ -14,12 +14,12 @@
 # left alone. Frozen panes carry @popup_frozen, so thaw finds them server-wide
 # even if the popup switched session (M-e sessionizer).
 # Wired around every display-popup binding in .tmux.conf:
-#   run "tmux-popup-freeze freeze #{window_id}" \; display-popup ... \; run "tmux-popup-freeze thaw"
+#   run "tmux_popup_freeze freeze #{window_id}" \; display-popup ... \; run "tmux_popup_freeze thaw"
 set -uo pipefail
 
 case "${1:-}" in
 freeze)
-	window="${2:?usage: tmux-popup-freeze freeze <window-id>}"
+	window="${2:?usage: tmux_popup_freeze freeze <window-id>}"
 	# Only save once, so a nested freeze doesn't save the paused 0.
 	if [[ -z "$(tmux show -gv @popup_saved_status_interval 2>/dev/null)" ]]; then
 		tmux set -g @popup_saved_status_interval "$(tmux show -gv status-interval)" \; \
@@ -44,7 +44,7 @@ thaw)
 		done
 	;;
 *)
-	echo "usage: tmux-popup-freeze freeze <window-id> | thaw" >&2
+	echo "usage: tmux_popup_freeze freeze <window-id> | thaw" >&2
 	exit 2
 	;;
 esac

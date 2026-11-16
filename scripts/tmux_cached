@@ -2,8 +2,8 @@
 # Run a status-line widget at most once per TTL, serving the cached output in
 # between. status-interval is 1s for tmux-agents; expensive widgets (git
 # status, kube, tailscale) wrap themselves in this to keep a slower cadence.
-# Usage: tmux-cached <ttl-seconds> [--] <command> [args...]
-# A ttl of 0 always reruns and refreshes the entry (see tmux-toggle-tailscale).
+# Usage: tmux_cached <ttl-seconds> [--] <command> [args...]
+# A ttl of 0 always reruns and refreshes the entry (see tmux_toggle_tailscale).
 set -uo pipefail
 
 ttl="$1"

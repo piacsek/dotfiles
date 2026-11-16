@@ -7,7 +7,7 @@
 
     <key>ProgramArguments</key>
     <array>
-        <string>/Users/piacsek/dotfiles/scripts/gh-dash-theme-refresh</string>
+        <string>/Users/piacsek/dotfiles/scripts/gh_dash_theme_refresh</string>
     </array>
 
     <key>WatchPaths</key>
