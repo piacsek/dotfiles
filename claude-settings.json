@@ -1,4 +1,7 @@
 {
+  "env": {
+    "CLAUDE_CODE_SUBAGENT_MODEL": "opus"
+  },
   "attribution": {
     "commit": "",
     "pr": "",
@@ -38,9 +41,6 @@
       "mcp__claude_ai_Linear__get_user",
       "mcp__claude_ai_Linear__search_documentation"
     ]
-  },
-  "env": {
-    "CLAUDE_CODE_SUBAGENT_MODEL": "opus"
   },
   "model": "fable",
   "hooks": {
