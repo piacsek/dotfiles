@@ -22,6 +22,7 @@ if not pcall(vim.cmd.colorscheme, vim.g._default_colorscheme) then
 end
 
 vim.opt.termguicolors = true
+vim.opt.termsync = false
 -- Color the cursor from the `Cursor` highlight so it follows the colorscheme
 -- live (nvim emits OSC 12). Ghostty's own cursor-color isn't hot-reloadable, so
 -- this is what actually changes the cursor in-editor on :colorscheme.
