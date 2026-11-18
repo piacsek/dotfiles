@@ -6,6 +6,4 @@ font-size = 15
 window-padding-color = extend
 macos-option-as-alt = true
 macos-titlebar-style = hidden
-keybind = alt+d=scroll_page_down
-keybind = alt+u=scroll_page_up
 keybind = ctrl+space=unbind
