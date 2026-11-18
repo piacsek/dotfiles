@@ -83,9 +83,6 @@ vim.keymap.set({ "n", "v" }, "<C-s>", ":w<CR>", { desc = "[S]ave" })
 vim.keymap.set("n", "<C-.>", ":horizontal resize +5<CR>", { desc = "Increase window horizontal size" })
 vim.keymap.set("n", "<C-,>", ":horizontal resize -5<CR>", { desc = "Decrease window horizontal size" })
 
-vim.keymap.set("n", ">", ":vertical resize +5<CR>", { desc = "Increase window vertical size" })
-vim.keymap.set("n", "<", ":vertical resize -5<CR>", { desc = "Decrease window vertical size" })
-
 vim.keymap.set("t", "<C-o>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 -- Tmux navigation (terminal-mode): leave terminal mode before navigating
