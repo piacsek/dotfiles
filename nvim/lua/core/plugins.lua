@@ -393,6 +393,11 @@ vim.api.nvim_create_user_command("TSInstallParsers", function()
 		"json",
 		"sql",
 		"rust",
+		"yaml",
+		"css",
+		"tmux",
+		"zsh",
+		"toml",
 	})
 end, {})
 
@@ -573,7 +578,10 @@ require("snacks").setup({
 		previewers = {
 			diff = { style = "terminal", cmd = { "delta" } },
 			git = {
-				args = { "-c", "core.pager=" .. vim.fn.expand("~/dotfiles/scripts/delta_themed.sh") .. " --paging=never" },
+				args = {
+					"-c",
+					"core.pager=" .. vim.fn.expand("~/dotfiles/scripts/delta_themed.sh") .. " --paging=never",
+				},
 			},
 		},
 		sources = {
