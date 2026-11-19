@@ -1,0 +1,125 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [ $# -ne 1 ] || ! [[ $1 =~ ^[A-Za-z0-9._-]+$ ]]; then
+  echo "usage: tui_repo <name>" >&2
+  exit 2
+fi
+
+name=$1
+owner=$(gh api user --jq .login)
+repo=$owner/$name
+dir=${PROJECTS_DIR:-$HOME/projects}/$name
+
+if [ -e "$dir" ]; then
+  echo "tui_repo: $dir already exists" >&2
+  exit 1
+fi
+if gh api "repos/$repo" --silent 2>/dev/null; then
+  echo "tui_repo: $repo already exists on GitHub" >&2
+  exit 1
+fi
+
+step() { printf '==> %s\n' "$1"; }
+trap 'echo "tui_repo: stopped at \"$current\"; $repo may exist half configured" >&2' ERR
+current="start"
+
+current="bootstrap commit"
+step "$current in $dir"
+mkdir -p "$dir/.github/workflows"
+cd "$dir"
+git init --quiet --initial-branch main
+printf '# %s\n' "$name" >README.md
+gh api licenses/mit --jq .body |
+  sed -e "s/\[year\]/$(date +%Y)/" -e "s/\[fullname\]/$(git config user.name)/" >LICENSE
+cat >.github/workflows/ci.yml <<'EOF'
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - run: echo "replace this step with the project's gates"
+EOF
+git add -A
+git commit --quiet --message "Bootstrap"
+
+current="create the public repository"
+step "$current $repo"
+gh repo create "$repo" --public >/dev/null
+git remote add origin "git@github.com:$repo.git"
+git push --quiet --set-upstream origin main
+
+current="repository settings"
+step "$current"
+gh api --silent -X PATCH "repos/$repo" --input - <<'EOF'
+{
+  "allow_squash_merge": true,
+  "allow_merge_commit": false,
+  "allow_rebase_merge": false,
+  "allow_auto_merge": false,
+  "allow_update_branch": false,
+  "delete_branch_on_merge": true,
+  "squash_merge_commit_title": "COMMIT_OR_PR_TITLE",
+  "squash_merge_commit_message": "COMMIT_MESSAGES",
+  "has_discussions": true,
+  "security_and_analysis": {
+    "secret_scanning": { "status": "enabled" },
+    "secret_scanning_push_protection": { "status": "enabled" }
+  }
+}
+EOF
+
+current="Actions token permissions"
+step "$current"
+gh api --silent -X PUT "repos/$repo/actions/permissions/workflow" \
+  -f default_workflow_permissions=read \
+  -F can_approve_pull_request_reviews=false
+
+current="main ruleset"
+step "$current"
+gh api --silent -X POST "repos/$repo/rulesets" --input - <<'EOF'
+{
+  "name": "main",
+  "target": "branch",
+  "enforcement": "active",
+  "conditions": { "ref_name": { "include": ["~DEFAULT_BRANCH"], "exclude": [] } },
+  "bypass_actors": [],
+  "rules": [
+    { "type": "deletion" },
+    { "type": "non_fast_forward" },
+    { "type": "required_linear_history" },
+    {
+      "type": "pull_request",
+      "parameters": {
+        "allowed_merge_methods": ["squash"],
+        "dismiss_stale_reviews_on_push": false,
+        "require_code_owner_review": false,
+        "require_last_push_approval": false,
+        "required_approving_review_count": 0,
+        "required_review_thread_resolution": false
+      }
+    },
+    {
+      "type": "required_status_checks",
+      "parameters": {
+        "do_not_enforce_on_create": false,
+        "strict_required_status_checks_policy": true,
+        "required_status_checks": [{ "context": "check", "integration_id": 15368 }]
+      }
+    }
+  ]
+}
+EOF
+
+trap - ERR
+echo "done: https://github.com/$repo in $dir"
