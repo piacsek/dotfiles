@@ -54,7 +54,7 @@ status)
 		fi
 	done < <(read_limits)
 	if [[ -n "$out" ]]; then
-		printf '#[fg=#ffd479]◔ %s#[default]' "$out"
+		printf ' #[fg=#ffd479]◔ %s#[default]' "$out"
 	fi
 	;;
 view)
