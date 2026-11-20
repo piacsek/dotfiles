@@ -31,6 +31,16 @@ Notes and gotchas for working in this dotfiles repo. Each item is a hard-won fac
 - **Install:** Homebrew tap `piacsek/tap/tmux-agents` (listed in `core-deps.txt`, prebuilt release binary in `/opt/homebrew/bin`). Update with `macos_core_deps_update tmux-agents`; a new version needs a GitHub release plus a tap formula bump.
 - **You cannot probe `#()` with `tmux display -p`:** it returns "" for any `#()` (even `#(echo hi)`), including via `#{T:status-right}`. To verify status-line widgets ran, watch `~/.cache/tmux-cached/` mtimes or use `tmux run-shell '<cmd>'`.
 
+## harbour (agent sessions beside a live pane)
+
+- **Lives in its own repo:** `~/projects/harbour` (github.com/piacsek/harbour). Its `AGENTS.md` has the architecture and gates; only the wiring lives here.
+- **Install:** Homebrew tap `piacsek/tap/harbour` (listed in `core-deps.txt`). `harbour-dev` is a working-tree build and never replaces it.
+- **Wiring in this repo:**
+  - `.tmux.conf` `status-right` runs `#(harbour status)` next to `#(tmux-agents status)`: harbour's sessions run inside harbour, not in tmux panes, so `tmux-agents` does not see them. It prints nothing when no harbour runs. `~/.tmux_work.conf` overrides `status-right` and must carry the same segment.
+  - The `C-h`/`C-l` bindings in `.tmux.conf` list `harbour(-dev)?` beside vim, so those keys reach harbour and do not switch tmux panes.
+  - `M-g`, `M-r`, `M-t` and the split bindings open at `#{pane_current_path}`, which follows the selected harbour session's repository root, because harbour changes its own working directory. That only holds while harbour is the pane's foreground process: type `harbour` at the prompt, or end a wrapper with `exec harbour`.
+  - `scripts/lazygit_open_in_nvim.sh` (lazygit `O`) tries `harbour edit` first. Exit 0: opened in that session's Neovim. Exit 3 (no harbour, or no session holds the file) or 1: falls back to nvim on tmux window 1. Exit 2 (harbour or Neovim refused, for example a prompt is open): stops and reports it, since the file may still open there.
+
 ## tmux popups
 
 - **Every `display-popup` binding must be wrapped in `scripts/tmux_popup_freeze`** (`run "tmux_popup_freeze freeze #{window_id}" \; display-popup ... \; run "tmux_popup_freeze thaw"`). Any busy pane under a popup (Claude Code) makes tmux repaint the whole popup on each pane update (~23x the bytes) → blinking. Copy mode stops pane repaints (measured 0 bytes). tmux has no popup open/close hook (`after-display-popup` is `invalid option`), so the wrap is per binding; it works because `display-popup` holds the command list until close. Enabling Ghostty `sync` terminal-feature alone did not fix it. Second source: with an overlay up, every `status-interval` tick repaints the whole popup even when the status text is unchanged (1s interval → once-per-second blink), so the script also sets `status-interval 0` while open and restores the saved value on thaw.

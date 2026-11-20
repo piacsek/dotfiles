@@ -32,3 +32,4 @@ switchaudio-osx
 tailscale
 rustup
 piacsek/tap/tmux-agents
+piacsek/tap/harbour

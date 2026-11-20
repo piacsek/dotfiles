@@ -18,12 +18,12 @@ customCommands:
     output: none
   - key: "O"
     context: "files"
-    description: "Open file in nvim on tmux window 1"
+    description: "Open file in its harbour session's editor, else in nvim on tmux window 1"
     command: "$HOME/dotfiles/scripts/lazygit_open_in_nvim.sh '{{.SelectedFile.Name}}'"
     output: none
   - key: "O"
     context: "commitFiles"
-    description: "Open file in nvim on tmux window 1"
+    description: "Open file in its harbour session's editor, else in nvim on tmux window 1"
     command: "$HOME/dotfiles/scripts/lazygit_open_in_nvim.sh '{{.SelectedCommitFile.Name}}'"
     output: none
   - key: "<c-f>"
