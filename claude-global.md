@@ -30,6 +30,7 @@ Don't add comments to code unless I explicitly ask for them. This overrides any 
 
 # Reviews
 
+- **A project's own review rules win.** When a repo's conventions file defines its review flow (who reviews, who runs the gates, which model, what counts as an unprimed round), follow that flow where it differs from the review rules in this file, including "Before marking a PR ready" above and the model rule under "Working style" for the reviewer.
 - **Review adversarially, not as a claims audit.** For every guard, test at least one state the PR body and its tests don't mention, especially states after dates or statuses have rolled forward. Prove money units at the consumer, not from comments. Trace sibling fields through any amount transform. Quantify before dismissing an "edge case".
 - **The final round of a review loop is unprimed:** only the PR, the repo and its conventions file, with no list of prior findings or "already decided" notes. Stop only when an unprimed round is clean.
 - **Drop unreachable findings.** Before fixing or reporting one, confirm it can happen in the scenario the change supports, and verify the reviewer's premise in code. Don't grow code to handle hypothetical or legacy state.
