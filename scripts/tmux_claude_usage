@@ -52,11 +52,14 @@ status)
 		if ((pct >= limit)); then
 			label=""
 			[[ "$short" == "7d" ]] && label="󰨳 "
-			out+="${out:+  }$label$pct%"
+			color=""
+			((pct >= 80)) && color="#[fg=#ffd479]"
+			((pct > 90)) && color="#[fg=#ff6b6b]"
+			out+="${out:+  }$color$label$pct%${color:+#[default]}"
 		fi
 	done < <(read_limits)
 	if [[ -n "$out" ]]; then
-		printf ' #[fg=#ffd479]◔ %s#[default]' "$out"
+		printf ' ◔ %s' "$out"
 	fi
 	;;
 view)
