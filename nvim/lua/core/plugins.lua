@@ -566,6 +566,22 @@ vim.g["test#custom_runners"] = { JavaScript = { "PlaywrightBdd" } }
 
 vim.g["test#javascript#runner"] = "jest"
 
+vim.api.nvim_create_autocmd("BufEnter", {
+	callback = function(args)
+		local manifest = vim.bo[args.buf].filetype == "rust"
+			and vim.fs.find("Cargo.toml", { path = vim.fs.dirname(args.file), upward = true })[1]
+		if manifest then
+			manifest = vim.fs.abspath(manifest)
+			vim.g["test#project_root"] = vim.fs.dirname(manifest)
+			vim.g["test#filename_modifier"] = ":."
+			vim.g["test#rust#cargotest#executable"] = "cargo test --manifest-path " .. vim.fn.shellescape(manifest)
+		else
+			vim.g["test#project_root"] = nil
+			vim.g["test#filename_modifier"] = ":p"
+		end
+	end,
+})
+
 -- Snacks
 --
 
