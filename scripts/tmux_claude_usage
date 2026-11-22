@@ -50,7 +50,9 @@ status)
 		limit=$t5
 		[[ "$short" == "7d" ]] && limit=$t7
 		if ((pct >= limit)); then
-			out+="${out:+ }$short $pct%"
+			label=""
+			[[ "$short" == "7d" ]] && label="󰨳 "
+			out+="${out:+  }$label$pct%"
 		fi
 	done < <(read_limits)
 	if [[ -n "$out" ]]; then

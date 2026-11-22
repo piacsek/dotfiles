@@ -12,7 +12,7 @@ GRID = """\
 ..#############..
 ..#.#.......#.#..
 ..#.#.......#.#..""".splitlines()
-CW, CH, TOP = 56, 62, 760
+CW, CH, TOP = 56, 62, 600
 def glyph():
     p = TTGlyphPen(None)
     for j, row in enumerate(GRID):

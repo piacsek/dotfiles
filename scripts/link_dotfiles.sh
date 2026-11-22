@@ -27,6 +27,21 @@ link_dotfile() {
   printf 'Linked %s\n' "$target"
 }
 
+copy_font() {
+  local source=$1 target=$2
+
+  [[ -e "$source" ]] || { printf 'Missing source: %s\n' "$source" >&2; return 1; }
+  mkdir -p "$(dirname "$target")"
+
+  if [[ -f "$target" && ! -L "$target" ]] && cmp -s "$source" "$target"; then
+    return 0
+  fi
+
+  rm -f "$target"
+  cp "$source" "$target"
+  printf 'Copied %s\n' "$target"
+}
+
 mkdir -p "$HOME/.config/gh-dash" "$HOME/.config/tmux-sessionizer" \
   "$HOME/.config/tmux" "$HOME/scratch.nvim"
 sessionizer_config="$HOME/.config/tmux-sessionizer/tmux-sessionizer.conf"
@@ -49,4 +64,4 @@ link_dotfile "$dotfiles_dir/.ghosttyrc" "$HOME/.config/ghostty/config"
 link_dotfile "$dotfiles_dir/harbour-config.toml" "$HOME/.config/harbour/config.toml"
 link_dotfile "$dotfiles_dir/.tool-versions" "$HOME/.tool-versions"
 link_dotfile "$dotfiles_dir/available-scripts" "$HOME/.available-scripts"
-link_dotfile "$dotfiles_dir/fonts/ClawdGlyph.ttf" "$HOME/Library/Fonts/ClawdGlyph.ttf"
+copy_font "$dotfiles_dir/fonts/ClawdGlyph.ttf" "$HOME/Library/Fonts/ClawdGlyph.ttf"
