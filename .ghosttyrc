@@ -7,3 +7,4 @@ window-padding-color = extend
 macos-option-as-alt = true
 macos-titlebar-style = hidden
 keybind = ctrl+space=unbind
+font-codepoint-map = U+100000=Clawd Glyph
