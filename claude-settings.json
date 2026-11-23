@@ -40,6 +40,10 @@
       "mcp__claude_ai_Linear__get_team",
       "mcp__claude_ai_Linear__get_user",
       "mcp__claude_ai_Linear__search_documentation"
+    ],
+    "deny": [
+      "mcp__claude_ai_Slack__slack_send_message",
+      "mcp__claude_ai_Slack__slack_schedule_message"
     ]
   },
   "model": "claude-opus-5-5",
