@@ -1,6 +1,6 @@
 sidebar_width = 43
 nerd_font = true
 claude_icon = "clawd"
-accent = "lightmagenta"
+accent = "lightcyan"
 tidy_after = "12h"
 prefix = "C-;"
