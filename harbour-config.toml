@@ -1,3 +1,4 @@
 sidebar_width = 43
 nerd_font = true
 claude_icon = "clawd"
+accent = "lightmagenta"
