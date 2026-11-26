@@ -5,12 +5,11 @@ description: Move a config file into the ~/dotfiles repo, symlink it back to its
 
 # Track a config file in the dotfiles repo
 
-The dotfiles repo at `~/dotfiles/` holds tracked configs as plain files at the repo root (e.g. `gh-dash-config.yml`, `claude-settings.json`). The original system location holds a symlink. `scripts/link_dotfiles.sh` creates those symlinks on a fresh machine (the bootstrap runs it) — every tracked file MUST have a `link_dotfile` line there or it won't survive a reinstall.
+The dotfiles repo at `~/dotfiles/` holds tracked configs as plain files at the repo root (e.g. `gh-dash-config.yml`, `lazygit-config.yml`). The original system location holds a symlink. `scripts/link_dotfiles.sh` creates those symlinks on a fresh machine (the bootstrap runs it) — every tracked file MUST have a `link_dotfile` line there or it won't survive a reinstall.
 
 ## Steps
 
 1. **Confirm the source path and target name with the user** if not already obvious. Default convention: flat at repo root, kebab-case name that hints at what it is. Examples:
-   - `~/.claude/settings.json` → `~/dotfiles/claude-settings.json`
    - `~/.config/gh-dash/config.yml` → `~/dotfiles/gh-dash-config.yml`
 
 2. **Verify the source is a real file, not already a symlink.** Run `ls -la <source>`. If it's already a symlink into `~/dotfiles/`, stop — already tracked.
@@ -31,6 +30,6 @@ The dotfiles repo at `~/dotfiles/` holds tracked configs as plain files at the r
 
 ## Gotchas
 
-- `~/dotfiles/.claude/` is **project-scoped** for Claude Code (only loads when running claude inside `~/dotfiles`). User-global Claude settings belong at `~/dotfiles/claude-settings.json` symlinked to `~/.claude/settings.json`, NOT inside `.claude/`.
+- `~/dotfiles/.claude/` is **project-scoped** for Claude Code (only loads when running claude inside `~/dotfiles`). `~/.claude/settings.json` is NOT symlinked: it is a per-machine file, seeded once from `~/dotfiles/claude-settings.json` by `link_dotfiles.sh` so work-specific settings never show up as diffs here.
 - If the source is a directory, use `ln -sf` on the directory itself, not its contents.
 - Don't track GENERATED files (e.g. ghostty-mirror.nvim's theme output in `~/.config/ghostty/themes/`) — track the config that generates them instead.
