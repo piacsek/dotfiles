@@ -41,8 +41,12 @@ context, then turn the actionable ones into a task list with a drafted reply per
 
 ## 2. Triage
 
-Classify every thread. **Skip** `isResolved: true` and `isOutdated: true` — report only
-how many were skipped, so a resolved thread never becomes a task.
+Classify every thread. **Skip** `isResolved: true` — report only how many were skipped,
+so a resolved thread never becomes a task.
+
+**Do not skip `isOutdated: true`.** Outdated only means the commented line was edited, not
+that the ask was answered. Triage outdated threads like any other, by their last comment;
+their `line` is null, so cite them as `path (outdated)`.
 
 For the rest, decide actionable vs not:
 
@@ -91,5 +95,5 @@ one that argues.
 - PR title and URL, review decision, and who was asked to review.
 - Review summaries by reviewer, with state (approved / changes requested / commented).
 - A table of actionable threads: severity, `path:line`, reviewer, the ask in a few words.
-- The non-actionable and skipped (resolved/outdated) counts — one line, not a list.
+- The non-actionable and skipped (resolved) counts — one line, not a list.
 - The drafted replies.
