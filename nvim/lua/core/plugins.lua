@@ -569,14 +569,21 @@ vim.g["test#javascript#runner"] = "jest"
 vim.g["test#custom_transformations"] = {
 	cargo_test_dir = function(cmd)
 		local manifest = cmd:match("^cargo test %-%-manifest%-path '([^']+)'")
-		local target, rest = cmd:match(" '([%w_]+)::([^']*)'")
-		if not (manifest and target) or cmd:find(" %-%-bin ") or cmd:find(" %-%-test ") then
+		local position = vim.g["test#last_position"]
+		if not (manifest and position) or cmd:find(" %-%-bin ") or cmd:find(" %-%-test ") then
 			return cmd
 		end
-		if vim.uv.fs_stat(vim.fs.joinpath(vim.fs.dirname(manifest), "tests", target, "main.rs")) == nil then
+		local file = vim.fs.relpath(vim.fs.dirname(manifest), vim.fs.abspath(position.file))
+		local target = file and (file:match("^tests/([%w_]+)%.rs$") or file:match("^tests/([%w_]+)/"))
+		if not target then
 			return cmd
 		end
-		return (cmd:gsub(" '[%w_]+::[^']*'", " --test " .. target .. " '" .. rest .. "'", 1))
+		local prefix, name, suffix = cmd:match("^(cargo test %-%-manifest%-path '[^']+') '([^']*)'(.*)$")
+		if not prefix then
+			return cmd
+		end
+		local test = name:gsub("^" .. target .. "::", "", 1)
+		return prefix .. " --test " .. target .. " '" .. test .. "'" .. suffix
 	end,
 }
 vim.g["test#transformation"] = "cargo_test_dir"
