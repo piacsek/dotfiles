@@ -565,10 +565,11 @@ vim.g["test#neovim_sticky#kill_previous"] = 1
 vim.g["test#custom_runners"] = { JavaScript = { "PlaywrightBdd" } }
 
 vim.g["test#javascript#runner"] = "jest"
+vim.g["test#rust#runner"] = "cargotest"
 
 vim.g["test#custom_transformations"] = {
 	cargo_test_dir = function(cmd)
-		local manifest = cmd:match("^cargo test %-%-manifest%-path '([^']+)'")
+		local manifest = cmd:match("^cargo nextest run %-%-manifest%-path '([^']+)'")
 		local position = vim.g["test#last_position"]
 		if not (manifest and position) or cmd:find(" %-%-bin ") or cmd:find(" %-%-test ") then
 			return cmd
@@ -578,7 +579,7 @@ vim.g["test#custom_transformations"] = {
 		if not target then
 			return cmd
 		end
-		local prefix, name, suffix = cmd:match("^(cargo test %-%-manifest%-path '[^']+') '([^']*)'(.*)$")
+		local prefix, name, suffix = cmd:match("^(cargo nextest run %-%-manifest%-path '[^']+') '([^']*)'(.*)$")
 		if not prefix then
 			return cmd
 		end
@@ -596,7 +597,8 @@ vim.api.nvim_create_autocmd("BufEnter", {
 			manifest = vim.fs.abspath(manifest)
 			vim.g["test#project_root"] = vim.fs.dirname(manifest)
 			vim.g["test#filename_modifier"] = ":."
-			vim.g["test#rust#cargotest#executable"] = "cargo test --manifest-path " .. vim.fn.shellescape(manifest)
+			vim.g["test#rust#cargotest#executable"] = "cargo nextest run --manifest-path "
+				.. vim.fn.shellescape(manifest)
 		else
 			vim.g["test#project_root"] = nil
 			vim.g["test#filename_modifier"] = ":p"
